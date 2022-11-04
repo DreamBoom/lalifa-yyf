@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.lalifa.widget.MyViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:canScroll="false" />
+
+    <FrameLayout
+        android:id="@+id/bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black">
+
+        <com.lalifa.widget.TabButtonGroup
+            android:id="@+id/tab_group"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <com.lalifa.widget.TabButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:tbn_checked="true"
+                app:tbn_icon_array_id="@array/main_tab_home"
+                app:tbn_icon_size="26dp"
+                app:tbn_text_color_checked="@color/global"
+                app:tbn_text_color_unchecked="@color/textColor2"
+                app:tbn_text_size="11sp"
+                app:tbn_tip="@string/main_home" />
+
+            <com.lalifa.widget.TabButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="60dp"
+                android:layout_weight="1"
+                app:tbn_icon_array_id="@array/main_tab_shop"
+                app:tbn_icon_size="26dp"
+                app:tbn_text_color_checked="#9578F9"
+                app:tbn_text_color_unchecked="@color/textColor2"
+                app:tbn_text_size="11sp"
+                app:tbn_tip="@string/main_mall" />
+
+            <com.lalifa.widget.TabButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:tbn_icon_array_id="@array/main_tab_near"
+                app:tbn_icon_size="26dp"
+                app:tbn_text_color_checked="#FF7926"
+                app:tbn_text_color_unchecked="@color/textColor2"
+                app:tbn_text_size="11sp"
+                app:tbn_tip="@string/main_active" />
+
+            <com.lalifa.widget.TabButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:tbn_icon_array_id="@array/main_tab_me"
+                app:tbn_icon_size="26dp"
+                app:tbn_text_color_checked="#12EBFC"
+                app:tbn_text_color_unchecked="@color/textColor2"
+                app:tbn_text_size="11sp"
+                app:tbn_tip="@string/main_me" />
+
+        </com.lalifa.widget.TabButtonGroup>
+
+        <ImageView
+            android:id="@+id/btn_che"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:onClick="mainClick"
+            android:src="@mipmap/icon_5" />
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

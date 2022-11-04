@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lalifa.main">
+
+    <application>
+        <activity
+            android:name=".activity.Knapsack"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EditMyInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MoneyInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MyWalletActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.VipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ModelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MeInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ShopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActiveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
+    </application>
+
+</manifest>

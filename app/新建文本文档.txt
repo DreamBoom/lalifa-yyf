@@ -1,0 +1,63 @@
+密钥库类型: PKCS12
+密钥库提供方: SUN
+
+您的密钥库包含 1 个条目
+
+别名: key0
+创建日期: 2022年10月8日
+条目类型: PrivateKeyEntry
+证书链长度: 1
+证书[1]:
+所有者: CN=mina
+发布者: CN=mina
+序列号: 15add65b
+生效时间: Sat Oct 08 09:26:38 CST 2022, 失效时间: Wed Oct 02 09:26:38 CST 2047
+证书指纹:
+         SHA1: 60:A3:8F:3E:CD:54:99:01:1A:43:8B:7F:B0:32:B3:B5:45:08:A0:57
+         SHA256: 72:0E:EA:17:F4:28:2F:F7:2B:60:AF:AE:0F:50:46:7E:48:13:E2:5D:6F:53:E3:1E:95:0F:55:10:4C:D6:19:92
+签名算法名称: SHA256withRSA
+主体公共密钥算法: 2048 位 RSA 密钥
+版本: 3
+
+扩展:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 16 86 9F AB 22 7D 9B AD   F3 67 E9 04 65 30 4E 6F  ...."....g..e0No
+0010: 3A 2B 22 18                                        :+".
+]
+]
+
+
+
+
+C:\Users\Lalifa\.android>keytool -list -v -keystore debug.keystore
+输入密钥库口令:
+密钥库类型: PKCS12
+密钥库提供方: SUN
+
+您的密钥库包含 1 个条目
+
+别名: androiddebugkey
+创建日期: 2022年9月22日
+条目类型: PrivateKeyEntry
+证书链长度: 1
+证书[1]:
+所有者: C=US, O=Android, CN=Android Debug
+发布者: C=US, O=Android, CN=Android Debug
+序列号: 1
+生效时间: Thu Sep 22 11:33:04 CST 2022, 失效时间: Sat Sep 14 11:33:04 CST 2052
+证书指纹:
+         SHA1: 86:15:D6:B3:00:67:B7:00:53:01:63:45:C9:29:D0:C4:1F:F2:16:57
+         SHA256: 57:07:71:58:F2:4D:BC:D7:31:AF:BF:6C:97:4E:7E:E7:CB:72:0E:FB:5E:7E:5C:C1:17:F0:4D:25:9C:DC:6A:93
+签名算法名称: SHA1withRSA (弱)
+主体公共密钥算法: 2048 位 RSA 密钥
+版本: 1
+
+
+*******************************************
+*******************************************
+
+
+

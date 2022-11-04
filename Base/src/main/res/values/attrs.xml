@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="TabButton">
+        <attr name="tbn_icon_array_id" format="reference" />
+        <attr name="tbn_tip" format="string" />
+        <attr name="tbn_icon_size" format="dimension" />
+        <attr name="tbn_text_size" format="dimension" />
+        <attr name="tbn_text_color_checked" format="color" />
+        <attr name="tbn_text_color_unchecked" format="color" />
+        <attr name="tbn_checked" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CommonRefreshView">
+        <attr name="crv_refreshEnable" format="boolean" />
+        <attr name="crv_loadMoreEnable" format="boolean" />
+        <attr name="crv_emptyEnable" format="boolean" />
+        <attr name="crv_layout" format="reference" />
+        <attr name="crv_itemCount" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="MyViewPager">
+        <attr name="canScroll" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="RatioImageView">
+        <attr name="ri_ratio" format="float" />
+    </declare-styleable>
+    <declare-styleable name="DrawableTextView">
+        <attr name="dt_top_width" format="dimension" />
+        <attr name="dt_top_height" format="dimension" />
+        <attr name="dt_left_width" format="dimension" />
+        <attr name="dt_left_height" format="dimension" />
+        <attr name="dt_right_width" format="dimension" />
+        <attr name="dt_right_height" format="dimension" />
+        <attr name="dt_bottom_width" format="dimension" />
+        <attr name="dt_bottom_height" format="dimension" />
+        <attr name="dt_top_drawable" format="reference" />
+        <attr name="dt_left_drawable" format="reference" />
+        <attr name="dt_right_drawable" format="reference" />
+        <attr name="dt_bottom_drawable" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="MyLinearLayout2">
+        <attr name="mll_span_count" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="MyFrameLayout2">
+        <attr name="mfl_ratio" format="float" />
+        <attr name="mfl_offestY" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="MyLinearLayout6">
+        <attr name="mll_ratio" format="float" />
+    </declare-styleable>
+    <declare-styleable name="MyRelativeLayout2">
+        <attr name="mrl_ratio" format="float" />
+        <attr name="mrl_scaleX" format="float" />
+    </declare-styleable>
+    <declare-styleable name="MyLinearLayout3">
+        <attr name="mll_height_percent" format="float" />
+    </declare-styleable>
+    <declare-styleable name="MyLinearLayout4">
+        <attr name="mll4_count" format="float" />
+    </declare-styleable>
+    <declare-styleable name="CircleProgress">
+        <attr name="cp_stroke_width" format="dimension" />
+        <attr name="cp_bg_color" format="color" />
+        <attr name="cp_fg_color" format="color" />
+        <attr name="cp_max_progress" format="float" />
+        <attr name="cp_cur_progress" format="float" />
+    </declare-styleable>
+    <declare-styleable name="LineProgress">
+        <attr name="lp_fg_color" format="color" />
+        <attr name="lp_bg_color" format="color" />
+        <attr name="lp_max_progress" format="integer" />
+        <attr name="lp_cur_progress" format="integer" />
+        <attr name="lp_strokeWidth" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="NineGridLayout">
+        <attr name="ngl_space" format="dimension" />
+        <attr name="ngl_divider_width" format="dimension" />
+        <attr name="ngl_corner_radius" format="dimension" />
+        <attr name="ngl_item_width" format="dimension" />
+        <attr name="ngl_play_icon" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="CoinGiveLayout">
+        <attr name="cgl_bg_color" format="color" />
+        <attr name="cgl_radius" format="dimension" />
+        <attr name="cgl_arrow_width" format="dimension" />
+        <attr name="cgl_arrow_height" format="dimension" />
+        <attr name="cgl_arrow_offset_x" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RatingBar">
+        <attr name="rtb_star_count" format="integer"/>
+        <attr name="rtb_fill_count" format="integer"/>
+        <attr name="rtb_star_width" format="dimension"/>
+        <attr name="rtb_star_height" format="dimension"/>
+        <attr name="rtb_star_space" format="dimension"/>
+        <attr name="rtb_fill_drawable" format="reference"/>
+        <attr name="rtb_normal_drawable" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="StarCountView">
+        <attr name="scv_check_drawable" format="reference"/>
+        <attr name="scv_uncheck_drawable" format="reference"/>
+        <attr name="scv_drawable_size" format="dimension"/>
+        <attr name="scv_total_count" format="integer"/>
+        <attr name="scv_fill_count" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="BubbleLayout">
+        <attr name="bubbleBgColor" format="color"/>
+        <attr name="bubbleRadius" format="dimension"/>
+        <attr name="arrowWidth" format="dimension"/>
+        <attr name="arrowHeight" format="dimension"/>
+        <attr name="arrowPositionY" format="dimension"/>
+        <attr name="arrowDirecrion" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SideIndexBar">
+        <attr name="sib_check_text_color" format="color"/>
+        <attr name="sib_uncheck_text_color" format="color"/>
+        <attr name="sib_text_size" format="dimension"/>
+        <attr name="sib_text_space" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="TextSeekBar">
+        <attr name="text2" format="string"/>
+        <attr name="progressVal" format="integer"/>
+        <attr name="progressVal_max" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="MaxHeightRecyclerView">
+        <attr name="mrv_max_height" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="ImageSelectView">
+        <attr name="isv_max_count" format="integer" />
+        <attr name="isv_select_icon" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PercentLayout_Layout" tools:ignore="ResourceName">
+        <attr name="layout_widthPercent" format="string" />
+        <attr name="layout_heightPercent" format="string" />
+
+        <attr name="layout_marginPercent" format="string" />
+        <attr name="layout_marginLeftPercent" format="string" />
+        <attr name="layout_marginTopPercent" format="string" />
+        <attr name="layout_marginRightPercent" format="string" />
+        <attr name="layout_marginBottomPercent" format="string" />
+        <attr name="layout_marginStartPercent" format="string" />
+        <attr name="layout_marginEndPercent" format="string" />
+
+        <attr name="layout_textSizePercent" format="string" />
+
+        <attr name="layout_maxWidthPercent" format="string" />
+        <attr name="layout_maxHeightPercent" format="string" />
+        <attr name="layout_minWidthPercent" format="string" />
+        <attr name="layout_minHeightPercent" format="string" />
+
+        <attr name="layout_paddingPercent" format="string" />
+        <attr name="layout_paddingTopPercent" format="string" />
+        <attr name="layout_paddingBottomPercent" format="string" />
+        <attr name="layout_paddingLeftPercent" format="string" />
+        <attr name="layout_paddingRightPercent" format="string" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout">
+        <attr name="android:orientation" />
+        <attr name="layoutDirection" format="enum">
+            <enum name="ltr" value="0" />
+            <enum name="rtl" value="1" />
+        </attr>
+        <attr name="debugDraw" format="boolean" />
+        <attr name="maxLines" format="integer" />
+        <attr name="weightDefault" format="float" />
+        <attr name="android:gravity" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams">
+        <attr name="layout_newLine" format="boolean" />
+        <attr name="layout_weight" format="float" />
+        <attr name="android:layout_gravity" />
+    </declare-styleable>
+</resources>

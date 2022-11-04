@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.MySxActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/co1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@mipmap/bg_money"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/t1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="随心币余额"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="25dp"
+            android:drawableEnd="@mipmap/icon_xz"
+            android:drawablePadding="5dp"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/t1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/co1" />
+
+    <EditText
+        android:id="@+id/etMoney"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:background="@drawable/bg_black8"
+        android:drawableStart="@mipmap/icon_xz"
+        android:drawablePadding="5dp"
+        android:hint="输入充值金额【6-10000】元"
+        android:inputType="numberSigned"
+        android:maxLength="5"
+        android:padding="10dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@+id/list" />
+
+    <RelativeLayout
+        android:id="@+id/zfb"
+        android:layout_width="0dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/bg_black8"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/wx"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginStart="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etMoney">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingStart="15dp"
+            android:text="支付宝"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+        <ImageView
+            android:background="@drawable/select_image"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/wx"
+        android:layout_width="0dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/bg_black"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/zfb"
+        app:layout_constraintTop_toBottomOf="@+id/etMoney">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingStart="15dp"
+            android:text="微信"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+        <ImageView
+            android:background="@drawable/select_image"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <TextView
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_16"
+        android:text="确认充值"
+        android:background="@drawable/bg_zs30"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_margin="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

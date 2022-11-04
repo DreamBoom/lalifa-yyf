@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".activity.SettingActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:divider="@color/white"
+        app:showDividers="middle">
+
+        <TextView
+            android:id="@+id/set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="通用设置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="黑名单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="实名认证"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="手机号"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_white_back"
+                android:gravity="end"
+                android:padding="15dp"
+                android:text="去绑定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="绑定支付宝"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_white_back"
+                android:gravity="end"
+                android:padding="15dp"
+                android:text="去绑定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="绑定银行卡"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_white_back"
+                android:gravity="end"
+                android:padding="15dp"
+                android:text="去绑定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="忘记密码"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_white_back"
+                android:gravity="end"
+                android:padding="15dp"
+                android:text="去绑定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="隐私政策"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="服务协议"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:id="@+id/qsn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="青少年模式"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="清除缓存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="意见反馈"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:padding="15dp"
+            android:text="注销账号"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/logOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center"
+            android:background="@color/black1"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>

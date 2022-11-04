@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.rongcloud.roomkit">
+
+    <application>
+        <activity
+            android:name=".ui.other.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.other.PHActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.other.MySxActivity"
+            android:exported="false" />
+        <service
+            android:name="cn.rongcloud.roomkit.service.RTCNotificationService"
+            android:permission="true" />
+    </application>
+</manifest>

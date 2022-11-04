@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/mTitleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mPreviewRecyclerView"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_bar"
+        android:background="#f0303030" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="#f0303030">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:visibility="gone"
+            android:background="#30ffffff" />
+
+
+        <CheckBox
+            android:id="@+id/mOriginalCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/picker_str_bottom_original"
+            android:textColor="@color/white_F5" />
+
+        <TextView
+            android:id="@+id/mTvNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:paddingStart="14dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="8dp"
+            android:text="确定"
+            android:textColor="#859D7B"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/mSelectCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:button="@null"
+            android:drawablePadding="4dp"
+            android:includeFontPadding="true"
+            android:paddingStart="4dp"
+            android:text="@string/picker_str_bottom_choose"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

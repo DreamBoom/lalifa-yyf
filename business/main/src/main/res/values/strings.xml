@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="sy">首页</string>
+    <string name="main_home">首页</string>
+    <string name="main_mall">聊天室</string>
+    <string name="main_active">消息</string>
+    <string name="main_me">我的</string>
+</resources>

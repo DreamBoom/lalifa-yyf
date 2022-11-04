@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".activity.ModelActivity">
+
+    <ImageView
+        android:background="@mipmap/bg_model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="青少年模式未开启"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_margin="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="开启时：以下行为会受到限制"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:layout_marginHorizontal="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="无法进行充值、消费"
+        android:drawableStart="@drawable/ic_model_choose"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="部分功能无法使用"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/ic_model_choose"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

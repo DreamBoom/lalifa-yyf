@@ -1,0 +1,47 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="grid_expected_size">120dp</dimen>
+    <dimen name="size01">0.1dp</dimen>
+    <dimen name="size02">0.2dp</dimen>
+    <dimen name="size03">0.3dp</dimen>
+    <dimen name="size04">0.4dp</dimen>
+    <dimen name="size05">0.5dp</dimen>
+    <dimen name="size1">1dp</dimen>
+    <dimen name="size2">2dp</dimen>
+    <dimen name="size3">3dp</dimen>
+    <dimen name="size4">4dp</dimen>
+    <dimen name="size5">5dp</dimen>
+    <dimen name="size6">6dp</dimen>
+    <dimen name="size7">7dp</dimen>
+    <dimen name="size8">8dp</dimen>
+    <dimen name="size9">9dp</dimen>
+    <dimen name="size10">10dp</dimen>
+    <dimen name="size11">11dp</dimen>
+    <dimen name="size12">12dp</dimen>
+    <dimen name="size13">13dp</dimen>
+    <dimen name="size15">15dp</dimen>
+    <dimen name="size14">14dp</dimen>
+    <dimen name="size16">16dp</dimen>
+    <dimen name="size17">17dp</dimen>
+    <dimen name="size18">18dp</dimen>
+    <dimen name="size19">19dp</dimen>
+    <dimen name="size20">20dp</dimen>
+    <dimen name="size21">21dp</dimen>
+    <dimen name="size22">22dp</dimen>
+    <dimen name="size23">23dp</dimen>
+    <dimen name="size24">24dp</dimen>
+    <dimen name="size25">25dp</dimen>
+    <dimen name="size26">26dp</dimen>
+    <dimen name="size27">27dp</dimen>
+    <dimen name="size28">28dp</dimen>
+    <dimen name="size29">29dp</dimen>
+    <dimen name="size30">30dp</dimen>
+    <dimen name="size31">31dp</dimen>
+    <dimen name="size32">32dp</dimen>
+    <dimen name="size33">33dp</dimen>
+    <dimen name="size34">34dp</dimen>
+    <dimen name="size35">35dp</dimen>
+    <dimen name="size45">45dp</dimen>
+
+
+</resources>

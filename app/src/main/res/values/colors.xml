@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grayM">#999999</color>
+    <color name="grayF">#888888</color>
+    <color name="grayF30">#4D888888</color>
+    <color name="gray6">#666666</color>
+    <color name="black3">#333333</color>
+    <color name="black45">#454545</color>
+    <color name="color_BC102E">#BC102E</color>
+    <color name="color_F6F6F6">#F6F6F6</color>
+    <color name="color_1890FF">#1890FF</color>
+    <color name="color_E8F4FF">#E8F4FF</color>
+    <color name="color_FF993B">#FF993B</color>
+    <color name="color_1A1890FF">#0F1890FF</color>
+    <color name="color_f8f8f8">#F8F8F8</color>
+    <color name="color_0DC86E">#0DC86E</color>
+    <color name="color_E7FAF1">#E7FAF1</color>
+    <color name="color_FF5B05">#FF5B05</color>
+    <color name="color_FBF1F2">#FBF1F2</color>
+    <color name="color_F7EDE8">#F7EDE8</color>
+    <color name="color_E9F0F7">#E9F0F7</color>
+    <color name="color_F3F3F3">#F3F3F3</color>
+    <color name="transparent">#00000000</color>
+    <color name="zs">#B24FD0</color>
+
+</resources>

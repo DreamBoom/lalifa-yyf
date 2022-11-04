@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lalifa.widget.percent.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white"
+    android:orientation="vertical">
+
+    <com.lalifa.widget.percent.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_marginPercent="8.5%w">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/main_primary_17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:maxLines="1"
+            android:text="标题"
+            app:layout_marginBottomPercent="10.2%w" />
+
+
+        <com.lalifa.widget.percent.PercentLinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_message"
+                style="@style/main_secondary_15"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left|top"
+                android:minLines="2"
+                android:text="什么情况"
+                android:visibility="visible" />
+        </com.lalifa.widget.percent.PercentLinearLayout>
+    </com.lalifa.widget.percent.PercentLinearLayout>
+
+    <com.lalifa.widget.percent.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal"
+        app:layout_heightPercent="10%w"
+        app:layout_marginBottomPercent="5.7%w"
+        app:layout_marginLeftPercent="5.7%w"
+        app:layout_marginRightPercent="5.7%w">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            style="@style/main_secondary_15"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_fen"
+            android:gravity="center"
+            android:text="@string/basis_cancle"
+            android:textColor="@color/gray_e9"
+            app:layout_widthPercent="29%w" />
+
+        <TextView
+            android:id="@+id/btn_confirm"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_black1"
+            android:gravity="center"
+            android:text="@string/basis_ok"
+            android:textSize="@dimen/font_14"
+            app:layout_marginLeftPercent="2.9%w"
+            app:layout_widthPercent="29%w" />
+    </com.lalifa.widget.percent.PercentLinearLayout>
+</com.lalifa.widget.percent.PercentLinearLayout>
+

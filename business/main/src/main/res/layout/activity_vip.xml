@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".activity.VipActivity">
+
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="15dp"
+        android:text="爵位"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bgIm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="15dp"
+        android:background="@mipmap/bg_vip"
+        app:layout_constraintTop_toBottomOf="@+id/level" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/header"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@mipmap/icon_header"
+        app:layout_constraintStart_toStartOf="@+id/bgIm"
+        app:layout_constraintTop_toTopOf="@+id/bgIm" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:text="用户名"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/info"
+        app:layout_constraintStart_toEndOf="@+id/header"
+        app:layout_constraintTop_toTopOf="@+id/header"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/info"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:text="暂未开通当前会员"
+        android:textColor="@color/textColorGray"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/header"
+        app:layout_constraintStart_toEndOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintVertical_weight="1" />
+    <TextView
+        android:id="@+id/up"
+        android:text="升级会员，享受更多优惠"
+        android:textColor="#FFF9CA"
+        app:layout_constraintTop_toBottomOf="@+id/bgIm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/levelOf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="15dp"
+        android:text="爵位权益"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/up" />
+    <ImageView
+        android:id="@+id/vip1"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="35dp"
+        android:background="@mipmap/vip1"
+        app:layout_constraintTop_toBottomOf="@+id/levelOf"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+    <TextView
+        android:id="@+id/tv1"
+        android:text="特权1"
+        android:background="@drawable/bg_white"
+        app:layout_constraintStart_toEndOf="@+id/vip1"
+        app:layout_constraintTop_toTopOf="@+id/vip1"
+        android:textSize="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="#FF3B14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="享消费折扣"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/tv1"
+        app:layout_constraintTop_toTopOf="@+id/vip1"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="自营商家全场7折！"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/vip1"
+        app:layout_constraintBottom_toBottomOf="@+id/vip1"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/vip2"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="35dp"
+        android:background="@mipmap/vip2"
+        app:layout_constraintTop_toBottomOf="@+id/vip1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+    <TextView
+        android:id="@+id/tv2"
+        android:text="特权2"
+        android:background="@drawable/bg_white"
+        app:layout_constraintStart_toEndOf="@+id/vip2"
+        app:layout_constraintTop_toTopOf="@+id/vip2"
+        android:textSize="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="#FF3B14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="申请业务员"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/tv2"
+        app:layout_constraintTop_toTopOf="@+id/vip2"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="业务员可以推荐新人、商家、团购！"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/vip2"
+        app:layout_constraintBottom_toBottomOf="@+id/vip2"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <ImageView
+        android:id="@+id/vip3"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="35dp"
+        android:background="@mipmap/vip3"
+        app:layout_constraintTop_toBottomOf="@+id/vip2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+    <TextView
+        android:id="@+id/tv3"
+        android:text="特权3"
+        android:background="@drawable/bg_white"
+        app:layout_constraintStart_toEndOf="@+id/vip3"
+        app:layout_constraintTop_toTopOf="@+id/vip3"
+        android:textSize="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="#FF3B14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="海量红包"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/tv3"
+        app:layout_constraintTop_toTopOf="@+id/vip3"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="每月送五张5元红包，全场通用无限制！"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/vip3"
+        app:layout_constraintBottom_toBottomOf="@+id/vip3"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/imBg"
+        android:background="@drawable/rl_bg_vip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:textSize="14dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="45dp"
+            android:text="开通500/月"
+            android:textColor="#FEF4D9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/pay"
+            android:textSize="14dp"
+            android:padding="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="45dp"
+            android:text="立即开通会员"
+            android:textColor="#FEF4D9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
