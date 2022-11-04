@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.MySxActivity">
+    tools:context=".ui.other.MySxActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/co1"
@@ -88,6 +88,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
         <ImageView
+            android:id="@+id/imZfb"
             android:background="@drawable/select_image"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
@@ -102,7 +103,7 @@
         android:layout_marginTop="35dp"
         android:layout_marginEnd="25dp"
         android:layout_marginStart="15dp"
-        android:background="@drawable/bg_black"
+        android:background="@drawable/bg_black8"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
@@ -117,6 +118,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
         <ImageView
+            android:id="@+id/imWx"
             android:background="@drawable/select_image"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
@@ -125,6 +127,7 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <TextView
+        android:id="@+id/pay"
         android:textColor="@color/white"
         android:textSize="@dimen/font_16"
         android:text="确认充值"

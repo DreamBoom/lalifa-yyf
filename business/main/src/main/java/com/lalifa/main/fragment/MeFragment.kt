@@ -57,6 +57,8 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
             num3.onClick { start(FanActivity::class.java) }
             nm3.onClick { start(FanActivity::class.java) }
             pack.onClick { start(Knapsack::class.java) }
+            feelBack.onClick { start(FeedBack::class.java) }
+            kf.onClick { start(CallUs::class.java) }
         }
     }
 }

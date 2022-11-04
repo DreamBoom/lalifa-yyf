@@ -56,3 +56,16 @@ fun showPriceDialog(bean: GoodInfoBean, callback: (id: Int) -> Unit = {}) {
         .show()
 
 }
+
+fun showDh() {
+    DialogLayer()
+        .contentView(R.layout.dialog_dh)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .onInitialize {
+            //findViewById<ImageView>(R.id.im)!!.load(Config.FILE_PATH + bean.image)
+        }
+        .show()
+
+}

@@ -115,3 +115,48 @@ data class FriendBean(
     val id: Int,
     val userName: String
 )
+/**
+ * @Des 钱包列表
+ */
+data class MoneyListBean(
+    val core_currency: String,
+    val core_drill: String,
+    val count: Int,
+    val exchange: List<Exchange>,
+    val record: List<MoneyRecord>,
+    val subscription_ratio: String
+)
+
+data class Exchange(
+    val drill: Int,
+    val id: Int,
+    val price: String
+)
+
+data class MoneyRecord(
+    val balance: String,
+    val consume_id: Int,
+    val create_time: String,
+    val id: Int,
+    val note: String,
+    val pid: Int,
+    val price: String,
+    val sort: Int,
+    val type: Int,
+    val uid: Int
+)
+/**
+ * @Des 充值列表
+ */
+data class RechargeBean(
+    val alipay_status: String,
+    val recharge_proportion: String,
+    val rule: List<Rule>,
+    val wechat_status: String
+)
+
+data class Rule(
+    val id: Int,
+    val price: String,
+    val receipt_price: String
+)

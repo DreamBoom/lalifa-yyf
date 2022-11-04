@@ -1,6 +1,7 @@
 package com.lalifa.main.api
 
 import com.drake.net.Post
+import com.lalifa.extension.string
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -82,11 +83,25 @@ suspend fun CoroutineScope.friends(type: Int): List<FriendBean>? {
  * @receiver CoroutineScope
  * @param type 0：收入  1：支出
  * @param offset 页码
- * @return FriendBean?
+ * @return MoneyListBean?
  */
-suspend fun CoroutineScope.wallet(type: String, offset: String): List<FriendBean>? {
-    return Post<BaseBean<List<FriendBean>>>("user/wallet") {
+suspend fun CoroutineScope.wallet(type: String, offset: String): MoneyListBean? {
+    return Post<BaseBean<MoneyListBean>>("user/wallet") {
         param("type", type)
         param("offset", offset)
+    }.await().data
+}
+
+/**
+ * 意见反馈
+ * @receiver CoroutineScope
+ * @param problem 反馈问题
+ * @param image 图片
+ * @return MoneyListBean?
+ */
+suspend fun CoroutineScope.feedBack(problem: String, image: List<String>): MoneyListBean? {
+    return Post<BaseBean<MoneyListBean>>("user/feedback") {
+        param("problem", problem)
+        param("image", image.string())
     }.await().data
 }

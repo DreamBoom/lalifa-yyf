@@ -5,17 +5,17 @@ import com.drake.brv.BindingAdapter
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
+import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
+import com.lalifa.che.api.ChildInfo
 import com.lalifa.ext.Config
 import com.lalifa.extension.dp
 import com.lalifa.extension.load
 import com.lalifa.main.R
-import com.lalifa.main.api.Classify
-import com.lalifa.main.api.KnapsackBean
-import com.lalifa.main.api.Ware
-import com.lalifa.main.api.shopBean
+import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ItemGoodBinding
 import com.lalifa.main.databinding.ItemGoodTypeBinding
+import com.lalifa.main.databinding.ItemMoneyBinding
 
 /**
  * 商城
@@ -56,6 +56,26 @@ fun RecyclerView.goodsList(): BindingAdapter {
                 im.load(Config.FILE_PATH + bean.image)
                 name.text = bean.name
                 price.text = bean.price
+            }
+        }
+    }
+}
+
+
+/**
+ * 钱包明细列表
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.moneyList(): BindingAdapter {
+    return linear().setup {
+        addType<MoneyRecord>(R.layout.item_money)
+        onBind {
+            val bean = getModel<MoneyRecord>()
+            getBinding<ItemMoneyBinding>().apply {
+                type.text = bean.note
+                time.text = bean.create_time
+                money.text = bean.price
             }
         }
     }

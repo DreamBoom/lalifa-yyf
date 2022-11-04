@@ -2,14 +2,16 @@ package com.lalifa.main.activity
 
 import android.graphics.Color
 import androidx.core.content.ContextCompat
+import com.drake.brv.PageRefreshLayout
+import com.drake.net.utils.scopeNetLife
+import com.lalifa.base.BaseListFragment
 import com.lalifa.base.BaseTitleActivity
-import com.lalifa.extension.fragmentAdapter
-import com.lalifa.extension.getIntentString
-import com.lalifa.extension.pageChangedListener
-import com.lalifa.extension.start
+import com.lalifa.che.api.cheList
+import com.lalifa.extension.*
 import com.lalifa.main.R
+import com.lalifa.main.adapter.moneyList
+import com.lalifa.main.api.wallet
 import com.lalifa.main.databinding.ActivityMyMoneyBinding
-import com.lalifa.main.fragment.*
 
 class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
     override fun getViewBinding() = ActivityMyMoneyBinding.inflate(layoutInflater)
@@ -26,8 +28,8 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
                 supportFragmentManager,
                 arrayListOf("收入", "支出")
             ) {
-                add(MoneyOfGetFragment())
-                add(MoneyOfOutFragment())
+                add(MoneyFragment(0))
+                add(MoneyFragment(1))
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.TRANSPARENT
                 tabLayout.textSelectColor = ContextCompat.getColor(
@@ -44,5 +46,31 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
     override fun rightClick() {
         super.rightClick()
         start(MoneyInfoActivity::class.java)
+    }
+
+    override fun onClick() {
+        super.onClick()
+        binding.apply {
+            dh.onClick {
+
+            }
+        }
+    }
+}
+
+
+class MoneyFragment(val type: Int) : BaseListFragment() {
+    override fun initView() {
+        super.initView()
+        binding.recyclerView.moneyList().apply {
+
+        }
+    }
+
+    override fun PageRefreshLayout.getData() {
+        scopeNetLife {
+            val dynamic = wallet(type.toString(), index.toString())
+            addData(dynamic!!.record)
+        }
     }
 }

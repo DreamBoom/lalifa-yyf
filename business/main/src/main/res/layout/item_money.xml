@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/black"
-    android:layout_height="wrap_content">
-<TextView
-    android:id="@+id/t1"
-    android:text="充值"
-    android:paddingHorizontal="15dp"
-    android:paddingTop="15dp"
-    android:paddingBottom="10dp"
-    android:textSize="14dp"
-    android:textColor="@color/white"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/time"
-        android:layout_below="@+id/t1"
-        android:text="2022/05/15 11:20"
-        android:paddingHorizontal="15dp"
-        android:paddingBottom="15dp"
-        android:textSize="14dp"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_centerVertical="true"
-        android:text="0"
-        android:paddingHorizontal="15dp"
-        android:layout_alignParentEnd="true"
-        android:textSize="18dp"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:background="@color/white"
-        android:layout_below="@+id/time"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:text="充值"
+            android:textColor="@color/white"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/type"
+            android:paddingHorizontal="15dp"
+            android:paddingBottom="15dp"
+            android:text="2022/05/15 11:20"
+            android:textColor="@color/white"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="15dp"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_below="@+id/time"
+            android:background="@color/white" />
+    </RelativeLayout>
+</layout>

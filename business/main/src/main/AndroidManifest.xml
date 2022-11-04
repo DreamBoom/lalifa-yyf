@@ -4,6 +4,12 @@
 
     <application>
         <activity
+            android:name=".activity.CallUs"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FeedBack"
+            android:exported="false" />
+        <activity
             android:name=".activity.Knapsack"
             android:exported="false" />
         <activity
