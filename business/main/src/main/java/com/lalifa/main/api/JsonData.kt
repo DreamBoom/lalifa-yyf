@@ -90,15 +90,19 @@ data class KnapsackInfo(
  * @Des 个人中心
  */
 data class UserInfoBean(
+    val age: Int,
     val avatar: String,
+    val bio: String,
+    val birthday: String,
     val core_currency: String,
     val core_drill: String,
     val fans: Int,
     val follow: Int,
     val friends: Int,
+    val gender: Int,
     val id: Int,
     val jointime_text: String,
-    val level: Int,
+    val level: String,
     val logintime_text: String,
     val patron_saint: Int,
     val prevtime_text: String,
@@ -159,4 +163,105 @@ data class Rule(
     val id: Int,
     val price: String,
     val receipt_price: String
+)
+/**
+ * @Des 贵族权益
+ */
+data class TitleBean(
+    val background_image: String,
+    val consumption: String,
+    val headdress: List<Headdres>,
+    val id: Int,
+    val image: String,
+    val mount: List<Mount>,
+    val name: String,
+    val special_effects: List<SpecialEffect>,
+    val status: Int,
+    val surplus: Int
+)
+
+data class Headdres(
+    val effect_image: String,
+    val image: String,
+    val name: String
+)
+
+data class Mount(
+    val effect_image: String,
+    val image: String,
+    val name: String
+)
+
+data class SpecialEffect(
+    val effect_image: String,
+    val image: String,
+    val name: String
+)
+
+/**
+ * @Des 我的发布
+ */
+data class ReleaseBean(
+    val count: Int,
+    val `dynamic`: List<Dynamic>
+)
+
+data class Dynamic(
+    val avatar: String,
+    val browse: String,
+    val comment_count: Int,
+    val content: String,
+    val create_time: String,
+    val fabulous: Int,
+    val fabulous_type: Int,
+    val gender: Int,
+    val id: Int,
+    val image: List<String>,
+    val level: String,
+    val share: Int,
+    val status: Int,
+    val uid: Int,
+    val userName: String
+)
+/**
+ * @Des 活动列表
+ */
+data class ActivityBean(
+    val end_time: String,
+    val id: Int,
+    val name: String,
+    val start_time: String,
+    val state: Int
+)
+/**
+ * @Des 活动详情
+ */
+data class ActivityInfoBean(
+    val activity_list: List<Activity>,
+    val end_time: String,
+    val id: Int,
+    val name: String,
+    val price: Int,
+    val rule: String,
+    val start_time: String
+)
+
+data class Activity(
+    val activity_details: List<ActivityDetail>,
+    val id: Int,
+    val price: String
+)
+
+data class ActivityDetail(
+    val activity_id: Int,
+    val days: Int,
+    val goods: Goods,
+    val goods_id: Int,
+    val id: Int,
+    val type: Int
+)
+
+data class Goods(
+    val image: String,
+    val name: String
 )

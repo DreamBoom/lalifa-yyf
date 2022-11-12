@@ -2,6 +2,7 @@
 
 package com.lalifa.extension
 
+import com.drake.logcat.LogCat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -269,4 +270,41 @@ fun Date.format(): String {
         //如果当前秒数大，够了一个周期
     } else "刚刚"
     //x秒前
+}
+
+/**
+ *@param date 日期 2020-05-15
+ *@return String 星座
+ */
+
+fun getConstellation(date: String): String {
+    val s = date.replace("-", "").substring(4, 8).toInt()
+    LogCat.e(s)
+    return when (s) {
+        in 321..420 -> "白羊座"
+        in 421..521 -> "金牛座"
+        in 522..621 -> "双子座"
+        in 622..722 -> "巨蟹座"
+        in 723..823 -> "狮子座"
+        in 824..923 -> "处女座"
+        in 924..1023 -> "天秤座"
+        in 1024..1122 -> "天蝎座"
+        in 1123..1221 -> "射手座"
+        in 1222..1231 -> "摩羯座"
+        in 101..120 -> "摩羯座"
+        in 121..219 -> "水瓶座"
+        in 220..320 -> "双鱼座"
+        else -> "未知"
+    }
+}
+
+/**
+*@param date 日期 2020-05-15
+*@return int 年龄
+*/
+fun getAge(date: String): Int {
+    val calendar = Calendar.getInstance()//取得当前时间的年月日 时分秒
+    val year = calendar[Calendar.YEAR]
+    val substring = date.substring(0, 4).toInt()
+    return year - substring
 }

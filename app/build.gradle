@@ -98,7 +98,7 @@ android {
             // 融云demo的AppKey，开发者可用来测试
             buildConfigField("String", "APP_KEY", "\"lmxuhwagl3jsd\"")
             // 融云demo对应服务器的测试地址，开发者可用来测试
-            buildConfigField("String", "BASE_SERVER_ADDRES", "\"http://96yuyinfang.136.dianchuiguan.com.cn/\"")
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"http://122.114.79.247:8110/\"")
 
             // 这里是连接测试服务器的token，需要到 https://rcrtc-api.rongcloud.net/code 申请
             buildConfigField("String", "BUSINESS_TOKEN", "\"xxxxx\"")

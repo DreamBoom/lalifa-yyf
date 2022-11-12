@@ -8,10 +8,11 @@ import cn.rongcloud.roomkit.databinding.FragmentPhBinding
 import com.lalifa.base.BaseFragment
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.pageChangedListener
+
 /**
  * @param type 1--财富榜  2-魅力榜  3-在线榜
  * */
-class PhFragment(type:Int): BaseFragment<FragmentPhBinding>() {
+class PhFragment(type: Int) : BaseFragment<FragmentPhBinding>() {
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -28,7 +29,9 @@ class PhFragment(type:Int): BaseFragment<FragmentPhBinding>() {
                 add(PhBoyFragment(3))
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.TRANSPARENT
-                tabLayout.textSelectColor = ContextCompat.getColor(requireContext(), com.lalifa.base.R.color.white)
+                tabLayout.textSelectColor = ContextCompat.getColor(
+                    requireContext(), com.lalifa.base.R.color.textColor2
+                )
                 tabLayout.textUnselectColor = Color.WHITE
             }
             tabLayout.setViewPager(viewPager)

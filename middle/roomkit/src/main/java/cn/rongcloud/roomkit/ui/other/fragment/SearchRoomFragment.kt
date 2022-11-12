@@ -27,7 +27,7 @@ class SearchRoomFragment : BaseFragment<SearchRoomBinding>() {
                             getBinding<ItemSearchBinding>().name.text = getModel()
                         }
                     }.models = arrayListOf("游戏", "相亲", "接待", "电影VIP", "电竞", "女生", "男生",
-                    "交友", "声鉴", "音乐", "电台")
+                    "交友", "声鉴", "音乐", "电台播放")
             }
 //            list.grid(4).dividerSpace(12.dp)
 //                .dividerSpace(10.dp, DividerOrientation.VERTICAL)

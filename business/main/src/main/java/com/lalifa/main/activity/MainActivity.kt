@@ -1,6 +1,7 @@
 package com.lalifa.main.activity
 
 import cn.rongcloud.voice.roomlist.VoiceRoomListFragment
+import com.example.message.fragment.MessageFragment
 import com.lalifa.base.BaseActivity
 import com.lalifa.che.activity.CheActivity
 import com.lalifa.extension.fragmentAdapter
@@ -10,7 +11,6 @@ import com.lalifa.extension.start
 import com.lalifa.main.databinding.ActivityHomeBinding
 import com.lalifa.main.fragment.MainFragment
 import com.lalifa.main.fragment.MeFragment
-import com.lalifa.main.fragment.MessageFragment
 
 class MainActivity : BaseActivity<ActivityHomeBinding>() {
     override fun initView() {

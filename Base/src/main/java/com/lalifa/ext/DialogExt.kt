@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.*
 import com.drake.channel.receiveEvent
+import com.lalifa.base.R
 import com.lalifa.extension.*
-import com.lalifa.yyf.R
 import per.goweii.layer.core.anim.AnimStyle
 import per.goweii.layer.core.anim.NullAnimatorCreator
 import per.goweii.layer.core.ktx.*
@@ -62,7 +62,7 @@ fun Activity.showTipDialog(
 fun Fragment.showTipDialog(
     content: String, title: String = "温馨提示",
     isShowCancelBtn: Boolean = false,
-    cancelText: String = "取消", sureText: String = "完成",
+    cancelText: String = "取消", sureText: String = "确定",
     callback: () -> Unit = {}
 ) {
     requireActivity().showTipDialog(content, title, isShowCancelBtn, cancelText, sureText, callback)
@@ -130,49 +130,52 @@ fun Fragment.showTipDialog(
 //            requireViewById<TextView>(R.id.title).text = title
 //        }.show()
 //}
-//
-///**
-// * 显示一个在键盘上方的弹框
-// * @receiver Activity
-// * @param hint String
-// * @param callback Function1<[@kotlin.ParameterName] String, Unit>
-// */
-//fun Activity.showInputDialog(
-//    hint: String = "请输入",
-//    content: String = "",
-//    callback: (content: String) -> Unit
-//) {
-//    DialogLayer(this)
-//        .contentView(R.layout.dialog_input)
-//        .cancelableOnTouchOutside(true)
-//        .contentAnimator(NullAnimatorCreator())
-//        .backgroundDimDefault()
-//        .addInputMethodCompat(true)
-//        .onPreShow {
-//            val et = requireViewById<EditText>(R.id.et_input)
-//            et.requestFocus()
-//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.showSoftInput(et, InputMethodManager.SHOW_FORCED)
-//        }.onPreDismiss {
-//            val et = requireViewById<EditText>(R.id.et_input)
-//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(et.windowToken, 0)
-//        }.onInitialize {
-//            val inputEt = requireViewById<EditText>(R.id.et_input).apply {
-//                setHint(hint)
-//                setText(content)
-//            }
-//            requireViewById<TextView>(R.id.sure_btn).onClick {
-//                if (inputEt.text().isEmpty()) {
-//                    toast("请输入内容")
-//                    return@onClick
-//                }
-//                callback.invoke(inputEt.text())
-//                dismiss()
-//            }
-//        }.show()
-//}
-//
+
+/**
+ * 显示一个在键盘上方的弹框
+ * @receiver Activity
+ * @param hint String
+ * @param l int 可输入长度
+ * @param callback Function1<[@kotlin.ParameterName] String, Unit>
+ */
+fun Activity.showInputDialog(
+    hint: String = "请输入",
+    content: String = "",
+    l:Int,
+    callback: (content: String) -> Unit
+) {
+    DialogLayer(this)
+        .contentView(R.layout.dialog_input)
+        .cancelableOnTouchOutside(true)
+        .contentAnimator(NullAnimatorCreator())
+        .backgroundDimDefault()
+        .addInputMethodCompat(true)
+        .onPreShow {
+            val et = requireViewById<EditText>(R.id.et_input)
+            et.requestFocus()
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(et, InputMethodManager.SHOW_FORCED)
+        }.onPreDismiss {
+            val et = requireViewById<EditText>(R.id.et_input)
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(et.windowToken, 0)
+        }.onInitialize {
+            val inputEt = requireViewById<EditText>(R.id.et_input).apply {
+                setHint(hint)
+                maxEms = l
+                setText(content)
+            }
+            requireViewById<TextView>(R.id.sure).onClick {
+                if (inputEt.text().isEmpty()) {
+                    toast("请输入内容")
+                    return@onClick
+                }
+                callback.invoke(inputEt.text())
+                dismiss()
+            }
+        }.show()
+}
+
 ///**
 // * 显示添加好友支付弹框
 // * @receiver Context

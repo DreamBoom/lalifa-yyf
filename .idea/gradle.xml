@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/business" />
             <option value="$PROJECT_DIR$/business/che" />
             <option value="$PROJECT_DIR$/business/main" />
+            <option value="$PROJECT_DIR$/business/message" />
             <option value="$PROJECT_DIR$/business/voiceroom" />
             <option value="$PROJECT_DIR$/middle" />
             <option value="$PROJECT_DIR$/middle/config" />

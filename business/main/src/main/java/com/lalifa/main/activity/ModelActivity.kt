@@ -1,11 +1,10 @@
 package com.lalifa.main.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.lalifa.base.BaseActivity
+import com.lalifa.base.BaseTitleActivity
 import com.lalifa.main.databinding.ActivityModelBinding
 
-class ModelActivity : BaseActivity<ActivityModelBinding>() {
+class ModelActivity : BaseTitleActivity<ActivityModelBinding>() {
+    override fun title() = "青少年模式"
     override fun getViewBinding() = ActivityModelBinding.inflate(layoutInflater)
 
     override fun initView() {

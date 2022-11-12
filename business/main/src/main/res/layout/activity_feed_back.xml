@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <com.lalifa.widget.ImageSelectView
-        android:id="@+id/selectIm"
+        android:id="@+id/imgView"
         android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

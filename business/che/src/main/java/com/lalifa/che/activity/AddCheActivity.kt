@@ -6,12 +6,8 @@ import com.lalifa.base.BaseTitleActivity
 import com.lalifa.che.api.upChe
 import com.lalifa.che.api.upload
 import com.lalifa.che.databinding.ActivityAddCheBinding
-import com.lalifa.extension.onClick
-import com.lalifa.extension.text
-import com.lalifa.extension.toast
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.lalifa.extension.*
+import kotlinx.coroutines.*
 
 class AddCheActivity : BaseTitleActivity<ActivityAddCheBinding>() {
     override fun title() = "发布帖子"
@@ -31,20 +27,16 @@ class AddCheActivity : BaseTitleActivity<ActivityAddCheBinding>() {
                     toast("请输入内容")
                     return@onClick
                 }
-                val pathList = arrayListOf<String>()
-                val imgs = imgView.getData()
-                imgs.forEach {
-                    scopeNetLife {
-                        pathList.add(upload(it.path).url)
-                        if (pathList.size == imgs.size) {
-                            LogCat.e("1111")
-                            scopeNetLife { upChe(info, pathList) }
-                        } else {
-                            LogCat.e("2222")
-                        }
-                    }
+                scopeNetLife {
+                    val imgs = imgView.getData()
+                    val list = if (imgs.isNotEmpty()) upload(imgs) else arrayListOf()
+                    LogCat.e(list.toString())
+                    upChe(binding.etInfo.text(), list)
+                    toast("提交成功")
+                    finish()
                 }
             }
         }
     }
+
 }

@@ -76,4 +76,5 @@
     <color name="basis_color_svg">#8A96A3</color>
     <color name="re_color_default">@color/basis_blue_dark</color>
     <color name="kit_color_default">#BB4A4F64</color>
+    <color name="textColor2">#625896</color>
 </resources>

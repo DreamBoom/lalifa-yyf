@@ -10,6 +10,8 @@ import com.lalifa.extension.text
 import com.lalifa.extension.toast
 import com.lalifa.main.api.feedBack
 import com.lalifa.main.databinding.ActivityFeedBackBinding
+import io.rong.common.dlog.DLog
+import io.rong.common.dlog.DLog.upload
 
 class FeedBack : BaseTitleActivity<ActivityFeedBackBinding>() {
     override fun title() = "我要反馈"
@@ -28,18 +30,13 @@ class FeedBack : BaseTitleActivity<ActivityFeedBackBinding>() {
                     toast("请输入内容")
                     return@onClick
                 }
-                val pathList = arrayListOf<String>()
-                val imgs = selectIm.getData()
-                imgs.forEach {
-                    scopeNetLife {
-                        pathList.add(upload(it.path).url)
-                        if (pathList.size == imgs.size) {
-                            LogCat.e("1111")
-                            scopeNetLife { feedBack(info, pathList) }
-                        } else {
-                            LogCat.e("2222")
-                        }
-                    }
+                scopeNetLife {
+                    val imgs = imgView.getData()
+                    val list = if (imgs.isNotEmpty()) upload(imgs) else arrayListOf()
+                    LogCat.e(list.toString())
+                    upChe(binding.etInfo.text(), list)
+                    toast("提交成功")
+                    finish()
                 }
             }
         }

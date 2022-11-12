@@ -4,6 +4,15 @@
 
     <application>
         <activity
+            android:name=".activity.ActiveInfo"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MyChe"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RealName"
+            android:exported="false" />
+        <activity
             android:name=".activity.CallUs"
             android:exported="false" />
         <activity
@@ -48,7 +57,9 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

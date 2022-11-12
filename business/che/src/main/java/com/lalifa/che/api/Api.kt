@@ -41,7 +41,21 @@ suspend fun CoroutineScope.upload(path: String): ImgBean {
         param("file", File(path))
     }.await().data!!
 }
-
+suspend fun CoroutineScope.upload(list: ArrayList<String>): ArrayList<String> {
+    val deferredList = arrayListOf<Deferred<BaseBean<ImgBean>>>().apply {
+        list.forEach {
+            val deferred = Post<BaseBean<ImgBean>>("common/upload") {
+                param("file", File(it))
+            }
+            add(deferred)
+        }
+    }
+    return arrayListOf<String>().apply {
+        deferredList.forEach {
+            it.await().data?.let { it1 -> add(it1.url) }
+        }
+    }
+}
 /**
  * 发布动态
  * @receiver CoroutineScope

@@ -59,6 +59,7 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
             pack.onClick { start(Knapsack::class.java) }
             feelBack.onClick { start(FeedBack::class.java) }
             kf.onClick { start(CallUs::class.java) }
+            share.onClick { start(MyChe::class.java) }
         }
     }
 }

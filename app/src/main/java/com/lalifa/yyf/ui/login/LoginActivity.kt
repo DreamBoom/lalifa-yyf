@@ -3,6 +3,8 @@ package com.lalifa.yyf.ui.login
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import cn.rongcloud.config.UserManager
+import cn.rongcloud.config.provider.user.UserProvider
 import cn.rongcloud.config.router.RouterPath
 import cn.sharesdk.framework.Platform
 import cn.sharesdk.framework.PlatformActionListener
@@ -11,13 +13,18 @@ import cn.sharesdk.tencent.qq.QQ
 import cn.sharesdk.wechat.friends.Wechat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.ext.Config
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
+import com.lalifa.extension.text
 import com.lalifa.main.activity.MainActivity
 import com.lalifa.utils.SPUtil
+import com.lalifa.yyf.api.login
+import com.lalifa.yyf.app.App
 import com.lalifa.yyf.databinding.ActivityLoginBinding
+
 //import com.mob.MobSDK
 
 
@@ -85,10 +92,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun login() {
-        SPUtil.set(Config.IS_LOGIN, true)
-        SPUtil.set(Config.TOKEN,"aa0d3b38-26e0-402d-9f52-feff90e1b47f")
-        start(MainActivity::class.java)
-        finish()
+        scopeNetLife {
+            val user = login("13462439645", "111111")
+            if (null != user) {
+                UserManager.save(user.userinfo)
+                UserProvider.provider().update(user.userinfo.toUserInfo())
+                SPUtil.set(Config.IS_LOGIN, true)
+                App.initNetHttp()
+                start(MainActivity::class.java)
+                finish()
+            }
+        }
     }
 
     /*

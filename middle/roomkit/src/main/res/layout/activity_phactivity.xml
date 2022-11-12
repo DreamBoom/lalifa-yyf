@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg_ph"
-    tools:context=".ui.PHActivity">
+    tools:context=".ui.other.PHActivity">
     <TextView
         android:text="排行榜"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,13 +36,15 @@
     <com.flyco.tablayout.SlidingTabLayout
         app:layout_constraintTop_toBottomOf="@+id/back"
         android:id="@+id/tab_layout"
+        android:layout_marginTop="10dp"
+        app:tl_tab_space_equal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tl_indicator_color="@color/transparent"
         app:tl_indicator_corner_radius="1.5dp"
         app:tl_indicator_height="3dp"
         app:tl_indicator_width="14dp"
-        app:tl_textSelectColor="@color/white"
+        app:tl_textSelectColor="@color/textColor2"
         app:tl_textUnselectColor="@color/white"
         app:tl_textsize="18dp" />
 

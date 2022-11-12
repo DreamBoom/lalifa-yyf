@@ -39,6 +39,7 @@ class UserInfoActivity : BaseActivity<ActivityUserInfoBinding>() {
         super.onClick()
         binding.apply {
             back.onClick { finish() }
+
             image.onClick {
                 imagePick(maxCount = 1) {
                     scopeNetLife {

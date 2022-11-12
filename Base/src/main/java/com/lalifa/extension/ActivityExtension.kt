@@ -203,7 +203,38 @@ fun FragmentActivity.sexPickView(callback: (String) -> Unit) {
         )
         optionView.show()
 }
-
+/**
+ * 性别选择
+ * @receiver FragmentActivity
+ * @param callback Function1<String, Unit>
+ */
+fun Activity.sexPickView(callback: (String) -> Unit) {
+    val sexList = arrayListOf("男", "女")
+    val optionView = OptionsPickerBuilder(
+        this@sexPickView
+    ) { options1, options2, options3, v ->
+        callback.invoke(
+            sexList[options1]
+        )
+    }.setLineSpacingMultiplier(2.0f)//条目间距
+        .setSubmitColor(Color.WHITE)//确定按钮文字颜色
+        .setCancelColor(Color.WHITE)//取消按钮文字颜色
+        .setTitleSize(17)//标题文字大小
+        .setSubCalSize(15)//取消，确定文字大小
+        .setContentTextSize(17)//内容大小
+        .setTitleText("选择性别")
+        .setTitleColor(Color.WHITE)
+        .setTitleBgColor(Color.parseColor("#1A1A1A"))
+        .setDividerColor(Color.parseColor("#1AFFFFFF"))
+        .setTextColorCenter(Color.WHITE) //设置选中项文字颜色
+        .setTextColorOut(Color.parseColor("#FFFFFF"))
+        .setBgColor(Color.parseColor("#1A1A1A"))
+        .build<Any>()
+    optionView.setPicker(
+        sexList.toList()
+    )
+    optionView.show()
+}
 /**
  * 时间选择器
  * @receiver Activity
@@ -358,6 +389,15 @@ fun Context.preview(position: Int = 0, urlList: List<String>) {
         .setShowIndicator(true) // 设置失败时的占位图，默认为库中自带R.drawable.load_failed，设置为 0 时不显示
         .setErrorPlaceHolder(cc.shinichi.library.R.drawable.load_failed) // 点击回调
         .start()
+}
+
+//空数据返回
+fun String?.pk(def: String = ""): String {
+    return if (this.isNullOrEmpty()) {
+        def
+    } else {
+        this
+    }
 }
 
 

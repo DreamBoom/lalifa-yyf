@@ -1,4 +1,4 @@
-package com.lalifa.main.fragment
+package com.example.message.fragment
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,27 +7,31 @@ import androidx.core.content.ContextCompat
 import com.lalifa.base.BaseFragment
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.pageChangedListener
-import com.lalifa.main.R
-import com.lalifa.main.databinding.ViewMainMessageBinding
+import com.lalifa.message.databinding.TabMessageBinding
+import io.rong.imkit.conversationlist.ConversationListFragment
 
-class MessageFragment : BaseFragment<ViewMainMessageBinding>() {
+class TabMessageFragment : BaseFragment<TabMessageBinding>() {
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = ViewMainMessageBinding.inflate(layoutInflater)
-
+    ) = TabMessageBinding.inflate(layoutInflater)
+    //ConversationListFragment
     override fun initView() {
         binding.apply {
             viewPager.fragmentAdapter(
                 childFragmentManager,
-                arrayListOf("消息", "好友", "群组")
+                arrayListOf("系统消息", "小报", "申请通知", "与我相关")
             ) {
-                add(TabMessageFragment())
-                add(TabFriendFragment())
-                add(TabGroupFragment())
+                add(ConversationListFragment())
+                add(ConversationListFragment())
+                add(ConversationListFragment())
+                add(ConversationListFragment())
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.TRANSPARENT
-                tabLayout.textSelectColor = ContextCompat.getColor(requireContext(),R.color.textColor2)
+                tabLayout.textSelectColor = ContextCompat.getColor(
+                    requireContext(),
+                    com.lalifa.base.R.color.textColor2
+                )
                 tabLayout.textUnselectColor = Color.WHITE
             }
             tabLayout.setViewPager(viewPager)

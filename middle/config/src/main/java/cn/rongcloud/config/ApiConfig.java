@@ -19,11 +19,11 @@ public class ApiConfig {
     public final static String PRIVACY = "https://cdn.ronghub.com/Privacy_agreement_zh.html";
     public final static int REQUEST_SUCCESS_CODE = 10000;
     public static final String CUSTOMER_PHONE = "13161856839";
-    public static String HOST = Config.HOST;
-    public static String FILE_URL = Config.FILE_PATH + "file/show?path=";
+    public static String HOST = AppConfig.get().getBaseServerAddress();
+    public static String FILE_URL = HOST + "file/show?path=";
     /**
      * 文件上传
      */
-    public static String FILE_UPLOAD = Config.FILE_PATH + "file/upload";
+    public static String FILE_UPLOAD =  HOST + "file/upload";
 
 }

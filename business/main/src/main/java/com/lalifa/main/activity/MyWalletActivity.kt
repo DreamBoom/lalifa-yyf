@@ -1,17 +1,19 @@
 package com.lalifa.main.activity
 
 import android.graphics.Color
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListFragment
 import com.lalifa.base.BaseTitleActivity
-import com.lalifa.che.api.cheList
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.adapter.moneyList
 import com.lalifa.main.api.wallet
 import com.lalifa.main.databinding.ActivityMyMoneyBinding
+import com.lalifa.widget.percent.PercentFrameLayout
+
 
 class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
     override fun getViewBinding() = ActivityMyMoneyBinding.inflate(layoutInflater)
@@ -51,7 +53,13 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
     override fun onClick() {
         super.onClick()
         binding.apply {
+            cz.onClick {
+
+            }
             dh.onClick {
+
+            }
+            tx.onClick {
 
             }
         }

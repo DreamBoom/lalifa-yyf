@@ -36,6 +36,7 @@ abstract class BaseListFragment : BaseFragment<LayoutCommonListBinding>() {
                     getData()
                 }
             }
+            refreshLayout.autoRefresh()
         }
     }
 

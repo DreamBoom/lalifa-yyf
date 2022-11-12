@@ -16,7 +16,7 @@
         android:layout_marginTop="25dp"
         android:text="温馨提示"
         android:textColor="@color/white"
-        android:textSize="@dimen/size18" />
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/content"
@@ -27,7 +27,7 @@
         android:textColor="@color/white"
         android:textSize="14sp" />
 <ImageView
-    android:background="@color/color_f8f8f8"
+    android:background="#f8f8f8"
     android:layout_width="match_parent"
     android:layout_height="1dp"/>
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -44,12 +44,12 @@
             android:padding="10dp"
             android:text="取消"
             android:textColor="@color/white"
-            android:textSize="@dimen/size16" />
+            android:textSize="@dimen/font_16" />
 
         <ImageView
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/color_f8f8f8" />
+            android:background="#f8f8f8" />
 
         <TextView
             android:id="@+id/sure_btn"
@@ -58,9 +58,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:text="完成"
+            android:text="确定"
             android:textColor="@color/white"
-            android:textSize="@dimen/size16" />
+            android:textSize="@dimen/font_16" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </LinearLayout>

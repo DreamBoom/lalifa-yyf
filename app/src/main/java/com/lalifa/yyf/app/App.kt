@@ -1,13 +1,14 @@
 package com.lalifa.yyf.app
 
-//import com.lalifa.yyf.BuildConfig
 import android.app.Application
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import cn.rongcloud.config.UserManager
 import com.drake.channel.sendTag
+import com.drake.logcat.LogCat
 import com.drake.net.utils.TipUtils.toast
 import com.drake.tooltip.ToastConfig
 import com.drake.tooltip.interfaces.ToastFactory
@@ -15,9 +16,12 @@ import com.lalifa.api.JsonHttpConverter
 import com.lalifa.api.NetHttp
 import com.lalifa.ext.Config
 import com.lalifa.ext.Config.Companion.HOST
+import com.lalifa.extension.pk
 import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.MApplication
 import com.lalifa.yyf.R
+import io.rong.imkit.RongIM
+import io.rong.imlib.RongCoreClient
 
 
 object App {
@@ -28,7 +32,8 @@ object App {
     }
 
     private fun initVoiceRoom() {
-        // RongCoreClient.init(MApplication.get(), Config.RONG_APP_KEY)
+        RongCoreClient.init(MApplication.get(), Config.RONG_APP_KEY)
+        RongIM.init(MApplication.get(), Config.RONG_APP_KEY)
     }
 
     /**
@@ -57,12 +62,13 @@ object App {
     /**
      * 初始化网络请求，全局配置
      */
-    private fun initNetHttp() {
+     fun initNetHttp() {
         NetHttp.init(MApplication.get(), HOST, JsonHttpConverter(),
             block = {
                 //全局请求头/参数
                 //     addHeader("Content-Type","application/json; charset=utf-8")
-                addHeader("token", SPUtil.get(Config.TOKEN))
+                LogCat.e("=====>>>"+UserManager.get()!!.toString())
+                addHeader("token", UserManager.get()!!.token.pk(""))
             }, error = {
                 toast(it.message)
                 when (it.code) {

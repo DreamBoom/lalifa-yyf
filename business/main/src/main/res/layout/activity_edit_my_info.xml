@@ -11,6 +11,7 @@
     tools:context=".activity.EditMyInfoActivity">
 
     <RelativeLayout
+        android:id="@+id/cHeader"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
@@ -25,6 +26,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="39dp"
+            android:id="@+id/header"
             android:layout_toStartOf="@+id/right"
             app:shapeAppearance="@style/CircleStyle"
             android:layout_height="39dp"
@@ -43,6 +45,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/cName"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
@@ -57,18 +60,20 @@
 
 
         <TextView
-            android:text="泡泡"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:drawablePadding="5dp"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
-            android:drawableEnd="@drawable/ic_white_back" />
+            android:drawableEnd="@drawable/ic_white_back"
+            android:drawablePadding="5dp"
+            android:text="泡泡"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/cBio"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
@@ -83,6 +88,7 @@
 
 
         <TextView
+            android:id="@+id/bio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -95,6 +101,7 @@
             android:textSize="16dp" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/cGender"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
@@ -109,6 +116,7 @@
 
 
         <TextView
+            android:id="@+id/sex"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:drawablePadding="5dp"
@@ -120,6 +128,7 @@
             android:drawableEnd="@drawable/ic_white_back" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/cAge"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
@@ -134,6 +143,7 @@
 
 
         <TextView
+            android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -159,6 +169,7 @@
 
 
         <TextView
+            android:id="@+id/mId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -184,6 +195,7 @@
 
 
         <TextView
+            android:id="@+id/xz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

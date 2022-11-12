@@ -1,6 +1,7 @@
 package cn.rongcloud.roomkit.ui.other
 
 import android.graphics.Color
+import androidx.core.content.ContextCompat
 import cn.rongcloud.roomkit.databinding.ActivityPhactivityBinding
 import cn.rongcloud.roomkit.ui.other.fragment.PhFragment
 
@@ -22,7 +23,10 @@ class PHActivity : BaseActivity<ActivityPhactivityBinding>() {
                 add(PhFragment(3))
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.TRANSPARENT
-                tabLayout.textSelectColor = Color.WHITE
+                tabLayout.textSelectColor = ContextCompat.getColor(
+                    this@PHActivity,
+                    com.lalifa.base.R.color.textColor2
+                )
                 tabLayout.textUnselectColor = Color.WHITE
             }
             tabLayout.setViewPager(viewPager)

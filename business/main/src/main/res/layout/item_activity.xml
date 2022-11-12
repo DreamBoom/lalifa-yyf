@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/bk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="35dp"
+            android:background="@mipmap/bk_active"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/itemList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="35dp"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_activity2" />
+
+            <TextView
+                android:id="@+id/get"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/itemList"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_fs"
+                android:text="领取"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-18dp"
+            android:background="@drawable/bg_ac_bk"
+            android:text="累计充值0元"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/bk"
+            app:layout_constraintEnd_toEndOf="@+id/bk"
+            app:layout_constraintStart_toStartOf="@+id/bk" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

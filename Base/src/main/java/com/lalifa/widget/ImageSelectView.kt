@@ -97,8 +97,13 @@ class ImageSelectView : RecyclerView {
         }.models = arrayListOf(ImageBean(ImageType.SELECT, ""))
     }
 
-    fun getData(): ArrayList<ImageBean> {
-        return models as ArrayList<ImageBean>
+    fun getData(): ArrayList<String> {
+        return arrayListOf<String>().apply {
+            (models as ArrayList<ImageBean>).forEach {
+                if (it.type == ImageType.IMAGE)
+                    add(it.path)
+            }
+        }
     }
 
 

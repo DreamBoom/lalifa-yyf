@@ -47,6 +47,7 @@
         <entry key="..\:/work/LALIFA/newModel/main/src/main/res/layout/view_main_me.xml" value="0.3390625" />
         <entry key="..\:/work/LALIFA/newModel/main/src/main/res/layout/view_main_message.xml" value="0.3390625" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/basis_selector_blue_solid.xml" value="0.1985" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_ac_bk.xml" value="0.1295" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_active.xml" value="0.2055" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_bk8.xml" value="0.2055" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_bk_white.xml" value="0.2055" />
@@ -55,10 +56,14 @@
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_black8.xml" value="0.2055" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_btn_bs.xml" value="0.1985" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_day.xml" value="0.1875" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_fs.xml" value="0.1295" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_gray.xml" value="0.1215" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_gray10.xml" value="0.1365" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_szs.xml" value="0.1875" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_tm8.xml" value="0.2055" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_white56.xml" value="0.1985" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bg_y.xml" value="0.1835" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/bghs.xml" value="0.135" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/ic_back.xml" value="0.1835" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/ic_back_black.xml" value="0.1835" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/drawable/ic_fold.xml" value="0.1985" />
@@ -73,8 +78,11 @@
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/basis_layout_dialog_wx.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/basis_layout_loadtag.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/common_layout.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/common_list_layout.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/common_top_bar.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/custom_preview.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/dialog_input.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/dialog_tips.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/item_select_img.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/kit_layout_toast.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/layout_common_empty.xml" value="0.3536458333333333" />
@@ -90,6 +98,7 @@
         <entry key="..\:/work/LALIFA/yyf/app/src/main/res/layout/activity_login_pass.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/app/src/main/res/layout/activity_main.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/app/src/main/res/layout/activity_register.xml" value="0.3482051282051282" />
+        <entry key="..\:/work/LALIFA/yyf/app/src/main/res/layout/activity_splash.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/app/src/main/res/layout/activity_user_info.xml" value="0.3482051282051282" />
         <entry key="..\:/work/LALIFA/yyf/app/src/main/res/layout/item_select_img.xml" value="0.175" />
         <entry key="..\:/work/LALIFA/yyf/business/che/src/main/res/drawable/bg_black.xml" value="0.2095" />
@@ -129,18 +138,21 @@
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/drawable/rl_ph2.xml" value="0.1835" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/drawable/rl_ph3.xml" value="0.1835" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_active.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_active_info.xml" value="0.4311740890688259" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_call_us.xml" value="0.3536458333333333" />
-        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_edit_my_info.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_edit_my_info.xml" value="0.264" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_fan.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_feed_back.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_home.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_knapsack.xml" value="0.24114583333333334" />
-        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_me_info.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_me_info.xml" value="0.152" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_model.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_money_info.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_my_che.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_my_money.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_my_sx.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_phactivity.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_real_name.xml" value="0.264" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_search.xml" value="0.264" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_set.xml" value="0.3390625" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/activity_setting.xml" value="0.3536458333333333" />
@@ -158,6 +170,9 @@
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/fragment_ph2.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/fragment_ph_boy.xml" value="1.0" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_active.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_activity.xml" value="0.2265625" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_activity2.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_che.xml" value="0.2" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_cz.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_day.xml" value="0.30462962962962964" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_fan.xml" value="0.3536458333333333" />
@@ -167,19 +182,29 @@
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_gz.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_home1.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_home2.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_im.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_jw.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_main_chat.xml" value="0.3390625" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_money.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_my_che.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_ph.xml" value="0.4" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_search.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_sys_msg.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/item_tv.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/me_tab1_fragment.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/me_tab1_friend.xml" value="0.3453703703703704" />
+        <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/me_tab2_fragment.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/search_people.xml" value="0.175" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/search_room.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/tab_friend.xml" value="0.175" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/view_main_home.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/view_main_me.xml" value="0.264" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/view_main_message.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/item_friend.xml" value="0.23743589743589744" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/item_sys_msg.xml" value="0.2265625" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/tab_friend.xml" value="0.23743589743589744" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/tab_message.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/view_main_message.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/voiceroom/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2095" />
         <entry key="..\:/work/LALIFA/yyf/business/voiceroom/src/main/res/drawable/bg_lock.xml" value="0.2095" />
         <entry key="..\:/work/LALIFA/yyf/business/voiceroom/src/main/res/drawable/bg_voice_room_portrait.xml" value="0.1985" />
@@ -299,6 +324,7 @@
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/drawable/thumb_audio_volume_setting.xml" value="0.1835" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/activity_abs_switch.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/activity_my_sx.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/activity_phactivity.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/activity_room.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/basis_action_bar_default.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/dialog_create_room.xml" value="0.3536458333333333" />
@@ -314,6 +340,7 @@
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_member_list.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_member_setting.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_music_setting.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_ph.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_ph_boy.xml" value="0.3390625" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_revoke_seat_request.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/middle/roomkit/src/main/res/layout/fragment_room_list.xml" value="0.325" />
