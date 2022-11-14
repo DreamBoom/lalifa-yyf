@@ -6,6 +6,14 @@ package cn.rongcloud.config.router;
  */
 public class RouterPath {
 
+    /**
+     * 首页
+     */
+    public static final String ROUTER_MAIN = "/app/main";
+    /**
+     * 登录页
+     */
+    public static final String ROUTER_LOGIN = "/app/login";
     // 语聊房相关页面
     /**
      * 房间列表页面

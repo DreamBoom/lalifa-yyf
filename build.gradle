@@ -23,8 +23,6 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 //        classpath "com.android.tools.build:gradle:3.5.0"
         classpath 'com.huawei.agconnect:agcp:1.1.1.300'
-//      添加神策分析 android-gradle-plugin2 依赖
-        classpath 'com.sensorsdata.analytics.android:android-gradle-plugin2:3.4.7'
     }
 }
 

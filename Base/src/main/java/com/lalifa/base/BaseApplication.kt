@@ -26,7 +26,6 @@ abstract class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
-
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { _, _ -> ClassicsHeader(this) }
         SmartRefreshLayout.setDefaultRefreshFooterCreator { _, _ -> ClassicsFooter(this) }
         PageRefreshLayout.startIndex = 1

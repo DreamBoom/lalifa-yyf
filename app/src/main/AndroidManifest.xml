@@ -65,16 +65,5 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false" />
-        <activity
-            android:name="com.lalifa.yyf.ui.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:screenOrientation="fullSensor" /> <!-- 》》》》》》》》》》登录注册》》》》》》》》》》》 -->
-        <service android:name="com.amap.api.location.APSService" />
-
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="b41b31934090036b1855ee8c8864dcb5" />
     </application>
-
 </manifest>

@@ -1,9 +1,12 @@
 package com.lalifa.yyf.ui.login
 
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.widget.Toast
 import cn.rongcloud.config.UserManager
+import cn.rongcloud.config.feedback.SensorsUtil
+import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.user.UserProvider
 import cn.rongcloud.config.router.RouterPath
 import cn.sharesdk.framework.Platform
@@ -13,6 +16,7 @@ import cn.sharesdk.tencent.qq.QQ
 import cn.sharesdk.wechat.friends.Wechat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.ext.Config
@@ -24,18 +28,19 @@ import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.api.login
 import com.lalifa.yyf.app.App
 import com.lalifa.yyf.databinding.ActivityLoginBinding
-
-//import com.mob.MobSDK
-
+import com.mob.MobSDK
+import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
 
 /**
  * 登录界面
  */
+@Route(path = RouterPath.ROUTER_LOGIN)
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun getViewBinding() = ActivityLoginBinding.inflate(layoutInflater)
     override fun initView() {
-//        MobSDK.init(this, "36cdb3c927c4c", "19587758b802435324dcdff55261544f")
-//        MobSDK.submitPolicyGrantResult(true, null)
+        MobSDK.init(this, "36cdb3c927c4c", "19587758b802435324dcdff55261544f")
+        MobSDK.submitPolicyGrantResult(true, null)
         binding.etPhone.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -99,12 +104,36 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 UserProvider.provider().update(user.userinfo.toUserInfo())
                 SPUtil.set(Config.IS_LOGIN, true)
                 App.initNetHttp()
-                start(MainActivity::class.java)
-                finish()
+                initRongIM(user.userinfo)
             }
         }
     }
+    private fun initRongIM(user: User) {
+        if (!TextUtils.isEmpty(user.imToken)) {
+            RongIM.connect(user.imToken, object : RongIMClient.ConnectCallback() {
+                override fun onSuccess(t: String) {
+                    //连接融云成功后返回当前UserId
+                    LogCat.e("连接成功用户ID->$t")
+                    UserManager.get()!!.userId = t
+                    SensorsUtil.instance().setUserProperties(UserManager.get()!!.mobile)
+                    SensorsUtil.instance().registerSuperProperties(true)
+                    start(MainActivity::class.java)
+                    finish()
+                }
 
+                override fun onError(e: RongIMClient.ConnectionErrorCode?) {
+                    if (e.toString() == "RC_CONNECTION_EXIST") {
+                        UserManager.logout()
+                    }
+                    LogCat.e(e)
+                }
+
+                override fun onDatabaseOpened(code: RongIMClient.DatabaseOpenStatus?) {
+                    LogCat.e(code.toString() + ">>>111")
+                }
+            })
+        }
+    }
     /*
    * 第三方登录QQ
    * */

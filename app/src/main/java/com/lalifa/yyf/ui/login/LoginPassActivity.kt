@@ -53,8 +53,8 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
     }
 
     private fun initRongIM(user: User) {
-        if (!TextUtils.isEmpty(user.imToken)) {
-            RongIM.connect(user.imToken, object : RongIMClient.ConnectCallback() {
+        if (!TextUtils.isEmpty(user.token)) {
+            RongIM.connect(user.token, object : RongIMClient.ConnectCallback() {
                 override fun onSuccess(t: String) {
                     SensorsUtil.instance().setUserProperties(UserManager.get()!!.mobile)
                     SensorsUtil.instance().registerSuperProperties(true)

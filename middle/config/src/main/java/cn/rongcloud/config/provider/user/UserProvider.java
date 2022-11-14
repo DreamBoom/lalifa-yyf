@@ -29,25 +29,22 @@ import io.rong.imlib.model.UserInfo;
  */
 public class UserProvider implements IProvider<UserInfo> {
     private final static String TAG = "UserProvider";
-    private final static String API_BATCH = ApiConfig.HOST + "/user/batch";
+    private final static String API_BATCH = ApiConfig.HOST + "user/batch";
     private final static IProvider _provider = new UserProvider();
     private final UserObserver datObserver;
     private final Map<String, IResultBack> observers = new HashMap<>(4);
     private final Map<String, IResultBack> onceObservers = new HashMap<>(4);//只监听一次
 
     private UserProvider() {
-        datObserver = new UserObserver(new IResultBack<UserInfo>() {
-            @Override
-            public void onResult(UserInfo userInfo) {
-                String userId = null == userInfo ? null : userInfo.getUserId();
-                if (TextUtils.isEmpty(userId)) {
-                    return;
-                }
-                IResultBack<UserInfo> onceBack = onceObservers.remove(userInfo.getUserId());
-                if (null != onceBack) onceBack.onResult(userInfo);
-                IResultBack<UserInfo> observer = observers.get(userInfo.getUserId());
-                if (null != observer) observer.onResult(userInfo);
+        datObserver = new UserObserver(userInfo -> {
+            String userId = null == userInfo ? null : userInfo.getUserId();
+            if (TextUtils.isEmpty(userId)) {
+                return;
             }
+            IResultBack<UserInfo> onceBack = onceObservers.remove(userInfo.getUserId());
+            if (null != onceBack) onceBack.onResult(userInfo);
+            IResultBack<UserInfo> observer = observers.get(userInfo.getUserId());
+            if (null != observer) observer.onResult(userInfo);
         });
         RongUserInfoManager.getInstance().addUserDataObserver(datObserver);
         //设置IM user provider 使用Im 提供的缓存机制

@@ -1,6 +1,7 @@
 package com.lalifa.yyf.ui
 
 import android.annotation.SuppressLint
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -9,6 +10,7 @@ import com.lalifa.ext.Config
 import com.lalifa.extension.start
 import com.lalifa.extension.toast
 import com.lalifa.extension.uiTask
+import com.lalifa.main.activity.MainActivity
 import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.databinding.ActivitySplashBinding
 import com.lalifa.yyf.ui.login.LoginActivity
@@ -17,6 +19,7 @@ import com.lalifa.yyf.ui.login.LoginActivity
  * 起始页
  */
 @SuppressLint("CustomSplashScreen")
+@Route(path = "/app/splash")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)
 
@@ -39,11 +42,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                         toast("获取部分权限成功，但部分权限未正常授予")
                         return
                     }
-                    uiTask(3000) {
-                        val isLogin = SPUtil.getBoolean(Config.IS_LOGIN)
-                        if (!isLogin) {
-                            start(LoginActivity::class.java)
-                            finish()
+                    uiTask(1000) {
+                        if (SPUtil.getBoolean(Config.IS_LOGIN)) {
+                            start(MainActivity::class.java)
                         } else {
                             start(LoginActivity::class.java)
                         }

@@ -2,4 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lalifa.message">
 
+    <application>
+        <activity
+            android:name=".ui.FriendApply"
+            android:exported="false" />
+        <activity
+            android:name=".ui.FriendList"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MsgHd"
+            android:exported="false" />
+        <activity
+            android:name=".ui.NewFriend"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ConversationActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.lalifa.message"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+    </application>
+
 </manifest>

@@ -16,11 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<com.lalifa.widget.LeanTextView
+<TextView
     android:id="@+id/tvActive"
     android:text="活动时间:"
     android:textSize="10dp"
-    android:layout_marginBottom="85dp"
     android:textColor="@color/textColor2"
     android:background="@drawable/bghs"
     app:layout_constraintBottom_toBottomOf="@+id/top"
@@ -30,11 +29,12 @@
     android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top" />
+        app:layout_constraintTop_toBottomOf="@+id/tvActive" />
 
     <TextView
         android:id="@+id/t1"

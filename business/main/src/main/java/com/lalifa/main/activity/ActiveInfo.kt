@@ -16,7 +16,6 @@ class ActiveInfo : BaseTitleActivity<ActivityActiveInfoBinding>() {
             val info = getActivityInfo(id.toString())
             binding.apply {
                 tvActive.text = "活动时间:${info!!.start_time}-${info!!.end_time}"
-                tvActive.degrees = 60
                 tvRule.text = info.rule
                 list.activeInfoList().apply {
                     R.id.get.onClick {

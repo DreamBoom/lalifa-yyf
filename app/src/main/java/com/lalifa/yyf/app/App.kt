@@ -8,7 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import cn.rongcloud.config.UserManager
 import com.drake.channel.sendTag
-import com.drake.logcat.LogCat
 import com.drake.net.utils.TipUtils.toast
 import com.drake.tooltip.ToastConfig
 import com.drake.tooltip.interfaces.ToastFactory
@@ -17,10 +16,10 @@ import com.lalifa.api.NetHttp
 import com.lalifa.ext.Config
 import com.lalifa.ext.Config.Companion.HOST
 import com.lalifa.extension.pk
-import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.MApplication
 import com.lalifa.yyf.R
 import io.rong.imkit.RongIM
+import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.RongCoreClient
 
 
@@ -34,6 +33,10 @@ object App {
     private fun initVoiceRoom() {
         RongCoreClient.init(MApplication.get(), Config.RONG_APP_KEY)
         RongIM.init(MApplication.get(), Config.RONG_APP_KEY)
+//        RouteUtils.registerActivity(
+//            RouteUtils.RongActivityType.ConversationActivity,
+//            MyConversationActivity::class.java
+//        )
     }
 
     /**
@@ -66,9 +69,10 @@ object App {
         NetHttp.init(MApplication.get(), HOST, JsonHttpConverter(),
             block = {
                 //全局请求头/参数
-                //     addHeader("Content-Type","application/json; charset=utf-8")
-                LogCat.e("=====>>>"+UserManager.get()!!.toString())
-                addHeader("token", UserManager.get()!!.token.pk(""))
+                //addHeader("Content-Type","application/json; charset=utf-8")
+                if(UserManager.get()!=null&&!TextUtils.isEmpty(UserManager.get()!!.token)){
+                    addHeader("token", UserManager.get()!!.token.pk(""))
+                }
             }, error = {
                 toast(it.message)
                 when (it.code) {
