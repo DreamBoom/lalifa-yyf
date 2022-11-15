@@ -23,5 +23,4 @@ class NewFriend : BaseTitleActivity<ActivityNewFriendBinding>() {
             }
         }
     }
-
 }

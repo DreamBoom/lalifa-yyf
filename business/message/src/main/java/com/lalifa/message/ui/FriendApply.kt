@@ -5,7 +5,7 @@ import com.lalifa.base.BaseTitleActivity
 import com.lalifa.message.R
 import com.lalifa.message.adapter.applyList
 import com.lalifa.message.api.ApplyBean
-import com.lalifa.message.api.addFriend
+import com.lalifa.message.api.applyFriend
 import com.lalifa.message.api.applyList
 import com.lalifa.message.databinding.ActivityFriendApplyBinding
 
@@ -19,13 +19,13 @@ class FriendApply : BaseTitleActivity<ActivityFriendApplyBinding>() {
                 apply = list.applyList().apply {
                     R.id.agree.onClick {
                         scopeNetLife {
-                            addFriend(getModel<ApplyBean>().id.toString(), "1")
+                            applyFriend(getModel<ApplyBean>().id.toString(), "1")
                             getList()
                         }
                     }
                     R.id.noAgree.onClick {
                         scopeNetLife {
-                            addFriend(getModel<ApplyBean>().id.toString(), "2")
+                            applyFriend(getModel<ApplyBean>().id.toString(), "2")
                             getList()
                         }
                     }

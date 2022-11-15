@@ -3,6 +3,7 @@ package com.lalifa.message.ui
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.message.adapter.friendList
+import com.lalifa.message.api.addFriend
 import com.lalifa.message.api.friendsList
 import com.lalifa.message.databinding.ActivityFriendListBinding
 
@@ -20,5 +21,4 @@ class FriendList : BaseTitleActivity<ActivityFriendListBinding>() {
             }
         }
     }
-
 }

@@ -1062,7 +1062,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
 
                             @Override
                             public void onError(RongIMClient.ErrorCode err) {
-                                LogCat.e(TAG, "getOnLineUserIds#onError code = " + err.code + " msg = " + err.getMessage());
+                                LogCat.e(TAG, "getOnLineUserIds#onError code = " + err.getValue() + " msg = " + err.getMessage());
                                 if (null != resultBack) resultBack.onResult(new ArrayList<>());
                             }
                         }
@@ -1081,7 +1081,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
 
             @Override
             public void onError(RongIMClient.ErrorCode err) {
-                LogCat.e(TAG, "getUnReadMegCount#onError code = " + err.code + " msg = " + err.getMessage());
+                LogCat.e(TAG, "getUnReadMegCount#onError code = " + err.getValue() + " msg = " + err.getMessage());
                 if (null != resultBack) resultBack.onResult(0);
             }
         });

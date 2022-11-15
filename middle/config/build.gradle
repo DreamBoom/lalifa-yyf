@@ -47,7 +47,8 @@ dependencies {
 //    api 'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
 
     //imlib
-    api "cn.rongcloud.sdk:im_kit:$imLib"
+   // api "cn.rongcloud.sdk:im_kit:$imLib"
+    api project(":imkit")
     api 'de.hdodenhof:circleimageview:3.1.0'
     api project(':Base')
 

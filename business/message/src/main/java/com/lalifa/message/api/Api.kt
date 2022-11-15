@@ -45,10 +45,24 @@ suspend fun CoroutineScope.applyList():ArrayList<ApplyBean>? {
  * @param type String 状态 1：通过  2：拒绝
  * @return Any
  */
-suspend fun CoroutineScope.addFriend(id: String,type: String):Any{
+suspend fun CoroutineScope.applyFriend(id: String,type: String):Any{
     return Post<BaseBean<Any>>("user/examine_friends") {
         param("id", id)
         param("type", type)
+    }.await().data!!
+}
+
+/**
+ * 申请好友添加
+ * @receiver CoroutineScope
+ * @param pid String 添加id
+ * @param postscript String 申请附言
+ * @return Any
+ */
+suspend fun CoroutineScope.addFriend(pid: String,postscript: String=""):Any{
+    return Post<BaseBean<Any>>("user/add_friends") {
+        param("pid", pid)
+        param("postscript", postscript)
     }.await().data!!
 }
 

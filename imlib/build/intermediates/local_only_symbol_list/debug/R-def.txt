@@ -1,0 +1,31 @@
+R_DEF: Internal format may change without notice
+local
+bool rc_extension_history
+bool rc_q_storage_mode_enable
+bool rc_secure_shared_preferences
+bool rc_typing_status
+integer rc_disappear_interval
+integer rc_image_quality
+integer rc_image_size
+integer rc_location_thumb_height
+integer rc_location_thumb_quality
+integer rc_location_thumb_width
+integer rc_max_original_image_size
+integer rc_resume_file_transfer_size_each_slice
+integer rc_sight_compress_height
+integer rc_sight_compress_width
+integer rc_thumb_compress_min_size
+integer rc_thumb_compress_size
+integer rc_thumb_quality
+string push_heartbeat_timer
+string rc_heartbeat_acquire_time
+string rc_heartbeat_timer
+string rc_init_failed
+string rc_location_sharing_ended
+string rc_media_message_default_save_path
+string rc_notification_channel_name
+string rc_notification_new_msg
+string rc_notification_new_plural_msg
+string rc_notification_ticker_text
+string rc_quit_custom_service
+string rc_receive_location_share_msg

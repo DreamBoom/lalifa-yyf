@@ -1,0 +1,2 @@
+io/rong/libcore/BuildConfig.java
+ io.rong.libcore.BuildConfig

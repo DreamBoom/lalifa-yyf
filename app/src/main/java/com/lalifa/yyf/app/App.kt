@@ -26,17 +26,7 @@ import io.rong.imlib.RongCoreClient
 object App {
     fun init() {
         initToast()
-        initVoiceRoom()
         initNetHttp()
-    }
-
-    private fun initVoiceRoom() {
-        RongCoreClient.init(MApplication.get(), Config.RONG_APP_KEY)
-        RongIM.init(MApplication.get(), Config.RONG_APP_KEY)
-//        RouteUtils.registerActivity(
-//            RouteUtils.RongActivityType.ConversationActivity,
-//            MyConversationActivity::class.java
-//        )
     }
 
     /**

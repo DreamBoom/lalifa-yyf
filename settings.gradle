@@ -10,3 +10,5 @@ if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !(properties.get("
 }
 
 
+include ':imlib'
+include ':imkit'

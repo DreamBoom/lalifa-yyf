@@ -83,6 +83,7 @@
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/custom_preview.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/dialog_input.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/dialog_tips.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/fragment_image_item.xml" value="0.1" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/item_select_img.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/kit_layout_toast.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/Base/src/main/res/layout/layout_common_empty.xml" value="0.3536458333333333" />
@@ -203,8 +204,10 @@
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/view_main_me.xml" value="0.264" />
         <entry key="..\:/work/LALIFA/yyf/business/main/src/main/res/layout/view_main_message.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/activity_conversation.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/activity_conversation_list.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/activity_friend_apply.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/activity_friend_list.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/activity_msg_xt.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/activity_new_friend.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/item_apply.xml" value="0.24114583333333334" />
         <entry key="..\:/work/LALIFA/yyf/business/message/src/main/res/layout/item_friend.xml" value="0.23743589743589744" />
@@ -272,6 +275,16 @@
         <entry key="..\:/work/LALIFA/yyf/callkit-android/src/main/res/layout/rc_voip_user_portrait.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/callkit-android/src/main/res/layout/rc_voip_video_call_user_info.xml" value="0.3536458333333333" />
         <entry key="..\:/work/LALIFA/yyf/callkit-android/src/main/res/layout/rc_voip_viewlet_remote_user.xml" value="0.3536458333333333" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_conversation_activity.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_conversation_fragment.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_conversationlist_activity.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_conversationlist_empty_view.xml" value="0.24114583333333334" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_conversationlist_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_conversationlist_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_reference_ext_attach_view.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_refresh_header.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/rc_widget_setting_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/work/LALIFA/yyf/imkit/res/layout/view_footer.xml" value="0.25364583333333335" />
         <entry key="..\:/work/LALIFA/yyf/main/src/main/res/drawable/bg_black.xml" value="0.166" />
         <entry key="..\:/work/LALIFA/yyf/main/src/main/res/drawable/bg_gray.xml" value="0.166" />
         <entry key="..\:/work/LALIFA/yyf/main/src/main/res/drawable/bg_y.xml" value="0.166" />

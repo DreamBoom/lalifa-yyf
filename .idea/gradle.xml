@@ -18,6 +18,8 @@
             <option value="$PROJECT_DIR$/business/main" />
             <option value="$PROJECT_DIR$/business/message" />
             <option value="$PROJECT_DIR$/business/voiceroom" />
+            <option value="$PROJECT_DIR$/imkit" />
+            <option value="$PROJECT_DIR$/imlib" />
             <option value="$PROJECT_DIR$/middle" />
             <option value="$PROJECT_DIR$/middle/config" />
             <option value="$PROJECT_DIR$/middle/gift" />

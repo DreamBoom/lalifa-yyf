@@ -21,7 +21,13 @@ android {
             }
         }
     }
-
+    viewBinding {
+        enabled = true
+    }
+    dataBinding {
+        //noinspection DataBindingWithoutKapt
+        enabled = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -38,7 +44,7 @@ dependencies {
     api project(path: ':middle:music')
     api project(path: ':middle:roomkit')
     api project(path: ':middle:pk')
-
+    api project(path: ':middle:config')
     Properties properties = new Properties()
     File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
     properties.load(propertyFile.newDataInputStream())
@@ -48,8 +54,6 @@ dependencies {
        // api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
     }
 
-    implementation "cn.rongcloud.sdk:im_lib:$imLib"
-    implementation "cn.rongcloud.sdk:im_kit:$imLib"
     implementation "cn.rongcloud.sdk:call_lib:$rtcLib"
     implementation "cn.rongcloud.sdk:player:$rtcLib"
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="rc_quit_custom_service">Custom Service Have Quit</string>
+    <string name="rc_init_failed">Failed Connect Custom Service</string>
+    <string name="rc_location_sharing_ended">Real-time Location session ended.</string>
+    <string name="rc_receive_location_share_msg">A location sharing message was received.</string>
+</resources>
