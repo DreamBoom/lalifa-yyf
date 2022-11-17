@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.drake.logcat.LogCat;
+import com.lalifa.ext.Config;
 import com.lalifa.oklib.OkApi;
 import com.lalifa.oklib.WrapperCallBack;
 import com.lalifa.oklib.wrapper.Wrapper;
@@ -36,7 +37,7 @@ import io.rong.imlib.model.ReceivedProfile;
 public class ConnectModule implements IModule {
     private final static String TAG = "ConnectModule";
     private OnRegisterMessageTypeListener listener;
-    private final static String DEVICE = ApiConfig.HOST + "/user/login/device/mobile";
+    private final static String DEVICE = ApiConfig.HOST + "user/login/device/mobile";
 
     protected ConnectModule(OnRegisterMessageTypeListener listener) {
         this.listener = listener;
@@ -44,23 +45,19 @@ public class ConnectModule implements IModule {
 
     @Override
     public void onInit() {
-        String appkey = AppConfig.get().getAppKey();
+        String appkey = Config.RONG_APP_KEY;
         if (TextUtils.isEmpty(appkey)) {
             return;
         }
         // 初始化im
         RongIM.init((Application) UIKit.getContext(), appkey);
-
         // 连接监听
-        IMCenter.getInstance().addConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
-            @Override
-            public void onChanged(ConnectionStatus status) {
-                LogCat.d(TAG, "onInit: ConnectionStatusListener");
-                if (status == RongIMClient.ConnectionStatusListener.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT) {
-                    LogCat.d(TAG, "onInit: KICKED_OFFLINE_BY_OTHER_CLIENT");
-                    KToast.show("当前账号已在其他设备登录，请重新登录");
-                    UserManager.logout();
-                }
+        IMCenter.getInstance().addConnectionStatusListener(status -> {
+            LogCat.d(TAG, "onInit: ConnectionStatusListener");
+            if (status == RongIMClient.ConnectionStatusListener.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT) {
+                LogCat.d(TAG, "onInit: KICKED_OFFLINE_BY_OTHER_CLIENT");
+                KToast.show("当前账号已在其他设备登录，请重新登录");
+                UserManager.logout();
             }
         });
 

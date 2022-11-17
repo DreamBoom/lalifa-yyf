@@ -38,12 +38,8 @@ dependencies {
     api("cn.rongcloud.sdk:rcmusiccontrolkit_lib:$musicLib") {
         exclude group: 'com.scwang.smart'
     }
-
-    compileOnly "cn.rongcloud.sdk:im_lib:$imLib"
-    compileOnly "cn.rongcloud.sdk:im_kit:$imLib"
     compileOnly "cn.rongcloud.sdk:call_lib:$rtcLib"
     compileOnly "cn.rongcloud.sdk:player:$rtcLib"
-
     // hifive音乐 需要的库 https://open.hifiveai.com/api/base/V4.1.2/baseClient/androidInterface/doc
     implementation "io.reactivex.rxjava2:rxjava:2.2.10"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"

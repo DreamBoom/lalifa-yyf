@@ -42,6 +42,7 @@ public class AppConfig {
         ModuleManager.manager().onInit();
     }
 
+
     private String appKey = "";
     private String umengAppKey = "";
     private String baseServerAddress = "";

@@ -2,6 +2,7 @@ package cn.rongcloud.roomkit;
 
 import androidx.annotation.NonNull;
 
+import com.lalifa.utils.UIKit;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.EmojiProvider;
 import com.vanniktech.emoji.emoji.EmojiCategory;
@@ -49,10 +50,10 @@ public class RoomKitInit implements IModule {
     public void onInit() {
         EmojiManager.install(MyEmojiProvider.getEmojiProviderInstance());
         // // 初始化kit
-        // RCSceneKitEngine.getInstance().initWithAppKey(UIKit.getContext(), "");
+         //RCSceneKitEngine.getInstance().initWithAppKey(UIKit.getContext(), "");
         // // 初始化HiFive
-        // HFOpenApi.registerApp(this, "");
-        // HFOpenApi.setVersion("V4.1.2");
+//         HFOpenApi.registerApp(this, "");
+//         HFOpenApi.setVersion("V4.1.2");
     }
 
     @Override

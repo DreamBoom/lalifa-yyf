@@ -22,13 +22,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
         multiDexEnabled true
+        dexOptions{
+            preDexLibraries = false
+        }
+        //极光
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.lalifa.yyf",
+                JPUSH_APPKEY : "4c9d2557b02c1bb77a6e1fd5", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default"
+        ]
+
         // 写modes到BuildConfig
         buildConfigField("String[]", "YYF", "${modes()}")
-
-        ndk {
-            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
-        }
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -51,12 +62,13 @@ android {
             storePassword 'lalifa'
         }
     }
-
-    viewBinding {
-        enabled = true
-    }
-    dataBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding {
+            enabled = true
+        }
+        viewBinding {
+            enabled = true
+        }
     }
 
     buildTypes {
@@ -161,11 +173,16 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation android_ui.appcompat
     implementation android_ui.material
+
+    implementation 'com.android.support:multidex:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.tencent.bugly:crashreport:latest.release'
 //    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+    //极光
+    implementation 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
+    implementation 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
     // config
     implementation project(path: ':middle:config')
     implementation project(path: ':business:voiceroom')

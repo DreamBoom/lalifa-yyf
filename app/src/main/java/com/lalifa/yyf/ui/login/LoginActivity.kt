@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.widget.Toast
+import cn.jpush.android.api.JPushInterface
 import cn.rongcloud.config.UserManager
 import cn.rongcloud.config.feedback.SensorsUtil
 import cn.rongcloud.config.provider.user.User
@@ -15,22 +16,22 @@ import cn.sharesdk.framework.ShareSDK
 import cn.sharesdk.tencent.qq.QQ
 import cn.sharesdk.wechat.friends.Wechat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.ext.Config
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
-import com.lalifa.extension.text
 import com.lalifa.main.activity.MainActivity
 import com.lalifa.utils.SPUtil
+import com.lalifa.yyf.MApplication
 import com.lalifa.yyf.api.login
 import com.lalifa.yyf.app.App
 import com.lalifa.yyf.databinding.ActivityLoginBinding
 import com.mob.MobSDK
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
+
 
 /**
  * 登录界面
@@ -100,6 +101,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         scopeNetLife {
             val user = login("13462439645", "111111")
             if (null != user) {
+                //在jpush上设置别名
+                JPushInterface.setAlias(
+                    MApplication.get(), "13462439645"
+                ) { i, s, set ->
+                    if (i == 0) {
+                        LogCat.e("设置别名成功")
+                    } else {
+                        LogCat.e("设置别名失败")
+                    }
+                }
                 UserManager.save(user.userinfo)
                 UserProvider.provider().update(user.userinfo.toUserInfo())
                 SPUtil.set(Config.IS_LOGIN, true)
@@ -108,9 +119,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
         }
     }
+
     private fun initRongIM(user: User) {
         if (!TextUtils.isEmpty(user.imToken)) {
-            RongIM.connect(user.imToken, object : RongIMClient.ConnectCallback() {
+            RongIM.connect(user.imToken, 0, object : RongIMClient.ConnectCallback() {
                 override fun onSuccess(t: String) {
                     //连接融云成功后返回当前UserId
                     LogCat.e("连接成功用户ID->$t")
@@ -122,18 +134,34 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
 
                 override fun onError(e: RongIMClient.ConnectionErrorCode?) {
-                    if (e.toString() == "RC_CONNECTION_EXIST") {
+                    if (e!! == RongIMClient.ConnectionErrorCode.RC_CONN_TOKEN_EXPIRE) {
+                        //从 APP 服务请求新 token，获取到新 token 后重新 connect()
+                        LogCat.e("融云建立链接异常===>从 APP 服务请求新 token，获取到新 token 后重新 connect()")
+                    } else if (e == RongIMClient.ConnectionErrorCode.RC_CONNECT_TIMEOUT) {
+                        //连接超时，弹出提示，可以引导用户等待网络正常的时候再次点击进行连接
+                        LogCat.e("融云建立链接异常===>连接超时，弹出提示")
+                    } else if (e.toString() == "RC_CONNECTION_EXIST") {
+                        LogCat.e("融云建立链接异常===>退出当前用户")
                         UserManager.logout()
+                    }else{
+                        //其它业务错误码，请根据相应的错误码作出对应处理。
+                        LogCat.e("融云建立链接异常===>$e")
                     }
-                    LogCat.e(e)
                 }
 
                 override fun onDatabaseOpened(code: RongIMClient.DatabaseOpenStatus?) {
-                    LogCat.e(code.toString() + ">>>111")
+                    if(RongIMClient.DatabaseOpenStatus.DATABASE_OPEN_SUCCESS == code) {
+                        //本地数据库打开，跳转到会话列表页面
+                        LogCat.e("融云本地数据库打开===>")
+                    } else {
+                        //数据库打开失败，可以弹出 toast 提示。
+                        LogCat.e("融云数据库打开失败===>")
+                    }
                 }
             })
         }
     }
+
     /*
    * 第三方登录QQ
    * */

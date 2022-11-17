@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import cn.jpush.android.api.JPushInterface
 import cn.rongcloud.config.UserManager
 import com.drake.channel.sendTag
 import com.drake.net.utils.TipUtils.toast

@@ -91,5 +91,10 @@
       <option name="name" value="Google2" />
       <option name="url" value="https://maven.google.com/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven7" />
+      <option name="name" value="maven7" />
+      <option name="url" value="https://maven.google.com" />
+    </remote-repository>
   </component>
 </project>

@@ -1,9 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        maven {
-            url 'https://jitpack.io'
-        }
+        gradlePluginPortal()
+        maven {url 'https://jitpack.io'}
         google()
         mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/public' }
@@ -12,6 +11,8 @@ buildscript {
         maven { url 'https://developer.huawei.com/repo/' }
         maven { url "https://oss.jfrog.org/libs-snapshot" }
         maven { url 'https://repo1.maven.org/maven2/' }
+        //极光
+        maven { url "https://maven.google.com" }
         jcenter()
     }
     dependencies {
@@ -21,13 +22,19 @@ buildscript {
         classpath "com.mob.sdk:MobSDK:2018.0319.1724"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-//        classpath "com.android.tools.build:gradle:3.5.0"
+        classpath "com.android.tools.build:gradle:3.5.0"
         classpath 'com.huawei.agconnect:agcp:1.1.1.300'
+
+        //极光 fcm
+        classpath 'com.google.gms:google-services:4.3.8'
+        //极光 hms
+        classpath 'com.huawei.agconnect:agcp:1.6.0.300'
     }
 }
 
 allprojects {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/public/' }
@@ -36,6 +43,8 @@ allprojects {
         maven { url "https://oss.jfrog.org/libs-snapshot" }
         maven { url 'https://jitpack.io' }
         maven { url 'https://repo1.maven.org/maven2/' }
+        //极光
+        maven { url "https://maven.google.com" }
         jcenter()
         //xiangxin
         maven { url 'http://maven.faceunity.com/repository/maven-public/' }
@@ -79,8 +88,7 @@ ext {
     sensors = "6.2.7"
 
     // 融云相关库
-    imLib = "5.2.5.1"
-    rtcLib = "5.2.5.3"
+    rtcLib = "5.3.0.1"
     musicLib = "1.0.1"
     corekitLib = "1.0.0"
     voiceroomLib = "2.0.9.1"

@@ -21,12 +21,13 @@ android {
             }
         }
     }
-    viewBinding {
-        enabled = true
-    }
-    dataBinding {
-        //noinspection DataBindingWithoutKapt
-        enabled = true
+    buildFeatures{
+        dataBinding {
+            enabled = true
+        }
+        viewBinding {
+            enabled = true
+        }
     }
     buildTypes {
         release {

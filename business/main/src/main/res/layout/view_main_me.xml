@@ -5,19 +5,16 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/co1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#323130"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
+            android:background="#323130">
 
             <TextView
                 android:id="@+id/name"
@@ -29,31 +26,34 @@
                 android:textSize="@dimen/font_18"
                 app:layout_constraintBottom_toTopOf="@+id/line"
                 app:layout_constraintStart_toEndOf="@+id/header" />
+
             <View
                 android:id="@+id/info"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/header"
                 app:layout_constraintTop_toTopOf="@+id/header" />
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/header"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
-                app:shapeAppearance="@style/CircleStyle"
                 android:layout_marginVertical="30dp"
                 android:layout_marginStart="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/CircleStyle" />
+
             <TextView
                 android:id="@+id/vip"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:drawableStart="@mipmap/icon_hg"
+                android:drawablePadding="5dp"
+                android:gravity="center"
                 android:padding="5dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
-                android:gravity="center"
-                android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/icon_hg"
                 app:layout_constraintBottom_toTopOf="@+id/line"
                 app:layout_constraintStart_toEndOf="@+id/name" />
 
@@ -89,7 +89,6 @@
                 android:textSize="@dimen/font_14"
                 app:layout_constraintStart_toEndOf="@+id/tId"
                 app:layout_constraintTop_toBottomOf="@+id/line" />
-
 
 
             <TextView
@@ -205,100 +204,104 @@
                 app:layout_constraintTop_toBottomOf="@+id/num1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/co2"
-            android:layout_width="0dp"
-            android:layout_height="96dp"
-            android:layout_marginVertical="15dp"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/bg_black"
-            app:layout_constraintEnd_toStartOf="@+id/co3"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/co1">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="我的钻石"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_18"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/co2"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:layout_marginVertical="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/bg_black12">
 
-            <TextView
-                android:id="@+id/drill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="0"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_16"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="我的钻石"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:src="@mipmap/icon_fz"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/drill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/co3"
-            android:layout_width="0dp"
-            android:layout_height="96dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/bg_black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/co2"
-            app:layout_constraintTop_toBottomOf="@+id/co1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@mipmap/icon_fz"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="我的钱包"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_18"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/co3"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_black12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/co2"
+                app:layout_constraintTop_toBottomOf="@+id/co1">
 
-            <TextView
-                android:id="@+id/money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="0"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_16"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="我的钱包"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:src="@mipmap/icon_lh"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:src="@mipmap/icon_lh"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@mipmap/me_bg"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/co2">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -329,8 +332,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/bg_black"
-            app:layout_constraintTop_toBottomOf="@+id/ll">
+            android:background="@drawable/bg_black12">
 
             <TextView
                 android:id="@+id/gn1"
@@ -476,8 +478,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/bg_black"
-            app:layout_constraintTop_toBottomOf="@+id/co9">
+            android:background="@drawable/bg_black12">
 
             <TextView
                 android:id="@+id/gn2"
@@ -499,9 +500,9 @@
                 android:gravity="center_horizontal"
                 android:paddingVertical="10dp"
                 android:text="客服电话"
-                app:layout_constraintEnd_toStartOf="@+id/setting"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
+                app:layout_constraintEnd_toStartOf="@+id/setting"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/gn2" />
@@ -518,18 +519,18 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
                 app:layout_constraintEnd_toStartOf="@+id/view"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/kf"
-                app:layout_constraintTop_toBottomOf="@+id/gn2"
-                app:layout_constraintHorizontal_weight="1" />
+                app:layout_constraintTop_toBottomOf="@+id/gn2" />
 
             <TextView
                 android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="2"
                 app:layout_constraintStart_toEndOf="@+id/setting"
-                app:layout_constraintTop_toBottomOf="@+id/gn2"
-                app:layout_constraintHorizontal_weight="2" />
+                app:layout_constraintTop_toBottomOf="@+id/gn2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>

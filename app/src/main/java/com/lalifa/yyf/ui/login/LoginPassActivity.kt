@@ -1,6 +1,7 @@
 package com.lalifa.yyf.ui.login
 
 import android.text.TextUtils
+import cn.jpush.android.api.JPushInterface
 import cn.rongcloud.config.UserManager
 import cn.rongcloud.config.feedback.SensorsUtil
 import cn.rongcloud.config.provider.user.User
@@ -12,6 +13,7 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.extension.*
 import com.lalifa.main.activity.MainActivity
+import com.lalifa.yyf.MApplication
 import com.lalifa.yyf.api.login
 import com.lalifa.yyf.databinding.ActivityLoginPassBinding
 import io.rong.imkit.RongIM
@@ -42,6 +44,16 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                 scopeNetLife {
                     val user = login(etPhone.text(), etPass.text())
                     if (null != user) {
+                        //在jpush上设置别名
+                        JPushInterface.setAlias(
+                            MApplication.get(), "13462439645"
+                        ) { i, s, set ->
+                            if (i == 0) {
+                                LogCat.e("设置别名成功")
+                            } else {
+                                LogCat.e("设置别名失败")
+                            }
+                        }
                         UserManager.save(user.userinfo)
                         UserProvider.provider().update(user.userinfo.toUserInfo())
                         initRongIM(user.userinfo)

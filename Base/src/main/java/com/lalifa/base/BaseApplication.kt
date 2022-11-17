@@ -3,6 +3,7 @@ package com.lalifa.base
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import androidx.multidex.MultiDexApplication
 import com.drake.brv.PageRefreshLayout
 import com.drake.statelayout.StateConfig
 import com.scwang.smart.refresh.footer.ClassicsFooter
@@ -12,7 +13,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 /**
  * ApplicationBase
  */
-abstract class BaseApplication : Application() {
+abstract class BaseApplication : MultiDexApplication() {
 
     companion object {
         private lateinit var INSTANCE:BaseApplication
