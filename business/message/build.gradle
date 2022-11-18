@@ -38,10 +38,10 @@ android {
 
 dependencies {
     implementation project(':Base')
-    implementation project(':imkit')
+    implementation project(path:':middle:config')
     implementation android_ui.appcompat
     implementation android_ui.material
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    api "com.alibaba:arouter-api:$arouter"
+    implementation "com.alibaba:arouter-api:$arouter"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter"
 }

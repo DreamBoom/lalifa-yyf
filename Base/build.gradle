@@ -35,13 +35,10 @@ android {
         }
     }
     buildFeatures{
-        dataBinding {
-            enabled = true
-        }
-        viewBinding {
-            enabled = true
-        }
+        dataBinding = true
+        viewBinding = true
     }
+
 
 //    sourceSets {
 //        main {

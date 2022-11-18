@@ -1,7 +1,7 @@
 package com.lalifa.main.api
 
+import com.drake.logcat.LogCat
 import com.drake.net.Post
-import com.lalifa.che.api.ImgBean
 import com.lalifa.extension.string
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -30,9 +30,9 @@ suspend fun CoroutineScope.upload(path: String):ImgBean  {
     }.await().data!!
 }
 suspend fun CoroutineScope.upload(list: ArrayList<String>): ArrayList<String> {
-    val deferredList = arrayListOf<Deferred<com.lalifa.che.api.BaseBean<ImgBean>>>().apply {
+    val deferredList = arrayListOf<Deferred<BaseBean<ImgBean>>>().apply {
         list.forEach {
-            val deferred = Post<com.lalifa.che.api.BaseBean<ImgBean>>("common/upload") {
+            val deferred = Post<BaseBean<ImgBean>>("common/upload") {
                 param("file", File(it))
             }
             add(deferred)
@@ -242,3 +242,138 @@ suspend fun CoroutineScope.getActivityInfo(id:String): ActivityInfoBean? {
         param("id", id)
     }.await().data
 }
+
+/**
+ * 好友列表
+ * @receiver CoroutineScope
+ * @param id String 搜索ID
+ * @param name String 搜索名称
+ * @return ArrayList<FriendBean>?
+ */
+suspend fun CoroutineScope.friendsList(id: String = "",name: String = ""):ArrayList<FriendBean>? {
+    return Post<BaseBean<ArrayList<FriendBean>>>("user/friends_list") {
+        param("id", id)
+        param("name", name)
+    }.await().data!!
+}
+
+/**
+ * 新人列表
+ * @receiver CoroutineScope
+ * @return ArrayList<NewFriendBean>?
+ */
+suspend fun CoroutineScope.newFriendsList():ArrayList<NewFriendBean>? {
+    return Post<BaseBean<ArrayList<NewFriendBean>?>>("user/new_people") {
+    }.await().data!!
+}
+
+/**
+ * 申请列表
+ * @receiver CoroutineScope
+ * @return ArrayList<NewFriendBean>?
+ */
+suspend fun CoroutineScope.applyList():ArrayList<ApplyBean>? {
+    return Post<BaseBean<ArrayList<ApplyBean>?>>("user/examine_friends_list") {
+    }.await().data!!
+}
+
+/**
+ * 审核好友添加
+ * @receiver CoroutineScope
+ * @param id String 审核ID
+ * @param type String 状态 1：通过  2：拒绝
+ * @return Any
+ */
+suspend fun CoroutineScope.applyFriend(id: String,type: String):Any{
+    return Post<BaseBean<Any>>("user/examine_friends") {
+        param("id", id)
+        param("type", type)
+    }.await().data!!
+}
+
+/**
+ * 申请好友添加
+ * @receiver CoroutineScope
+ * @param pid String 添加id
+ * @param postscript String 申请附言
+ * @return Any
+ */
+suspend fun CoroutineScope.addFriend(pid: String,postscript: String=""):Any{
+    return Post<BaseBean<Any>>("user/add_friends") {
+        param("pid", pid)
+        param("postscript", postscript)
+    }.await().data!!
+}
+/**
+ * 发现页列表
+ * @receiver CoroutineScope
+ * @return CheListBean?
+ */
+suspend fun CoroutineScope.cheList(type: Int, offset: Int): CheListBean? {
+    return Post<BaseBean<CheListBean>>("user/community") {
+        param("type", type)
+        param("offset", offset)
+    }.await().data
+}
+
+/**
+ * 发现页详情
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.cheInfo(id: Int): CheInfoBean? {
+    return Post<BaseBean<CheInfoBean>>("user/DynamicDetails") {
+        param("id", id)
+    }.await().data
+}
+
+/**
+ * 发布动态
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.upChe(content: String, image: List<String>): CheInfoBean? {
+    LogCat.e("==111===" + image.string())
+    return Post<BaseBean<CheInfoBean>>("user/dynamic") {
+        param("content", content)
+        param("image", image.string())
+    }.await().data
+}
+
+/**
+ * 点赞动态
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.dzChe(id: Int): CheInfoBean? {
+    return Post<BaseBean<CheInfoBean>>("user/fabulous") {
+        param("id", id)
+    }.await().data
+}
+
+/**
+ * 评论动态
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.plChe(id: String, note: String, pid: String): Any? {
+    return Post<BaseBean<Any>>("user/comment") {
+        param("id", id)
+        param("note", note)
+        param("pid", pid)
+    }.await().data
+}
+
+/**
+ * 点赞评论
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.dzPl(id: String): Any? {
+    return Post<BaseBean<Any>>("user/FabulousComment") {
+        param("id", id)
+    }.await().data
+}
+
+
+

@@ -9,8 +9,6 @@ import cn.jpush.android.api.JPushInterface
 import cn.rongcloud.config.AppConfig
 import cn.rongcloud.config.init.ModuleManager
 import cn.rongcloud.config.router.ARouterWrapper
-import cn.rongcloud.music.MusicInit
-import cn.rongcloud.pk.PKInit
 import cn.rongcloud.roomkit.RoomKitInit
 import cn.rongcloud.thirdcdn.ThirdCDNConstant
 import com.lalifa.base.BaseApplication
@@ -65,7 +63,7 @@ class MApplication : BaseApplication() {
         )
         // init rong
         ModuleManager.manager()
-            .register(RoomKitInit(), MusicInit(), PKInit())
+            .register(RoomKitInit())
         //初始化 bugly
 //        CrashReport.initCrashReport(this, BUGLY_ID, DEBUG)
         // 设置三方CDN推拉流地址

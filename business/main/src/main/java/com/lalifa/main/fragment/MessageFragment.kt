@@ -6,9 +6,10 @@ import com.lalifa.base.BaseFragment
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
+import com.lalifa.main.activity.*
 import com.lalifa.main.databinding.ViewMainMessageBinding
-import com.lalifa.message.fragment.ConversationList
-import com.lalifa.message.ui.*
+import io.rong.imkit.utils.RouteUtils
+import io.rong.imlib.model.Conversation
 
 class MessageFragment : BaseFragment<ViewMainMessageBinding>() {
     override fun getViewBinding(
@@ -31,7 +32,8 @@ class MessageFragment : BaseFragment<ViewMainMessageBinding>() {
             search.onClick { }
             newFriend.onClick { start(NewFriend::class.java) }
             topMore.onClick {
-
+                RouteUtils.routeToConversationActivity(context,
+                    Conversation.ConversationType.PRIVATE, "2", false)
             }
 
             msgXt.onClick { start(MsgXt::class.java) }

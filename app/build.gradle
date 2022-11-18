@@ -63,13 +63,10 @@ android {
         }
     }
     buildFeatures{
-        dataBinding {
-            enabled = true
-        }
-        viewBinding {
-            enabled = true
-        }
+        dataBinding = true
+        viewBinding = true
     }
+
 
     buildTypes {
         debug {
@@ -184,10 +181,8 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
     implementation 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
     // config
-    implementation project(path: ':middle:config')
     implementation project(path: ':business:voiceroom')
     implementation project(path: ':business:main')
-    implementation project(path: ':business:che')
     implementation project(path: ':middle:thirdcdn')
     implementation project(path: ':Base')
 }

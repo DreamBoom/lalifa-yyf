@@ -21,13 +21,10 @@ android {
         }
     }
     buildFeatures{
-        dataBinding {
-            enabled = true
-        }
-        viewBinding {
-            enabled = true
-        }
+        dataBinding = true
+        viewBinding = true
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,9 +35,7 @@ android {
 
 dependencies {
     implementation project(':Base')
-    implementation project(':business:che')
     implementation project(':business:voiceroom')
-    implementation project(':business:message')
     implementation android_ui.appcompat
     implementation android_ui.material
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

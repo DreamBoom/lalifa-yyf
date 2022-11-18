@@ -14,9 +14,7 @@
             <option value="$PROJECT_DIR$/Base" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/business" />
-            <option value="$PROJECT_DIR$/business/che" />
             <option value="$PROJECT_DIR$/business/main" />
-            <option value="$PROJECT_DIR$/business/message" />
             <option value="$PROJECT_DIR$/business/voiceroom" />
             <option value="$PROJECT_DIR$/imkit" />
             <option value="$PROJECT_DIR$/imlib" />

@@ -2,7 +2,6 @@ package com.lalifa.main.activity
 
 import cn.rongcloud.voice.roomlist.VoiceRoomListFragment
 import com.lalifa.base.BaseActivity
-import com.lalifa.che.activity.CheActivity
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.pageChangedListener
@@ -18,7 +17,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>() {
             vp.offscreenPageLimit = 4
             vp.fragmentAdapter(supportFragmentManager) {
                 add(MainFragment())
-                add(VoiceRoomListFragment.getInstance())
+                add(VoiceRoomListFragment())
                 add(MessageFragment())
                 add(MeFragment())
             }.pageChangedListener {

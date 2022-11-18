@@ -60,6 +60,33 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.FriendApply"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FriendList"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MsgHd"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MsgXt"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NewFriend"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AddCheActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NoticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CheInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CheActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

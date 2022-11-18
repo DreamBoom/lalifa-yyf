@@ -22,13 +22,11 @@ android {
         }
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
     }
-    dataBinding {
-        //noinspection DataBindingWithoutKapt
-        enabled = true
-    }
+
     buildTypes {
         release {
             minifyEnabled false

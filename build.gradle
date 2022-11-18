@@ -13,6 +13,7 @@ buildscript {
         maven { url 'https://repo1.maven.org/maven2/' }
         //极光
         maven { url "https://maven.google.com" }
+        //noinspection JcenterRepositoryObsolete
         jcenter()
     }
     dependencies {
@@ -45,6 +46,7 @@ allprojects {
         maven { url 'https://repo1.maven.org/maven2/' }
         //极光
         maven { url "https://maven.google.com" }
+        //noinspection JcenterRepositoryObsolete
         jcenter()
         //xiangxin
         maven { url 'http://maven.faceunity.com/repository/maven-public/' }
@@ -108,9 +110,5 @@ ext {
     ]
 
     mode_voice = "voice"
-    mode_radio = "radio"
-    mode_call = "call"
-    mode_live = "live"
-    mode_game = "game"
-    rc_busi = [mode_voice, mode_live, mode_radio, mode_call, mode_game]
+    rc_busi = [mode_voice]
 }

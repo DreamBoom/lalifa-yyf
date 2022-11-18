@@ -9,11 +9,13 @@ import static cn.rongcloud.voice.Constant.EVENT_REQUEST_SEAT_AGREE;
 import static cn.rongcloud.voice.Constant.EVENT_REQUEST_SEAT_REFUSE;
 import static cn.rongcloud.voice.Constant.EVENT_ROOM_CLOSE;
 
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Lifecycle;
 
 import com.drake.logcat.LogCat;
@@ -191,7 +193,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     public void onRoomKVReady() {
 
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onRoomDestroy() {
         roomEventSubject.onNext(new Pair(EVENT_ROOM_CLOSE, new ArrayList<>()));
@@ -364,7 +366,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
             RCChatRoomMessageManager.onReceiveMessage(present.getRoomId(), message.getContent());
         }
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onRoomNotificationReceived(String name, String content) {
         ArrayList<String> contents = new ArrayList<>();
@@ -393,6 +395,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
      *
      * @param i
      */
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onKickSeatReceived(int i) {
         sendRoomEvent(new Pair(EVENT_KICK_OUT_OF_SEAT, new ArrayList<>()));
@@ -401,6 +404,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     /**
      * 请求加入麦位被允许
      */
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onRequestSeatAccepted() {
         sendRoomEvent(new Pair(EVENT_REQUEST_SEAT_AGREE, new ArrayList<>()));
@@ -409,6 +413,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     /**
      * 请求加入麦位被拒绝
      */
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onRequestSeatRejected() {
         sendRoomEvent(new Pair(EVENT_REQUEST_SEAT_REFUSE, new ArrayList<>()));
@@ -509,6 +514,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
      * @param targetId 被踢用户的标识
      * @param userId   发起踢人用户的标识
      */
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onUserReceiveKickOutRoom(String targetId, String userId) {
         Log.e(TAG, "onUserReceiveKickOutRoom: ");

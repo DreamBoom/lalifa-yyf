@@ -8,7 +8,6 @@ import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
-import com.lalifa.che.databinding.ItemCheBinding
 import com.lalifa.ext.Config
 import com.lalifa.extension.dp
 import com.lalifa.extension.imagesAdapter
@@ -17,7 +16,6 @@ import com.lalifa.extension.onClick
 import com.lalifa.main.R
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
-import com.lalifa.utils.ImageLoader
 
 /**
  * 商城
@@ -140,7 +138,7 @@ fun RecyclerView.tiList(type: Int): BindingAdapter {
  * @receiver RecyclerView
  * @return BindingAdapter
  */
-fun RecyclerView.cheList(): BindingAdapter {
+fun RecyclerView.cheMyList(): BindingAdapter {
     return linear().setup {
         addType<Dynamic>(R.layout.item_my_che)
         onBind {
@@ -214,6 +212,155 @@ fun RecyclerView.activeInfo2List(): BindingAdapter {
             val bean = getModel<ActivityDetail>()
             getBinding<ItemActivity2Binding>().apply {
                im.load(Config.FILE_PATH+bean.goods.image)
+            }
+        }
+    }
+}
+
+/**
+ * 好友列表
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.friendList(): BindingAdapter {
+    return linear().setup {
+        addType<FriendBean>(R.layout.item_friend)
+        onBind {
+            val bean = getModel<FriendBean>()
+            getBinding<ItemFriendBinding>().apply {
+                itemHeader.load(Config.FILE_PATH + bean.avatar)
+                name.text = bean.userName
+                mId.text = "ID:${bean.id}"
+                if (bean.gender == 0) {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                } else {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 新人列表
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.newFriendList(): BindingAdapter {
+    return linear().setup {
+        addType<NewFriendBean>(R.layout.item_new_friend)
+        onBind {
+            val bean = getModel<FriendBean>()
+            getBinding<ItemNewFriendBinding>().apply {
+                itemHeader.load(Config.FILE_PATH + bean.avatar)
+                name.text = bean.userName
+                mId.text = "ID:${bean.id}"
+                if (bean.gender == 0) {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                } else {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 申请列表
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.applyList(): BindingAdapter {
+    return linear().setup {
+        addType<ApplyBean>(R.layout.item_apply)
+        onBind {
+            val bean = getModel<ApplyBean>()
+            getBinding<ItemApplyBinding>().apply {
+                itemHeader.load(Config.FILE_PATH + bean.avatar)
+                name.text = bean.userName
+                mId.text = "ID:${bean.id}"
+                info.text = bean.postscript
+                time.text = bean.create_time
+                if (bean.gender == 0) {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                } else {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 发现页列表适配器
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.cheList(): BindingAdapter {
+    return linear().setup {
+        addType<Dynamic>(R.layout.item_che)
+        onBind {
+            val bean = getModel<Dynamic>()
+            getBinding<ItemCheBinding>().apply {
+                header.load(bean.avatar)
+                name.text = bean.userName
+                time.text = bean.create_time
+                if(bean.gender==0){
+                    sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_boy)
+                }else{
+                    sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_gril)
+                }
+                info.text = bean.content
+                bean.image.forEach {
+                    Config.FILE_PATH+it
+                }
+                gridImg.imagesAdapter(bean.image,true)
+                share.text = "${bean.share}"
+                like.text = "${bean.fabulous}"
+                pl.text = "${bean.comment_count}"
+            }
+        }
+    }
+}
+
+/**
+ * 评论列表适配器
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.cheInfoList(): BindingAdapter {
+    return linear().setup {
+        addType<Comment>(R.layout.item_pl)
+        onBind {
+            val bean = getModel<Comment>()
+            getBinding<ItemPlBinding>().apply {
+                header.load(bean.avatar)
+                name.text = bean.userName
+                time.text = bean.create_time
+                info.text = bean.content
+                like.text = "${bean.fabulous}"
+                childList.cheChildInfoList().apply {  }.models=bean.child
+            }
+        }
+    }
+}
+
+/**
+ * 评论子列表适配器
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.cheChildInfoList(): BindingAdapter {
+    return linear().setup {
+        addType<ChildInfo>(R.layout.item_pl_child)
+        onBind {
+            val bean = getModel<ChildInfo>()
+            getBinding<ItemPlChildBinding>().apply {
+                header.load(bean.avatar)
+                name.text = bean.userName
+                time.text = bean.create_time
+                info.text = bean.content
+                like.text = "${bean.fabulous}"
             }
         }
     }

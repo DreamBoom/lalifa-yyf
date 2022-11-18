@@ -4,13 +4,12 @@ import android.graphics.Color
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
-import com.lalifa.che.activity.CheInfoActivity
-import com.lalifa.che.api.dzChe
 import com.lalifa.extension.start
 import com.lalifa.main.R
 import com.lalifa.main.adapter.cheList
 import com.lalifa.main.api.Dynamic
 import com.lalifa.main.api.delDynamic
+import com.lalifa.main.api.dzChe
 import com.lalifa.main.api.release
 import com.lalifa.yyf.ext.showTipDialog
 

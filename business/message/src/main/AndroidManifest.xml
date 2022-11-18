@@ -18,18 +18,6 @@
         <activity
             android:name=".ui.NewFriend"
             android:exported="false" />
-        <activity
-            android:name=".ui.ConversationActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:host="com.lalifa.message"
-                    android:pathPrefix="/conversation/"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
