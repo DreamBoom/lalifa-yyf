@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rc_conversation_item"
     android:layout_width="match_parent"
-    app:layout_srlBackgroundColor="#000000"
+    android:background="@color/black"
     android:layout_height="@dimen/rc_conversation_item_height">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/black"
         android:layout_height="match_parent">
 
         <RelativeLayout

@@ -8,7 +8,8 @@ if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !(properties.get("
     println("------------------>>>>load local voiceroom sdk module")
     project(':RCVoiceRoom').projectDir = new File("${properties.get("VOICE_ROOM_SDK_DIR")}/voiceroom")
 }
-
-
-include ':imlib'
 include ':imkit'
+include ':imlib'
+include ':rtclib'
+include ':calllib'
+include ':callkit'

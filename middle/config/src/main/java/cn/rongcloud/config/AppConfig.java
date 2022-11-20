@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.rongcloud.config.init.ModuleManager;
+import cn.rongcloud.config.ryutiles.MyGiftConfig;
+import io.rong.imkit.conversation.extension.RongExtensionManager;
 
 public class AppConfig {
     private static class Holder {
@@ -40,6 +42,7 @@ public class AppConfig {
             }
         }
         ModuleManager.manager().onInit();
+        RongExtensionManager.getInstance().setExtensionConfig(new MyGiftConfig());
     }
 
 

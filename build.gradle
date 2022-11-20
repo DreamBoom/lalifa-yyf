@@ -5,7 +5,7 @@ buildscript {
         maven {url 'https://jitpack.io'}
         google()
         mavenCentral()
-        maven { url 'https://maven.aliyun.com/repository/public' }
+       // maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url "https://s01.oss.sonatype.org/content/groups/public" }
         maven { url "https://maven.rongcloud.cn/repository/maven-releases/" }
         maven { url 'https://developer.huawei.com/repo/' }
@@ -14,7 +14,7 @@ buildscript {
         //极光
         maven { url "https://maven.google.com" }
         //noinspection JcenterRepositoryObsolete
-        jcenter()
+       // jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.2'
@@ -38,7 +38,7 @@ allprojects {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url 'https://maven.aliyun.com/repository/public/' }
+       // maven { url 'https://maven.aliyun.com/repository/public/' }
         maven { url "https://maven.rongcloud.cn/repository/maven-releases/" }
         maven { url 'https://developer.huawei.com/repo/' }
         maven { url "https://oss.jfrog.org/libs-snapshot" }
@@ -47,7 +47,7 @@ allprojects {
         //极光
         maven { url "https://maven.google.com" }
         //noinspection JcenterRepositoryObsolete
-        jcenter()
+       // jcenter()
         //xiangxin
         maven { url 'http://maven.faceunity.com/repository/maven-public/' }
         // 1.添加MobSDK Maven地址
@@ -90,7 +90,7 @@ ext {
     sensors = "6.2.7"
 
     // 融云相关库
-    rtcLib = "5.3.0.1"
+    rtcLib = "5.3.1"
     musicLib = "1.0.1"
     corekitLib = "1.0.0"
     voiceroomLib = "2.0.9.1"

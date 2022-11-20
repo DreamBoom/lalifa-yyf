@@ -1,0 +1,47 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="io.rong.calllib" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="19"
+6-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml
+7        android:targetSdkVersion="31" />
+7-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml
+8
+9    <uses-permission android:name="android.permission.CAMERA" />
+9-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:10:5-65
+9-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:10:22-62
+10    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+10-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:11:5-79
+10-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:11:22-76
+11    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+11-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:12:5-80
+11-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:12:22-77
+12    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+12-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:13:5-71
+12-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:13:22-68
+13    <uses-permission android:name="android.permission.BLUETOOTH" />
+13-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:14:5-68
+13-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:14:22-65
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:15:5-67
+14-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:15:22-64
+15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+15-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:16:5-81
+15-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:16:22-78
+16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+16-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:17:5-79
+16-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:17:22-76
+17
+18    <application android:supportsRtl="true" >
+18-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:4:5-8:19
+18-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:4:18-44
+19        <meta-data
+19-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:5:9-7:62
+20            android:name="rc.calllib"
+20-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:6:13-38
+21            android:value="io.rong.calllib.RongCallClient" />
+21-->D:\work\LALIFA\yyf\calllib\AndroidManifest.xml:7:13-59
+22    </application>
+23
+24</manifest>

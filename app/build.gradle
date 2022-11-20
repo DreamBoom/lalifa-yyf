@@ -177,9 +177,6 @@ dependencies {
 //    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     annotationProcessor "com.alibaba:arouter-compiler:$arouter"
-    //极光
-    implementation 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
-    implementation 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
     // config
     implementation project(path: ':business:voiceroom')
     implementation project(path: ':business:main')

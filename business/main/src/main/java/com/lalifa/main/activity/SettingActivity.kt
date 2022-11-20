@@ -29,6 +29,7 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                 showTipDialog("注销账号将删除所有账户信息，确定要注销吗？") {
                     scopeNetLife {
                         UserManager.logout()
+
                         SPUtil.set(Config.IS_LOGIN,false)
                         toast("注销成功！")
                     }

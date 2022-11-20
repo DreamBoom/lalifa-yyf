@@ -48,8 +48,6 @@ dependencies {
     } else {
         //api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
     }
-
-    implementation "cn.rongcloud.sdk:call_lib:$rtcLib"
     implementation "cn.rongcloud.sdk:player:$rtcLib"
 
     implementation "com.alibaba:arouter-api:$arouter"

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\work\LALIFA\yyf\calllib\libs"><file name="rong_calllib_5.3.1.jar" path="D:\work\LALIFA\yyf\calllib\libs\rong_calllib_5.3.1.jar"/></source></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\work\LALIFA\yyf\calllib\src\debug\jniLibs"/></dataSet></merger>

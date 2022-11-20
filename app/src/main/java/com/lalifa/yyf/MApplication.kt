@@ -1,23 +1,19 @@
 package com.lalifa.yyf
 
 //import com.tencent.bugly.crashreport.CrashReport
-import android.app.Application
 import android.content.Context
 import android.text.TextUtils
 import androidx.multidex.MultiDex
-import cn.jpush.android.api.JPushInterface
 import cn.rongcloud.config.AppConfig
 import cn.rongcloud.config.init.ModuleManager
 import cn.rongcloud.config.router.ARouterWrapper
 import cn.rongcloud.roomkit.RoomKitInit
 import cn.rongcloud.thirdcdn.ThirdCDNConstant
 import com.lalifa.base.BaseApplication
-import com.lalifa.ext.Config
 import com.lalifa.utils.SystemUtil
-import com.lalifa.utils.UIKit
 import com.lalifa.yyf.BuildConfig.*
 import com.lalifa.yyf.app.App
-import io.rong.imkit.RongIM
+import com.lalifa.utils.ImPushUtil
 
 class MApplication : BaseApplication() {
 
@@ -49,8 +45,7 @@ class MApplication : BaseApplication() {
      * 初始化日志打印工具 列表空界面
      */
     private fun initConfig() {
-        JPushInterface.setDebugMode(true)
-        JPushInterface.init(this)
+        ImPushUtil.getInstance(this).init()
         //LogCat.setDebug(BuildConfig.DEBUG, MApplication.get().getString(R.string.app_name))
         ARouterWrapper.init(this)
         AppConfig.get().init(

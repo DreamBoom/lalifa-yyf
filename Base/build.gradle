@@ -142,4 +142,8 @@ dependencies {
     // https://github.com/google/gson
     api "com.google.code.gson:gson:$gson"
     api "com.airbnb.android:lottie:$lottieVersion"
+    //极光
+    api 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
+    api 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
+
 }
