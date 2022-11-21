@@ -1,15 +1,21 @@
 package com.lalifa.yyf
 
-//import com.tencent.bugly.crashreport.CrashReport
 import android.content.Context
 import android.text.TextUtils
 import androidx.multidex.MultiDex
 import cn.rongcloud.config.AppConfig
+import cn.rongcloud.config.UserManager
 import cn.rongcloud.config.init.ModuleManager
 import cn.rongcloud.config.router.ARouterWrapper
 import cn.rongcloud.roomkit.RoomKitInit
 import cn.rongcloud.thirdcdn.ThirdCDNConstant
+import com.drake.channel.sendTag
+import com.drake.net.utils.TipUtils
+import com.lalifa.api.JsonHttpConverter
+import com.lalifa.api.NetHttp
 import com.lalifa.base.BaseApplication
+import com.lalifa.ext.Config
+import com.lalifa.extension.pk
 import com.lalifa.utils.SystemUtil
 import com.lalifa.yyf.BuildConfig.*
 import com.lalifa.yyf.app.App
@@ -59,8 +65,6 @@ class MApplication : BaseApplication() {
         // init rong
         ModuleManager.manager()
             .register(RoomKitInit())
-        //初始化 bugly
-//        CrashReport.initCrashReport(this, BUGLY_ID, DEBUG)
         // 设置三方CDN推拉流地址
         ThirdCDNConstant.setPushAndPullUrl(
             THIRD_CDN_PUSH_URL,

@@ -30,10 +30,10 @@
         tools:replace="android:name"
         tools:targetApi="s">
         <activity
-            android:name=".ui.login.LoginPassActivity"
+            android:name="com.lalifa.main.activity.login.LoginPassActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
@@ -48,22 +48,22 @@
             android:value="true" />
 
         <activity
-            android:name=".ui.login.RegisterActivity"
+            android:name="com.lalifa.main.activity.login.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.UserInfoActivity"
+            android:name="com.lalifa.main.activity.login.UserInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.SexActivity"
+            android:name="com.lalifa.main.activity.login.SexActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.ForgetPasswordActivity"
+            android:name="com.lalifa.main.activity.login.ForgetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.InputCodeActivity"
+            android:name="com.lalifa.main.activity.login.InputCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.lalifa.main.activity.login.LoginActivity"
             android:exported="false" />
         <!-- Since JCore2.0.0 Required SDK核心功能-->
         <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->

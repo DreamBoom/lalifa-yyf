@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'com.mob.sdk'
 }
 
 
@@ -165,17 +164,12 @@ dependencies {
     implementation fileTree(includes: ['*.aar'],  dir: 'libs')
     implementation android_ui.appcompat
     implementation android_ui.material
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation files('..\\libs\\commons-io-1.4.jar')
-    implementation 'org.jsoup:jsoup:1.13.1'
     implementation android_ui.appcompat
     implementation android_ui.material
 
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.tencent.bugly:crashreport:latest.release'
-//    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     annotationProcessor "com.alibaba:arouter-compiler:$arouter"
     // config
     implementation project(path: ':business:voiceroom')
@@ -200,23 +194,4 @@ def modes() {
         busi += "\"${temp}\","
     }
     return "new String[]{" + busi.substring(0, busi.length() - 1) + "}"
-}
-
-MobSDK {
-    appKey "36cdb3c927c4c"
-    appSecret "19587758b802435324dcdff55261544f"
-    ShareSDK {
-        loopShare true
-        devInfo {
-            Wechat {
-                appId "wx4868b35061f87885"
-                appSecret "64020361b8ec4c99936c0e3999a9f249"
-            }
-            QQ {
-                appId "100371282"
-                appKey "aed9b0303e3ed1e27bae87c33761161d"
-                shareByAppClient true
-            }
-        }
-    }
 }

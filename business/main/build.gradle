@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.mob.sdk'
 }
 
 android {
@@ -41,4 +42,23 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     api "com.alibaba:arouter-api:$arouter"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter"
+}
+
+MobSDK {
+    appKey "36cdb3c927c4c"
+    appSecret "19587758b802435324dcdff55261544f"
+    ShareSDK {
+        loopShare true
+        devInfo {
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+                shareByAppClient true
+            }
+        }
+    }
 }

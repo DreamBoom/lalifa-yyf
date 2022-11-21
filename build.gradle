@@ -5,16 +5,15 @@ buildscript {
         maven {url 'https://jitpack.io'}
         google()
         mavenCentral()
-       // maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url "https://s01.oss.sonatype.org/content/groups/public" }
         maven { url "https://maven.rongcloud.cn/repository/maven-releases/" }
-        maven { url 'https://developer.huawei.com/repo/' }
-        maven { url "https://oss.jfrog.org/libs-snapshot" }
-        maven { url 'https://repo1.maven.org/maven2/' }
         //极光
-        maven { url "https://maven.google.com" }
+        // 配置HMS Core SDK的Maven仓地址。
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven { url "https://dl.google.com/dl/android/maven2/" }
         //noinspection JcenterRepositoryObsolete
-       // jcenter()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.2'
@@ -24,8 +23,6 @@ buildscript {
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "com.android.tools.build:gradle:3.5.0"
-        classpath 'com.huawei.agconnect:agcp:1.1.1.300'
-
         //极光 fcm
         classpath 'com.google.gms:google-services:4.3.8'
         //极光 hms
@@ -38,18 +35,15 @@ allprojects {
         gradlePluginPortal()
         google()
         mavenCentral()
-       // maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
         maven { url "https://maven.rongcloud.cn/repository/maven-releases/" }
-        maven { url 'https://developer.huawei.com/repo/' }
-        maven { url "https://oss.jfrog.org/libs-snapshot" }
         maven { url 'https://jitpack.io' }
-        maven { url 'https://repo1.maven.org/maven2/' }
         //极光
-        maven { url "https://maven.google.com" }
+        // 配置HMS Core SDK的Maven仓地址。
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven { url "https://dl.google.com/dl/android/maven2/" }
         //noinspection JcenterRepositoryObsolete
-       // jcenter()
-        //xiangxin
-        maven { url 'http://maven.faceunity.com/repository/maven-public/' }
+        jcenter()
         // 1.添加MobSDK Maven地址
         maven { url "https://mvn.mob.com/android" }
     }
@@ -87,10 +81,8 @@ ext {
     floatWindow = "1.0.9"
     pictureselector = "v3.0.9"
     lottieVersion = "5.2.0"
-    sensors = "6.2.7"
 
     // 融云相关库
-    rtcLib = "5.3.1"
     musicLib = "1.0.1"
     corekitLib = "1.0.0"
     voiceroomLib = "2.0.9.1"

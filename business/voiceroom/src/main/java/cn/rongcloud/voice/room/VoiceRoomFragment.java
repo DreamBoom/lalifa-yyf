@@ -32,7 +32,6 @@ import java.util.List;
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
 import cn.rongcloud.config.feedback.RcEvent;
-import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
@@ -727,7 +726,6 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
      */
     @Override
     public void clickPrivateMessage() {
-        SensorsUtil.instance().textClick(mRoomId, present.getmVoiceRoomBean().getRoomName(), RcEvent.RadioRoom);
         RouteUtils.routeToSubConversationListActivity(
                 requireActivity(),
                 Conversation.ConversationType.PRIVATE,
@@ -756,7 +754,6 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
      */
     @Override
     public void clickPk() {
-        SensorsUtil.instance().pkClick(present.getRoomId(), present.getmVoiceRoomBean().getRoomName(), RcEvent.VoiceRoom);
         PKState pkState = PKManager.get().getPkState();
         if (pkState.isNotInPk()) {
             PKManager.get().showPkInvitation(activity);

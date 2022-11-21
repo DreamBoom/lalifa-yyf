@@ -172,4 +172,19 @@
         <attr name="layout_weight" format="float" />
         <attr name="android:layout_gravity" />
     </declare-styleable>
+    <declare-styleable name="MapIconView">
+        <attr name="miv_icon" format="reference" />
+        <attr name="miv_title" format="string" />
+    </declare-styleable>
+    <declare-styleable name="UserAvatarView">
+        <attr name="uav_avatar" format="reference" />
+        <attr name="uav_show_stroke" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgressView">
+        <attr name="cpv_stroke_with" format="integer"/>
+        <attr name="cpv_stroke_color" format="color"/>
+        <attr name="cpv_progress_color" format="color"/>
+        <attr name="cpv_progress" format="integer"/>
+    </declare-styleable>
 </resources>

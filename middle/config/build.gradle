@@ -52,7 +52,4 @@ dependencies {
     api project(":callkit")
     api 'de.hdodenhof:circleimageview:3.1.0'
     api project(':Base')
-
-    // 添加 Sensors Analytics SDK 依赖
-    api "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:$sensors"
 }

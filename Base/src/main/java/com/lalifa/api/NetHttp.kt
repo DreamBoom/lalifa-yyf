@@ -1,6 +1,8 @@
 package com.lalifa.api
 
 import android.content.Context
+import android.text.TextUtils
+import com.drake.channel.sendTag
 import com.drake.logcat.LogCat
 import com.drake.net.NetConfig
 import com.drake.net.convert.NetConverter
@@ -9,7 +11,10 @@ import com.drake.net.interceptor.RequestInterceptor
 import com.drake.net.interfaces.NetErrorHandler
 import com.drake.net.okhttp.*
 import com.drake.net.request.BaseRequest
+import com.drake.net.utils.TipUtils
 import com.drake.tooltip.dialog.BubbleDialog
+import com.lalifa.ext.Config
+import com.lalifa.extension.pk
 import java.util.concurrent.TimeUnit
 
 /**

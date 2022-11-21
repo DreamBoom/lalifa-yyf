@@ -28,7 +28,6 @@ import java.util.List;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
-import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
@@ -818,9 +817,6 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     public void leaveRoom(IRoomCallBack callback) {
         if (roomInfo != null) {
             RCRTCMicOutputStream defaultAudioStream = RCRTCEngine.getInstance().getDefaultAudioStream();
-            SensorsUtil.instance().leaveRoom(roomId, voiceRoomBean.getRoomName(), voiceRoomBean.isPrivate(),
-                    defaultAudioStream == null ? false : defaultAudioStream.isMicrophoneDisable(),
-                    false, RoomType.VOICE_ROOM.convertToRcEvent(), "");
         }
         RCVoiceRoomEngine.getInstance().leaveRoom(new RCVoiceRoomCallback() {
             @Override

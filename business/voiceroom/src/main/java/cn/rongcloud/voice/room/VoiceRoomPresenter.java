@@ -51,7 +51,6 @@ import java.util.Map;
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
 import cn.rongcloud.config.feedback.RcEvent;
-import cn.rongcloud.config.feedback.SensorsUtil;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.music.MusicApi;
 import cn.rongcloud.music.MusicBean;
@@ -257,8 +256,6 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
     }
 
     private void joinRoom(String roomId, boolean isCreate) {
-        SensorsUtil.instance().joinRoom(roomId, mVoiceRoomBean.getRoomName(), mVoiceRoomBean.getIsPrivate() == 1,
-                false, false, RoomType.VOICE_ROOM.convertToRcEvent());
         //设置界面监听
         VoiceEventHelper.helper().register(roomId);
         VoiceEventHelper.helper().setRoomBean(mVoiceRoomBean);
@@ -642,7 +639,6 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                 }
             });
         } else {
-            SensorsUtil.instance().connectRequest(getRoomId(), mVoiceRoomBean.getRoomName(), RcEvent.VoiceRoom);
             RCVoiceRoomEngine.getInstance().requestSeat(new RCVoiceRoomCallback() {
                 @Override
                 public void onSuccess() {
@@ -946,7 +942,6 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
 
     @Override
     public void cancelRequestSeat(ClickCallback<Boolean> callback) {
-        SensorsUtil.instance().recallConnect(getRoomId(), mVoiceRoomBean.getRoomName(), RcEvent.VoiceRoom);
         VoiceEventHelper.helper().cancelRequestSeat(new ClickCallback<Boolean>() {
             @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
             @Override
@@ -1003,7 +998,6 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
      * 点击底部送礼物，礼物可以送给麦位和房主，无论房主是否在房间
      */
     public void sendGift() {
-        SensorsUtil.instance().giftClick(getRoomId(), mVoiceRoomBean.getRoomName(), RcEvent.VoiceRoom);
         ArrayList<Member> memberArrayList = new ArrayList<>();
         //房间内所有人
         ArrayList<UiSeatModel> uiSeatModels = voiceRoomModel.getUiSeatModels();
@@ -1200,7 +1194,6 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
     private void deleteRoom() {
         //房主关闭房间，调用删除房间接口
         if (mVoiceRoomBean != null)
-            SensorsUtil.instance().closeRoom(getRoomId(), mVoiceRoomBean.getRoomName(), "", RcEvent.VoiceRoom);
         OkApi.get(VRApi.deleteRoom(mVoiceRoomBean.getRoomId()), null, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
@@ -1402,7 +1395,6 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                 mView.showToast("请先上麦之后再播放音乐");
             }
         }
-        SensorsUtil.instance().settingClick(getRoomId(), mVoiceRoomBean.getRoomName(), fun.getText(), RoomFunIdUitls.convert(fun), RcEvent.VoiceRoom);
     }
 
     /**
