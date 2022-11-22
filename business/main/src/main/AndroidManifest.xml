@@ -45,7 +45,7 @@
             android:name=".activity.MoneyInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MyWalletActivity"
+            android:name=".activity.me.MyWalletActivity"
             android:exported="false" />
         <activity
             android:name=".activity.me.VipActivity"
@@ -60,7 +60,7 @@
             android:name=".activity.me.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MeInfoActivity"
+            android:name=".activity.me.MeInfoActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ShopActivity"

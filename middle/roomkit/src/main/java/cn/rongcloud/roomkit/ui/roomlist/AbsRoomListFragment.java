@@ -38,7 +38,7 @@ import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
 import cn.rongcloud.roomkit.ui.other.MySxActivity;
 import cn.rongcloud.roomkit.ui.other.PHActivity;
-import cn.rongcloud.roomkit.ui.other.SearchActivity;
+import cn.rongcloud.roomkit.ui.other.MainSearchActivity;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
 import io.rong.imkit.picture.tools.ToastUtils;
 
@@ -87,7 +87,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
         ImageView money = getView(R.id.money);
         search.setOnClickListener(view -> {
             Intent intent = new Intent();
-            intent.setClass(getActivity(), SearchActivity.class);
+            intent.setClass(getActivity(), MainSearchActivity.class);
             startActivity(intent);
         });
         ph.setOnClickListener(view -> {

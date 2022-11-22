@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".ui.other.SearchActivity"
+            android:name=".ui.other.MainSearchActivity"
             android:exported="false" />
         <activity
             android:name=".ui.other.PHActivity"

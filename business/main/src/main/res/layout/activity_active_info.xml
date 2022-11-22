@@ -37,24 +37,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tvActive" />
 
     <TextView
-        android:id="@+id/t1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="35dp"
-        android:text="活动规则:"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list" />
-    <TextView
         android:id="@+id/tvRule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
         android:text="@string/active"
         android:textColor="@color/white"
         android:textSize="@dimen/font_16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/t1" />
+        app:layout_constraintTop_toBottomOf="@+id/list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

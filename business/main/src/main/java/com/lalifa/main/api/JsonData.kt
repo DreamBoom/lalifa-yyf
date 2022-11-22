@@ -134,8 +134,8 @@ data class MoneyListBean(
     val core_currency: String,
     val core_drill: String,
     val count: Int,
-    val exchange: List<Exchange>,
-    val record: List<MoneyRecord>,
+    val exchange: ArrayList<Exchange>,
+    val record: ArrayList<MoneyRecord>,
     val subscription_ratio: String
 )
 

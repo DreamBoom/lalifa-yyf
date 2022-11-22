@@ -1,14 +1,18 @@
-package com.lalifa.main.activity
+package com.lalifa.main.activity.me
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.core.content.ContextCompat
+import cn.rongcloud.config.UserManager
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.base.BaseListFragment
+import com.lalifa.ext.Config
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.che.CheInfoActivity
+import com.lalifa.main.activity.me.EditMyInfoActivity
 import com.lalifa.main.adapter.cheMyList
 import com.lalifa.main.api.Dynamic
 import com.lalifa.main.api.dzChe
@@ -19,8 +23,18 @@ import com.lalifa.main.fragment.MeTab1Fragment
 class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     override fun getViewBinding() = ActivityMeInfoBinding.inflate(layoutInflater)
 
+    @SuppressLint("SetTextI18n")
     override fun initView() {
         binding.apply {
+            header.load(Config.FILE_PATH+ UserManager.get()!!.avatar)
+            name.text = UserManager.get()!!.userName
+
+            if(UserManager.get()!!.gender==0){
+                sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_boy)
+            }else{
+                sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_gril)
+            }
+            mId.text = "ID:${UserManager.get()!!.id}"
             viewPager.fragmentAdapter(
                 supportFragmentManager,
                 arrayListOf("关于TA", "动态", "守护神", "礼物")
@@ -45,6 +59,9 @@ class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
         binding.apply {
             back.onClick { finish() }
             bgEdit.onClick {
+                start(EditMyInfoActivity::class.java)
+            }
+            bgTop.onClick {
                 imagePick(maxCount = 1) {
                     bgTop.load(it[0].path)
                 }

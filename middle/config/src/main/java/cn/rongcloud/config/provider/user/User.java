@@ -28,6 +28,7 @@ public class User implements Serializable, Provide {
     private String createtime;
     private Long expiretime;
     private Long expires_in;
+    private int gender = 0;
 
     @Override
     public String toString() {
@@ -39,14 +40,22 @@ public class User implements Serializable, Provide {
                 ", avatar='" + avatar + '\'' +
                 ", score=" + score +
                 ", imToken='" + imToken + '\'' +
-                ", token='" + token + '\'' +
                 ", userId='" + userId + '\'' +
+                ", token='" + token + '\'' +
                 ", user_id='" + user_id + '\'' +
                 ", createtime='" + createtime + '\'' +
                 ", expiretime=" + expiretime +
                 ", expires_in=" + expires_in +
-                ", authorization='" + '\'' +
+                ", gender=" + gender +
                 '}';
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getUser_id() {

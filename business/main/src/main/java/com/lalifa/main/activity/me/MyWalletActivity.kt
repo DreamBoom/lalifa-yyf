@@ -1,18 +1,20 @@
-package com.lalifa.main.activity
+package com.lalifa.main.activity.me
 
 import android.graphics.Color
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import cn.rongcloud.roomkit.ui.other.MySxActivity
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListFragment
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.extension.*
 import com.lalifa.main.R
+import com.lalifa.main.activity.MoneyInfoActivity
 import com.lalifa.main.adapter.moneyList
+import com.lalifa.main.api.Exchange
 import com.lalifa.main.api.wallet
 import com.lalifa.main.databinding.ActivityMyMoneyBinding
-import com.lalifa.widget.percent.PercentFrameLayout
+import com.lalifa.main.ext.showDh
 
 
 class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
@@ -54,10 +56,10 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
         super.onClick()
         binding.apply {
             cz.onClick {
-
+                start(MySxActivity::class.java)
             }
             dh.onClick {
-
+                showDh(MoneyFragment.list)
             }
             tx.onClick {
 
@@ -68,17 +70,19 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
 
 
 class MoneyFragment(val type: Int) : BaseListFragment() {
+    companion object{
+        var list = ArrayList<Exchange>()
+    }
     override fun initView() {
         super.initView()
-        binding.recyclerView.moneyList().apply {
-
-        }
+        binding.recyclerView.moneyList()
     }
 
     override fun PageRefreshLayout.getData() {
         scopeNetLife {
             val dynamic = wallet(type.toString(), index.toString())
-            addData(dynamic!!.record)
+            list = dynamic!!.exchange
+            addData(dynamic.record)
         }
     }
 }

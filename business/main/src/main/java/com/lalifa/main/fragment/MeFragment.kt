@@ -54,7 +54,6 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
             } }
             gifs.onClick { start(GiftActivity::class.java) }
             vip.onClick { start(VipActivity::class.java) }
-            header.onClick { start(EditMyInfoActivity::class.java) }
             num1.onClick { start(FanActivity::class.java) }
             nm1.onClick { start(FanActivity::class.java) }
             num3.onClick { start(FanActivity::class.java) }

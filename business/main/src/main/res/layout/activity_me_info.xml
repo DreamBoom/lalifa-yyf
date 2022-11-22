@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.MeInfoActivity">
+    tools:context=".activity.me.MeInfoActivity">
 
     <ImageView
         android:id="@+id/bgTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/me_bg_top"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="210dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
         android:id="@+id/bgEdit"
@@ -64,11 +65,11 @@
         app:layout_constraintTop_toTopOf="@+id/header" />
 
     <TextView
-        android:id="@+id/id"
+        android:id="@+id/mId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
-        android:text="在线 | ID:666666"
+        android:text="ID:666666"
         android:textColor="@color/white"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/header"

@@ -13,7 +13,7 @@ import com.lalifa.main.databinding.ActivityActiveBinding
 
 class ActiveActivity : BaseTitleActivity<ActivityActiveBinding>() {
     override fun getViewBinding()= ActivityActiveBinding.inflate(layoutInflater)
-
+    override fun title()= "活动列表"
     override fun initView() {
         scopeNetLife {
             val activity = getActivity()

@@ -1,13 +1,12 @@
 package com.lalifa.main.fragment
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import cn.rongcloud.roomkit.ui.other.MySxActivity
 import cn.rongcloud.roomkit.ui.other.PHActivity
-import cn.rongcloud.roomkit.ui.other.SearchActivity
+import cn.rongcloud.roomkit.ui.other.MainSearchActivity
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
 import com.drake.net.utils.scopeNetLife
@@ -31,7 +30,6 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
     ) = ViewMainHomeBinding.inflate(layoutInflater)
 
     override fun initView() {
-        val list = arrayListOf(com.lalifa.base.R.mipmap.banner1)
         binding.apply {
             mList1.grid(3).setup {
                 addType<String>(R.layout.item_home1)
@@ -51,7 +49,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         scopeNetLife {
             val index = index()
             binding.gg.text = "${index!!.notice.n_title}:${index.notice.n_message_content}"
-            if(index.carousel.isNullOrEmpty()){
+            if(index.carousel.isNotEmpty()){
                 val imgList = arrayListOf<String>()
                 for ( item in index.carousel){
                     imgList.add(Config.FILE_PATH+item.image)
@@ -79,7 +77,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         binding.apply {
             shop.onClick { start(ShopActivity::class.java) }
             active.onClick { start(ActiveActivity::class.java) }
-            search.onClick { start(SearchActivity::class.java) }
+            search.onClick { start(MainSearchActivity::class.java) }
             ph.onClick { start(PHActivity::class.java) }
             money.onClick { start(MySxActivity::class.java) }
         }

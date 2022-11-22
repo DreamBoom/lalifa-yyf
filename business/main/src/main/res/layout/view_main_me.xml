@@ -295,38 +295,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@mipmap/me_bg"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="20dp"
-                android:src="@mipmap/icon_yhg" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="高人一等，尊享贵族体验"
-                android:textColor="@color/white"
-                android:textSize="14dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="20dp"
-                android:src="@mipmap/icon_hy" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/co9"
             android:layout_width="match_parent"

@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="绑定银行卡"
+                android:text="绑定微信"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_16" />
 
@@ -136,7 +136,6 @@
                 android:drawableEnd="@drawable/ic_white_back"
                 android:gravity="end"
                 android:padding="15dp"
-                android:text="去绑定"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_16" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -205,6 +204,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:layout_margin="15dp"
             android:gravity="center"
             android:background="@color/black1"
             android:text="退出登录"
