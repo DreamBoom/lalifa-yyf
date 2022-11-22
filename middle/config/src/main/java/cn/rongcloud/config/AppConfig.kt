@@ -6,8 +6,6 @@ import cn.rongcloud.config.AppConfig
 import cn.rongcloud.config.init.ModuleManager
 import io.rong.imkit.conversation.extension.RongExtensionManager
 import cn.rongcloud.config.ryutiles.MyGiftConfig
-import cn.rongcloud.rtc.api.RCRTCConfig
-import cn.rongcloud.rtc.api.RCRTCEngine
 import com.drake.channel.sendTag
 import com.drake.net.utils.TipUtils
 import com.lalifa.api.JsonHttpConverter
@@ -22,7 +20,6 @@ class AppConfig {
     }
 
     fun init(
-        context:Context,
         appKey: String,
         umengAppKey: String,
         baseServerAddress: String,

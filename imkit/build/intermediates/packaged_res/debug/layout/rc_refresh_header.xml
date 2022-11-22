@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     tools:paddingTop="20dp"
     tools:paddingBottom="20dp"
-    tools:background="#000"
+    tools:background="#eee"
     tools:parentTag="android.widget.RelativeLayout">
 
     <ImageView

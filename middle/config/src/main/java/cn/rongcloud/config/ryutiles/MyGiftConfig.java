@@ -3,8 +3,6 @@ package cn.rongcloud.config.ryutiles;
 import java.util.List;
 import java.util.ListIterator;
 
-import io.rong.callkit.AudioPlugin;
-import io.rong.callkit.VideoPlugin;
 import io.rong.imkit.conversation.extension.DefaultExtensionConfig;
 import io.rong.imkit.conversation.extension.component.plugin.FilePlugin;
 import io.rong.imkit.conversation.extension.component.plugin.IPluginModule;

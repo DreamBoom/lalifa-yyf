@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background = "#000000"
     android:padding="15dp">
 
     <ProgressBar
@@ -17,7 +16,7 @@
         android:layout_height="wrap_content"
         style="@style/TextStyle.Alignment"
         android:text="@string/rc_loadmore_loading"
-        android:textColor="#ffffff"
+        android:textColor="#717171"
         android:textSize="14sp" />
 
 </LinearLayout>

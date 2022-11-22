@@ -21,7 +21,7 @@ public class MyPlugin implements IPluginModule {
      */
     @Override
     public Drawable obtainDrawable(Context context) {
-        return context.getResources().getDrawable(R.drawable.ic_bubble_loading); //示例代码
+        return context.getResources().getDrawable(R.drawable.sendgift); //示例代码
     }
     /**
      * 获取 plugin 标题

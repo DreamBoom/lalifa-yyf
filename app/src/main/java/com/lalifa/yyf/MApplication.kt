@@ -56,7 +56,6 @@ class MApplication : BaseApplication() {
         //LogCat.setDebug(BuildConfig.DEBUG, MApplication.get().getString(R.string.app_name))
         ARouterWrapper.init(this)
         AppConfig.get().init(
-            this,
             APP_KEY,
             UM_APP_KEY,
             BASE_SERVER_ADDRES,
