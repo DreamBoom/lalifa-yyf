@@ -70,7 +70,7 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
             }
             ((ViewGroup) content).addView(defaultBarView, 0);
             Toolbar toolbar = defaultBarView.findViewById(R.id.basis_toolbar);
-            toolbar.setNavigationIcon(backRes == -1 ? com.lalifa.base.R.drawable.ic_back : backRes);
+            toolbar.setNavigationIcon(backRes == -1 ? com.lalifa.base.R.drawable.ic_base_back : backRes);
             activity.setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -165,7 +165,7 @@ public class ActionWrapBar implements IWrapBar<ActionWrapBar> {
             if (null != title) tvTitle.setText(title);
             if (elevation > -1) actionBar.setElevation(elevation);
             actionBar.setDisplayHomeAsUpEnabled(!backHide);
-            actionBar.setHomeAsUpIndicator(backRes == -1 ? com.lalifa.base.R.drawable.ic_back : backRes);
+            actionBar.setHomeAsUpIndicator(backRes == -1 ? com.lalifa.base.R.drawable.ic_base_back : backRes);
             if (noneBar) {
                 actionBar.hide();
             } else {

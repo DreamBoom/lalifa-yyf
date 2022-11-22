@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.MyChe">
+    tools:context=".activity.che.MyChe">
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/list"
     tools:listitem="@layout/item_che"

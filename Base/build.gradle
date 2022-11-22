@@ -147,4 +147,7 @@ dependencies {
     api 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
 
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    //支付宝
+    api 'com.alipay.sdk:alipaysdk-android:+@aar'
 }

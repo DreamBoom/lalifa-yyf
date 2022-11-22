@@ -250,8 +250,8 @@ suspend fun CoroutineScope.titles(): ArrayList<TitleBean>? {
  * @param page 页码
  * @return ReleaseBean?
  */
-suspend fun CoroutineScope.release(page:Int): ReleaseBean? {
-    return Post<BaseBean<ReleaseBean>>("user/release") {
+suspend fun CoroutineScope.release(page:Int): CheListBean? {
+    return Post<BaseBean<CheListBean>>("user/release") {
         param("offset", page)
     }.await().data
 }

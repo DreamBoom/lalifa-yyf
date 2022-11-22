@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent"
-    tools:context=".activity.CallUs">
+    tools:context=".activity.me.CallUs">
 <ImageView
     android:id="@+id/code"
     android:background="@color/white"

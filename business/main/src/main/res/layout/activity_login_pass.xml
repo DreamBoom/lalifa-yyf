@@ -9,7 +9,7 @@
         android:layout_width="50dp"
         android:layout_height="44dp"
         android:scaleType="center"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_base_back" />
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imHeader"
         android:layout_width="80dp"

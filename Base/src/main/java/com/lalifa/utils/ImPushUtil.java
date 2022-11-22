@@ -18,12 +18,12 @@ public class ImPushUtil {
     private static ImPushUtil sInstance;
     private boolean mClickNotification;
     private int mNotificationType;
-    private BaseApplication context;
-    private ImPushUtil(BaseApplication context) {
+    private Context context;
+    private ImPushUtil(Context context) {
         this.context = context;
     }
 
-    public static ImPushUtil getInstance(BaseApplication context) {
+    public static ImPushUtil getInstance(Context context) {
         if (sInstance == null) {
             synchronized (ImPushUtil.class) {
                 if (sInstance == null) {

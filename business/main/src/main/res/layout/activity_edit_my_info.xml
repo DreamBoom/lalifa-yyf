@@ -8,7 +8,7 @@
     android:orientation="vertical"
     app:divider="@color/white"
     app:showDividers="middle"
-    tools:context=".activity.EditMyInfoActivity">
+    tools:context=".activity.me.EditMyInfoActivity">
 
     <RelativeLayout
         android:id="@+id/cHeader"

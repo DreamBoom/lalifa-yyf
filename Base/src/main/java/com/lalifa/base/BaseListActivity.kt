@@ -1,35 +1,23 @@
 package com.lalifa.base
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.drake.brv.PageRefreshLayout
 import com.drake.brv.utils.page
-import com.drake.logcat.LogCat
-import com.drake.net.utils.scope
 import com.drake.statusbar.immersive
 import com.drake.statusbar.statusPadding
-import com.lalifa.base.databinding.CommonLayoutBinding
 import com.lalifa.base.databinding.CommonListLayoutBinding
-import com.lalifa.base.databinding.LayoutCommonListBinding
 import com.lalifa.extension.applyVisible
 import com.lalifa.extension.onClick
-import com.lalifa.extension.visible
-import java.lang.Exception
-import java.lang.reflect.ParameterizedType
 
 abstract class BaseListActivity : AppCompatActivity() {
     private lateinit var mainBinding: CommonListLayoutBinding
@@ -46,7 +34,7 @@ abstract class BaseListActivity : AppCompatActivity() {
     open fun blackText(): String = ""
 
     //返回图标
-    open fun blackImage(): Int = R.drawable.ic_back
+    open fun blackImage(): Int = R.drawable.ic_base_back
 
     //标题颜色
     open fun titleColor(): Int = 0

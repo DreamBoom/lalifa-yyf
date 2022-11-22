@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:paddingEnd="@dimen/font_20"
             android:scaleType="center"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_base_back" />
 
         <TextView
             android:id="@+id/title"

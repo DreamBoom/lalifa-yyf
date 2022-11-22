@@ -9,4 +9,4 @@
     android:layout_width="24dp"
     android:layout_height="24dp"
     android:scaleType="centerCrop"
-    app:srcCompat="@drawable/ic_back" />
+    app:srcCompat="@drawable/ic_base_back" />

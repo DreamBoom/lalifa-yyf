@@ -9,6 +9,8 @@ import com.lalifa.extension.load
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.main.activity.*
+import com.lalifa.main.activity.che.MyChe
+import com.lalifa.main.activity.me.*
 import com.lalifa.main.api.userInfo
 import com.lalifa.main.databinding.ViewMainMeBinding
 
@@ -50,6 +52,7 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
                 putExtra("drill",drill.text.toString())
                 putExtra("money",money.text.toString())
             } }
+            gifs.onClick { start(GiftActivity::class.java) }
             vip.onClick { start(VipActivity::class.java) }
             header.onClick { start(EditMyInfoActivity::class.java) }
             num1.onClick { start(FanActivity::class.java) }
@@ -57,9 +60,9 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
             num3.onClick { start(FanActivity::class.java) }
             nm3.onClick { start(FanActivity::class.java) }
             pack.onClick { start(Knapsack::class.java) }
-            feelBack.onClick { start(FeedBack::class.java) }
             kf.onClick { start(CallUs::class.java) }
             share.onClick { start(MyChe::class.java) }
+            shop.onClick { start(ShopActivity::class.java) }
         }
     }
 }

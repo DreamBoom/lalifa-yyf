@@ -1,11 +1,8 @@
 package cn.rongcloud.config;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.lalifa.ui.IBasis;
 import com.lalifa.ui.UIStack;
 import com.lalifa.utils.ObjToSP;
@@ -14,7 +11,6 @@ import java.util.List;
 
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
-import cn.rongcloud.config.router.RouterPath;
 import io.rong.imkit.RongIM;
 
 /**

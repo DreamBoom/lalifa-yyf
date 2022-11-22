@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="10dp"
-                android:text="访客"
+                android:text="守护神"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -346,70 +346,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/level"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/icon_me1"
-                android:drawablePadding="5dp"
-                android:gravity="center_horizontal"
-                android:paddingVertical="10dp"
-                android:text="用户等级"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintEnd_toStartOf="@+id/realName"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gn1" />
-
-            <TextView
-                android:id="@+id/realName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/icon_me2"
-                android:drawablePadding="5dp"
-                android:gravity="center_horizontal"
-                android:paddingVertical="10dp"
-                android:text="实名认证"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintEnd_toStartOf="@+id/myRoom"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/level"
-                app:layout_constraintTop_toBottomOf="@+id/gn1" />
-
-            <TextView
-                android:id="@+id/myRoom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/icon_me1"
-                android:drawablePadding="5dp"
-                android:gravity="center_horizontal"
-                android:paddingVertical="10dp"
-                android:text="收藏房间"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintEnd_toStartOf="@+id/focus"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/realName"
-                app:layout_constraintTop_toBottomOf="@+id/gn1" />
-
-            <TextView
-                android:id="@+id/focus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/icon_me4"
-                android:drawablePadding="5dp"
-                android:gravity="center_horizontal"
-                android:paddingVertical="10dp"
-                android:text="关注主播"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/myRoom"
-                app:layout_constraintTop_toBottomOf="@+id/gn1" />
-
-            <TextView
                 android:id="@+id/shop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -423,7 +359,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/pack"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/level" />
+                app:layout_constraintTop_toBottomOf="@+id/gn1" />
 
             <TextView
                 android:id="@+id/pack"
@@ -438,8 +374,8 @@
                 android:textSize="@dimen/font_14"
                 app:layout_constraintEnd_toStartOf="@+id/share"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/level"
-                app:layout_constraintTop_toBottomOf="@+id/level" />
+                app:layout_constraintStart_toEndOf="@+id/shop"
+                app:layout_constraintTop_toBottomOf="@+id/gn1" />
 
             <TextView
                 android:id="@+id/share"
@@ -452,26 +388,26 @@
                 android:text="我的发布"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
-                app:layout_constraintEnd_toStartOf="@+id/feelBack"
+                app:layout_constraintEnd_toStartOf="@+id/gifs"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/pack"
-                app:layout_constraintTop_toBottomOf="@+id/level" />
+                app:layout_constraintTop_toBottomOf="@+id/gn1" />
 
             <TextView
-                android:id="@+id/feelBack"
+                android:id="@+id/gifs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableTop="@mipmap/icon_me8"
                 android:drawablePadding="5dp"
                 android:gravity="center_horizontal"
                 android:paddingVertical="10dp"
-                android:text="意见反馈"
+                android:text="礼物墙"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/share"
-                app:layout_constraintTop_toBottomOf="@+id/level" />
+                app:layout_constraintTop_toBottomOf="@+id/gn1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

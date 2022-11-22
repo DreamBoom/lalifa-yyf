@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.SettingActivity">
+    tools:context=".activity.me.SettingActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -116,6 +116,7 @@
                 android:textSize="@dimen/font_16" />
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/forget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -177,6 +178,7 @@
             android:textSize="@dimen/font_16" />
 
         <TextView
+            android:id="@+id/feelBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_white_back"

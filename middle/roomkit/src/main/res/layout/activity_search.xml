@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_base_back"
         app:layout_constraintBottom_toBottomOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/search" />

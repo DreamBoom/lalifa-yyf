@@ -19,8 +19,8 @@ suspend fun CoroutineScope.recharge(): RechargeBean? {
  * @receiver CoroutineScope
  * @return RechargeBean?
  */
-suspend fun CoroutineScope.pay(id:String,price:String,payType:String): RechargeBean? {
-    return Post<BaseBean<RechargeBean>>("user/recharge") {
+suspend fun CoroutineScope.pay(id:String,price:String,payType:String): String? {
+    return Post<BaseBean<String>>("user/recharge") {
         param("id", id)
         param("price", price)
         param("payType", payType)

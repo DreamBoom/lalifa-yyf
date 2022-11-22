@@ -7,6 +7,7 @@ import cn.rongcloud.roomkit.ui.other.fragment.PhFragment
 
 import com.lalifa.base.BaseActivity
 import com.lalifa.extension.fragmentAdapter
+import com.lalifa.extension.onClick
 import com.lalifa.extension.pageChangedListener
 
 class PHActivity : BaseActivity<ActivityPhactivityBinding>() {
@@ -32,6 +33,11 @@ class PHActivity : BaseActivity<ActivityPhactivityBinding>() {
             tabLayout.setViewPager(viewPager)
             tabLayout.currentTab = 0
         }
+    }
+
+    override fun onClick() {
+        super.onClick()
+        binding.back.onClick { finish() }
     }
 
 }

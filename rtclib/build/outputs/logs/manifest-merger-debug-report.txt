@@ -1,35 +1,35 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:1:1-25:12
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:1:1-25:12
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:1:1-25:12
+ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:1:1-25:12
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml:1:1-25:12
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml:1:1-25:12
 	package
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:2:5-34
-		INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-		INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:2:5-34
+		INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
+		INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:1:11-69
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:1:11-69
 application
-ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:19:5-24:19
+ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:19:5-24:19
 	android:supportsRtl
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:20:9-35
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:20:9-35
 meta-data#rc.rtclib
-ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:21:9-23:64
+ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:21:9-23:64
 	android:value
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:23:13-61
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:23:13-61
 	android:name
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml:22:13-37
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml:22:13-37
 uses-sdk
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
+INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-		INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
+		INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml
+		INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-		ADDED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
-		INJECTED from D:\work\LALIFA\yyf\rtclib\AndroidManifest.xml
+		INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml
+		ADDED from E:\work\yyf\rtclib\AndroidManifest.xml
+		INJECTED from E:\work\yyf\rtclib\AndroidManifest.xml

@@ -1,17 +1,17 @@
 package cn.rongcloud.roomkit.ui.other
 
+import android.os.Handler
+import android.os.Message
 import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
-import androidx.core.widget.addTextChangedListener
 import cn.rongcloud.roomkit.R
 import cn.rongcloud.roomkit.api.Rule
 import cn.rongcloud.roomkit.api.pay
 import cn.rongcloud.roomkit.api.recharge
 import cn.rongcloud.roomkit.databinding.ActivityMySxBinding
 import cn.rongcloud.roomkit.databinding.ItemCzBinding
+import com.alipay.sdk.app.PayTask
 import com.drake.brv.utils.grid
-import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
@@ -76,6 +76,25 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
     var payId = 0
     var payType = 1
     var money = 0.0
+    private val SDK_PAY_FLAG = 1
+    val mHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            val payResult = PayResult(msg.obj as Map<String?, String?>)
+            /**
+             * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+             */
+            val resultInfo: String = payResult.getResult() // 同步返回需要验证的信息
+            val resultStatus: String = payResult.getResultStatus()
+            // 判断resultStatus 为9000则代表支付成功
+            if (TextUtils.equals(resultStatus, "9000")) {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                toast("====111"+resultInfo)
+            } else {
+                // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                toast("====222"+resultInfo)
+            }
+        }
+    }
     override fun onClick() {
         super.onClick()
         binding.apply {
@@ -96,7 +115,23 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
                         return@onClick
                     }
                 }
-                scopeNetLife { pay(payId.toString(), money.toString(), payType.toString()) }
+                scopeNetLife {
+                    val pay1 = pay(payId.toString(), money.toString(), payType.toString())
+                    if(payType == 1){
+                        val orderInfo = pay1 // 订单信息
+                        val payRunnable = Runnable {
+                            val alipay = PayTask(this@MySxActivity)
+                            val result = alipay.payV2(orderInfo, true)
+                            val msg = Message()
+                            msg.what = SDK_PAY_FLAG
+                            msg.obj = result
+                            mHandler.sendMessage(msg)
+                        }
+                        // 必须异步调用
+                        val payThread = Thread(payRunnable)
+                        payThread.start()
+                    }
+                }
             }
         }
     }

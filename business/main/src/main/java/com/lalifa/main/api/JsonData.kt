@@ -207,31 +207,6 @@ data class SpecialEffect(
 )
 
 /**
- * @Des 我的发布
- */
-data class ReleaseBean(
-    val count: Int,
-    val `dynamic`: List<Dynamic>
-)
-
-data class Dynamic(
-    val avatar: String,
-    val browse: String,
-    val comment_count: Int,
-    val content: String,
-    val create_time: String,
-    val fabulous: Int,
-    val fabulous_type: Int,
-    val gender: Int,
-    val id: Int,
-    val image: List<String>,
-    val level: String,
-    val share: Int,
-    val status: Int,
-    val uid: Int,
-    val userName: String
-)
-/**
  * @Des 活动列表
  */
 data class ActivityBean(
@@ -316,10 +291,10 @@ data class ImgBean(
  */
 data class CheListBean(
     val count: Int,
-    val `dynamic`: List<Dynamic1>
+    val dynamic: List<Dynamic>
 )
 
-data class Dynamic1(
+data class Dynamic(
     val avatar: String,
     val browse: String,
     val comment_count: Int,
@@ -330,7 +305,7 @@ data class Dynamic1(
     val gender: Int,
     val id: Int,
     val image: List<String>,
-    val level: Int,
+    val level: String,
     val num: Int,
     val share: Int,
     val status: Int,

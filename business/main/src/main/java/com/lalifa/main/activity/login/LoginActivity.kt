@@ -97,11 +97,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun loginUser() {
         scopeNetLife {
-            val user = login("13462439645", "111111")
+            val user = login("15838069904", "123456")
             if (null != user) {
                 //在jpush上设置别名
                 JPushInterface.setAlias(
-                    this@LoginActivity, "13462439645"
+                    this@LoginActivity, user.userinfo.userId
                 ) { i, s, set ->
                     if (i == 0) {
                         LogCat.e("设置别名成功")

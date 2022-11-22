@@ -40,12 +40,14 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                 if (etPass.isEmp()) {
                     toast("请输入密码")
                 }
+                login.disable()
                 scopeNetLife {
                     val user = login(etPhone.text(), etPass.text())
                     if (null != user) {
+                        login.enable()
                         //在jpush上设置别名
                         JPushInterface.setAlias(
-                            this@LoginPassActivity, "13462439645"
+                            this@LoginPassActivity, user.userinfo.userId
                         ) { i, s, set ->
                             if (i == 0) {
                                 LogCat.e("设置别名成功")

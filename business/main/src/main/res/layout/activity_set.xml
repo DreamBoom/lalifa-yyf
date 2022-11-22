@@ -8,7 +8,7 @@
     android:orientation="vertical"
     app:divider="@color/white"
     app:showDividers="middle"
-    tools:context=".activity.SetActivity">
+    tools:context=".activity.me.SetActivity">
 
     <TextView
         android:layout_width="match_parent"

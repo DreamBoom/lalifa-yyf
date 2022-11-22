@@ -58,7 +58,7 @@
         android:drawableStart="@mipmap/icon_xz"
         android:drawablePadding="5dp"
         android:hint="输入充值金额【6-10000】元"
-        android:inputType="numberSigned"
+        android:inputType="number"
         android:maxLength="5"
         android:padding="10dp"
         android:text=""

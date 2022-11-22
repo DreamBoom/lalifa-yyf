@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context=".activity.ModelActivity">
+    tools:context=".activity.me.ModelActivity">
 
     <ImageView
         android:background="@mipmap/bg_model"

@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.FanActivity">
+    tools:context=".activity.me.FanActivity">
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
-        app:layout_constraintStart_toEndOf="@+id/back"
+        app:tl_tab_space_equal="true"
+        android:layout_marginHorizontal="60dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/back"
@@ -28,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_base_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
