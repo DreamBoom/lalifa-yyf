@@ -83,6 +83,9 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
             immersive(ContextCompat.getColor(this,R.color.black),darkMode = darkMode())
         }
     }
+    open fun setTitle(title:String){
+        mainBinding.topBar.title.text = title
+    }
 
     open fun getRightIcon(): Drawable?=null
     abstract fun getViewBinding(): T

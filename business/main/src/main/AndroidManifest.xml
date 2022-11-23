@@ -4,19 +4,17 @@
 
     <application>
         <activity
+            android:name=".activity.me.BindActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activity.me.BindPhoneActivity"
+            android:exported="false"/>
+        <activity
             android:name=".activity.me.GiftActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".activity.friend.SearchActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".activity.ActiveInfo"
             android:exported="false" />

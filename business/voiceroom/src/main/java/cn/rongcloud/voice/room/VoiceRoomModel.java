@@ -28,7 +28,9 @@ import com.lalifa.utils.KToast;
 import com.lalifa.utils.UIKit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
@@ -136,11 +138,11 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
      */
     public Observable<UiSeatModel> obSeatInfoByIndex(int index) {
         return seatListChangeSubject.map(new Function<List<UiSeatModel>, UiSeatModel>() {
-            @Override
-            public UiSeatModel apply(List<UiSeatModel> uiSeatModels) throws Throwable {
-                return uiSeatModels.get(index);
-            }
-        }).subscribeOn(dataModifyScheduler)
+                    @Override
+                    public UiSeatModel apply(List<UiSeatModel> uiSeatModels) throws Throwable {
+                        return uiSeatModels.get(index);
+                    }
+                }).subscribeOn(dataModifyScheduler)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -193,6 +195,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
     public void onRoomKVReady() {
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onRoomDestroy() {
@@ -366,6 +369,7 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
             RCChatRoomMessageManager.onReceiveMessage(present.getRoomId(), message.getContent());
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     @Override
     public void onRoomNotificationReceived(String name, String content) {
@@ -587,12 +591,13 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
 
     /**
      * 通过网络去获取最新的房间信息
-     *
      * @param roomId
      * @return
      */
     public void queryRoomInfoFromServer(String roomId) {
-        OkApi.get(VRApi.getRoomInfo(roomId), null, new WrapperCallBack() {
+        Map<String, Object> params = new HashMap<>(8);
+        params.put("id", roomId);
+        OkApi.post(VRApi.getRoomInfo(), params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {
@@ -781,22 +786,22 @@ public class VoiceRoomModel extends BaseModel<VoiceRoomPresenter> implements RCV
         seatInfoByUserId.setExtra(extra);
         UiSeatModel.UiSeatModelExtra finalExtra = extra;
         return Completable.create(new CompletableOnSubscribe() {
-            @Override
-            public void subscribe(@io.reactivex.rxjava3.annotations.NonNull CompletableEmitter emitter) throws Throwable {
-                RCVoiceRoomEngine.getInstance().disableAudioRecording(finalExtra.isDisableRecording());
-                RCVoiceRoomEngine.getInstance().updateSeatInfo(0, GsonUtil.obj2Json(finalExtra), new RCVoiceRoomCallback() {
                     @Override
-                    public void onSuccess() {
-                        emitter.onComplete();
-                    }
+                    public void subscribe(@io.reactivex.rxjava3.annotations.NonNull CompletableEmitter emitter) throws Throwable {
+                        RCVoiceRoomEngine.getInstance().disableAudioRecording(finalExtra.isDisableRecording());
+                        RCVoiceRoomEngine.getInstance().updateSeatInfo(0, GsonUtil.obj2Json(finalExtra), new RCVoiceRoomCallback() {
+                            @Override
+                            public void onSuccess() {
+                                emitter.onComplete();
+                            }
 
-                    @Override
-                    public void onError(int code, String message) {
-                        emitter.onError(new Throwable(message));
+                            @Override
+                            public void onError(int code, String message) {
+                                emitter.onError(new Throwable(message));
+                            }
+                        });
                     }
-                });
-            }
-        }).subscribeOn(dataModifyScheduler)
+                }).subscribeOn(dataModifyScheduler)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

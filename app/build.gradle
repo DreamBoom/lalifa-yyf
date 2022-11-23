@@ -39,12 +39,6 @@ android {
 
         // 写modes到BuildConfig
         buildConfigField("String[]", "YYF", "${modes()}")
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
     }
 
     signingConfigs {

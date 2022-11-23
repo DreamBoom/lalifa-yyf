@@ -9,6 +9,7 @@ import cn.rongcloud.config.init.ModuleManager
 import cn.rongcloud.config.router.ARouterWrapper
 import cn.rongcloud.roomkit.RoomKitInit
 import cn.rongcloud.thirdcdn.ThirdCDNConstant
+import com.alibaba.android.arouter.launcher.ARouter
 import com.drake.channel.sendTag
 import com.drake.net.utils.TipUtils
 import com.lalifa.api.JsonHttpConverter
@@ -38,7 +39,6 @@ class MApplication : BaseApplication() {
         super.onCreate()
         val process = SystemUtil.getProcessName()
         // 过滤非主进程
-        // 过滤非主进程
         if (!TextUtils.equals(process, packageName)) {
             return
         }
@@ -54,12 +54,17 @@ class MApplication : BaseApplication() {
     private fun initConfig() {
         ImPushUtil.getInstance(this).init()
         //LogCat.setDebug(BuildConfig.DEBUG, MApplication.get().getString(R.string.app_name))
+        if (BuildConfig.DEBUG) {
+            // 两行开启日志代码必须写在init之前，否则这些配置在init过程中将无效
+            ARouter.openLog()  // 打印日志
+            ARouter.openDebug()// 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+        }
         ARouterWrapper.init(this)
+        ARouter.init(this);
         AppConfig.get().init(
             APP_KEY,
             UM_APP_KEY,
             BASE_SERVER_ADDRES,
-            BUSINESS_TOKEN,
             INTERIAL,
             YYF!!
         )

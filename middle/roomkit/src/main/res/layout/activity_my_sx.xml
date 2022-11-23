@@ -82,9 +82,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
+            android:paddingVertical="7dp"
             android:paddingStart="15dp"
             android:text="支付宝"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:drawableStart="@mipmap/icon_zhifub"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
         <ImageView
@@ -112,9 +115,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
+            android:paddingVertical="7dp"
             android:paddingStart="15dp"
             android:text="微信"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:drawableStart="@mipmap/icon_wixinzf"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
         <ImageView

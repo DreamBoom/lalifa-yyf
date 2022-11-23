@@ -27,8 +27,8 @@ public class OKModule implements IModule {
                 if (null != user && !TextUtils.isEmpty(user.getAuthorization())) {
                     map.put("Authorization", user.getAuthorization());
                 }
-                if (!TextUtils.isEmpty(AppConfig.get().getBusinessToken())) {
-                    map.put("BusinessToken", AppConfig.get().getBusinessToken());
+                if (null != user && !TextUtils.isEmpty(user.getToken())) {
+                    map.put("token", UserManager.get().getToken());
                 }
                 return map;
             }

@@ -13,6 +13,8 @@ import com.lalifa.main.databinding.ActivitySettingBinding
 import com.lalifa.utils.ImPushUtil
 import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.ext.showTipDialog
+import java.util.*
+import kotlin.collections.HashMap
 
 class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
     override fun getViewBinding() = ActivitySettingBinding.inflate(layoutInflater)
@@ -26,6 +28,13 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
         binding.apply {
             set.onClick { start(SetActivity::class.java) }
             logOut.onClick { }
+            bindPhone.onClick { start(BindPhoneActivity::class.java) }
+            bindZfb.onClick { start(BindActivity::class.java){
+                putExtra("type",0)
+            } }
+            bindWx.onClick { start(BindActivity::class.java){
+                putExtra("type",1)
+            } }
             qsn.onClick { start(ModelActivity::class.java) }
             realName.onClick { start(RealName::class.java) }
             feelBack.onClick { start(FeedBack::class.java) }

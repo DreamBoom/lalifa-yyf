@@ -1,6 +1,8 @@
 package com.lalifa.main.activity
 
+import cn.rongcloud.config.router.RouterPath
 import cn.rongcloud.voice.roomlist.VoiceRoomListFragment
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.lalifa.base.BaseActivity
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
@@ -10,7 +12,7 @@ import com.lalifa.main.databinding.ActivityHomeBinding
 import com.lalifa.main.fragment.MainFragment
 import com.lalifa.main.fragment.MeFragment
 import com.lalifa.main.fragment.MessageFragment
-
+@Route(path = RouterPath.ROUTER_MAIN)
 class MainActivity : BaseActivity<ActivityHomeBinding>() {
     override fun initView() {
         binding.apply {

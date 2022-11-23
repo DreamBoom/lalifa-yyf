@@ -1,6 +1,7 @@
 package com.lalifa.main.ext
 
 import android.view.Gravity
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -63,16 +64,17 @@ fun showPriceDialog(bean: GoodInfoBean, callback: (id: Int) -> Unit = {}) {
 
 }
 
-fun showDh(list:ArrayList<Exchange>) {
-    var mMoney = 0.0
-    var payId = 0
+fun showDh(list:ArrayList<Exchange>,callback: (id: Int) -> Unit = {}) {
+    var payId = -1
     DialogLayer()
         .contentView(R.layout.dialog_dh)
         .gravity(Gravity.BOTTOM)
         .backgroundDimDefault()
         .setOutsideTouchToDismiss(true)
+        .addOnClickToDismissListener(R.id.dhClose)
         .onInitialize {
-            findViewById<RecyclerView>(R.id.infoList)!!.grid(2).setup {
+            findViewById<RecyclerView>(R.id.infoList)!!
+                .grid(2).setup {
                 addType<Exchange>(cn.rongcloud.roomkit.R.layout.item_cz)
                 onBind {
                     val bean = getModel<Exchange>()
@@ -82,18 +84,31 @@ fun showDh(list:ArrayList<Exchange>) {
                     }
                 }
                 cn.rongcloud.roomkit.R.id.itemZs.onClick {
-                    mMoney = getModel<Exchange>().price.toDouble()
                     payId = getModel<Exchange>().id
                 }
             }.models = list
-            findViewById<TextView>(R.id.buy)!!.onClick {
-               if(mMoney==0.0){
-                   toast("请选择兑换数量")
-                   return@onClick
-               }
-                //todo huidia
+            findViewById<TextView>(R.id.dhBuy)!!.onClick {
+                callback.invoke(payId)
             }
         }
         .show()
+}
 
+fun showTx(money:Double,callback: (money: Double) -> Unit = {}) {
+    DialogLayer()
+        .contentView(R.layout.dialog_tx)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .addOnClickToDismissListener(R.id.txClose)
+        .onInitialize {
+            val etMoney = findViewById<EditText>(R.id.etMoney)
+            findViewById<TextView>(R.id.txAll)!!.onClick {
+                etMoney!!.setText(money.toString())
+            }
+            findViewById<TextView>(R.id.txBuy)!!.onClick {
+                callback.invoke(etMoney.double())
+            }
+        }
+        .show()
 }

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.drake.logcat.LogCat;
 import com.lalifa.ui.UIStack;
 import com.lalifa.utils.ImageLoader;
 import com.lalifa.utils.UiUtils;
@@ -147,6 +148,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
     @Override
     public void init() {
         mRoomId = getArguments().getString(ROOM_ID);
+        LogCat.e("=====mRoomId="+mRoomId);
         isCreate = getArguments().getBoolean(IntentWrap.KEY_IS_CREATE);
         clVoiceRoomView = (ConstraintLayout) getView().findViewById(R.id.cl_voice_room_view);
 
@@ -177,7 +179,8 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
             @Override
             public void accept(Unit unit) throws Throwable {
                 //添加防抖动
-                mMemberListFragment = new MemberListFragment(present.getRoomId(), VoiceRoomFragment.this);
+                mMemberListFragment = new MemberListFragment(present.getRoomId(),
+                        VoiceRoomFragment.this);
                 mMemberListFragment.show(getChildFragmentManager());
             }
         });
@@ -185,20 +188,11 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         rv_seat_list = getView(R.id.rv_seat_list);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         rv_seat_list.setLayoutManager(gridLayoutManager);
-        voiceRoomSeatsAdapter = new VoiceRoomSeatsAdapter(getActivity(), new VoiceRoomSeatsAdapter.OnClickVoiceRoomSeatsListener() {
-            @Override
-            public void clickVoiceRoomSeats(UiSeatModel uiSeatModel, int position) {
-                onClickVoiceRoomSeats(uiSeatModel, position);
-            }
-        });
+        voiceRoomSeatsAdapter = new VoiceRoomSeatsAdapter(getActivity(),
+                this::onClickVoiceRoomSeats);
         voiceRoomSeatsAdapter.setHasStableIds(true);
         rv_seat_list.setAdapter(voiceRoomSeatsAdapter);
-        mRoomTitleBar.setOnMenuClickListener().subscribe(new Consumer() {
-            @Override
-            public void accept(Object o) throws Throwable {
-                clickMenu();
-            }
-        });
+        mRoomTitleBar.setOnMenuClickListener().subscribe(o -> clickMenu());
 
         mNoticeView = getView(R.id.tv_notice);
         mNoticeView.setOnClickListener(v -> {
@@ -206,12 +200,8 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
         });
         // 背景
         mBackgroundImageView = getView(R.id.iv_background);
-        VoiceRoomProvider.provider().getAsyn(mRoomId, new IResultBack<VoiceRoomBean>() {
-            @Override
-            public void onResult(VoiceRoomBean voiceRoomBean) {
-                setRoomBackground(voiceRoomBean.getBackgroundUrl());
-            }
-        });
+        VoiceRoomProvider.provider().getAsyn(mRoomId, voiceRoomBean ->
+                setRoomBackground(voiceRoomBean.getBackgroundUrl()));
         // 房主座位
         mRoomSeatView = getView(R.id.room_seat_view);
 
@@ -256,12 +246,9 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
     @Override
     public void showNoticeDialog(boolean isEdit) {
 
-        mNoticeDialog.show(present.getNotice(), isEdit, new RoomNoticeDialog.OnSaveNoticeListener() {
-            @Override
-            public void saveNotice(String notice) {
-                //修改公告信息
-                present.modifyNotice(notice);
-            }
+        mNoticeDialog.show(present.getNotice(), isEdit, notice -> {
+            //修改公告信息
+            present.modifyNotice(notice);
         });
     }
 

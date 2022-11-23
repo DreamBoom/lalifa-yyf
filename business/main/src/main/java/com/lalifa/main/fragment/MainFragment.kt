@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import cn.rongcloud.roomkit.intent.IntentWrap
+import cn.rongcloud.roomkit.ui.RoomType
+import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager
+import cn.rongcloud.roomkit.ui.other.MainSearchActivity
 import cn.rongcloud.roomkit.ui.other.MySxActivity
 import cn.rongcloud.roomkit.ui.other.PHActivity
-import cn.rongcloud.roomkit.ui.other.MainSearchActivity
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
 import com.drake.net.utils.scopeNetLife
@@ -33,6 +36,12 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         binding.apply {
             mList1.grid(3).setup {
                 addType<String>(R.layout.item_home1)
+            }.apply {
+                R.id.itemRoom.onClick {
+                    val list: ArrayList<String> = ArrayList()
+                    list.add("1")
+                    launchRoomActivity("1", list, 0, false)
+                }
             }.models = arrayListOf("", "", "")
             mList2.grid(3).setup {
                 addType<String>(R.layout.item_home1)
@@ -42,6 +51,22 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
             }.models = arrayListOf("", "", "", "")
         }
         initData()
+    }
+    private fun launchRoomActivity(
+        roomId: String, roomIds: ArrayList<String>, position: Int, isCreate: Boolean
+    ) {
+        // 如果在其他房间有悬浮窗，先关闭再跳转
+        MiniRoomManager.getInstance().finish(
+            roomId
+        ) {
+            IntentWrap.launchRoom(
+                requireContext(),
+                RoomType.VOICE_ROOM,
+                roomIds,
+                position,
+                isCreate
+            )
+        }
     }
 
     @SuppressLint("SetTextI18n")

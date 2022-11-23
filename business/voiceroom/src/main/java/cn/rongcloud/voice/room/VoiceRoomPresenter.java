@@ -50,7 +50,6 @@ import java.util.Map;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.bean.VoiceRoomBean;
-import cn.rongcloud.config.feedback.RcEvent;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.music.MusicApi;
 import cn.rongcloud.music.MusicBean;
@@ -73,16 +72,13 @@ import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.ui.OnItemClickListener;
 import cn.rongcloud.roomkit.ui.RoomListIdsCache;
 import cn.rongcloud.roomkit.ui.RoomOwnerType;
-import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.room.dialog.shield.Shield;
 import cn.rongcloud.roomkit.ui.room.fragment.BackgroundSettingFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
 import cn.rongcloud.roomkit.ui.room.fragment.MemberSettingFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.gift.GiftFragment;
-import cn.rongcloud.roomkit.ui.room.fragment.gift.VideoGiftFragment;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.IFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomBackgroundFun;
-import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomFunIdUitls;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomLockAllSeatFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomLockFun;
 import cn.rongcloud.roomkit.ui.room.fragment.roomsetting.RoomMusicFun;
@@ -187,7 +183,9 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
      */
     public void getRoomInfo(String roomId, boolean isCreate) {
         mView.showLoading("");
-        OkApi.get(VRApi.getRoomInfo(roomId), null, new WrapperCallBack() {
+        Map<String, Object> params = new HashMap<>(8);
+        params.put("id", roomId);
+        OkApi.get(VRApi.getRoomInfo(), params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {
@@ -1670,7 +1668,9 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                 || voiceRoomModel.getSeatInfoByUserId(UserManager.get().getUserId()) != null
                 || TextUtils.equals(UserManager.get().getUserId(), mVoiceRoomBean.getCreateUserId()))
             return;
-        OkApi.get(VRApi.getRoomInfo(message.getRoomId()), null, new WrapperCallBack() {
+        Map<String, Object> params = new HashMap<>(8);
+        params.put("id", message.getRoomId());
+        OkApi.get(VRApi.getRoomInfo(), params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {

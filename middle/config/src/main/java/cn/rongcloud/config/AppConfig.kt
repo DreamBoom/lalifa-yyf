@@ -23,14 +23,12 @@ class AppConfig {
         appKey: String,
         umengAppKey: String,
         baseServerAddress: String,
-        businessToken: String,
         international: Boolean,
         busiModes: Array<String?>?
     ) {
         this.appKey = appKey
         this.umengAppKey = umengAppKey
         this.baseServerAddress = baseServerAddress
-        this.businessToken = businessToken
         isInternational = international
         if (null == modes) modes = ArrayList<String?>()
         modes!!.clear()
@@ -48,8 +46,6 @@ class AppConfig {
     var umengAppKey = ""
         private set
     var baseServerAddress = ""
-        private set
-    var businessToken = ""
         private set
     var isInternational = false
         private set

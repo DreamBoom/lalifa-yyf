@@ -44,10 +44,8 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
                         }
                     }
                     R.id.itemZs.onClick {
-                        LogCat.e("22222")
                         money = getModel<Rule>().price.toDouble()
                         payId = getModel<Rule>().id
-                        LogCat.e(""+getModel<Rule>().id+"====="+payId)
                     }
                 }.models = recharge()!!.rule
                 etMoney.addTextChangedListener(

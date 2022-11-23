@@ -12,9 +12,11 @@ import com.lalifa.main.R
 import com.lalifa.main.activity.MoneyInfoActivity
 import com.lalifa.main.adapter.moneyList
 import com.lalifa.main.api.Exchange
+import com.lalifa.main.api.exchangeDrill
 import com.lalifa.main.api.wallet
 import com.lalifa.main.databinding.ActivityMyMoneyBinding
 import com.lalifa.main.ext.showDh
+import com.lalifa.main.ext.showTx
 
 
 class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
@@ -59,10 +61,25 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
                 start(MySxActivity::class.java)
             }
             dh.onClick {
-                showDh(MoneyFragment.list)
+                showDh(MoneyFragment.list) {
+                    if (it == -1) {
+                        toast("请选择兑换数量")
+                    } else {
+                        scopeNetLife {
+                            exchangeDrill(it.toString())
+                        }
+                    }
+                }
             }
             tx.onClick {
+                showTx(20.0) {
+                    if (it <= 0) {
+                        toast("请输入提现金额")
+                    } else {
+                      //todo 提现接口
 
+                    }
+                }
             }
         }
     }
@@ -70,9 +87,10 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
 
 
 class MoneyFragment(val type: Int) : BaseListFragment() {
-    companion object{
+    companion object {
         var list = ArrayList<Exchange>()
     }
+
     override fun initView() {
         super.initView()
         binding.recyclerView.moneyList()

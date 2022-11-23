@@ -1,9 +1,12 @@
 package cn.rongcloud.roomkit.api;
 
+import com.lalifa.ext.Config;
+
 import cn.rongcloud.config.ApiConfig;
 
 public class VRApi {
-    public final static String HOST = ApiConfig.HOST;
+    public final static String HOST = Config.HOST;
+   // public final static String HOST = ApiConfig.HOST;
     /**
      * 粉丝或关注列表
      */
@@ -50,7 +53,7 @@ public class VRApi {
     /**
      * 上传文件后，文件的前缀
      */
-    public static final String FILE_PATH = "http://122.114.79.247:1115/";
+    public static final String FILE_PATH = Config.FILE_PATH;
 
     /**
      * pk状态上报
@@ -127,11 +130,10 @@ public class VRApi {
     /**
      * 获取房间信息
      *
-     * @param roomId
      * @return
      */
-    public static String getRoomInfo(String roomId) {
-        return HOST + "mic/room/" + roomId;
+    public static String getRoomInfo() {
+        return HOST + "chat_room/room_details";
     }
 
     /**

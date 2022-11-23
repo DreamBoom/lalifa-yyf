@@ -20,6 +20,7 @@ public class ApiConfig {
     public final static int REQUEST_SUCCESS_CODE = 10000;
     public static final String CUSTOMER_PHONE = "13161856839";
     public static String HOST = AppConfig.get().getBaseServerAddress();
+    //public static String HOST = "https://rcrtc-api.rongcloud.net/";
     public static String FILE_URL = HOST + "file/show?path=";
     /**
      * 文件上传

@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.drake.logcat.LogCat;
 import com.lalifa.adapter.BannerImageAdapter;
 import com.lalifa.oklib.OkApi;
 import com.lalifa.oklib.OkParams;
@@ -291,11 +292,12 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
         }
     }
 
-    private void launchRoomActivity(
+    public void launchRoomActivity(
             String roomId, ArrayList<String> roomIds, int position, boolean isCreate) {
         // 如果在其他房间有悬浮窗，先关闭再跳转
         MiniRoomManager.getInstance().finish(roomId, () -> {
-            IntentWrap.launchRoom(requireContext(), getRoomType(), roomIds, position, isCreate);
+            IntentWrap.launchRoom(requireContext(), getRoomType(),
+                    roomIds, position, isCreate);
         });
     }
 

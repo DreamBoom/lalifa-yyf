@@ -172,6 +172,17 @@ suspend fun CoroutineScope.wallet(type: String, offset: String): MoneyListBean? 
 }
 
 /**
+ * 兑换随心钻
+ * @receiver CoroutineScope
+ * @return Any?
+ */
+suspend fun CoroutineScope.exchangeDrill(id: String): Any? {
+    return Post<BaseBean<Any>>("user/exchange_drill") {
+        param("id", id)
+    }.await().data
+}
+
+/**
  * 意见反馈
  * @receiver CoroutineScope
  * @param problem 反馈问题
