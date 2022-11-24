@@ -61,6 +61,49 @@ fun RecyclerView.goodsList(): BindingAdapter {
     }
 }
 
+/**
+ * 背包
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.knapsackList(): BindingAdapter {
+    return grid(5).setup {
+        addType<Classify>(R.layout.item_good_type)
+
+        onBind {
+            val bean = getModel<Classify>()
+            getBinding<ItemGoodTypeBinding>().apply {
+            //    im.load(Config.FILE_PATH + bean.image)
+                name.text = bean.name
+            }
+        }
+    }
+}
+
+/**
+ * 背包-物品
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.knapsacksList(): BindingAdapter {
+    return grid(5).divider {
+        setDivider(8.dp)
+        orientation = DividerOrientation.VERTICAL
+    }.divider {
+        setDivider(8.dp)
+        orientation = DividerOrientation.HORIZONTAL
+    }.setup {
+        addType<KnapsackInfo>(R.layout.item_good)
+        onBind {
+            val bean = getModel<KnapsackInfo>()
+            getBinding<ItemGoodBinding>().apply {
+               // im.load(Config.FILE_PATH + bean.image)
+                name.text = bean.name
+              //  price.text = bean.price
+            }
+        }
+    }
+}
 
 /**
  * 钱包明细列表

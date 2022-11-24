@@ -8,7 +8,7 @@
     tools:context=".activity.me.CallUs">
 <ImageView
     android:id="@+id/code"
-    android:background="@color/white"
+    android:background="@mipmap/logo"
     android:layout_marginTop="50dp"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/callUs"
             android:src="@mipmap/call_phone"
             android:padding="15dp"
             android:layout_alignParentEnd="true"

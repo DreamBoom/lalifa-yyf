@@ -6,6 +6,8 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.main.R
 import com.lalifa.main.adapter.goodsList
+import com.lalifa.main.adapter.knapsackList
+import com.lalifa.main.adapter.knapsacksList
 import com.lalifa.main.adapter.shopList
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityKnapsackBinding
@@ -25,7 +27,7 @@ class Knapsack : BaseTitleActivity<ActivityKnapsackBinding>() {
             val shop = knapsack()
             binding.apply {
                 typeList.apply {
-                    shopList().apply {
+                    knapsackList().apply {
                         R.id.im.onClick {
                             val bean = getModel<Classify>()
                             list.clear()
@@ -41,7 +43,7 @@ class Knapsack : BaseTitleActivity<ActivityKnapsackBinding>() {
                     list.addAll(item.knapsack)
                 }
                 goodList.apply {
-                    goodsList().apply {
+                    knapsacksList().apply {
                         models = list
                     }
                 }

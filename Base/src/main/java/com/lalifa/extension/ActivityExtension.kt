@@ -7,6 +7,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View
@@ -25,6 +26,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 
 
 /**
@@ -391,6 +393,38 @@ fun Context.preview(position: Int = 0, urlList: List<String>) {
         .start()
 }
 
+/**
+ * @param phoneNum 手机号码
+ * @param isDirect 是否直接拨打电话
+ */
+ fun Context.callPhone(phoneNum: String, isDirect: Boolean = true) {
+    if (phoneNum.isPhoneNum()) {
+        var intent: Intent? = null
+        intent = if (isDirect) {
+            Intent(Intent.ACTION_CALL)
+        } else {
+            Intent(Intent.ACTION_DIAL)
+        }
+        val data = Uri.parse("tel:$phoneNum")
+        intent.data = data
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    } else {
+        showToast(this, "手机号码不正确!")
+    }
+}
+//判断是否为汉字
+fun String.isHan(): Boolean {
+    val pattern = Pattern.compile("^[\u4e00-\u9fa5]{0,}$")
+    return pattern.matcher(this).matches()
+}
+
+//判断是否为正确的手机号
+fun String.isPhoneNum(): Boolean {
+    val pattern =
+        Pattern.compile("^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}\$")
+    return pattern.matcher(this).matches()
+}
 //空数据返回
 fun String?.pk(def: String = ""): String {
     return if (this.isNullOrEmpty()) {

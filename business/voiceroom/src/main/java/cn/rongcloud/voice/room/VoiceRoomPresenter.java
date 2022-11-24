@@ -185,7 +185,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
         mView.showLoading("");
         Map<String, Object> params = new HashMap<>(8);
         params.put("id", roomId);
-        OkApi.get(VRApi.getRoomInfo(), params, new WrapperCallBack() {
+        OkApi.post(VRApi.getRoomInfo(), params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {
@@ -1670,7 +1670,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
             return;
         Map<String, Object> params = new HashMap<>(8);
         params.put("id", message.getRoomId());
-        OkApi.get(VRApi.getRoomInfo(), params, new WrapperCallBack() {
+        OkApi.post(VRApi.getRoomInfo(), params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {

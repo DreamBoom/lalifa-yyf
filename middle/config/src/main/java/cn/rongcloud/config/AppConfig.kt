@@ -2,17 +2,19 @@ package cn.rongcloud.config
 
 import android.content.Context
 import android.text.TextUtils
-import cn.rongcloud.config.AppConfig
 import cn.rongcloud.config.init.ModuleManager
-import io.rong.imkit.conversation.extension.RongExtensionManager
 import cn.rongcloud.config.ryutiles.MyGiftConfig
+import cn.rongcloud.config.ryutiles.MyMediaMessageContent
 import com.drake.channel.sendTag
 import com.drake.net.utils.TipUtils
 import com.lalifa.api.JsonHttpConverter
 import com.lalifa.api.NetHttp
 import com.lalifa.ext.Config
 import com.lalifa.extension.pk
-import java.util.ArrayList
+import io.rong.imkit.conversation.extension.RongExtensionManager
+import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.MessageContent
+
 
 class AppConfig {
     private object Holder {
@@ -38,6 +40,11 @@ class AppConfig {
             }
         }
         ModuleManager.manager().onInit()
+        //注册自定义消息
+        val myMessages = ArrayList<Class<out MessageContent?>>()
+        myMessages.add(MyMediaMessageContent::class.java)
+        RongIMClient.registerMessageType(myMessages)
+        //注册自定义键盘
         RongExtensionManager.getInstance().extensionConfig = MyGiftConfig()
     }
 

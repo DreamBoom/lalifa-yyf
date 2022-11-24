@@ -91,17 +91,16 @@ data class Spec(
  * @Des 背包列标
  */
 data class KnapsackBean(
-    val classify: List<Classify>
+    val classify: ArrayList<Classify>
 )
 
 data class Classify(
     val id: Int,
-    val knapsack: List<KnapsackInfo>,
+    val knapsack: ArrayList<KnapsackInfo>,
     val name: String
 )
 data class KnapsackInfo(
     val id: Int,
-    val knapsack: List<Any>,
     val name: String
 )
 /**

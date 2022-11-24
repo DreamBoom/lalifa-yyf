@@ -20,7 +20,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
 
     buildTypes {
         release {
@@ -38,7 +41,7 @@ dependencies {
     // https://github.com/alibaba/ARouter
     api "com.alibaba:arouter-api:$arouter"
     kapt "com.alibaba:arouter-compiler:$arouter"
-
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     // 友盟统计相关
     api 'com.umeng.umsdk:common:9.4.0'// 必选
     api 'com.umeng.umsdk:asms:1.2.3'// 必选

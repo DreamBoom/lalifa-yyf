@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.lalifa.ext.Config;
 import com.lalifa.oklib.OkApi;
 import com.lalifa.oklib.WrapperCallBack;
 import com.lalifa.oklib.wrapper.Wrapper;
@@ -28,8 +29,8 @@ import cn.rongcloud.roomkit.ui.RoomType;
 import io.rong.imlib.model.UserInfo;
 
 public class VoiceRoomProvider extends AbsProvider<VoiceRoomBean> implements IListProvider<VoiceRoomBean> {
-    private final static String API_ROOM = ApiConfig.HOST + "mic/room/";
-    private final static String API_ROOMS = ApiConfig.HOST + "mic/room/list";
+    private final static String API_ROOM = Config.HOST + "chat_room/room_details";
+    private final static String API_ROOMS = Config.HOST + "mic/room/list";
     private final static VoiceRoomProvider _provider = new VoiceRoomProvider();
     private List<String> bgImages = new ArrayList<>();
     private int page = 1;
@@ -50,7 +51,9 @@ public class VoiceRoomProvider extends AbsProvider<VoiceRoomBean> implements ILi
         }
         // TODO
         String roomId = ids.get(0);
-        OkApi.get(API_ROOM + roomId, null, new WrapperCallBack() {
+        Map<String, Object> params = new HashMap<>(8);
+        params.put("id", roomId);
+        OkApi.post(API_ROOM, params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 Log.e(TAG, GsonUtil.obj2Json(result));
