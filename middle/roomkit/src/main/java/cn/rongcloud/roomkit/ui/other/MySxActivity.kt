@@ -1,5 +1,6 @@
 package cn.rongcloud.roomkit.ui.other
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Message
 import android.text.Editable
@@ -31,6 +32,19 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
     }
 
     override fun initView() {
+       binding.etMoney.addTextChangedListener(
+            object : AbsTextWatcher() {
+                override fun afterTextChanged(s: Editable) {
+                    if (!TextUtils.isEmpty(s.toString())) {
+                        payId = 0
+                        money = s.toString().toDouble()
+                    } else {
+                        payId = 0
+                        money = 0.0
+                    }
+                }
+            }
+        )
         scopeNetLife {
             binding.apply {
                 imZfb.isSelected = true
@@ -46,21 +60,9 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
                     R.id.itemZs.onClick {
                         money = getModel<Rule>().price.toDouble()
                         payId = getModel<Rule>().id
+                        binding.etMoney.setText(getModel<Rule>().price)
                     }
                 }.models = recharge()!!.rule
-                etMoney.addTextChangedListener(
-                    object : AbsTextWatcher() {
-                        override fun afterTextChanged(s: Editable) {
-                            if (!TextUtils.isEmpty(s.toString())) {
-                                payId = 0
-                                money = s.toString().toDouble()
-                            } else {
-                                payId = 0
-                                money = 0.0
-                            }
-                        }
-                    }
-                )
             }
         }
 
@@ -75,21 +77,26 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
     var payType = 1
     var money = 0.0
     private val SDK_PAY_FLAG = 1
-    val mHandler: Handler = object : Handler() {
+    val mHandler: Handler = @SuppressLint("HandlerLeak")
+    object : Handler() {
         override fun handleMessage(msg: Message) {
             val payResult = PayResult(msg.obj as Map<String?, String?>)
             /**
              * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
              */
-            val resultInfo: String = payResult.getResult() // 同步返回需要验证的信息
-            val resultStatus: String = payResult.getResultStatus()
+            val resultInfo: String = payResult.result // 同步返回需要验证的信息
+            val resultStatus: String = payResult.resultStatus
             // 判断resultStatus 为9000则代表支付成功
             if (TextUtils.equals(resultStatus, "9000")) {
                 // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                toast("====111"+resultInfo)
+                if(!TextUtils.isEmpty(resultInfo)){
+                    toast(resultInfo)
+                }
             } else {
                 // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                toast("====222"+resultInfo)
+                if(!TextUtils.isEmpty(resultInfo)){
+                    toast(resultInfo)
+                }
             }
         }
     }
@@ -114,6 +121,10 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
                     }
                 }
                 scopeNetLife {
+                    if(payType==2){
+                        toast("微信支付正在开发...")
+                        return@scopeNetLife
+                    }
                     val pay1 = pay(payId.toString(), money.toString(), payType.toString())
                     if(payType == 1){
                         val orderInfo = pay1 // 订单信息

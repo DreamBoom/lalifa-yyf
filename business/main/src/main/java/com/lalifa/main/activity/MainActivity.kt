@@ -1,6 +1,7 @@
 package com.lalifa.main.activity
 
 import cn.rongcloud.config.router.RouterPath
+import cn.rongcloud.roomkit.ui.other.fragment.RoomListFragment
 import cn.rongcloud.voice.roomlist.VoiceRoomListFragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.lalifa.base.BaseActivity
@@ -19,7 +20,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>() {
             vp.offscreenPageLimit = 4
             vp.fragmentAdapter(supportFragmentManager) {
                 add(MainFragment())
-                add(VoiceRoomListFragment())
+                add(RoomListFragment())
                 add(MessageFragment())
                 add(MeFragment())
             }.pageChangedListener {

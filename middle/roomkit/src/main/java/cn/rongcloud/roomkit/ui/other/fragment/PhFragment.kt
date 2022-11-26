@@ -10,9 +10,9 @@ import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.pageChangedListener
 
 /**
- * @param type 1--财富榜  2-魅力榜  3-在线榜
+ * @param type 1--财富榜  2-魅力榜
  * */
-class PhFragment(type: Int) : BaseFragment<FragmentPhBinding>() {
+class PhFragment(val type: Int) : BaseFragment<FragmentPhBinding>() {
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -24,9 +24,9 @@ class PhFragment(type: Int) : BaseFragment<FragmentPhBinding>() {
                 childFragmentManager,
                 arrayListOf("日榜", "周榜", "月榜")
             ) {
-                add(PhBoyFragment(1))
-                add(PhBoyFragment(2))
-                add(PhBoyFragment(3))
+                add(PhBoyFragment(1, type))
+                add(PhBoyFragment(2, type))
+                add(PhBoyFragment(3, type))
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.TRANSPARENT
                 tabLayout.textSelectColor = ContextCompat.getColor(

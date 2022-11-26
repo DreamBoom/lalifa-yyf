@@ -37,13 +37,13 @@
     <ImageView
         android:id="@+id/sex"
         android:layout_marginStart="3dp"
-        android:src="@drawable/ic_icon_boy"
         app:layout_constraintStart_toEndOf="@+id/name"
         app:layout_constraintTop_toTopOf="@id/name"
         app:layout_constraintBottom_toBottomOf="@id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/mId"
         android:text="ID:666"
         android:textSize="@dimen/font_14"
         android:layout_marginStart="10dp"
@@ -53,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/cf"
         android:text="666 财富值"
         android:textSize="@dimen/font_14"
         android:layout_marginStart="10dp"

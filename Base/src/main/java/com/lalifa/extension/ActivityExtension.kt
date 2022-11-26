@@ -395,19 +395,12 @@ fun Context.preview(position: Int = 0, urlList: List<String>) {
 
 /**
  * @param phoneNum 手机号码
- * @param isDirect 是否直接拨打电话
  */
- fun Context.callPhone(phoneNum: String, isDirect: Boolean = true) {
+ fun Context.callPhone(phoneNum: String) {
     if (phoneNum.isPhoneNum()) {
-        var intent: Intent? = null
-        intent = if (isDirect) {
-            Intent(Intent.ACTION_CALL)
-        } else {
-            Intent(Intent.ACTION_DIAL)
-        }
+        val  intent = Intent(Intent.ACTION_DIAL)
         val data = Uri.parse("tel:$phoneNum")
         intent.data = data
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     } else {
         showToast(this, "手机号码不正确!")

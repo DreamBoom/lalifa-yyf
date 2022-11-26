@@ -10,6 +10,7 @@ import com.lalifa.main.databinding.ActivityForgetPasswordBinding
  * 忘记密码
  */
 class ForgetPasswordActivity : BaseTitleActivity<ActivityForgetPasswordBinding>() {
+    override fun title() = "忘记密码"
     override fun getViewBinding() = ActivityForgetPasswordBinding.inflate(layoutInflater)
 
     override fun initView() {

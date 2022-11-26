@@ -293,7 +293,7 @@ fun RecyclerView.newFriendList(): BindingAdapter {
     return linear().setup {
         addType<NewFriendBean>(R.layout.item_new_friend)
         onBind {
-            val bean = getModel<FriendBean>()
+            val bean = getModel<NewFriendBean>()
             getBinding<ItemNewFriendBinding>().apply {
                 itemHeader.load(Config.FILE_PATH + bean.avatar)
                 name.text = bean.userName
@@ -404,6 +404,46 @@ fun RecyclerView.cheChildInfoList(): BindingAdapter {
                 time.text = bean.create_time
                 info.text = bean.content
                 like.text = "${bean.fabulous}"
+            }
+        }
+    }
+}
+
+/**
+ * 我的粉丝、我的关注适配器
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.fanList(): BindingAdapter {
+    return linear().setup {
+        addType<FriendBean>(R.layout.item_fan)
+        onBind {
+            val bean = getModel<FriendBean>()
+            getBinding<ItemFanBinding>().apply {
+                name.text = bean.userName
+                itemHeader.load(Config.FILE_PATH+bean.avatar)
+                if(bean.gender==1){
+                    imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                }else{
+                    imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 黑名单列表适配器
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.blackList(): BindingAdapter {
+    return linear().setup {
+        addType<FriendBean>(R.layout.item_friend)
+        onBind {
+            val bean = getModel<FriendBean>()
+            getBinding<ItemFriendBinding>().apply {
+
             }
         }
     }

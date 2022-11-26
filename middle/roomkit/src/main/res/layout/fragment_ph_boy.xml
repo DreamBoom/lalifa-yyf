@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg_ph"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,10 +18,10 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="名称"
             android:textColor="@color/white"
             android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/cfz2"
@@ -53,6 +54,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -88,6 +90,7 @@
         app:layout_constraintStart_toEndOf="@+id/co1">
 
         <TextView
+            android:id="@+id/name3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -117,7 +120,6 @@
         android:layout_height="60dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="15dp"
-        android:background="@mipmap/icon_header"
         app:layout_constraintStart_toStartOf="@+id/hg1"
         app:layout_constraintTop_toTopOf="@+id/hg1"
         app:shapeAppearance="@style/CircleStyle" />
@@ -137,7 +139,6 @@
         android:layout_height="50dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="15dp"
-        android:background="@mipmap/icon_header"
         app:layout_constraintStart_toStartOf="@+id/hg2"
         app:layout_constraintTop_toTopOf="@+id/hg2"
         app:shapeAppearance="@style/CircleStyle" />
@@ -158,7 +159,6 @@
         android:layout_height="50dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="15dp"
-        android:background="@mipmap/icon_header"
         app:layout_constraintStart_toStartOf="@+id/hg3"
         app:layout_constraintTop_toTopOf="@+id/hg3"
         app:shapeAppearance="@style/CircleStyle" />
@@ -173,6 +173,7 @@
         app:layout_constraintStart_toStartOf="@+id/co3"
         app:layout_constraintTop_toTopOf="parent" />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
         tools:listitem="@layout/item_ph"
         app:layout_constraintTop_toBottomOf="@+id/co1"
         app:layout_constraintBottom_toBottomOf="parent"

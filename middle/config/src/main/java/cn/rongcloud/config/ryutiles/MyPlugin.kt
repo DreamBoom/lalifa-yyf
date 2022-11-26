@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import cn.rongcloud.config.R
 import cn.rongcloud.config.api.giftList
 import cn.rongcloud.config.dialog.showGiftDialog
-import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNet
 import com.lalifa.ext.Config
-import io.rong.imkit.IMCenter
+import com.lalifa.utils.DownloadFileUtils
+import io.rong.imkit.RongIM
 import io.rong.imkit.conversation.extension.RongExtension
 import io.rong.imkit.conversation.extension.component.plugin.IPluginModule
 import io.rong.imlib.IRongCallback
@@ -59,41 +59,50 @@ class MyPlugin : IPluginModule {
     override fun onClick(currentFragment: Fragment, extension: RongExtension, index: Int) {
         scopeNet {
             val giftList = giftList()
-            if(giftList!=null&&giftList.isNotEmpty()&&!isShow){
+            if (giftList != null && giftList.isNotEmpty() && !isShow) {
                 isShow = true
-                showGiftDialog(giftList) {
-                    isShow = false
-                    LogCat.e("===file=="+Config.FILE_PATH + it.image)
-                    val localUri: Uri = Uri.parse(Config.FILE_PATH + it.image)
-                    val imageMessage = MyMediaMessageContent.obtain(localUri)
-                    val targetId = extension.targetId
-                    val conversationType: Conversation.ConversationType =
-                        Conversation.ConversationType.PRIVATE
-                    val message: Message = Message.obtain(targetId, conversationType, imageMessage)
-                    IMCenter.getInstance().sendMediaMessage(
-                        message,
-                        null,
-                        null,
-                        object : IRongCallback.ISendMediaMessageCallback {
-                            override fun onProgress(message: Message?, i: Int) {
-                                LogCat.e("=111===="+message.toString())
-                            }
-                            override fun onCanceled(message: Message?) {
-                                LogCat.e("=222===="+message.toString())
-                            }
-                            override fun onAttached(message: Message?) {
-                                LogCat.e("=333===="+message.toString())
-                            }
-                            override fun onSuccess(message: Message?) {
-                                LogCat.e("=444===="+message.toString())
-                            }
-                            override fun onError(
-                                message: Message?,
-                                errorCode: RongIMClient.ErrorCode?
-                            ) {
-                                LogCat.e("=555===${errorCode!!.code}errorCode="+message.toString())
-                            }
-                        })
+                showGiftDialog(giftList) { path ->
+                    DownloadFileUtils.downloadImg(
+                        currentFragment.context,
+                        Config.FILE_PATH + path.image,
+                        "${System.currentTimeMillis()}"
+                    ) { localImg ->
+                        isShow = false
+                        val localUri: Uri = Uri.parse(localImg)
+                        val imageMessage = ImageMessage.obtain(localUri, localUri)
+                        val targetId = extension.targetId
+                        val conversationType: Conversation.ConversationType =
+                            Conversation.ConversationType.PRIVATE
+                        val message: Message =
+                            Message.obtain(targetId, conversationType, imageMessage)
+                        RongIM.getInstance().sendMediaMessage(
+                            message,
+                            null,
+                            null,
+                            object : IRongCallback.ISendMediaMessageCallbackWithUploader() {
+                                override fun onAttached(message: Message?, uploader: IRongCallback.MediaMessageUploader) {
+                                    /*上传图片到自己的服务器*/
+                                    uploader.success(Uri.parse(Config.FILE_PATH + path.image))
+                                }
+
+                                override fun onError(message: Message?, errorCode: RongIMClient.ErrorCode?) {
+                                    //发送失败
+                                }
+
+                                override fun onCanceled(message: Message?) {
+                                    TODO("Not yet implemented")
+                                }
+
+                                override fun onSuccess(message: Message?) {
+                                    //发送成功
+                                }
+
+                                override fun onProgress(message: Message?, progress: Int) {
+                                    //发送进度
+                                }
+                            })
+                    }
+
                 }
             }
         }

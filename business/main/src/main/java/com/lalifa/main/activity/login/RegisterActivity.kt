@@ -52,6 +52,10 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
                     toast("请确认密码")
                     return@onClick
                 }
+                if(etPass.text()!=etPass1.text()){
+                    toast("两次密码不一致")
+                    return@onClick
+                }
                 start(SexActivity::class.java){
                     putExtra("mobile",etPhone.text())
                     putExtra("code",code)

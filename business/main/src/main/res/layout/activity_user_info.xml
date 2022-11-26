@@ -31,7 +31,7 @@
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:background="@mipmap/icon_picture_20"
+        android:src="@mipmap/icon_picture_20"
         app:shapeAppearance="@style/CircleStyle" />
 
     <TextView

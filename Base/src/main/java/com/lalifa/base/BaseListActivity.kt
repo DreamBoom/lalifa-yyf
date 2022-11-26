@@ -63,7 +63,7 @@ abstract class BaseListActivity : AppCompatActivity() {
     open fun startPadding(): Boolean = true
 
     //深色状态栏 true 深色 false 浅色
-    open fun darkMode(): Boolean = true
+    open fun darkMode(): Boolean = false
     open fun darkMode(darkMode: Boolean) {
         immersive(darkMode = darkMode)
     }

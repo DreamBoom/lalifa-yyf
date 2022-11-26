@@ -17,15 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/money"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:src="@mipmap/icon_money"
-        app:layout_constraintEnd_toStartOf="@+id/search"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,9 +47,23 @@
         app:banner_indicator_space="6dp"
         app:banner_radius="4dp"
         app:layout_constraintTop_toBottomOf="@+id/sy" />
+    <TextView
+        android:id="@+id/gg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_gray"
+        android:drawableStart="@mipmap/icon_lb"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:text="公告"
+        android:textColor="@color/white"
+        android:textSize="13dp"
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/layout_refresh"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:layout_constraintTop_toBottomOf="@+id/gg"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -82,7 +87,7 @@
 
     <include
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:layout_constraintTop_toBottomOf="@+id/gg"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/layout_empty"
         android:layout_height="0dp"

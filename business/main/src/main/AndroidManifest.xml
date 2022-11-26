@@ -4,17 +4,20 @@
 
     <application>
         <activity
+            android:name=".activity.me.BlackListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.me.BindActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activity.me.BindPhoneActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activity.me.GiftActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activity.friend.SearchActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activity.ActiveInfo"
             android:exported="false" />

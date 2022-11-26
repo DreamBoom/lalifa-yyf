@@ -25,6 +25,7 @@
             android:textSize="@dimen/font_16" />
 
         <TextView
+            android:id="@+id/blackList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_white_back"
@@ -169,15 +170,31 @@
             android:text="青少年模式"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
-
-        <TextView
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_white_back"
-            android:padding="15dp"
-            android:text="清除缓存"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_16" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="清除缓存"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <TextView
+                android:id="@+id/cache"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_white_back"
+                android:gravity="end"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
             android:id="@+id/feelBack"

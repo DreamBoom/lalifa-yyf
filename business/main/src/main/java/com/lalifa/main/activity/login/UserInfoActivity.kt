@@ -75,6 +75,7 @@ class UserInfoActivity : BaseActivity<ActivityUserInfoBinding>() {
                     toast("请选择生日")
                     return@onClick
                 }
+                next.disable()
                 register1(etName.text())
             }
         }
@@ -86,8 +87,14 @@ class UserInfoActivity : BaseActivity<ActivityUserInfoBinding>() {
                 mobile, code, password, confirmPassword, gender,
                 nickName, photo, myAge, myBirthday
             )
-//            start(com.lalifa.main.activity.MainActivity::class.java)
-//            finish()
+            if(register!=null){
+                start(LoginActivity::class.java)
+                finish()
+            }else{
+                binding.next.enable()
+                toast("请求异常")
+            }
+
         }
     }
 }

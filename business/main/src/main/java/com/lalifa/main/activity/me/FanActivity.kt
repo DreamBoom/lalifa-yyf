@@ -2,14 +2,17 @@ package com.lalifa.main.activity.me
 
 import android.graphics.Color
 import androidx.core.content.ContextCompat
+import com.drake.brv.PageRefreshLayout
+import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
+import com.lalifa.base.BaseListFragment
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.pageChangedListener
 import com.lalifa.main.R
+import com.lalifa.main.adapter.fanList
+import com.lalifa.main.api.friends
 import com.lalifa.main.databinding.ActivityFanBinding
-import com.lalifa.main.fragment.MyFanFragment
-import com.lalifa.main.fragment.MyGzFragment
 
 class FanActivity : BaseActivity<ActivityFanBinding>() {
     override fun getViewBinding() = ActivityFanBinding.inflate(layoutInflater)
@@ -20,8 +23,8 @@ class FanActivity : BaseActivity<ActivityFanBinding>() {
                 supportFragmentManager,
                 arrayListOf("我的关注", "我的粉丝")
             ) {
-                add(MyFanFragment())
-                add(MyGzFragment())
+                add(FanFrag(1))
+                add(FanFrag(2))
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.TRANSPARENT
                 tabLayout.textSelectColor = ContextCompat.getColor(
@@ -38,5 +41,19 @@ class FanActivity : BaseActivity<ActivityFanBinding>() {
     override fun onClick() {
         super.onClick()
         binding.back.onClick { finish() }
+    }
+}
+
+class FanFrag(val type:Int) : BaseListFragment() {
+    override fun initView() {
+        super.initView()
+        binding.recyclerView.fanList()
+    }
+
+    override fun PageRefreshLayout.getData() {
+        scopeNetLife {
+            val dynamic = friends(type)
+            addData(dynamic)
+        }
     }
 }

@@ -8,10 +8,9 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/item_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_margin="10dp"
-        android:background="@mipmap/icon_header"
         app:shapeAppearance="@style/CircleStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +31,6 @@
     <ImageView
         android:id="@+id/sex"
         android:layout_marginStart="10dp"
-        android:background="@drawable/ic_icon_gril"
         app:layout_constraintStart_toEndOf="@+id/name"
         app:layout_constraintTop_toTopOf="@+id/name"
         app:layout_constraintBottom_toBottomOf="@+id/name"
@@ -51,6 +49,7 @@
         app:layout_constraintStart_toEndOf="@+id/item_header"
         app:layout_constraintBottom_toBottomOf="@+id/item_header" />
     <TextView
+        android:id="@+id/hi"
         android:background="@drawable/bg_bk8"
         android:textColor="@color/white"
         android:layout_marginEnd="15dp"

@@ -7,9 +7,9 @@
     <ImageView
         android:id="@+id/iv_empty"
         android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content"
         android:src="@drawable/img_empty"
-        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
