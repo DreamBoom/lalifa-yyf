@@ -15,7 +15,7 @@ class CallUs : BaseTitleActivity<ActivityCallUsBinding>() {
     override fun onClick() {
         super.onClick()
         binding.callUs.onClick {
-            callPhone("13462439645")
+            callPhone("11111111111")
         }
     }
 }

@@ -148,7 +148,7 @@ public class VoiceRoomFragment extends AbsRoomFragment<VoiceRoomPresenter>
     @Override
     public void init() {
         mRoomId = getArguments().getString(ROOM_ID);
-        LogCat.e("=====mRoomId="+mRoomId);
+        LogCat.e("加载语音房=====mRoomId="+mRoomId);
         isCreate = getArguments().getBoolean(IntentWrap.KEY_IS_CREATE);
         clVoiceRoomView = (ConstraintLayout) getView().findViewById(R.id.cl_voice_room_view);
 

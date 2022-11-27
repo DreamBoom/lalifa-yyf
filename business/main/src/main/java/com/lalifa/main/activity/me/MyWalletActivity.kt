@@ -9,7 +9,6 @@ import com.lalifa.base.BaseListFragment
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.extension.*
 import com.lalifa.main.R
-import com.lalifa.main.activity.MoneyInfoActivity
 import com.lalifa.main.adapter.moneyList
 import com.lalifa.main.api.Exchange
 import com.lalifa.main.api.exchangeDrill
@@ -23,10 +22,11 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
     override fun getViewBinding() = ActivityMyMoneyBinding.inflate(layoutInflater)
     override fun title() = "我的钱包"
     override fun rightText() = "钱包明细"
+    var mMoney = 0.0
     override fun initView() {
         val drill = getIntentString("drill")
         val money = getIntentString("money")
-
+        mMoney = money.toDouble()
         binding.apply {
             SXMoney.text = drill
             goldMoney.text = money
@@ -72,7 +72,7 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
                 }
             }
             tx.onClick {
-                showTx(20.0) {
+                showTx(mMoney) {
                     if (it <= 0) {
                         toast("请输入提现金额")
                     } else {

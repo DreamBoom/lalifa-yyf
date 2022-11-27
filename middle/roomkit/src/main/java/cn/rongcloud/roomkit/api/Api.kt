@@ -64,3 +64,17 @@ suspend fun CoroutineScope.ranking(type:String,category:String,): List<RankBean>
         param("type", type)
     }.await().data
 }
+
+/**
+ * 排行榜
+ * @receiver CoroutineScope
+ * @param type 1：财富榜  2：魅力榜
+ * @param category 1：日榜  2：周榜 3月榜
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.roomDetail(id:String,password:String,): List<RankBean>? {
+    return Post<BaseBean<List<RankBean>>>("chat_room/room_details") {
+        param("id", id)
+        param("password", password)
+    }.await().data
+}

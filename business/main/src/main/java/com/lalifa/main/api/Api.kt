@@ -60,8 +60,8 @@ suspend fun CoroutineScope.login(account: String, password: String): LoginUserBe
  * @receiver CoroutineScope
  * @return indexBean?
  */
-suspend fun CoroutineScope.index(): indexBean? {
-    return Post<BaseBean<indexBean>>("index/index") {
+suspend fun CoroutineScope.index(): IndexBean? {
+    return Post<BaseBean<IndexBean>>("index/index") {
     }.await().data
 }
 
@@ -434,5 +434,23 @@ suspend fun CoroutineScope.dzPl(id: String): Any? {
     }.await().data
 }
 
+/**
+ * 礼物墙
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.getGiftList(): GiftListBean? {
+    return Post<BaseBean<GiftListBean>>("user/gift_wall") {
+    }.await().data
+}
+/**
+ * 礼物记录
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.giftHistory(): List<GiftHistoryBean>? {
+    return Post<BaseBean<List<GiftHistoryBean>>>("user/gift_record") {
+    }.await().data
+}
 
 

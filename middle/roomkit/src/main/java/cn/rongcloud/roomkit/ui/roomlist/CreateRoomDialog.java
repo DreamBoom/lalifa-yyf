@@ -38,6 +38,7 @@ import java.util.Random;
 
 import cn.rongcloud.config.bean.VoiceRoomBean;
 import cn.rongcloud.roomkit.R;
+import cn.rongcloud.roomkit.api.Office;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.manager.LocalDataManager;
 import cn.rongcloud.roomkit.ui.RoomType;
@@ -262,10 +263,10 @@ public class CreateRoomDialog extends BottomDialog {
                     VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
                     if (result.ok() && voiceRoomBean != null) {
                         dismiss();
-                        mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);
+                    //    mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);
                     } else if (30016 == result.getCode() && voiceRoomBean != null) {
                         dismiss();
-                        mCreateRoomCallBack.onCreateExist(voiceRoomBean);
+                      //  mCreateRoomCallBack.onCreateExist(voiceRoomBean);
                     } else {
                         ToastUtils.s(mActivity, result.getMessage());
                     }
@@ -296,8 +297,8 @@ public class CreateRoomDialog extends BottomDialog {
     }
 
     public interface CreateRoomCallBack {
-        void onCreateSuccess(VoiceRoomBean voiceRoomBean);
+        void onCreateSuccess(Office voiceRoomBean);
 
-        void onCreateExist(VoiceRoomBean voiceRoomBean);
+        void onCreateExist(Office voiceRoomBean);
     }
 }

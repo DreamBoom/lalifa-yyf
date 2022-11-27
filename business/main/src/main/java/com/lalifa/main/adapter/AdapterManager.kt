@@ -73,7 +73,7 @@ fun RecyclerView.knapsackList(): BindingAdapter {
         onBind {
             val bean = getModel<Classify>()
             getBinding<ItemGoodTypeBinding>().apply {
-            //    im.load(Config.FILE_PATH + bean.image)
+                //    im.load(Config.FILE_PATH + bean.image)
                 name.text = bean.name
             }
         }
@@ -97,9 +97,9 @@ fun RecyclerView.knapsacksList(): BindingAdapter {
         onBind {
             val bean = getModel<KnapsackInfo>()
             getBinding<ItemGoodBinding>().apply {
-               // im.load(Config.FILE_PATH + bean.image)
+                // im.load(Config.FILE_PATH + bean.image)
                 name.text = bean.name
-              //  price.text = bean.price
+                //  price.text = bean.price
             }
         }
     }
@@ -151,9 +151,9 @@ fun RecyclerView.titlesList(): BindingAdapter {
 fun RecyclerView.tiList(type: Int): BindingAdapter {
     return linear().setup {
         when (type) {
-            1 ->  addType<SpecialEffect>(R.layout.item_im)
-            2 ->  addType<Headdres>(R.layout.item_im)
-            else ->  addType<Mount>(R.layout.item_im)
+            1 -> addType<SpecialEffect>(R.layout.item_im)
+            2 -> addType<Headdres>(R.layout.item_im)
+            else -> addType<Mount>(R.layout.item_im)
         }
         onBind {
             getBinding<ItemImBinding>().apply {
@@ -190,16 +190,16 @@ fun RecyclerView.cheMyList(): BindingAdapter {
                 header.load(bean.avatar)
                 name.text = bean.userName
                 time.text = bean.create_time
-                if(bean.gender==0){
-                    sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_boy)
-                }else{
-                    sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_gril)
+                if (bean.gender == 0) {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                } else {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
                 }
                 info.text = bean.content
                 bean.image.forEach {
-                    Config.FILE_PATH+it
+                    Config.FILE_PATH + it
                 }
-                gridImg.imagesAdapter(bean.image,true)
+                gridImg.imagesAdapter(bean.image, true)
                 share.text = "${bean.share}"
                 like.text = "${bean.fabulous}"
                 pl.text = "${bean.comment_count}"
@@ -243,6 +243,7 @@ fun RecyclerView.activeInfoList(): BindingAdapter {
         }
     }
 }
+
 /**
  * 活动详情子适配器
  * @receiver RecyclerView
@@ -254,7 +255,7 @@ fun RecyclerView.activeInfo2List(): BindingAdapter {
         onBind {
             val bean = getModel<ActivityDetail>()
             getBinding<ItemActivity2Binding>().apply {
-               im.load(Config.FILE_PATH+bean.goods.image)
+                im.load(Config.FILE_PATH + bean.goods.image)
             }
         }
     }
@@ -348,16 +349,16 @@ fun RecyclerView.cheList(): BindingAdapter {
                 header.load(bean.avatar)
                 name.text = bean.userName
                 time.text = bean.create_time
-                if(bean.gender==0){
-                    sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_boy)
-                }else{
-                    sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_gril)
+                if (bean.gender == 0) {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                } else {
+                    sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
                 }
                 info.text = bean.content
                 bean.image.forEach {
-                    Config.FILE_PATH+it
+                    Config.FILE_PATH + it
                 }
-                gridImg.imagesAdapter(bean.image,true)
+                gridImg.imagesAdapter(bean.image, true)
                 share.text = "${bean.share}"
                 like.text = "${bean.fabulous}"
                 pl.text = "${bean.comment_count}"
@@ -382,7 +383,7 @@ fun RecyclerView.cheInfoList(): BindingAdapter {
                 time.text = bean.create_time
                 info.text = bean.content
                 like.text = "${bean.fabulous}"
-                childList.cheChildInfoList().apply {  }.models=bean.child
+                childList.cheChildInfoList().apply { }.models = bean.child
             }
         }
     }
@@ -421,10 +422,10 @@ fun RecyclerView.fanList(): BindingAdapter {
             val bean = getModel<FriendBean>()
             getBinding<ItemFanBinding>().apply {
                 name.text = bean.userName
-                itemHeader.load(Config.FILE_PATH+bean.avatar)
-                if(bean.gender==1){
+                itemHeader.load(Config.FILE_PATH + bean.avatar)
+                if (bean.gender == 1) {
                     imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
-                }else{
+                } else {
                     imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
                 }
             }
@@ -448,3 +449,119 @@ fun RecyclerView.blackList(): BindingAdapter {
         }
     }
 }
+
+/**
+ * 首页热门主持
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.mainList1(): BindingAdapter {
+    return grid(3).setup {
+        addType<Captain>(R.layout.item_home1)
+    }.apply {
+        onBind {
+            getBinding<ItemHome1Binding>().apply {
+
+            }
+        }
+    }
+}
+
+/**
+ * 首页热门队长
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.mainList2(): BindingAdapter {
+    return grid(3).setup {
+        addType<Host>(R.layout.item_home1)
+        onBind {
+            val bean = getModel<Host>()
+            onBind {
+                getBinding<ItemHome1Binding>().apply {
+
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * 首页热门房间
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.mainList3(): BindingAdapter {
+    return grid(2).setup {
+        addType<Room>(R.layout.item_home2)
+        onBind {
+            val bean = getModel<Room>()
+            getBinding<ItemHome2Binding>().apply {
+                bg.load(Config.FILE_PATH + bean.background)
+                fire.text = bean.hot.toString()
+                name.text = bean.title
+                when (bean.type_id) {
+                    1 -> t2.text = "同城"
+                    else -> t2.text = "其他"
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 礼物墙 组别
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.giftGroupAdapter(): BindingAdapter {
+    return grid(3).setup {
+        addType<Theme>(R.layout.item_gift_group)
+        onBind {
+            val bean = getModel<Theme>()
+            getBinding<ItemGiftGroupBinding>().apply {
+                groupName.text = bean.name
+            }
+        }
+    }
+}
+
+/**
+ * 礼物墙
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.giftAdapter(): BindingAdapter {
+    return grid(4).setup {
+        addType<Gift>(R.layout.item_gift_wall)
+        onBind {
+            val bean = getModel<Gift>()
+            getBinding<ItemGiftWallBinding>().apply {
+                im.load(Config.FILE_PATH + bean.image)
+                name.text = bean.name
+            }
+        }
+    }
+}
+
+/**
+ * 礼物记录
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.giftHistoryAdapter(): BindingAdapter {
+    return linear().setup {
+        addType<GiftHistoryBean>(R.layout.item_gift_history)
+        onBind {
+            val bean = getModel<GiftHistoryBean>()
+            getBinding<ItemGiftHistoryBinding>().apply {
+                giftHeader.load(Config.FILE_PATH + bean.create_time)
+                giftIm.load(Config.FILE_PATH + bean.create_time)
+                name.text = bean.name
+                giftTime.text = bean.create_time.substring(0,10)
+            }
+        }
+    }
+}
+

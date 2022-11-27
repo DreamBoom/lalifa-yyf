@@ -3,6 +3,7 @@ package cn.rongcloud.voice.room;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.drake.logcat.LogCat;
 
 import cn.rongcloud.config.router.RouterPath;
 import cn.rongcloud.roomkit.intent.IntentWrap;
@@ -21,6 +22,7 @@ public class VoiceRoomActivity extends AbsRoomActivity {
     @Override
     protected void initRoom() {
         isCreate = getIntent().getBooleanExtra(IntentWrap.KEY_IS_CREATE, false);
+        LogCat.e("已进入"+isCreate);
     }
 
     @Override

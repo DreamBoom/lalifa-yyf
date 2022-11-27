@@ -1,4 +1,5 @@
 package com.lalifa.main.api
+
 import java.io.Serializable
 
 /**
@@ -34,23 +35,69 @@ data class UserInfo(
 /**
  * @Des 首页
  */
-data class indexBean(
-    val captain: List<Any>,
+data class IndexBean(
+    val captain: List<Captain>,//热门队长
     val carousel: List<Carousel>,
-    val host: List<Any>,
+    val host: List<Host>, //热门主持
     val notice: Notice,
-    val room: List<Any>
-): Serializable
+    val room: List<Room>//热门房间
+) : Serializable
 
 data class Carousel(
     val image: String
-): Serializable
+) : Serializable
+
+data class Captain(
+    val avatar: String
+)
 
 data class Notice(
     val id: Int,
     val n_message_content: String,
     val n_title: String
-): Serializable
+) : Serializable
+
+data class Room(
+    val avatar: String,
+    val background: String,
+    val create_time: String,
+    val end_time: String,
+    val guild_id: Int,
+    val hot: Int,
+    val id: Int,
+    val image: String,
+    val loginfailure: Int,
+    val loginip: String,
+    val logintime: Int,
+    val nickname: String,
+    val notice: String,
+    val office_id: Int,
+    val password: String,
+    val password_type: Int,
+    val phone: String,
+    val ranking: Int,
+    val roomid: String,
+    val start_time: String,
+    val state: Int,
+    val status: Int,
+    val subheading: String,
+    val title: String,
+    val token: String,
+    val type_id: Int,
+    val uid: Int,
+    val updatetime: String
+)
+
+data class Host(
+    val create_time: String,
+    val flowing_water: String,
+    val hot: Int,
+    val id: Int,
+    val office_id: Int,
+    val status: Int,
+    val type: String,
+    val user_id: Int
+)
 
 /**
  * @Des 商城
@@ -87,6 +134,7 @@ data class Spec(
     val id: Int,
     val price: String
 )
+
 /**
  * @Des 背包列标
  */
@@ -99,10 +147,12 @@ data class Classify(
     val knapsack: ArrayList<KnapsackInfo>,
     val name: String
 )
+
 data class KnapsackInfo(
     val id: Int,
     val name: String
 )
+
 /**
  * @Des 个人中心
  */
@@ -156,6 +206,7 @@ data class MoneyRecord(
     val type: Int,
     val uid: Int
 )
+
 /**
  * @Des 充值列表
  */
@@ -171,6 +222,7 @@ data class Rule(
     val price: String,
     val receipt_price: String
 )
+
 /**
  * @Des 贵族权益
  */
@@ -215,6 +267,7 @@ data class ActivityBean(
     val start_time: String,
     val state: Int
 )
+
 /**
  * @Des 活动详情
  */
@@ -259,6 +312,7 @@ data class FriendBean(
     val id: Int,
     val userName: String
 )
+
 /**
  * @Des 新人
  */
@@ -268,6 +322,7 @@ data class NewFriendBean(
     val id: Int,
     val userName: String
 )
+
 /**
  * @Des 申请列表
  */
@@ -280,6 +335,7 @@ data class ApplyBean(
     val uid: Int,
     val userName: String
 )
+
 data class ImgBean(
     val fullurl: String,
     val url: String
@@ -311,6 +367,7 @@ data class Dynamic(
     val uid: Int,
     val userName: String
 )
+
 /**
  *
  * @ClassName 发现页详情
@@ -353,6 +410,42 @@ data class ChildInfo(
     val path: String,
     val pid: Int,
     val pid_name: String,
+    val uid: Int,
+    val userName: String
+)
+/**
+ *
+ * @ClassName 礼物墙
+ * @Des
+ */
+data class GiftListBean(
+    val count: Int,
+    val gift_count: Int,
+    val theme: List<Theme>
+)
+
+data class Theme(
+    val gift: List<Gift>,
+    val id: Int,
+    val name: String
+)
+
+data class Gift(
+    val count: Int,
+    val id: Int,
+    val image: String,
+    val name: String
+)
+/**
+ *
+ * @ClassName 礼物记录
+ * @Des
+ */
+data class GiftHistoryBean(
+    val create_time: String,
+    val id: Int,
+    val name: String,
+    val pid: Int,
     val uid: Int,
     val userName: String
 )

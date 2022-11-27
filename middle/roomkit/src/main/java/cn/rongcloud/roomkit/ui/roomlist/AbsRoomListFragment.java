@@ -48,7 +48,7 @@ import io.rong.imkit.picture.tools.ToastUtils;
  * @date 2021/9/15
  */
 public abstract class AbsRoomListFragment extends BaseMvpFragment
-        implements OnItemClickRoomListListener<VoiceRoomBean>, CreateRoomDialog.CreateRoomCallBack {
+        implements OnItemClickRoomListListener<VoiceRoomBean>{
 
     private RoomListAdapter mAdapter;
     private RecyclerView mRoomList;
@@ -170,14 +170,13 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
                         });
     }
 
-    @Override
+
     public void onCreateSuccess(VoiceRoomBean voiceRoomBean) {
         mAdapter.getData().add(0, voiceRoomBean);
         mAdapter.notifyItemInserted(0);
         clickItem(voiceRoomBean, 0, true, Arrays.asList(voiceRoomBean));
     }
 
-    @Override
     public void onCreateExist(VoiceRoomBean voiceRoomBean) {
         confirmDialog = new VRCenterDialog(requireActivity(), null);
         confirmDialog.replaceContent(getString(R.string.text_you_have_created_room), getString(R.string.cancel), null,
@@ -224,7 +223,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
                             requireActivity(),
                             mLauncher,
                             getRoomType(),
-                            AbsRoomListFragment.this);
+                            null);
             mCreateRoomDialog.show();
         } else {
             //如果是直播房，是直接进入直播间界面的
@@ -296,7 +295,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
             String roomId, ArrayList<String> roomIds, int position, boolean isCreate) {
         // 如果在其他房间有悬浮窗，先关闭再跳转
         MiniRoomManager.getInstance().finish(roomId, () -> {
-            IntentWrap.launchRoom(requireContext(), getRoomType(),
+            IntentWrap.launchRoom(requireContext(),
                     roomIds, position, isCreate);
         });
     }
@@ -344,7 +343,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
      * @param voiceRoomBean
      */
     private void jumpRoom(VoiceRoomBean voiceRoomBean) {
-        IntentWrap.launchRoom(requireContext(), voiceRoomBean.getRoomType(), voiceRoomBean.getRoomId());
+   //     IntentWrap.launchRoom(requireContext(), voiceRoomBean.getRoomType(), voiceRoomBean.getRoomId());
     }
 
     @Override

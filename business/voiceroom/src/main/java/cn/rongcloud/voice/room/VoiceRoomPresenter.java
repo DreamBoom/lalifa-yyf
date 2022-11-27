@@ -1697,7 +1697,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                                     }
                                     if (TextUtils.equals(password, roomBean.getPassword())) {
                                         inputPasswordDialog.dismiss();
-                                        exitRoom(roomBean.getRoomType(), roomBean.getRoomId());
+                                        exitRoom(roomBean.getRoomId());
                                     } else {
                                         mView.showToast("密码错误");
                                     }
@@ -1705,7 +1705,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
                             });
                             inputPasswordDialog.show();
                         } else {
-                            exitRoom(roomBean.getRoomType(), roomBean.getRoomId());
+                            exitRoom(roomBean.getRoomId());
                         }
                     }
                 } else {
@@ -1726,7 +1726,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
 
     }
 
-    private void exitRoom(int roomType, final String roomId) {
+    private void exitRoom(final String roomId) {
         // 房间类表包含roomId，则直接切换，否则跳转
         if (RoomListIdsCache.get().contains(roomId)) {
             mView.switchOtherRoom(roomId);
@@ -1734,7 +1734,7 @@ public class VoiceRoomPresenter extends BasePresenter<IVoiceRoomFragmentView> im
             leaveRoom(new IRoomCallBack() {
                 @Override
                 public void onSuccess() {
-                    IntentWrap.launchRoom(((VoiceRoomFragment) mView).requireContext(), roomType, roomId);
+                    IntentWrap.launchRoom(((VoiceRoomFragment) mView).requireContext(), roomId);
                 }
 
                 @Override

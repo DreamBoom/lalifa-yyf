@@ -3,6 +3,7 @@ package cn.rongcloud.roomkit.intent;
 import android.content.Context;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.drake.logcat.LogCat;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,7 @@ public class IntentWrap {
      * @param isCreate 是否是创建
      */
     public static void launchVoiceRoom(Context context, ArrayList<String> roomIds, int position, boolean isCreate) {
+        LogCat.e("路由跳转===ROUTER_VOICE_ROOM");
         ARouter.getInstance().build(RouterPath.ROUTER_VOICE_ROOM)
                 .withStringArrayList(KEY_ROOM_IDS, roomIds)
                 .withInt(KEY_ROOM_POSITION, position)
@@ -101,45 +103,23 @@ public class IntentWrap {
      * 根据房间类型，id，跳转到相应的房间
      *
      * @param context
-     * @param roomType
      * @param roomId
      */
-    public static void launchRoom(Context context, int roomType, String roomId) {
-        if (roomType == RoomType.RADIO_ROOM.getType()) {
-            ArrayList<String> ids = new ArrayList<>();
-            ids.add(roomId);
-            launchRadioRoom(context, ids, 0);
-        } else if (roomType == RoomType.VOICE_ROOM.getType()) {
-            ArrayList<String> ids = new ArrayList<>();
-            ids.add(roomId);
-            launchVoiceRoom(context, ids, 0, false);
-        } else if (roomType == RoomType.LIVE_ROOM.getType()) {
-            ArrayList<String> ids = new ArrayList<>();
-            ids.add(roomId);
-            launchLiveRoom(context, ids, 0, false);
-        } else if (roomType == RoomType.GAME_ROOM.getType()) {
-            launchGameRoom(context, roomId, false, false, "");
-        }
+    public static void launchRoom(Context context, String roomId) {
+        ArrayList<String> ids = new ArrayList<>();
+        ids.add(roomId);
+        launchVoiceRoom(context, ids, 0, false);
     }
 
     /**
      * 根据房间类型，id，跳转到相应的房间
      *
      * @param context
-     * @param roomType
      * @param roomIds
      * @param position
      * @param isCreate
      */
-    public static void launchRoom(Context context, RoomType roomType, ArrayList<String> roomIds, int position, boolean isCreate) {
-        if (roomType == RoomType.RADIO_ROOM) {
-            launchRadioRoom(context, roomIds, position);
-        } else if (roomType == RoomType.VOICE_ROOM) {
-            launchVoiceRoom(context, roomIds, position, isCreate);
-        } else if (roomType == RoomType.LIVE_ROOM) {
-            launchLiveRoom(context, roomIds, position, isCreate);
-        } else if (roomType == RoomType.GAME_ROOM) {
-            launchGameRoom(context, roomIds.get(0), isCreate, false, "");
-        }
+    public static void launchRoom(Context context,  ArrayList<String> roomIds, int position, boolean isCreate) {
+        launchVoiceRoom(context, roomIds, position, isCreate);
     }
 }

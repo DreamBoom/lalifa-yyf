@@ -21,6 +21,9 @@ import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.main.R
 import com.lalifa.main.activity.*
+import com.lalifa.main.adapter.mainList1
+import com.lalifa.main.adapter.mainList2
+import com.lalifa.main.adapter.mainList3
 import com.lalifa.main.api.index
 import com.lalifa.main.databinding.ViewMainHomeBinding
 import com.youth.banner.holder.BannerImageHolder
@@ -33,25 +36,9 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
     ) = ViewMainHomeBinding.inflate(layoutInflater)
 
     override fun initView() {
-        binding.apply {
-            mList1.grid(3).setup {
-                addType<String>(R.layout.item_home1)
-            }.apply {
-                R.id.itemRoom.onClick {
-                    val list: ArrayList<String> = ArrayList()
-                    list.add("1")
-                    launchRoomActivity("1", list, 0, false)
-                }
-            }.models = arrayListOf("", "", "")
-            mList2.grid(3).setup {
-                addType<String>(R.layout.item_home1)
-            }.models = arrayListOf("", "", "")
-            mList3.grid(2).setup {
-                addType<String>(R.layout.item_home2)
-            }.models = arrayListOf("", "", "", "")
-        }
         initData()
     }
+
     private fun launchRoomActivity(
         roomId: String, roomIds: ArrayList<String>, position: Int, isCreate: Boolean
     ) {
@@ -61,7 +48,6 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         ) {
             IntentWrap.launchRoom(
                 requireContext(),
-                RoomType.VOICE_ROOM,
                 roomIds,
                 position,
                 isCreate
@@ -73,26 +59,38 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
     private fun initData() {
         scopeNetLife {
             val index = index()
-            binding.gg.text = "${index!!.notice.n_title}:${index.notice.n_message_content}"
-            if(index.carousel.isNotEmpty()){
-                val imgList = arrayListOf<String>()
-                for ( item in index.carousel){
-                    imgList.add(Config.FILE_PATH+item.image)
-                }
-                binding.banner.addBannerLifecycleObserver(requireActivity())
-                    .setAdapter(object : BannerImageAdapter<String>(imgList.toList()) {
-                        override fun onBindView(
-                            holder: BannerImageHolder?,
-                            data: String?,
-                            position: Int,
-                            size: Int
-                        ) {
-                            holder?.imageView?.apply {
-                                scaleType = ImageView.ScaleType.CENTER_CROP
-                                data?.let { it1 -> load(it1) }
+            binding.apply {
+                mList1.mainList1().apply {
+                    R.id.itemRoom.onClick {
+                        val list: ArrayList<String> = ArrayList()
+                        list.add("1")
+                        launchRoomActivity("1", list, 0, false)
+                    }
+                }.models = index!!.captain
+                mList2.mainList2().models = index.host
+                mList3.mainList3().models = index.room
+                gg.text = "${index.notice.n_title}:${index.notice.n_message_content}"
+                if (index.carousel.isNotEmpty()) {
+                    val imgList = arrayListOf<String>()
+                    for (item in index.carousel) {
+                        imgList.add(Config.FILE_PATH + item.image)
+                    }
+                    banner.addBannerLifecycleObserver(requireActivity())
+                        .setAdapter(object : BannerImageAdapter<String>(imgList.toList()) {
+                            override fun onBindView(
+                                holder: BannerImageHolder?,
+                                data: String?,
+                                position: Int,
+                                size: Int
+                            ) {
+                                holder?.imageView?.apply {
+                                    scaleType = ImageView.ScaleType.CENTER_CROP
+                                    data?.let { it1 -> load(it1) }
+                                }
                             }
-                        }
-                    }).indicator = CircleIndicator(context)
+                        })
+                        .indicator = CircleIndicator(context)
+                }
             }
         }
     }

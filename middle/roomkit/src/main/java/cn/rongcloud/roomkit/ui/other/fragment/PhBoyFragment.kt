@@ -76,6 +76,13 @@ class PhBoyFragment(private val category:Int,private val type:Int): BaseFragment
                             }
                         }
                     }
+                }else{
+                    co1.invisible()
+                    hg1.invisible()
+                    co2.invisible()
+                    hg2.invisible()
+                    co3.invisible()
+                    hg3.invisible()
                 }
             }
 

@@ -14,11 +14,11 @@
         android:background="@drawable/rl_bg21">
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/t2"
             android:layout_centerHorizontal="true"
-            android:text="用户名称"
             android:textColor="@color/white"
             android:textSize="12dp" />
 
@@ -36,10 +36,11 @@
             android:textColor="@color/white"
             android:textSize="10dp" />
     </RelativeLayout>
+
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/header"
         android:layout_width="65dp"
-        android:layout_centerHorizontal="true"
         android:layout_height="65dp"
-        android:background="@mipmap/icon_header"
+        android:layout_centerHorizontal="true"
         app:shapeAppearance="@style/CircleStyle" />
 </RelativeLayout>

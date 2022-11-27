@@ -188,7 +188,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mList1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:orientation="horizontal"
@@ -219,7 +219,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mList2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:orientation="horizontal"
@@ -251,7 +251,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mList3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:orientation="horizontal"

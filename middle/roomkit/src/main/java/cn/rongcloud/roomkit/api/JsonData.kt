@@ -67,9 +67,11 @@ data class RoomListBean(
 )
 
 data class Office(
+    val uid: Int,
     val id: Int,
     val image: String,
     val notice: String,
+    val password_type: Int, //0开放 1加密
     val roomid: String,
     val title: String,
     val type_id: Int,
@@ -88,3 +90,8 @@ data class RankBean(
     val user_id: Int,
     val yield: String
 )
+
+/**
+ * @Des 房间详情
+ */
+
