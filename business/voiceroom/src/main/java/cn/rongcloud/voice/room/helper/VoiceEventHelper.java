@@ -9,6 +9,7 @@ import static cn.rongcloud.voice.Constant.EVENT_ROOM_CLOSE;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+
 import com.drake.logcat.LogCat;
 import com.lalifa.oklib.OkApi;
 import com.lalifa.oklib.OkParams;
@@ -27,7 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.rongcloud.config.UserManager;
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
@@ -47,7 +48,6 @@ import cn.rongcloud.roomkit.message.RCChatroomLocationMessage;
 import cn.rongcloud.roomkit.message.RCChatroomSeats;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import cn.rongcloud.roomkit.message.RCFollowMsg;
-import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
 import cn.rongcloud.roomkit.ui.room.dialog.shield.Shield;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
@@ -100,7 +100,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     private VRCenterDialog inviteDialog;
     protected String roomId;
     private List<Shield> shields = new ArrayList<>();
-    private VoiceRoomBean voiceRoomBean;
+    private RoomDetailBean voiceRoomBean;
 
     private VoiceEventHelper() {
     }
@@ -745,7 +745,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     }
 
     @Override
-    public void setRoomBean(VoiceRoomBean voiceRoomBean) {
+    public void setRoomBean(RoomDetailBean voiceRoomBean) {
         this.voiceRoomBean = voiceRoomBean;
     }
 

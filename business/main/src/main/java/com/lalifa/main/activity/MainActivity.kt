@@ -9,6 +9,7 @@ import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.pageChangedListener
 import com.lalifa.extension.start
+import com.lalifa.main.activity.che.CheActivity
 import com.lalifa.main.databinding.ActivityHomeBinding
 import com.lalifa.main.fragment.MainFragment
 import com.lalifa.main.fragment.MeFragment

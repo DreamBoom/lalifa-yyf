@@ -1,4 +1,6 @@
 package cn.rongcloud.roomkit.api
+import cn.rongcloud.config.provider.user.User
+import cn.rongcloud.config.provider.wrapper.Provide
 import java.io.Serializable
 
 /**
@@ -18,80 +20,83 @@ open class BaseBean<T> : Serializable {
  * @Des 充值列表
  */
 data class RechargeBean(
-    val alipay_status: String,
-    val recharge_proportion: String,
-    val rule: List<Rule>,
-    val wechat_status: String
+    var alipay_status: String,
+    var recharge_proportion: String,
+    var rule: List<Rule>,
+    var wechat_status: String
 )
 
 data class Rule(
-    val id: Int,
-    val price: String,
-    val receipt_price: String
+    var id: Int,
+    var price: String,
+    var receipt_price: String
 )
 /**
  * @Des 聊天室首页
  */
 data class RoomIndexBean(
-    val carousel: List<Carousel>,
-    val classify: List<Classify>,
-    val notice: Notice
+    var carousel: List<Carousel>,
+    var classify: List<Classify>,
+    var notice: Notice
 )
 
 data class Carousel(
-    val create_time: String,
-    val id: Int,
-    val image: String,
-    val sort: Int
+    var create_time: String,
+    var id: Int,
+    var image: String,
+    var sort: Int
 )
 
 data class Classify(
-    val id: Int,
-    val name: String
+    var id: Int,
+    var name: String
 )
 
 data class Notice(
-    val create_time: String,
-    val id: Int,
-    val image: String,
-    val n_message_content: String,
-    val n_title: String,
-    val status: Int
+    var create_time: String,
+    var id: Int,
+    var image: String,
+    var n_message_content: String,
+    var n_title: String,
+    var status: Int
 )
 /**
  * @Des 聊天室列表
  */
 data class RoomListBean(
-    val count: Int,
-    val office: List<Office>
-)
+    var count: Int,
+    var office: List<Office>
+):Provide{
+    override fun getKey(): String {
+        return ""
+    }
+}
 
-data class Office(
-    val uid: Int,
-    val id: Int,
-    val image: String,
-    val notice: String,
-    val password_type: Int, //0开放 1加密
-    val roomid: String,
-    val title: String,
-    val type_id: Int,
-    val type_name: String,
-    val users: List<Any>
-)
+data class Office (
+    var uid: Int,
+    var id: Int,
+    var image: String,
+    var notice: String,
+    var password_type: Int, //0开放 1加密
+    var roomid: String,
+    var title: String,
+    var type_id: Int,
+    var type_name: String,
+    var users: List<Any>
+):Provide{
+    override fun getKey(): String {
+        return "$id"
+    }
+}
 /**
  * @Des 排行榜
  */
 data class RankBean(
-    val avatar: String,
-    val create_time: String,
-    val gender: Int,
-    val member_id: Int,
-    val userName: String,
-    val user_id: Int,
-    val yield: String
+    var avatar: String,
+    var create_time: String,
+    var gender: Int,
+    var member_id: Int,
+    var userName: String,
+    var user_id: Int,
+    var yield: String
 )
-
-/**
- * @Des 房间详情
- */
-

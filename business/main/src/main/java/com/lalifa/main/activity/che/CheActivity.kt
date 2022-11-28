@@ -1,4 +1,4 @@
-package com.lalifa.main.activity
+package com.lalifa.main.activity.che
 
 import android.graphics.Color
 import androidx.core.content.ContextCompat
@@ -6,11 +6,9 @@ import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.base.BaseListFragment
-
 import com.lalifa.extension.*
 import com.lalifa.main.R
-import com.lalifa.main.activity.che.AddCheActivity
-import com.lalifa.main.activity.che.CheInfoActivity
+import com.lalifa.main.activity.NoticeActivity
 import com.lalifa.main.adapter.cheList
 import com.lalifa.main.api.Dynamic
 import com.lalifa.main.api.cheList

@@ -8,10 +8,13 @@ import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import cn.rongcloud.config.UserManager
-import cn.rongcloud.config.bean.VoiceRoomBean
+import cn.rongcloud.config.api.roomDetail
 import cn.rongcloud.roomkit.R
 import cn.rongcloud.roomkit.adapter.roomListAdapter
-import cn.rongcloud.roomkit.api.*
+import cn.rongcloud.roomkit.api.Office
+import cn.rongcloud.roomkit.api.VRApi
+import cn.rongcloud.roomkit.api.roomIndex
+import cn.rongcloud.roomkit.api.roomList
 import cn.rongcloud.roomkit.databinding.FragmentRoomListBinding
 import cn.rongcloud.roomkit.intent.IntentWrap
 import cn.rongcloud.roomkit.provider.VoiceRoomProvider
@@ -25,7 +28,6 @@ import cn.rongcloud.roomkit.widget.InputPasswordDialog
 import com.drake.brv.BindingAdapter
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
-import com.drake.tooltip.toast
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
@@ -40,8 +42,6 @@ import com.lalifa.widget.dialog.dialog.VRCenterDialog
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import io.rong.imkit.picture.tools.ToastUtils
-import java.util.*
-import kotlin.collections.ArrayList
 
 class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCallBack {
     private var mCreateRoomDialog: CreateRoomDialog? = null
@@ -291,7 +291,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCall
                             return
                         }
                         scopeNetLife {
-                            val roomDetail = roomDetail(item.id.toString(), password)
+                            val roomDetail = roomDetail(item.id.toString())
                             if (roomDetail != null) {
                                 inputPasswordDialog!!.dismiss()
                                 val list: ArrayList<String> = ArrayList()

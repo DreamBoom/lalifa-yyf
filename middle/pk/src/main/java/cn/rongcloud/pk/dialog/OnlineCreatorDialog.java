@@ -20,7 +20,7 @@ import com.lalifa.widget.dialog.BottomDialog;
 
 import java.util.List;
 
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.pk.R;
 import cn.rongcloud.pk.api.PKApi;
 import cn.rongcloud.pk.bean.PKResult;
@@ -50,26 +50,26 @@ public class OnlineCreatorDialog extends BottomDialog {
         rcyOwner = UIKit.getView(getContentView(), R.id.rcy_owner);
         rcyOwner.setLayoutManager(new LinearLayoutManager(mActivity));
 
-        adapter = new RcySAdapter<VoiceRoomBean, RcyHolder>(mActivity, R.layout.layout_owner_item) {
+        adapter = new RcySAdapter<RoomDetailBean, RcyHolder>(mActivity, R.layout.layout_owner_item) {
 
             @Override
-            public void convert(RcyHolder holder, VoiceRoomBean item, int position) {
-                holder.setText(R.id.tv_name, item.getCreateUser().getUserName());
+            public void convert(RcyHolder holder, RoomDetailBean item, int position) {
+                holder.setText(R.id.tv_name, item.getUserInfo().getUserName());
                 ImageLoader.loadUrl(holder.getView(R.id.head),
-                        item.getCreateUser().getPortraitUrl(),
+                        item.getUserInfo().getPortraitUrl(),
                         R.drawable.default_portrait,
                         ImageLoader.Size.S_200);
                 holder.rootView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String roomId = item.getRoomId();
+                        String roomId = item.getChatroom_id();
                         isInPk(roomId, new IResultBack<Boolean>() {
                             @Override
                             public void onResult(Boolean aBoolean) {
                                 if (!aBoolean) {// 没有正在pk
                                     dismiss();
                                     if (null != onSendPkCallback)
-                                        onSendPkCallback.sendPkInvitation(roomId, item.getCreateUserId());
+                                        onSendPkCallback.sendPkInvitation(roomId, item.getUserInfo().getUserId());
                                 } else {
                                     KToast.show("对方正在PK中");
                                 }
@@ -103,9 +103,9 @@ public class OnlineCreatorDialog extends BottomDialog {
     }
 
     private void requestOwners() {
-        PKApi.getOnlineCreator(roomType, new IResultBack<List<VoiceRoomBean>>() {
+        PKApi.getOnlineCreator(roomType, new IResultBack<List<RoomDetailBean>>() {
             @Override
-            public void onResult(List<VoiceRoomBean> voiceRoomBeans) {
+            public void onResult(List<RoomDetailBean> voiceRoomBeans) {
                 adapter.setData(voiceRoomBeans, true);
                 if (voiceRoomBeans != null && voiceRoomBeans.size() > 0) {
                     emptyLayout.setVisibility(View.GONE);

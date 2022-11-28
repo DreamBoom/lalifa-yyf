@@ -185,7 +185,8 @@ public class RoomTitleBar extends ConstraintLayout {
             return;
         }
         isShowFollow = true;
-        OkApi.post(VRApi.GET_USER, new OkParams().add("userIds", new String[]{roomUserId}).build(), new WrapperCallBack() {
+        OkApi.post(VRApi.GET_USER, new OkParams().
+                add("userIds", new String[]{roomUserId}).build(), new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {

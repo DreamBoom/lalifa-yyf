@@ -9,10 +9,7 @@ import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.lalifa.ext.Config
-import com.lalifa.extension.dp
-import com.lalifa.extension.imagesAdapter
-import com.lalifa.extension.load
-import com.lalifa.extension.onClick
+import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
@@ -187,10 +184,10 @@ fun RecyclerView.cheMyList(): BindingAdapter {
         onBind {
             val bean = getModel<Dynamic>()
             getBinding<ItemMyCheBinding>().apply {
-                header.load(bean.avatar)
+                header.load(bean.avatar.pk(""))
                 name.text = bean.userName
                 time.text = bean.create_time
-                if (bean.gender == 0) {
+                if (null!= bean.gender&& bean.gender== 0) {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
                 } else {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
@@ -346,10 +343,10 @@ fun RecyclerView.cheList(): BindingAdapter {
         onBind {
             val bean = getModel<Dynamic>()
             getBinding<ItemCheBinding>().apply {
-                header.load(bean.avatar)
+                header.load(bean.avatar.pk(""))
                 name.text = bean.userName
                 time.text = bean.create_time
-                if (bean.gender == 0) {
+                if (null!= bean.gender&&bean.gender == 0) {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
                 } else {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
@@ -556,9 +553,9 @@ fun RecyclerView.giftHistoryAdapter(): BindingAdapter {
         onBind {
             val bean = getModel<GiftHistoryBean>()
             getBinding<ItemGiftHistoryBinding>().apply {
-                giftHeader.load(Config.FILE_PATH + bean.create_time)
-                giftIm.load(Config.FILE_PATH + bean.create_time)
-                name.text = bean.name
+                giftHeader.load(Config.FILE_PATH + bean.avatar)
+                giftIm.load(Config.FILE_PATH + bean.image)
+                name.text = bean.userName
                 giftTime.text = bean.create_time.substring(0,10)
             }
         }

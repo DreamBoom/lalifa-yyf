@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.Office;
 import cn.rongcloud.roomkit.api.VRApi;
@@ -260,7 +260,7 @@ public class CreateRoomDialog extends BottomDialog {
             @Override
             public void onResult(Wrapper result) {
                 if (mCreateRoomCallBack != null) {
-                    VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
+                    RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
                     if (result.ok() && voiceRoomBean != null) {
                         dismiss();
                     //    mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);

@@ -16,3 +16,13 @@ suspend fun CoroutineScope.giftList(): List<GiftBean>? {
     return Post<BaseBean<List<GiftBean>>>("user/gift") {
     }.await().data
 }
+/**
+ * 聊天室详情
+ * @receiver CoroutineScope
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.roomDetail(id:String): RoomDetailBean? {
+    return Post<BaseBean<RoomDetailBean>>("chat_room/room_details") {
+        param("id", id)
+    }.await().data
+}

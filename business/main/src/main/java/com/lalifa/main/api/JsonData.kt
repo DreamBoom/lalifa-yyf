@@ -350,22 +350,22 @@ data class CheListBean(
 )
 
 data class Dynamic(
-    val avatar: String,
-    val browse: String,
-    val comment_count: Int,
-    val content: String,
-    val create_time: String,
-    val fabulous: Int,
-    val fabulous_type: Int,
-    val gender: Int,
+    val avatar: String? = "",
+    val browse: String= "",
+    val comment_count: Int=0,
+    val content: String= "",
+    val create_time: String= "",
+    val fabulous: Int=0,
+    val fabulous_type: Int=0,
+    val gender: Int?=0,
     val id: Int,
     val image: List<String>,
-    val level: String,
-    val num: Int,
-    val share: Int,
-    val status: Int,
-    val uid: Int,
-    val userName: String
+    val level: String= "",
+    val num: Int=0,
+    val share: Int=0,
+    val status: Int=0,
+    val uid: Int=0,
+    val userName: String? = ""
 )
 
 /**
@@ -444,6 +444,8 @@ data class Gift(
 data class GiftHistoryBean(
     val create_time: String,
     val id: Int,
+    var image: String,
+    var avatar: String,
     val name: String,
     val pid: Int,
     val uid: Int,

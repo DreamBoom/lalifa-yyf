@@ -37,7 +37,6 @@ public class RCRefreshBuffer<T> extends HandlerThread implements IBuffer<T> {
             public void handleMessage(@NonNull Message msg) {
                 int what = msg.what;
                 if (WHAT_LOOP == what) {
-//                    Logger.e(TAG, "from loop");
                     handleOutflow();
                     loop(true);
                 } else if (WHAT_APPLY == what) {

@@ -1,12 +1,12 @@
 package cn.rongcloud.voice.model;
 
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class UiRoomModel {
     private RCVoiceRoomInfo rcRoomInfo;
-    private VoiceRoomBean roomBean;
+    private RoomDetailBean roomBean;
     // 静音标识
     private boolean isMute;
 
@@ -25,11 +25,11 @@ public class UiRoomModel {
         if (null != subject) subject.onNext(this);
     }
 
-    public VoiceRoomBean getRoomBean() {
+    public RoomDetailBean getRoomBean() {
         return roomBean;
     }
 
-    public void setRoomBean(VoiceRoomBean roomBean) {
+    public void setRoomBean(RoomDetailBean roomBean) {
         this.roomBean = roomBean;
         if (null != subject) subject.onNext(this);
     }

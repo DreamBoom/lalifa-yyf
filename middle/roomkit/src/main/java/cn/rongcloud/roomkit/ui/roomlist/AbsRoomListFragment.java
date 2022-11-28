@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.drake.logcat.LogCat;
 import com.lalifa.adapter.BannerImageAdapter;
 import com.lalifa.oklib.OkApi;
 import com.lalifa.oklib.OkParams;
@@ -29,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.rongcloud.config.UserManager;
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.intent.IntentWrap;
@@ -37,9 +36,9 @@ import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.ui.OnItemClickRoomListListener;
 import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager;
+import cn.rongcloud.roomkit.ui.other.MainSearchActivity;
 import cn.rongcloud.roomkit.ui.other.MySxActivity;
 import cn.rongcloud.roomkit.ui.other.PHActivity;
-import cn.rongcloud.roomkit.ui.other.MainSearchActivity;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
 import io.rong.imkit.picture.tools.ToastUtils;
 
@@ -48,7 +47,7 @@ import io.rong.imkit.picture.tools.ToastUtils;
  * @date 2021/9/15
  */
 public abstract class AbsRoomListFragment extends BaseMvpFragment
-        implements OnItemClickRoomListListener<VoiceRoomBean>{
+        implements OnItemClickRoomListListener<RoomDetailBean>{
 
     private RoomListAdapter mAdapter;
     private RecyclerView mRoomList;
@@ -171,13 +170,13 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
     }
 
 
-    public void onCreateSuccess(VoiceRoomBean voiceRoomBean) {
+    public void onCreateSuccess(RoomDetailBean voiceRoomBean) {
         mAdapter.getData().add(0, voiceRoomBean);
         mAdapter.notifyItemInserted(0);
         clickItem(voiceRoomBean, 0, true, Arrays.asList(voiceRoomBean));
     }
 
-    public void onCreateExist(VoiceRoomBean voiceRoomBean) {
+    public void onCreateExist(RoomDetailBean voiceRoomBean) {
         confirmDialog = new VRCenterDialog(requireActivity(), null);
         confirmDialog.replaceContent(getString(R.string.text_you_have_created_room), getString(R.string.cancel), null,
                 getString(R.string.confirm), new View.OnClickListener() {
@@ -202,7 +201,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
                         if (result.ok()) {
                             showCreateRoomDialog();
                         } else if (result.getCode() == 30016) {
-                            VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
+                            RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
                             if (voiceRoomBean != null) {
                                 onCreateExist(voiceRoomBean);
                             } else {
@@ -234,21 +233,21 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
     }
 
     @Override
-    public boolean onLongClickItem(VoiceRoomBean item, int position, boolean isCreate, List<VoiceRoomBean> list) {
+    public boolean onLongClickItem(RoomDetailBean item, int position, boolean isCreate, List<RoomDetailBean> list) {
         return true;
     }
 
     @Override
     public void clickItem(
-            VoiceRoomBean item,
+            RoomDetailBean item,
             int position,
             boolean isCreate,
-            List<VoiceRoomBean> voiceRoomBeans) {
-        if (TextUtils.equals(item.getUserId(), UserManager.get().getUserId())) {
+            List<RoomDetailBean> voiceRoomBeans) {
+        if (TextUtils.equals(item.getUserInfo().getUserId(), UserManager.get().getUserId())) {
             ArrayList list = new ArrayList();
-            list.add(item.getRoomId());
-            launchRoomActivity(item.getRoomId(), list, 0, isCreate);
-        } else if (item.isPrivate()) {
+            list.add(item.getChatroom_id());
+            launchRoomActivity(item.getChatroom_id(), list, 0, isCreate);
+        } else if (item.getPassword_type()==1) {
             inputPasswordDialog =
                     new InputPasswordDialog(requireContext(), false, new InputPasswordDialog.OnClickListener() {
                         @Override
@@ -268,8 +267,8 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
                             if (TextUtils.equals(password, item.getPassword())) {
                                 inputPasswordDialog.dismiss();
                                 ArrayList list = new ArrayList();
-                                list.add(item.getRoomId());
-                                launchRoomActivity(item.getRoomId(), list, 0, false);
+                                list.add(item.getChatroom_id());
+                                launchRoomActivity(item.getChatroom_id(), list, 0, false);
                             } else {
                                 showToast("密码错误");
                             }
@@ -278,16 +277,16 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
             inputPasswordDialog.show();
         } else {
             ArrayList<String> list = new ArrayList<>();
-            for (VoiceRoomBean voiceRoomBean : voiceRoomBeans) {
-                if (!voiceRoomBean.getCreateUserId().equals(UserManager.get().getUserId())
-                        && !voiceRoomBean.isPrivate()) {
+            for (RoomDetailBean voiceRoomBean : voiceRoomBeans) {
+                if (!voiceRoomBean.getUserInfo().getUserId().equals(UserManager.get().getUserId())
+                        && voiceRoomBean.getPassword_type()==0) {
                     // 过滤掉上锁的房间和自己创建的房间
-                    list.add(voiceRoomBean.getRoomId());
+                    list.add(voiceRoomBean.getChatroom_id());
                 }
             }
-            int p = list.indexOf(item.getRoomId());
+            int p = list.indexOf(item.getChatroom_id());
             if (p < 0) p = 0;
-            launchRoomActivity(item.getRoomId(), list, p, false);
+            launchRoomActivity(item.getChatroom_id(), list, p, false);
         }
     }
 
@@ -314,7 +313,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
             @Override
             public void onResult(Wrapper result) {
                 if (result.ok()) {
-                    VoiceRoomBean voiceRoomBean = result.get(VoiceRoomBean.class);
+                    RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
                     if (voiceRoomBean != null) {
                         // 说明已经在房间内了，那么给弹窗
                         confirmDialog = new VRCenterDialog(requireActivity(), null);
@@ -342,7 +341,7 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
      *
      * @param voiceRoomBean
      */
-    private void jumpRoom(VoiceRoomBean voiceRoomBean) {
+    private void jumpRoom(RoomDetailBean voiceRoomBean) {
    //     IntentWrap.launchRoom(requireContext(), voiceRoomBean.getRoomType(), voiceRoomBean.getRoomId());
     }
 

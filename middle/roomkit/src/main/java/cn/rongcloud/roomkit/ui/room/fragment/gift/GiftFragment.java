@@ -1,7 +1,6 @@
 package cn.rongcloud.roomkit.ui.room.fragment.gift;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -28,7 +27,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import cn.rongcloud.config.UserManager;
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.manager.AllBroadcastManager;
@@ -66,7 +65,7 @@ public class GiftFragment extends BaseBottomSheetDialog {
             new Gift(9, R.drawable.ic_present_8, "玫瑰花", 10, false),
             new Gift(10, R.drawable.ic_present_9, "吉他", 20, false)
     );
-    private VoiceRoomBean mVoiceRoomBean;
+    private RoomDetailBean mVoiceRoomBean;
     private List<Member> mMembers;
     private HashMap<String, Member> mMembersMap = new HashMap<>();
     private List<String> mSelectUserIds = new ArrayList<>();
@@ -80,7 +79,7 @@ public class GiftFragment extends BaseBottomSheetDialog {
     // 显示的麦位号，true 从1开始，false 从0开始
     private boolean isNormalSeatIndex = false;
     private    FragmentManager fm;
-    public GiftFragment(VoiceRoomBean voiceRoomBean,
+    public GiftFragment(RoomDetailBean voiceRoomBean,
                         String selectUserId,
                         OnSendGiftListener onSendGiftListener) {
         super(R.layout.fragment_gift);
@@ -147,7 +146,7 @@ public class GiftFragment extends BaseBottomSheetDialog {
                 ImageView imageView = holder.getView(R.id.iv_member_head);
                 ImageLoader.loadUrl(imageView, member.getPortraitUrl(), R.drawable.default_portrait);
                 String name = "观众";
-                if (TextUtils.equals(mVoiceRoomBean.getCreateUserId(), member.getUserId())) {
+                if (TextUtils.equals(mVoiceRoomBean.getUserInfo().getUserId(), member.getUserId())) {
                     name = "房主";
                 } else if (member.getSeatIndex() >= 0 && member.getSeatIndex() < Integer.MAX_VALUE) {
                     name = (isNormalSeatIndex ? (member.getSeatIndex() + 1) : member.getSeatIndex()) + "";
@@ -284,7 +283,7 @@ public class GiftFragment extends BaseBottomSheetDialog {
 
     private void sendGift(String userId) {
         Map<String, Object> params = new OkParams()
-                .add("roomId", mVoiceRoomBean.getRoomId())
+                .add("roomId", mVoiceRoomBean.getChatroom_id())
                 .add("giftId", mCurrentGift.getIndex())
                 .add("toUid", userId)
                 .add("num", mGiftNum)
@@ -324,9 +323,9 @@ public class GiftFragment extends BaseBottomSheetDialog {
             message.setGiftId(mCurrentGift.getIndex() + "");
             message.setGiftValue(mCurrentGift.getPrice() + "");
             message.setGiftName(mCurrentGift.getName());
-            message.setRoomId(mVoiceRoomBean.getRoomId());
-            message.setRoomType(mVoiceRoomBean.getRoomType() + "");
-            message.setIsPrivate(mVoiceRoomBean.getIsPrivate() + "");
+            message.setRoomId(mVoiceRoomBean.getChatroom_id());
+            message.setRoomType(""+mVoiceRoomBean.getCollection_type());
+            message.setIsPrivate(mVoiceRoomBean.getPassword_type() + "");
             Map<String, Object> params = new OkParams()
                     .add("fromUserId", UserManager.get().getUserId())
                     .add("objectName", "RC:RCGiftBroadcastMsg")

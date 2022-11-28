@@ -38,14 +38,15 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/ll"
         android:overScrollMode="never" />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <ImageView
         android:id="@+id/addChe"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="25dp"
-        android:background="@color/transparent"
         android:layout_marginBottom="50dp"
-        android:src="@drawable/ic_add_che"
-        android:layout_width="56dp"
-        android:layout_height="56dp"/>
+        android:background="@color/transparent"
+        android:src="@drawable/ic_add_che" />
 </RelativeLayout>

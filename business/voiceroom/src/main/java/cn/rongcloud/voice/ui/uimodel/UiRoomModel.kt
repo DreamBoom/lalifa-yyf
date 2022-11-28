@@ -4,7 +4,7 @@
 
 package cn.rongcloud.voice.ui.uimodel
 
-import cn.rongcloud.config.bean.VoiceRoomBean
+import cn.rongcloud.config.api.RoomDetailBean
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
@@ -18,7 +18,7 @@ class UiRoomModel(private val roomInfoSubject: BehaviorSubject<UiRoomModel>) {
             field = value
             roomInfoSubject.onNext(this)
         }
-    var roomBean: VoiceRoomBean? = null
+    var roomBean: RoomDetailBean? = null
         set(value) {
             field = value
             roomInfoSubject.onNext(this)

@@ -4,6 +4,9 @@
 
     <application>
         <activity
+            android:name=".WardActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.me.GiftHistoryActivity"
             android:exported="false" />
         <activity
@@ -103,7 +106,7 @@
             android:name=".activity.che.CheInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CheActivity"
+            android:name=".activity.che.CheActivity"
             android:exported="false" />
     </application>
 

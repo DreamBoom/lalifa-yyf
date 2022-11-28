@@ -3,16 +3,16 @@ package cn.rongcloud.voice.room;
 
 import com.lalifa.ui.mvp.IBasePresent;
 
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.voice.model.UiSeatModel;
 
 interface IVoiceRoomPresent extends IBasePresent {
 
     void onNetworkStatus(int i);
 
-    void setCurrentRoom(VoiceRoomBean mVoiceRoomBean);
+    void setCurrentRoom(RoomDetailBean mVoiceRoomBean);
 
-    VoiceRoomBean getmVoiceRoomBean();
+    RoomDetailBean getmVoiceRoomBean();
 
     /**
      * 监听时间

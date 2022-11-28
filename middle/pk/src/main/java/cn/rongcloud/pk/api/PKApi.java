@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.rongcloud.config.AppConfig;
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.pk.bean.PKResult;
 
 public class PKApi {
@@ -152,14 +152,14 @@ public class PKApi {
         });
     }
 
-    public static void getOnlineCreator(int roomType, IResultBack<List<VoiceRoomBean>> resultBack) {
+    public static void getOnlineCreator(int roomType, IResultBack<List<RoomDetailBean>> resultBack) {
         Map<String, Object> params = new HashMap<>();
         params.put("roomType", roomType);
         OkApi.get(PKApi.ONLINE_CREATER, params, new WrapperCallBack() {
             @Override
             public void onResult(Wrapper result) {
                 LogCat.d(TAG, "requestOwners#onResult");
-                List<VoiceRoomBean> rooms = result.getList(VoiceRoomBean.class);
+                List<RoomDetailBean> rooms = result.getList(RoomDetailBean.class);
                 resultBack.onResult(rooms);
             }
 

@@ -6,7 +6,6 @@ import cn.rongcloud.config.ApiConfig;
 
 public class VRApi {
     public final static String HOST = Config.HOST;
-   // public final static String HOST = ApiConfig.HOST;
     /**
      * 粉丝或关注列表
      */
@@ -20,10 +19,6 @@ public class VRApi {
         return FOLLOW + userId;
     }
 
-    /**
-     * 房间列表
-     */
-    public static String ROOM_LIST = HOST + "mic/room/list";
     /**
      * 创建房间
      */
@@ -127,14 +122,6 @@ public class VRApi {
      */
     public static final String ADD_SHIELD = HOST + "mic/room/sensitive/add";
 
-    /**
-     * 获取房间信息
-     *
-     * @return
-     */
-    public static String getRoomInfo() {
-        return HOST + "chat_room/room_details";
-    }
 
     /**
      * 获取屏蔽词列表

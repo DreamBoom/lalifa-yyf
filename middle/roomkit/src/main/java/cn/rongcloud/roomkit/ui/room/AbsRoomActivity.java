@@ -3,16 +3,12 @@ package cn.rongcloud.roomkit.ui.room;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.drake.logcat.LogCat;
 import com.lalifa.ui.BaseActivity;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +16,7 @@ import java.util.List;
 
 import cn.rongcloud.config.DataShareManager;
 import cn.rongcloud.config.UserManager;
-import cn.rongcloud.config.bean.VoiceRoomBean;
+import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.intent.IntentWrap;
 import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
@@ -132,9 +128,11 @@ public abstract class AbsRoomActivity extends BaseActivity {
                 getRefreshLayout().finishRefresh(false);
             } else {
                 List<String> ids = new ArrayList<>();
-                for (VoiceRoomBean voiceRoomBean : voiceRoomBeans) {
-                    if (!voiceRoomBean.isPrivate() && !TextUtils.equals(voiceRoomBean.getCreateUserId(), UserManager.get().getUserId())) {
-                        ids.add(voiceRoomBean.getRoomId());
+                for (RoomDetailBean voiceRoomBean : voiceRoomBeans) {
+                    if (voiceRoomBean.getPassword_type()==1 &&
+                            !TextUtils.equals(voiceRoomBean.getUserInfo().getUserId(),
+                                    UserManager.get().getUserId())) {
+                        ids.add(voiceRoomBean.getChatroom_id());
                     }
                 }
                 refreshViewPagerFinished(ids);
@@ -149,9 +147,11 @@ public abstract class AbsRoomActivity extends BaseActivity {
                 getRefreshLayout().setNoMoreData(true);
             } else {
                 List<String> ids = new ArrayList<>();
-                for (VoiceRoomBean voiceRoomBean : voiceRoomBeans) {
-                    if (!voiceRoomBean.isPrivate() && !TextUtils.equals(voiceRoomBean.getCreateUserId(), UserManager.get().getUserId())) {
-                        ids.add(voiceRoomBean.getRoomId());
+                for (RoomDetailBean voiceRoomBean : voiceRoomBeans) {
+                    if (voiceRoomBean.getPassword_type()==1 &&
+                            !TextUtils.equals(voiceRoomBean.getUserInfo().getUserId(),
+                                    UserManager.get().getUserId())) {
+                        ids.add(voiceRoomBean.getChatroom_id());
                     }
                 }
                 loadMoreViewPagerFinished(ids);
@@ -238,9 +238,10 @@ public abstract class AbsRoomActivity extends BaseActivity {
             // 要打开的房间id
             String targetId = ids.get(getCurrentItem());
             // 从缓存中拿voiceRoomBean，判断是不是房主自己
-            VoiceRoomBean bean = VoiceRoomProvider.provider().getSync(targetId);
+            RoomDetailBean bean = VoiceRoomProvider.provider().getSync(targetId);
             if (bean != null) {
-                if (TextUtils.equals(bean.getCreateUserId(), UserManager.get().getUserId()) || bean.isPrivate()) {
+                if (TextUtils.equals(bean.getUserInfo().getUserId(),
+                        UserManager.get().getUserId()) || bean.getPassword_type()==1) {
                     canRefreshAndLoadMore = false;
                 } else {
                     canRefreshAndLoadMore = true;

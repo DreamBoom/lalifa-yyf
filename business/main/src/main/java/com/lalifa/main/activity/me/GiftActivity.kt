@@ -28,6 +28,7 @@ class GiftActivity : BaseTitleActivity<ActivityGiftBinding>() {
             scopeNetLife {
                 val list = getGiftList()
                 if(list!=null){
+                    num.text = "已收集${list.gift_count}件礼物"
                     giftGroup.giftGroupAdapter().apply {
                         R.id.groupName.onClick {
                             giftAdapter!!.models = getModel<Theme>().gift
