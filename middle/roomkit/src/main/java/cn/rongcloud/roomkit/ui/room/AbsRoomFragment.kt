@@ -37,7 +37,6 @@ abstract class AbsRoomFragment<P : BasePresenter<*>?> : BaseMvpFragment<P>(), Sw
     override fun onStart() {
         super.onStart()
         MiniRoomManager.getInstance().close()
-        d("==================================onStart:$tag")
     }
 
     override fun destroyRoom() {

@@ -8,13 +8,13 @@
     android:layout_height="590dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        app:shapeAppearance="@style/Round12Style"
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/Round12Style"
         app:srcCompat="@drawable/bg_create_room" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -28,39 +28,119 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_fold" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/iv_room_cover"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="44dp"
-        android:scaleType="centerCrop"
-        app:shapeAppearance="@style/Round12Style"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_create_voice_room_default_cover" />
-
-    <ImageView
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_select_room_theme"
-        app:layout_constraintBottom_toBottomOf="@id/iv_room_cover"
-        app:layout_constraintEnd_toEndOf="@id/iv_room_cover" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_select_cover"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/please_select_room_cover"
-        android:textColor="@color/whiteTextColor"
-        android:textSize="16sp"
+        android:text="创建车队"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_room_cover" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <RadioGroup
+        android:id="@+id/rg1"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/btn_create_room_is_public"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:text="游戏"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_happy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:button="@drawable/btn_create_room_is_public"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:text="娱乐"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="模式"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/et_room_name"
+        app:layout_constraintTop_toBottomOf="@+id/rg1" />
+
+    <RadioGroup
+        android:id="@+id/rg2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/et_room_name"
+        app:layout_constraintBottom_toBottomOf="@+id/t1"
+        app:layout_constraintTop_toTopOf="@+id/t1">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/btn_create_room_is_public"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:text="微信"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:button="@drawable/btn_create_room_is_public"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:text="QQ"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="16sp" />
+    </RadioGroup>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="段位"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/et_room_name"
+        app:layout_constraintTop_toBottomOf="@+id/t1" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/t3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="标签"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/et_room_name"
+        app:layout_constraintTop_toBottomOf="@+id/t2" />
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_room_name"
         android:layout_width="match_parent"
@@ -78,8 +158,27 @@
         android:singleLine="true"
         android:textColor="#020037"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_cover" />
+        app:layout_constraintTop_toBottomOf="@+id/t3" />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_room_cover"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_setting_background"
+        app:shapeAppearance="@style/Round12Style"
+        app:srcCompat="@drawable/ic_create_voice_room_default_cover" />
 
+    <ImageView
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_select_room_theme"
+        app:layout_constraintBottom_toBottomOf="@id/iv_room_cover"
+        app:layout_constraintEnd_toEndOf="@id/iv_room_cover" />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/label_setting_background"
         android:layout_width="wrap_content"
@@ -90,221 +189,6 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
         app:layout_constraintTop_toBottomOf="@id/et_room_name" />
-
-    <RadioGroup
-        android:id="@+id/rv_background_list"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/et_room_name"
-        app:layout_constraintStart_toStartOf="@id/et_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/label_setting_background">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_voice_room_bg_0"
-                android:layout_width="0dp"
-                app:shapeAppearance="@style/Round8Style"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_background_0"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_margin="5dp"
-                android:button="@drawable/btn_create_voice_room_bg_selector"
-                android:checked="true"
-                android:clickable="false"
-                app:layout_constraintEnd_toEndOf="@+id/iv_voice_room_bg_0"
-                app:layout_constraintTop_toTopOf="@+id/iv_voice_room_bg_0" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_is_gif_0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="GIF"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="11sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_voice_room_bg_0"
-                app:layout_constraintStart_toStartOf="@+id/iv_voice_room_bg_0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_voice_room_bg_1"
-                android:layout_width="0dp"
-                app:shapeAppearance="@style/Round8Style"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_background_1"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_margin="5dp"
-                android:button="@drawable/btn_create_voice_room_bg_selector"
-                android:clickable="false"
-                app:layout_constraintEnd_toEndOf="@+id/iv_voice_room_bg_1"
-                app:layout_constraintTop_toTopOf="@+id/iv_voice_room_bg_1" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_is_gif_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="GIF"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="11sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_voice_room_bg_1"
-                app:layout_constraintStart_toStartOf="@+id/iv_voice_room_bg_1" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_voice_room_bg_2"
-                app:shapeAppearance="@style/Round8Style"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:layout_constraintDimensionRatio="1:1"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_background_2"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_margin="5dp"
-                android:button="@drawable/btn_create_voice_room_bg_selector"
-                android:clickable="false"
-                app:layout_constraintEnd_toEndOf="@+id/iv_voice_room_bg_2"
-                app:layout_constraintTop_toTopOf="@+id/iv_voice_room_bg_2" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_is_gif_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="GIF"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="11sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_voice_room_bg_2"
-                app:layout_constraintStart_toStartOf="@+id/iv_voice_room_bg_2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_voice_room_bg_3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:shapeAppearance="@style/Round8Style"/>
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_background_3"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_margin="5dp"
-                android:button="@drawable/btn_create_voice_room_bg_selector"
-                android:clickable="false"
-                app:layout_constraintEnd_toEndOf="@+id/iv_voice_room_bg_3"
-                app:layout_constraintTop_toTopOf="@+id/iv_voice_room_bg_3" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_is_gif_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="GIF"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="11sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_voice_room_bg_3"
-                app:layout_constraintStart_toStartOf="@+id/iv_voice_room_bg_3" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </RadioGroup>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/label_is_a_public_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="@string/label_is_a_public_room"
-        android:textColor="@color/whiteTextColor"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/et_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/rv_background_list" />
-
-    <RadioGroup
-        android:id="@+id/rg_is_public"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/et_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/label_is_a_public_room">
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_private"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/btn_create_room_is_public"
-            android:checked="true"
-            android:paddingStart="5dp"
-            android:text="@string/private_voice_room"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="14sp" />
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_public"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:button="@drawable/btn_create_room_is_public"
-            android:paddingStart="5dp"
-            android:text="@string/public_voice_room"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="14sp" />
-    </RadioGroup>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_create_room"
         android:layout_width="0dp"
@@ -313,7 +197,7 @@
         android:background="@drawable/bg_create_voice_room_btn"
         app:layout_constraintEnd_toEndOf="@id/et_room_name"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/rg_is_public">
+        app:layout_constraintTop_toBottomOf="@+id/iv_room_cover">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

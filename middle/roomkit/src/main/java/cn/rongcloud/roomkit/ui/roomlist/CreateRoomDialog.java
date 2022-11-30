@@ -43,7 +43,6 @@ public class CreateRoomDialog extends BottomDialog {
     private ActivityResultLauncher mLauncher;
     private String mCoverUrl;
     private String mRoomBackground;
-    private RoomType mRoomType;
     private String mPassword = "";
 
     private EditText mRoomNameEditText;
@@ -52,21 +51,12 @@ public class CreateRoomDialog extends BottomDialog {
     private CreateRoomCallBack mCreateRoomCallBack;
     private InputPasswordDialog mInputPasswordDialog;
     private LoadTag mLoading;
-    private int[] themeArray = new int[]{
-            R.drawable.img_room_theme_1,
-            R.drawable.img_room_theme_2,
-            R.drawable.img_room_theme_3,
-            R.drawable.img_room_theme_4,
-            R.drawable.img_room_theme_5,
-            R.drawable.img_room_theme_6
-    };
     private Bitmap themeBitmap;
 
-    public CreateRoomDialog(Activity activity, ActivityResultLauncher launcher, RoomType roomType,
+    public CreateRoomDialog(Activity activity, ActivityResultLauncher launcher,
                             CreateRoomCallBack createRoomCallBack) {
         super((FragmentActivity) activity);
         this.mLauncher = launcher;
-        this.mRoomType = roomType;
         this.mCreateRoomCallBack = createRoomCallBack;
         setContentView(R.layout.dialog_create_room, -1, UiUtils.dp2px(590));
         initView();
@@ -87,8 +77,6 @@ public class CreateRoomDialog extends BottomDialog {
         mCoverImage.setOnClickListener(v -> {
             startPicSelectActivity();
         });
-        int themeId = themeArray[new Random().nextInt(themeArray.length)];
-        themeBitmap = BitmapFactory.decodeResource(getContentView().getResources(), themeId);
         mCoverImage.setImageBitmap(themeBitmap);
         // 房间背景
         mRoomBackground = LocalDataManager.getBackgroundByIndex(0);
@@ -96,46 +84,13 @@ public class CreateRoomDialog extends BottomDialog {
         if (!TextUtils.isEmpty(mRoomBackground)) {
             ImageLoader.loadUrl(backgroundImage, mRoomBackground, R.drawable.bg_create_room);
         }
-        ImageView[] roomImages = new ImageView[]{getContentView().findViewById(R.id.iv_voice_room_bg_0),
-                getContentView().findViewById(R.id.iv_voice_room_bg_1),
-                getContentView().findViewById(R.id.iv_voice_room_bg_2),
-                getContentView().findViewById(R.id.iv_voice_room_bg_3)};
-        TextView[] gifTexts = new TextView[]{
-                getContentView().findViewById(R.id.tv_is_gif_0),
-                getContentView().findViewById(R.id.tv_is_gif_1),
-                getContentView().findViewById(R.id.tv_is_gif_2),
-                getContentView().findViewById(R.id.tv_is_gif_3)
-        };
-        RadioButton[] roomRadios = new RadioButton[]{
-                getContentView().findViewById(R.id.rb_background_0),
-                getContentView().findViewById(R.id.rb_background_1),
-                getContentView().findViewById(R.id.rb_background_2),
-                getContentView().findViewById(R.id.rb_background_3)
-        };
-        for (int i = 0; i < roomImages.length; i++) {
-            final String imageUrl = LocalDataManager.getBackgroundByIndex(i);
-            if (!TextUtils.isEmpty(imageUrl)) {
-                ImageLoader.loadUrl(roomImages[i], imageUrl, R.color.transparent);
-                if (imageUrl.toLowerCase(Locale.ROOT).endsWith("gif")) {
-                    gifTexts[i].setVisibility(View.VISIBLE);
-                }
-            }
-            int finalI = i;
-            roomImages[i].setOnClickListener(v -> {
-                for (int i1 = 0; i1 < roomRadios.length; i1++) {
-                    roomRadios[i1].setChecked(finalI == i1);
-                }
-                ImageLoader.loadUrl(backgroundImage, imageUrl, R.drawable.bg_create_room);
-                mRoomBackground = imageUrl;
-            });
-        }
+
         // 创建房间
         getContentView().findViewById(R.id.btn_create_room).setOnClickListener(v -> {
             preCreateRoom();
         });
 
         mRoomNameEditText = getContentView().findViewById(R.id.et_room_name);
-        mPrivateButton = getContentView().findViewById(R.id.rb_private);
         mRoomNameEditText.setFilters(new InputFilter[]{new ChineseLengthFilter(20)});
         mLoading = new LoadTag(mActivity, mActivity.getString(R.string.text_creating_room));
     }
@@ -289,7 +244,7 @@ public class CreateRoomDialog extends BottomDialog {
     }
 
     public interface CreateRoomCallBack {
-        void onCreateSuccess(Office voiceRoomBean);
+        void onCreateSuccess(String roomId);
 
         void onCreateExist(String roomId);
     }

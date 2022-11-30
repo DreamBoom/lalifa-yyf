@@ -10,7 +10,6 @@
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
         android:scaleType="centerCrop" />
 
     <cn.rongcloud.roomkit.ui.room.widget.GiftAnimationView
@@ -55,6 +54,42 @@
             android:layout_marginEnd="@dimen/dimen_room_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/room_title_bar" />
+
+        <TextView
+            android:id="@+id/task"
+            android:text="任务"
+            android:gravity="center"
+            android:textSize="@dimen/size16"
+            android:background="@drawable/rl_zs"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/create"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
+        <TextView
+            android:id="@+id/create"
+            android:text="创建"
+            android:gravity="center"
+            android:textSize="@dimen/size16"
+            android:background="@drawable/rl_zs"
+            android:layout_margin="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/train"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
+        <TextView
+            android:id="@+id/train"
+            android:text="队列"
+            android:gravity="center"
+            android:textSize="@dimen/size16"
+            android:background="@drawable/rl_zs"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="55dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
         <FrameLayout
             android:id="@+id/fl_seat"

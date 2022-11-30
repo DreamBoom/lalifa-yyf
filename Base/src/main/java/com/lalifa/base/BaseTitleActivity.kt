@@ -92,25 +92,4 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
     abstract fun initView()
     open fun initViewBundle(savedInstanceState: Bundle?){}
     open fun onClick() {}
-    private var exitTime: Long = 0
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (isCanExit()) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
-                if (System.currentTimeMillis() - exitTime > 2000) {
-                    Toast.makeText(
-                        applicationContext,
-                        "再按一次退出",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    exitTime = System.currentTimeMillis()
-                } else {
-                    BaseApplication.get().exit()
-                }
-                return true
-            }
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
 }

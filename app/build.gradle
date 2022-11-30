@@ -11,7 +11,9 @@ static def releaseTime() {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    dexOptions {
+        preDexLibraries false
+    }
     defaultConfig {
         applicationId "com.lalifa.yyf"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -21,9 +23,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
         multiDexEnabled true
-        dexOptions{
-            preDexLibraries = false
-        }
         //极光
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。

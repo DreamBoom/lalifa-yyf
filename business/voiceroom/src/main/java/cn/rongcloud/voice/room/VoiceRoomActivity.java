@@ -22,7 +22,6 @@ public class VoiceRoomActivity extends AbsRoomActivity {
     @Override
     protected void initRoom() {
         isCreate = getIntent().getBooleanExtra(IntentWrap.KEY_IS_CREATE, false);
-        LogCat.e("已进入"+isCreate);
     }
 
     @Override

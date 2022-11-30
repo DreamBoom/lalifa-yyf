@@ -13,6 +13,18 @@ suspend fun CoroutineScope.giftList(): List<GiftBean>? {
     return Post<BaseBean<List<GiftBean>>>("user/gift") {
     }.await().data
 }
+
+/**
+ * 创建队伍
+ * @receiver CoroutineScope
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.createRoom(id:String): RoomDetailBean? {
+    return Post<BaseBean<RoomDetailBean>>("chat_room/add_fleet") {
+        param("id", id)
+    }.await().data
+}
+
 /**
  * 聊天室详情
  * @receiver CoroutineScope
@@ -23,6 +35,19 @@ suspend fun CoroutineScope.roomDetail(id:String): RoomDetailBean? {
         param("id", id)
     }.await().data
 }
+
+/**
+ * 获取房间内管理员列表
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.getManage(id:String): MutableList<User>? {
+    return Post<BaseBean<MutableList<User>>>("chat_room/manage") {
+        param("office_id", id)
+    }.await().data
+}
+
 
 /**
  * 获取房间内成员列表

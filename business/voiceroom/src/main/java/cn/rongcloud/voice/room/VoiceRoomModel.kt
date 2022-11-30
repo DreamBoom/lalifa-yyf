@@ -469,7 +469,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
         return Single.create {
             val roomBean = currentUIRoomInfo.roomBean
             if (roomBean != null) {
-//                    currentUIRoomInfo.setRoomBean(voiceRoomBean);
+                currentUIRoomInfo.roomBean = roomBean
             } else {
                 //通过网络去获取
                 queryRoomInfoFromServer(roomId)
@@ -486,7 +486,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
         scopeNet {
             val roomDetails = roomDetail(roomId!!.noEN())
             if(null!=roomDetails){
-              //  currentUIRoomInfo.roomBean = roomDetails
+                currentUIRoomInfo.roomBean = roomDetails
             }
         }
     }

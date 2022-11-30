@@ -97,9 +97,6 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
         mRoomList = getView(R.id.xrv_room);
         refreshLayout = getView(R.id.layout_refresh);
         emptyView = getView(R.id.layout_empty);
-        getView(R.id.iv_create_room).setOnClickListener(v -> {
-            createRoom();
-        });
         mAdapter = new RoomListAdapter(getContext(), R.layout.item_room);
         mAdapter.setOnItemClickListener(this);
         mRoomList.setAdapter(mAdapter);
@@ -215,7 +212,6 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
                     new CreateRoomDialog(
                             requireActivity(),
                             mLauncher,
-                            getRoomType(),
                             null);
             mCreateRoomDialog.show();
         } else {

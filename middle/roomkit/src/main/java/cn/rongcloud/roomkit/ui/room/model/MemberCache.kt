@@ -1,13 +1,16 @@
 package cn.rongcloud.roomkit.ui.room.model
 
 import androidx.lifecycle.MutableLiveData
+import cn.rongcloud.config.api.getManage
 import cn.rongcloud.config.api.getMembers
 import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.user.UserProvider
 import com.drake.logcat.LogCat.e
 import kotlin.jvm.JvmOverloads
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback
+import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNet
+import com.lalifa.extension.noEN
 
 /**
  * @author gyn
@@ -35,7 +38,7 @@ class MemberCache {
     @JvmOverloads
     fun refreshMemberData(roomId: String?, callback: ClickCallback<Boolean>? = null) {
         scopeNet {
-            val member = getMembers(roomId!!)
+            val member = getMembers(roomId!!.noEN())
             if (member != null) {
                 memberList.value = member!!
                 member.forEach { user ->
@@ -52,8 +55,9 @@ class MemberCache {
      * @param roomId
      */
     fun refreshAdminData(roomId: String?) {
+        LogCat.e("===拉取管理员列表")
         scopeNet {
-            val member = getMembers(roomId!!)
+            val member = getManage(roomId!!.noEN())
             if (member != null) {
                 val list = ArrayList<String>()
                 member.forEach {

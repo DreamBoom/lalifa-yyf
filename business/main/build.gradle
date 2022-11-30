@@ -13,7 +13,9 @@ kapt {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    dexOptions {
+        preDexLibraries false
+    }
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion

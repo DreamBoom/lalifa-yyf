@@ -100,7 +100,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun loginUser() {
         scopeNetLife {
-            val user = login("13462439645", "111111")
+          //  val user = login("13462439645", "111111")
+            val user = login("15500000003", "123456")
             if (null != user) {
                 binding.login.enable()
                 //在jpush上设置别名

@@ -249,12 +249,9 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
         }
         Log.d(TAG, "onAudienceEnter: userId = " + userId);
         if (null != listeners) {
-            getOnLineUserIds(roomId, new IResultBack<List<String>>() {
-                @Override
-                public void onResult(List<String> strings) {
-                    for (RoomListener l : listeners) {
-                        l.onOnLineUserIds(strings);
-                    }
+            getOnLineUserIds(roomId, strings -> {
+                for (RoomListener l : listeners) {
+                    l.onOnLineUserIds(strings);
                 }
             });
         }

@@ -94,13 +94,13 @@
         layout="@layout/layout_room_empty"
         android:layout_width="match_parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_create_room"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_create_room_btn" />
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/iv_create_room"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:layout_marginEnd="17dp"-->
+<!--        android:layout_marginBottom="17dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_create_room_btn" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

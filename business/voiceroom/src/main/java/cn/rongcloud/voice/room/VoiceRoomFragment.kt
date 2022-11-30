@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -16,10 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.config.UserManager
 import cn.rongcloud.config.api.RoomDetailBean
+import cn.rongcloud.config.api.roomCheck
 import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.user.UserProvider
 import cn.rongcloud.music.MusicControlManager
 import cn.rongcloud.music.MusicMiniView
+import cn.rongcloud.roomkit.api.Office
 import cn.rongcloud.roomkit.intent.IntentWrap
 import cn.rongcloud.roomkit.manager.RCChatRoomMessageManager
 import cn.rongcloud.roomkit.message.RCAllBroadcastMessage
@@ -51,6 +55,7 @@ import cn.rongcloud.roomkit.ui.room.model.Member
 import cn.rongcloud.roomkit.ui.room.widget.*
 import cn.rongcloud.roomkit.ui.room.widget.AllBroadcastView.OnClickBroadcast
 import cn.rongcloud.roomkit.ui.room.widget.RoomBottomView.OnBottomOptionClickListener
+import cn.rongcloud.roomkit.ui.roomlist.CreateRoomDialog
 import cn.rongcloud.roomkit.widget.EditDialog
 import cn.rongcloud.roomkit.widget.EditDialog.OnClickEditDialog
 import cn.rongcloud.roomkit.widget.InputPasswordDialog
@@ -63,11 +68,13 @@ import cn.rongcloud.voice.room.helper.VoiceEventHelper
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
 import com.drake.logcat.LogCat.e
+import com.drake.net.utils.scopeNetLife
 import com.lalifa.ext.Config
 import com.lalifa.ui.UIStack
 import com.lalifa.utils.ImageLoader
 import com.lalifa.utils.UiUtils
 import com.lalifa.wapper.IResultBack
+import com.lalifa.widget.dialog.dialog.VRCenterDialog
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imkit.utils.StatusBarUtil
 import io.rong.imlib.model.Conversation
@@ -80,7 +87,7 @@ import io.rong.imlib.model.UserInfo
  */
 class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFragmentView,
     OnClickMessageUserListener, OnBottomOptionClickListener, OnClickUserListener,
-    View.OnClickListener, OnClickBroadcast {
+    View.OnClickListener, OnClickBroadcast , CreateRoomDialog.CreateRoomCallBack {
     private var mBackgroundImageView: ImageView? = null
     private var mGiftAnimationView: GiftAnimationView? = null
     private var mRoomTitleBar: RoomTitleBar? = null
@@ -114,7 +121,6 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
 
     override fun init() {
         mRoomId = requireArguments().getString(ROOM_ID)
-        e("加载语音房=====mRoomId=$mRoomId")
         isCreate = requireArguments().getBoolean(IntentWrap.KEY_IS_CREATE)
         clVoiceRoomView = requireView().findViewById<View>(R.id.cl_voice_room_view) as ConstraintLayout
 
@@ -131,6 +137,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         rlRoomFinishedId = requireView().findViewById<View>(R.id.rl_room_finished_id) as RelativeLayout
         btnGoBackList = requireView().findViewById<View>(R.id.btn_go_back_list) as Button
         mRoomSettingFragment = RoomSettingFragment(present)
+        getView<TextView>(R.id.create).setOnClickListener { createRoom() }
         // 全局广播View
         mAllBroadcastView = getView(R.id.view_all_broadcast)
         mAllBroadcastView!!.setOnClickBroadcast(OnClickBroadcast { message: RCAllBroadcastMessage ->
@@ -211,6 +218,90 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         })
     }
 
+    /**
+     * 创建队伍
+     *
+     * @param isEdit
+     */
+    private fun createRoom() {
+        // 创建之前检查是否已有创建的房间
+        scopeNetLife {
+            val roomCheck = roomCheck()
+            if (null != roomCheck) {
+                if (TextUtils.isEmpty(roomCheck.RoomId)) {
+                    showCreateRoomDialog()
+                } else {
+                    onCreateExist(roomCheck.RoomId)
+                }
+            }
+        }
+    }
+    private var mCreateRoomDialog: CreateRoomDialog? = null
+    private var confirmDialog: VRCenterDialog? = null
+    /**
+     * 展示创建房间弹窗
+     */
+    private var mLauncher: ActivityResultLauncher<*>? = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result != null && result.data != null && result.data!!.data != null && mCreateRoomDialog != null
+        ) {
+            mCreateRoomDialog!!.setCoverUri(result.data!!.data)
+        }
+    }
+    private fun showCreateRoomDialog() {
+        mCreateRoomDialog = CreateRoomDialog(
+            requireActivity(),
+            mLauncher,
+            this@VoiceRoomFragment
+        )
+        mCreateRoomDialog!!.show()
+    }
+
+    override fun onCreateExist(roomId: String) {
+        confirmDialog = VRCenterDialog(requireActivity(), null)
+        confirmDialog!!.replaceContent(
+            getString(cn.rongcloud.roomkit.R.string.text_you_have_created_room),
+            getString(cn.rongcloud.roomkit.R.string.cancel),
+            null,
+            getString(cn.rongcloud.roomkit.R.string.confirm),
+            { jumpRoom(roomId) },
+            null
+        )
+        confirmDialog!!.show()
+    }
+
+    /**
+     * 跳转到相应的房间
+     *
+     * @param voiceRoomBean
+     */
+    private fun jumpRoom(roomId: String) {
+        IntentWrap.launchRoom(requireContext(), roomId)
+    }
+
+    override fun onCreateSuccess(roomid: String) {
+//        mAdapter.getData().add(0, voiceRoomBean)
+//        mAdapter.notifyItemInserted(0)
+
+        val list: ArrayList<String> = ArrayList()
+        list.add(roomid)
+        launchRoomActivity(roomid, list, 0, isCreate)
+    }
+
+    fun launchRoomActivity(
+        roomId: String, roomIds: ArrayList<String>, position: Int, isCreate: Boolean
+    ) {
+        // 如果在其他房间有悬浮窗，先关闭再跳转
+        MiniRoomManager.getInstance().finish(
+            roomId
+        ) {
+            IntentWrap.launchRoom(
+                requireContext(),
+                roomIds, position, isCreate
+            )
+        }
+    }
     /**
      * 显示公告弹窗
      *
@@ -425,6 +516,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         clVoiceRoomView!!.visibility = View.VISIBLE
         rlRoomFinishedId!!.visibility = View.GONE
         // 加载背景
+        //todo config.filepath
         ImageLoader.loadUrl(
             mBackgroundImageView!!,
             voiceRoomBean!!.background,

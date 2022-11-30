@@ -11,7 +11,9 @@ kapt {
 }
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    dexOptions {
+        preDexLibraries false
+    }
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -43,8 +45,10 @@ dependencies {
     properties.load(propertyFile.newDataInputStream())
     if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !properties.get("VOICE_ROOM_REMOTE_DEPENDENCE").toBoolean()) {
         println("------------------------>>>>use local module")
+        implementation "cn.rongcloud.sdk:rclogger_lib:1.0.5"
     } else {
-        //api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
+        implementation "cn.rongcloud.sdk:rclogger_lib:1.0.5"
+      //  api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
     }
     kapt  "com.alibaba:arouter-compiler:$arouter"
 }

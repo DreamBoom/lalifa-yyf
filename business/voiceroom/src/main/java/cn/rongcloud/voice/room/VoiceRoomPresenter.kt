@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import cn.rongcloud.config.UserManager
+import cn.rongcloud.config.UserManager.get
 import cn.rongcloud.config.api.RoomDetailBean
 import cn.rongcloud.config.api.roomDetail
 import cn.rongcloud.config.api.roomGift
@@ -39,6 +40,7 @@ import cn.rongcloud.roomkit.ui.room.model.Member
 import cn.rongcloud.roomkit.ui.room.model.MemberCache
 import cn.rongcloud.roomkit.ui.room.widget.RoomTitleBar
 import cn.rongcloud.roomkit.widget.InputPasswordDialog
+import cn.rongcloud.rtc.api.RCRTCConfig
 import cn.rongcloud.voice.Constant
 import cn.rongcloud.voice.model.UiSeatModel
 import cn.rongcloud.voice.room.dialogFragment.CreatorSettingFragment
@@ -66,7 +68,9 @@ import io.reactivex.rxjava3.functions.Consumer
 import io.rong.imlib.model.MessageContent
 import io.rong.message.CommandMessage
 import io.rong.message.TextMessage
+import org.greenrobot.eventbus.EventBus
 import java.util.*
+
 
 /**
  * 语聊房present
@@ -91,6 +95,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
     var roomOwnerType: RoomOwnerType? = null
         private set
     private var inputPasswordDialog: InputPasswordDialog? = null
+
     @JvmField
     var currentStatus = STATUS_NOT_ON_SEAT
 
@@ -111,7 +116,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
     fun init(roomId: String, isCreate: Boolean) {
         isInRoom = TextUtils.equals(VoiceEventHelper.helper().roomId, roomId)
         // TODO 请求数据
-        getRoomInfo(roomId,isCreate)
+        getRoomInfo(roomId, isCreate)
     }
 
     /**
@@ -121,7 +126,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         mView!!.showLoading("")
         scopeNet {
             val roomDetail = roomDetail(roomId.noEN())
-            if(null!=roomDetail){
+            if (null != roomDetail) {
                 mVoiceRoomBean = roomDetail
                 if (isInRoom) {
                     //如果已经在房间里面了,那么需要重新设置监听
@@ -131,16 +136,18 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                     voiceRoomModel!!.currentUIRoomInfo.isMute =
                         VoiceEventHelper.helper().muteAllRemoteStreams
                     //todo
-                   // voiceRoomModel.onSeatInfoUpdate(VoiceEventHelper.helper().rcVoiceSeatInfoList)
+                    // voiceRoomModel.onSeatInfoUpdate(VoiceEventHelper.helper().rcVoiceSeatInfoList)
                     setCurrentRoom(roomDetail)
                     mView!!.dismissLoading()
                     if (roomOwnerType != RoomOwnerType.VOICE_OWNER) {
                         refreshMusicView(true)
                     }
+                    LogCat.e("====isInRoom")
                 } else {
+                    LogCat.e("====isInRoom==leaveRoom")
                     leaveRoom(roomId, isCreate, true)
                 }
-            }else{
+            } else {
                 mView!!.dismissLoading()
                 //房间不存在了
                 mView!!.showFinishView()
@@ -170,6 +177,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
     }
 
     private fun joinRoom(roomId: String, isCreate: Boolean) {
+        LogCat.e("joinRoom=====$roomId")
         //设置界面监听
         VoiceEventHelper.helper().register(roomId)
         VoiceEventHelper.helper().setRoomBean(mVoiceRoomBean)
@@ -178,14 +186,23 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         currentStatus = STATUS_NOT_ON_SEAT
         mView!!.changeStatus(currentStatus)
         if (isCreate) {
+            // 构建一个 RCRTCConfig，可根据自己需求配置信息。
+            val config = RCRTCConfig.Builder.create().build()
+            // 创建一个 RCVoiceRoomInfo 实例
             val rcVoiceRoomInfo = RCVoiceRoomInfo()
+            // 设置房间名称
             rcVoiceRoomInfo.roomName = mVoiceRoomBean!!.title
-            rcVoiceRoomInfo.seatCount = 9
+            // 设置麦位数量
+            rcVoiceRoomInfo.seatCount = 10
+            // 设置上麦模式（ture是自由上麦 false为申请上麦）
             rcVoiceRoomInfo.isFreeEnterSeat = false
+            // 设置全麦锁座
             rcVoiceRoomInfo.isLockAll = false
+            // 设置全麦锁麦
             rcVoiceRoomInfo.isMuteAll = false
             RCVoiceRoomEngine.getInstance()
-                .createAndJoinRoom(roomId, rcVoiceRoomInfo, object : RCVoiceRoomCallback {
+                .createAndJoinRoom(config, roomId, rcVoiceRoomInfo,
+                    object : RCVoiceRoomCallback {
                     override fun onSuccess() {
                         d("==============createAndJoinRoom onSuccess")
                         VoiceEventHelper.helper().changeUserRoom(roomId)
@@ -204,8 +221,10 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                     }
                 })
         } else {
-            LogCat.e("==============joinRoom start")
-            RCVoiceRoomEngine.getInstance().joinRoom(roomId, object : RCVoiceRoomCallback {
+            // 构建一个 RCRTCConfig，可根据自己需求配置信息。
+            val config = RCRTCConfig.Builder.create().build()
+            RCVoiceRoomEngine.getInstance().joinRoom(config, roomId,
+                object : RCVoiceRoomCallback {
                 override fun onSuccess() {
                     d("==============joinRoom onSuccess")
                     VoiceEventHelper.helper().changeUserRoom(roomId)
@@ -295,15 +314,16 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         //刷新房间信息
         MemberCache.Companion.get().fetchData(mVoiceRoomBean.Chatroom_id)
         //监听房间里面的人
-        MemberCache.Companion.get().memberList.observe((mView as VoiceRoomFragment).viewLifecycleOwner) {
-                users -> //人数
+        MemberCache.Companion.get().memberList.observe((mView as VoiceRoomFragment).viewLifecycleOwner) { users -> //人数
             mView!!.setOnlineCount(users.size)
             voiceRoomModel.onMemberListener(users)
         }
         MemberCache.Companion.get().adminList.observe((mView as VoiceRoomFragment).viewLifecycleOwner) {
-            mView!!.refreshMessageList() }
+            mView!!.refreshMessageList()
+        }
         MemberCache.Companion.get().adminList.observe((mView as VoiceRoomFragment).viewLifecycleOwner) {
-            mView!!.refreshSeat() }
+            mView!!.refreshSeat()
+        }
         //获取屏蔽词
         shield
         giftCount
@@ -333,7 +353,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
      */
     private fun refreshMusicView(show: Boolean) {
         if (show) {
-            MusicApi.getPlayingMusic(roomId,object : IResultBack<MusicBean>{
+            MusicApi.getPlayingMusic(roomId, object : IResultBack<MusicBean> {
                 override fun onResult(musicBean: MusicBean?) {
                     if (musicBean != null) {
                         mView!!.refreshMusicView(
@@ -419,32 +439,33 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
      * TODO 多次订阅导致了多次回调，导致消息重复
      */
     private fun setObMessageListener() {
-        disposableList.add(RCChatRoomMessageManager.obMessageReceiveByRoomId(mVoiceRoomBean!!.Chatroom_id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(Consumer { messageContent ->
-                Log.v(TAG, "===>>>>>>: " + GsonUtil.obj2Json(messageContent.toString()))
-                //将消息显示到列表上
-                if (VoiceEventHelper.helper().isShowingMessage(messageContent)) {
-                    // fix：悬浮框 接收pk邀请
-                    if (null != mView) mView!!.showMessage(messageContent, false)
-                }
-                if (messageContent is RCChatroomGift || messageContent is RCChatroomGiftAll) {
-                    if (null != mView) mView!!.showVideoGift()
-                    giftCount
-                } else if (messageContent is RCChatroomLike) {
-                    if (null != mView) mView!!.showLikeAnimation()
-                    return@Consumer
-                } else if (messageContent is RCAllBroadcastMessage) {
-                    AllBroadcastManager.getInstance().addMessage(messageContent)
-                } else if (messageContent is RCChatroomSeats) {
-                    refreshRoomMember()
-                } else if (messageContent is RCChatroomLocationMessage) {
-                    VoiceEventHelper.helper().addMessage(messageContent)
-                } else if (messageContent is CommandMessage) {
-                    val show = !TextUtils.isEmpty(messageContent.data)
-                    refreshMusicView(show)
-                }
-            })
+        disposableList.add(
+            RCChatRoomMessageManager.obMessageReceiveByRoomId(mVoiceRoomBean!!.Chatroom_id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Consumer { messageContent ->
+                    Log.v(TAG, "===>>>>>>: " + GsonUtil.obj2Json(messageContent.toString()))
+                    //将消息显示到列表上
+                    if (VoiceEventHelper.helper().isShowingMessage(messageContent)) {
+                        // fix：悬浮框 接收pk邀请
+                        if (null != mView) mView!!.showMessage(messageContent, false)
+                    }
+                    if (messageContent is RCChatroomGift || messageContent is RCChatroomGiftAll) {
+                        if (null != mView) mView!!.showVideoGift()
+                        giftCount
+                    } else if (messageContent is RCChatroomLike) {
+                        if (null != mView) mView!!.showLikeAnimation()
+                        return@Consumer
+                    } else if (messageContent is RCAllBroadcastMessage) {
+                        AllBroadcastManager.getInstance().addMessage(messageContent)
+                    } else if (messageContent is RCChatroomSeats) {
+                        refreshRoomMember()
+                    } else if (messageContent is RCChatroomLocationMessage) {
+                        VoiceEventHelper.helper().addMessage(messageContent)
+                    } else if (messageContent is CommandMessage) {
+                        val show = !TextUtils.isEmpty(messageContent.data)
+                        refreshMusicView(show)
+                    }
+                })
         )
     }
 
@@ -645,7 +666,8 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                         mView!!.changeStatus(currentStatus)
                     } else if (TextUtils.equals(first, Constant.EVENT_MANAGER_LIST_CHANGE)) {
                         //管理员列表发生了变化
-                        MemberCache.Companion.get().refreshAdminData(getmVoiceRoomBean()!!.Chatroom_id)
+                        MemberCache.Companion.get()
+                            .refreshAdminData(getmVoiceRoomBean()!!.Chatroom_id)
                         Log.e(TAG, "accept: " + "EVENT_MANAGER_LIST_CHANGE")
                     } else if (TextUtils.equals(first, Constant.EVENT_KICKED_OUT_OF_ROOM)) {
                         //被踢出了房间
@@ -657,8 +679,10 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                     } else if (TextUtils.equals(first, Constant.EVENT_ROOM_CLOSE)) {
                         //当前房间被关闭
                         val confirmDialog =
-                            VRCenterDialog((mView as VoiceRoomFragment).requireActivity(),
-                                null)
+                            VRCenterDialog(
+                                (mView as VoiceRoomFragment).requireActivity(),
+                                null
+                            )
                         confirmDialog.replaceContent(
                             "当前直播已结束",
                             "",
@@ -895,7 +919,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         e(TAG, "getCreateUserId:$createUserId")
         e(TAG, "memberArrayList:" + GsonUtil.obj2Json(memberArrayList))
         //todo 测试
-       // mView!!.showSendGiftDialog(mVoiceRoomBean!!, createUserId, memberArrayList!!)
+        // mView!!.showSendGiftDialog(mVoiceRoomBean!!, createUserId, memberArrayList!!)
     }
 
     /**
@@ -1064,7 +1088,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
 //                    val disable = seatModel.extra.isDisableRecording
 //                    voiceRoomModel.creatorMuteSelf(disable)
 //                }
-                //                } else {
+        //                } else {
 //                    if (null == voiceRoomModel) return;
 //                    // 第一次进房间 房主的disableRecord状态置为false
 //                    boolean disable = RCVoiceRoomEngine.getInstance().isDisableAudioRecording();
@@ -1074,7 +1098,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
 //                    seatModel.setExtra(extra);
 //                    voiceRoomModel.creatorMuteSelf(disable);
 //                }
-    //        }
+        //        }
 
 //            override fun onError(i: Int, message: String) {
 //                mView!!.showToast(message)
@@ -1121,7 +1145,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         }
         disposableList.clear()
         VoiceEventHelper.helper().removeRCVoiceRoomEventListener(voiceRoomModel)
-        //        EventBus.get().off(UPDATE_SHIELD, null);
+            //  EventBus.get().off(UPDATE_SHIELD, null);
     }
 
     /**
@@ -1137,7 +1161,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
      */
     fun showSettingDialog() {
         val funList = Arrays.asList(
-            MutableLiveData<BaseFun>(RoomLockFun(if (mVoiceRoomBean!!.password_type==1) 1 else 0)),
+            MutableLiveData<BaseFun>(RoomLockFun(if (mVoiceRoomBean!!.password_type == 1) 1 else 0)),
             MutableLiveData<BaseFun>(RoomNameFun(0)),
             MutableLiveData<BaseFun>(RoomNoticeFun(0)),
             MutableLiveData<BaseFun>(RoomBackgroundFun(0)),
@@ -1245,8 +1269,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                         getmVoiceRoomBean()!!.Chatroom_id,
                         rcChatroomSeats,
                         true,
-                        { integer: Any? -> null }) {
-                            coreErrorCode: Any?, integer: Any? -> null }
+                        { integer: Any? -> null }) { coreErrorCode: Any?, integer: Any? -> null }
                 }
 
                 override fun onError(i: Int, s: String) {}
@@ -1354,7 +1377,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
      * @param name
      */
     fun setRoomName(name: String?) {
-    //todo 222
+        //todo 222
 //        OkApi.put(VRApi.ROOM_NAME,
 //            OkParams()
 //                .add("roomId", getmVoiceRoomBean()!!.Chatroom_id)
@@ -1506,7 +1529,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
             val roomBean = roomDetail(message.roomId.noEN())
             if (roomBean != null) {
                 // 房间有密码需要弹框验证密码
-                if (roomBean.password_type==1) {
+                if (roomBean.password_type == 1) {
                     inputPasswordDialog = InputPasswordDialog((mView as VoiceRoomFragment)
                         .requireContext(), false,
                         object : InputPasswordDialog.OnClickListener {
@@ -1532,11 +1555,11 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                     exitRoom(roomBean.Chatroom_id)
                 }
             } else {
-            mView!!.dismissLoading()
-            //房间不存在了
-            mView!!.showToast("房间不存在了")
+                mView!!.dismissLoading()
+                //房间不存在了
+                mView!!.showToast("房间不存在了")
+            }
         }
-    }
     }
 
     private fun exitRoom(roomId: String) {

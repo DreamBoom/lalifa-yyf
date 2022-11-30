@@ -5,10 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import cn.rongcloud.config.UserManager
-import cn.rongcloud.config.api.RoomDetailBean
 import cn.rongcloud.config.api.roomCheck
 import cn.rongcloud.config.api.roomDetail
 import cn.rongcloud.roomkit.R
@@ -19,12 +16,9 @@ import cn.rongcloud.roomkit.api.roomList
 import cn.rongcloud.roomkit.databinding.FragmentRoomListBinding
 import cn.rongcloud.roomkit.intent.IntentWrap
 import cn.rongcloud.roomkit.provider.VoiceRoomProvider
-import cn.rongcloud.roomkit.ui.RoomType
 import cn.rongcloud.roomkit.ui.miniroom.MiniRoomManager
 import cn.rongcloud.roomkit.ui.other.MainSearchActivity
 import cn.rongcloud.roomkit.ui.other.PHActivity
-import cn.rongcloud.roomkit.ui.roomlist.CreateRoomDialog
-import cn.rongcloud.roomkit.ui.roomlist.CreateRoomDialog.CreateRoomCallBack
 import cn.rongcloud.roomkit.widget.InputPasswordDialog
 import com.drake.brv.BindingAdapter
 import com.drake.logcat.LogCat
@@ -40,8 +34,7 @@ import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import io.rong.imkit.picture.tools.ToastUtils
 
-class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCallBack {
-    private var mCreateRoomDialog: CreateRoomDialog? = null
+class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
     private var confirmDialog: VRCenterDialog? = null
     private var inputPasswordDialog: InputPasswordDialog? = null
     override fun getViewBinding(
@@ -81,9 +74,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCall
             }
             apply = xrvRoom.roomListAdapter().apply {
                 R.id.itemRoom.onClick {
-                    val list = ArrayList<Office>()
-                    list.add(getModel())
-                    clickItem(getModel(), false, list)
+                    clickItem(getModel(), false)
                 }
             }
             layoutRefresh.setOnRefreshListener {
@@ -127,23 +118,10 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCall
             search.onClick { start(MainSearchActivity::class.java) }
             ph.onClick { start(PHActivity::class.java) }
             layoutEmpty.root.onClick { loadRoomList() }
-            ivCreateRoom.onClick { createRoom() }
         }
     }
 
-    private fun createRoom() {
-        // 创建之前检查是否已有创建的房间
-        scopeNetLife {
-            val roomCheck = roomCheck()
-            if (null != roomCheck) {
-                if (TextUtils.isEmpty(roomCheck.RoomId)) {
-                    showCreateRoomDialog()
-                } else {
-                    onCreateExist(roomCheck.RoomId)
-                }
-            }
-        }
-    }
+
 
     fun launchRoomActivity(
         roomId: String, roomIds: ArrayList<String>, position: Int, isCreate: Boolean
@@ -184,28 +162,6 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCall
     }
 
     /**
-     * 展示创建房间弹窗
-     */
-    private var mLauncher: ActivityResultLauncher<*>? = registerForActivityResult(
-        StartActivityForResult()
-    ) { result ->
-        if (result != null && result.data != null && result.data!!.data != null && mCreateRoomDialog != null
-        ) {
-            mCreateRoomDialog!!.setCoverUri(result.data!!.data)
-        }
-    }
-
-    private fun showCreateRoomDialog() {
-        mCreateRoomDialog = CreateRoomDialog(
-            requireActivity(),
-            mLauncher,
-            RoomType.VOICE_ROOM,
-            this@RoomListFragment
-        )
-        mCreateRoomDialog!!.show()
-    }
-
-    /**
      * 跳转到相应的房间
      *
      * @param voiceRoomBean
@@ -228,31 +184,9 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCall
 //        })
     }
 
-    override fun onCreateSuccess(voiceRoomBean: Office?) {
-//        mAdapter.getData().add(0, voiceRoomBean)
-//        mAdapter.notifyItemInserted(0)
-        val arrayList = ArrayList<Office>()
-        arrayList.add(voiceRoomBean!!)
-        clickItem(voiceRoomBean, true, arrayList)
-    }
-
-    override fun onCreateExist(roomId: String) {
-        confirmDialog = VRCenterDialog(requireActivity(), null)
-        confirmDialog!!.replaceContent(
-            getString(R.string.text_you_have_created_room),
-            getString(R.string.cancel),
-            null,
-            getString(R.string.confirm),
-            { jumpRoom(roomId) },
-            null
-        )
-        confirmDialog!!.show()
-    }
-
     private fun clickItem(
         item: Office,
-        isCreate: Boolean,
-        voiceRoomBeans: ArrayList<Office>
+        isCreate: Boolean
     ) {
         if (TextUtils.equals(item.uid.toString(), UserManager.get()!!.userId)) {
             val list: ArrayList<String> = ArrayList()
@@ -290,19 +224,10 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>(), CreateRoomCall
             inputPasswordDialog!!.show()
             LogCat.e("进入密码房间====${item.roomid}")
         } else {
-            val list = ArrayList<String>()
-            for (voiceRoomBean in voiceRoomBeans) {
-                if (voiceRoomBean.uid.toString() != UserManager.get()!!.userId
-                    && voiceRoomBean.password_type == 1
-                ) {
-                    // 过滤掉上锁的房间和自己创建的房间
-                    list.add(voiceRoomBean.roomid)
-                }
-            }
-            var p = list.indexOf(item.roomid)
-            if (p < 0) p = 0
             LogCat.e("进入非创建无密码房间====${item.roomid}")
-            launchRoomActivity(item.roomid, list, p, false)
+            val list: ArrayList<String> = ArrayList()
+            list.add(item.roomid)
+            launchRoomActivity(item.roomid, list, 0, false)
         }
     }
 }
