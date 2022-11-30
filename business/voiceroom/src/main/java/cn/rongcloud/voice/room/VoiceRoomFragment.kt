@@ -20,9 +20,6 @@ import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.user.UserProvider
 import cn.rongcloud.music.MusicControlManager
 import cn.rongcloud.music.MusicMiniView
-import cn.rongcloud.pk.PKManager
-import cn.rongcloud.pk.bean.PKState
-import cn.rongcloud.pk.widget.PKView
 import cn.rongcloud.roomkit.intent.IntentWrap
 import cn.rongcloud.roomkit.manager.RCChatRoomMessageManager
 import cn.rongcloud.roomkit.message.RCAllBroadcastMessage
@@ -62,7 +59,6 @@ import cn.rongcloud.voice.Constant
 import cn.rongcloud.voice.R
 import cn.rongcloud.voice.model.UiSeatModel
 import cn.rongcloud.voice.room.adapter.VoiceRoomSeatsAdapter
-import cn.rongcloud.voice.room.helper.SimpleVoicePkListener
 import cn.rongcloud.voice.room.helper.VoiceEventHelper
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
@@ -201,7 +197,6 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         )
         mRoomMessageAdapter = RoomMessageAdapter(context, mMessageView, this, RoomType.VOICE_ROOM)
         mMessageView!!.setAdapter(mRoomMessageAdapter)
-        pkView = getView(R.id.pk_view)
         voiceRoom = getView(R.id.voice_room)
         if (null == mNoticeDialog) {
             mNoticeDialog = RoomNoticeDialog(activity)
@@ -239,9 +234,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         // pk中房主才提示
         if (TextUtils.equals(
                 UserManager.get()!!.userId,
-                present!!.createUserId
-            ) && !PKManager.get().pkState.enableAction()
-        ) {
+                present!!.createUserId)) {
             return
         }
         mExitRoomPopupWindow =
@@ -256,7 +249,6 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
                             android.R.anim.fade_in,
                             android.R.anim.fade_out
                         )
-                        PKManager.get().unInit()
                         MiniRoomManager.getInstance().show(
                             requireContext(),
                             present!!.roomId,
@@ -346,42 +338,10 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         btnGoBackList!!.setOnClickListener { v: View -> onClick(v) }
     }
 
-    private var pkView: PKView? = null
     private var voiceRoom: View? = null
     override fun joinRoom() {
         present!!.init(mRoomId!!, isCreate)
         mAllBroadcastView!!.setBroadcastListener()
-    }
-
-    private fun initPk(voiceRoomBean: RoomDetailBean) {
-        PKManager.get()
-            .init(mRoomId, RoomType.VOICE_ROOM.type, pkView, object : SimpleVoicePkListener {
-                override fun onPkStart() {
-                    PKManager.get().enterPkWithAnimation(voiceRoom, pkView, 200)
-                }
-
-                override fun onPkStop() {
-                    PKManager.get().quitPkWithAnimation(pkView, voiceRoom, 200)
-                }
-
-                override fun onPkStateChanged(pkState: PKState) {
-                    when (pkState) {
-                        PKState.PK_NONE, PKState.PK_FINISH, PKState.PK_STOP -> {
-                            mRoomBottomView!!.refreshPkState(RoomBottomView.PKViewState.pk)
-                            pkView!!.visibility = View.GONE
-                            voiceRoom!!.visibility = View.VISIBLE
-                        }
-                        PKState.PK_INVITE -> mRoomBottomView!!.refreshPkState(RoomBottomView.PKViewState.wait)
-                        PKState.PK_GOING, PKState.PK_PUNISH, PKState.PK_START -> mRoomBottomView!!.refreshPkState(
-                            RoomBottomView.PKViewState.stop
-                        )
-                    }
-                }
-            })
-    }
-
-    private fun unInitPk() {
-        PKManager.get().unInit()
     }
 
     override fun onBackPressed() {
@@ -484,8 +444,6 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
             this, voiceRoomBean.Chatroom_id)
         // 设置消息列表数据
         mRoomMessageAdapter!!.setRoomCreateId(voiceRoomBean.userInfo!!.userId)
-        // init
-        initPk(voiceRoomBean)
     }
 
     override fun destroyRoom() {
@@ -493,8 +451,6 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         //离开房间的时候
         clVoiceRoomView!!.visibility = View.INVISIBLE
         rlRoomFinishedId!!.visibility = View.GONE
-        // uninit pk
-        unInitPk()
         //取消对当前房间的监听
         VoiceEventHelper.helper().unregeister()
         //取消当前对于各种消息的回调监听
@@ -659,10 +615,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     }
 
     override fun clickSeatOrder() {
-        if (PKManager.get().pkState.enableAction()) {
-            //弹窗邀请弹窗 并且将申请的集合和可以被要求的传入
-            present!!.showSeatOperationViewPagerFragment(0, -1)
-        }
+
     }
 
     /**
@@ -673,26 +626,10 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     }
 
     /**
-     * PK
-     */
-    override fun clickPk() {
-        val pkState = PKManager.get().pkState
-        if (pkState.isNotInPk) {
-            PKManager.get().showPkInvitation(activity)
-        } else if (pkState.isInInviting) {
-            PKManager.get().showCancelPkInvitation(activity)
-        } else if (pkState.isInPk) { // pk中
-            PKManager.get().showQuitPK(activity)
-        }
-    }
-
-    /**
      * 请求上麦按钮
      */
     override fun clickRequestSeat() {
-        if (PKManager.get().pkState.enableAction()) {
-            present!!.requestSeat(-1)
-        }
+        present!!.requestSeat(-1)
     }
 
     /**
@@ -826,7 +763,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
 
     override fun showUserSetting(member: Member, uiSeatModel: UiSeatModel) {
         if (mMemberSettingFragment == null) {
-            mMemberSettingFragment = MemberSettingFragment(present!!.roomOwnerType, present)
+            mMemberSettingFragment = MemberSettingFragment(present!!.roomOwnerType!!, present)
         }
         if (uiSeatModel != null) {
             //说明当前用户在麦位上

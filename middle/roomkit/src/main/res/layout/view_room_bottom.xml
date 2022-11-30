@@ -141,18 +141,6 @@
             app:layout_constraintEnd_toStartOf="@+id/iv_request_enter_seat"
             app:srcCompat="@drawable/ic_mic_switch" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_request_pk"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="@dimen/dimen_room_padding"
-            android:layout_marginBottom="7dp"
-            android:visibility="invisible"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/iv_send_gift"
-            app:srcCompat="@drawable/selector_pk" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </merge>

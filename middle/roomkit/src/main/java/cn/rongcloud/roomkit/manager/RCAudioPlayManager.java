@@ -19,8 +19,6 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.view.WindowManager;
 
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.api.callback.FileIOCallBack;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -258,18 +256,19 @@ public class RCAudioPlayManager implements SensorEventListener {
             if (null != callback) callback.onResult(file.getAbsolutePath());
             return;
         }
-        OkApi.download(audioPath, null, new FileIOCallBack(dir, cacheName) {
-            @Override
-            public void onResult(File file) {
-                if (null != callback) callback.onResult(file.getAbsolutePath());
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                super.onError(code, msg);
-                if (null != callback) callback.onResult(null);
-            }
-        });
+        //todo 222
+//        OkApi.download(audioPath, null, new FileIOCallBack(dir, cacheName) {
+//            @Override
+//            public void onResult(File file) {
+//                if (null != callback) callback.onResult(file.getAbsolutePath());
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                super.onError(code, msg);
+//                if (null != callback) callback.onResult(null);
+//            }
+//        });
     }
 
     public void startPlay(final Context context, Uri audioUri, IAudioPlayListener playListener) {

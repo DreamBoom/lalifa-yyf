@@ -10,10 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lalifa.adapter.adapter.RcyHolder;
 import com.lalifa.adapter.adapter.RcySAdapter;
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.OkParams;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.utils.ImageLoader;
 import com.lalifa.utils.UIKit;
 import com.lalifa.utils.UiUtils;
@@ -23,14 +19,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
-import cn.rongcloud.roomkit.api.VRApi;
-import cn.rongcloud.roomkit.manager.AllBroadcastManager;
 import cn.rongcloud.roomkit.message.RCAllBroadcastMessage;
 import cn.rongcloud.roomkit.message.RCChatroomGift;
 import cn.rongcloud.roomkit.message.RCChatroomGiftAll;
@@ -282,28 +275,29 @@ public class GiftFragment extends BaseBottomSheetDialog {
     }
 
     private void sendGift(String userId) {
-        Map<String, Object> params = new OkParams()
-                .add("roomId", mVoiceRoomBean.getChatroom_id())
-                .add("giftId", mCurrentGift.getIndex())
-                .add("toUid", userId)
-                .add("num", mGiftNum)
-                .build();
-        OkApi.post(VRApi.SEND_GIFT, params, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    successMembers.add(mMembersMap.get(userId));
-                }
-                latch.countDown();
-
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                super.onError(code, msg);
-                latch.countDown();
-            }
-        });
+        //todo 222
+//        Map<String, Object> params = new OkParams()
+//                .add("roomId", mVoiceRoomBean.getChatroom_id())
+//                .add("giftId", mCurrentGift.getIndex())
+//                .add("toUid", userId)
+//                .add("num", mGiftNum)
+//                .build();
+//        OkApi.post(VRApi.SEND_GIFT, params, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    successMembers.add(mMembersMap.get(userId));
+//                }
+//                latch.countDown();
+//
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                super.onError(code, msg);
+//                latch.countDown();
+//            }
+//        });
     }
 
     private void sendGiftBroadcast(String userId, boolean isAll) {
@@ -326,24 +320,25 @@ public class GiftFragment extends BaseBottomSheetDialog {
             message.setRoomId(mVoiceRoomBean.getChatroom_id());
             message.setRoomType(""+mVoiceRoomBean.getCollection_type());
             message.setIsPrivate(mVoiceRoomBean.getPassword_type() + "");
-            Map<String, Object> params = new OkParams()
-                    .add("fromUserId", UserManager.get().getUserId())
-                    .add("objectName", "RC:RCGiftBroadcastMsg")
-                    .add("content", message.toString())
-                    .build();
-            OkApi.post(VRApi.GIFT_BROADCAST, params, new WrapperCallBack() {
-                @Override
-                public void onResult(Wrapper result) {
-                    if (result.ok()) {
-                        AllBroadcastManager.getInstance().addMessage(message);
-                    }
-                }
-
-                @Override
-                public void onError(int code, String msg) {
-                    super.onError(code, msg);
-                }
-            });
+            //todo 222
+//            Map<String, Object> params = new OkParams()
+//                    .add("fromUserId", UserManager.get().getUserId())
+//                    .add("objectName", "RC:RCGiftBroadcastMsg")
+//                    .add("content", message.toString())
+//                    .build();
+//            OkApi.post(VRApi.GIFT_BROADCAST, params, new WrapperCallBack() {
+//                @Override
+//                public void onResult(Wrapper result) {
+//                    if (result.ok()) {
+//                        AllBroadcastManager.getInstance().addMessage(message);
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(int code, String msg) {
+//                    super.onError(code, msg);
+//                }
+//            });
         }
     }
 

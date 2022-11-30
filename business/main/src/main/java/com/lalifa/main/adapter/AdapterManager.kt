@@ -187,7 +187,7 @@ fun RecyclerView.cheMyList(): BindingAdapter {
                 header.load(bean.avatar.pk(""))
                 name.text = bean.userName
                 time.text = bean.create_time
-                if (null!= bean.gender&& bean.gender== 0) {
+                if (null != bean.gender && bean.gender == 0) {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
                 } else {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
@@ -346,7 +346,7 @@ fun RecyclerView.cheList(): BindingAdapter {
                 header.load(bean.avatar.pk(""))
                 name.text = bean.userName
                 time.text = bean.create_time
-                if (null!= bean.gender&&bean.gender == 0) {
+                if (null != bean.gender && bean.gender == 0) {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
                 } else {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
@@ -457,8 +457,10 @@ fun RecyclerView.mainList1(): BindingAdapter {
         addType<Captain>(R.layout.item_home1)
     }.apply {
         onBind {
+            val bean = getModel<Captain>()
             getBinding<ItemHome1Binding>().apply {
-
+                header.load(Config.FILE_PATH + bean.avatar)
+                name.text = bean.userName
             }
         }
     }
@@ -475,8 +477,10 @@ fun RecyclerView.mainList2(): BindingAdapter {
         onBind {
             val bean = getModel<Host>()
             onBind {
+                val bean = getModel<Host>()
                 getBinding<ItemHome1Binding>().apply {
-
+                    header.load(Config.FILE_PATH + bean.avatar)
+                    name.text = bean.userName
                 }
             }
         }
@@ -556,7 +560,7 @@ fun RecyclerView.giftHistoryAdapter(): BindingAdapter {
                 giftHeader.load(Config.FILE_PATH + bean.avatar)
                 giftIm.load(Config.FILE_PATH + bean.image)
                 name.text = bean.userName
-                giftTime.text = bean.create_time.substring(0,10)
+                giftTime.text = bean.create_time.substring(0, 10)
             }
         }
     }

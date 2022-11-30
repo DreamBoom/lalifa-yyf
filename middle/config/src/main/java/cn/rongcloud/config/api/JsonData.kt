@@ -93,6 +93,54 @@ data class GiftFrequency(
     var id: Int,
     var name: String
 )
+/**
+ * @Des 房间详情
+ */
+data class RoomGiftBean(
+    val blind_box: List<RoomBlindBox>,
+    val gift: List<RoomGift>,
+    val gift_bag: List<RoomGiftBag>,
+    val gift_box_frequency: List<RoomGiftBoxFrequency>,
+    val gift_frequency: List<RoomGiftFrequency>,
+    val knapsack: List<Any>,
+    val total_price: Int
+)
+
+data class RoomBlindBox(
+    val id: Int,
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+data class RoomGift(
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+data class RoomGiftBag(
+    val id: Int,
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+data class RoomGiftBoxFrequency(
+    val frequency: String,
+    val id: Int,
+    val name: String
+)
+
+data class RoomGiftFrequency(
+    val frequency: String,
+    val id: Int,
+    val name: String
+)
+
+data class RoomCheckBean(
+    val RoomId: String
+)
 
 
 

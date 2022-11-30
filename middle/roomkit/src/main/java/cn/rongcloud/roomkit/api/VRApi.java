@@ -34,7 +34,7 @@ public class VRApi {
     }
 
     /**
-     * 更改用户所属房间
+     * 更改用户所属房间 暂时不需要，有回调不需要调这个
      */
     public static String USER_ROOM_CHANGE = HOST + "user/change";
     /**
@@ -77,16 +77,6 @@ public class VRApi {
      * 操作管理员
      */
     public static final String ADMIN_MANAGE = HOST + "mic/room/manage";
-
-    /**
-     * 获取房间内成员列表
-     *
-     * @param roomId
-     * @return
-     */
-    public static String getMembers(String roomId) {
-        return HOST + "mic/room/" + roomId + "/members";
-    }
 
     /**
      * 获取房间内管理员列表

@@ -1,5 +1,6 @@
 package com.lalifa.api
 
+import android.text.TextUtils
 import com.drake.logcat.LogCat
 import com.drake.net.convert.NetConverter
 import com.drake.net.exception.ConvertException
@@ -31,12 +32,14 @@ class JsonHttpConverter : NetConverter {
                                 bodyString.parseBody<R>(succeed)
                             }
                             else -> {
-                                KToast.show( json.getString("msg"))
+                                if(!TextUtils.isEmpty(json.getString("msg"))){
+                                    KToast.show( json.getString("msg"))
+                                }
                                 //失败
                                 throw NetResponseException(
                                     json.getInt("code"),
                                     response,
-                                    json.getString("msg")
+                                    "请求异常"
                                 )
                             }
                         }

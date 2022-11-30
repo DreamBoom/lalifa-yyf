@@ -18,7 +18,7 @@ public class ModuleManager implements OnRegisterMessageTypeListener {
     private boolean registerMessageType = false;
 
     private ModuleManager() {
-        modules.add(new BaseModule(new OKModule()));
+       // modules.add(new BaseModule(new OKModule()));
         modules.add(new BaseModule(new ConnectModule(this)));
     }
 

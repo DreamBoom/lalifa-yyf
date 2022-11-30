@@ -8,10 +8,6 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.OkParams;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.utils.KToast;
 import com.lalifa.utils.UIKit;
 import com.lalifa.wapper.IResultBack;
@@ -22,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.rongcloud.roomkit.R;
-import cn.rongcloud.roomkit.api.VRApi;
 import io.rong.imkit.picture.tools.ToastUtils;
 
 /**
@@ -116,23 +111,24 @@ public class ShieldDialog extends BottomDialog {
     }
 
     private void getShield() {
-        OkApi.get(VRApi.getShield(mRoomId), null, new WrapperCallBack() {
-
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    List<Shield> shields = result.getList(Shield.class);
-                    if (shields != null && shields.size() > 0) {
-                        ShieldDialog.this.shields.clear();
-                        if (shields.size() < max_tag) {
-                            ShieldDialog.this.shields.add(Shield.buildDefault());
-                        }
-                        ShieldDialog.this.shields.addAll(shields);
-                        addView();
-                    }
-                }
-            }
-        });
+        //todo 222
+//        OkApi.get(VRApi.getShield(mRoomId), null, new WrapperCallBack() {
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    List<Shield> shields = result.getList(Shield.class);
+//                    if (shields != null && shields.size() > 0) {
+//                        ShieldDialog.this.shields.clear();
+//                        if (shields.size() < max_tag) {
+//                            ShieldDialog.this.shields.add(Shield.buildDefault());
+//                        }
+//                        ShieldDialog.this.shields.addAll(shields);
+//                        addView();
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void showAddTag() {
@@ -161,66 +157,68 @@ public class ShieldDialog extends BottomDialog {
     }
 
     private void addShield(final String s) {
-        OkApi.post(VRApi.ADD_SHIELD, new OkParams().add("roomId", mRoomId).add("name", s).build(), new WrapperCallBack() {
-
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    getShield();
-                    Shield shield = result.get(Shield.class);
-                    if (shield != null) {
-                        shields.add(shield);
-                        addView();
-                        if (onShieldDialogListener != null)
-                            onShieldDialogListener.onAddShield(s, shields);
-                        // //添加屏蔽词成功，通知房间其他人去获取屏蔽词
-                        // RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_ADD_SHIELD, s, null);
-                        // //通知自己获取屏蔽词
-                        // EventBus.get().emit(UPDATE_SHIELD, shields);
-                    }
-                } else {
-                    ToastUtils.s(getDialog().getContext(), "添加敏感词失败");
-                }
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                super.onError(code, msg);
-                ToastUtils.s(getDialog().getContext(), "添加敏感词失败");
-            }
-        });
+        //todo 222
+//        OkApi.post(VRApi.ADD_SHIELD, new OkParams().add("roomId", mRoomId).add("name", s).build(), new WrapperCallBack() {
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    getShield();
+//                    Shield shield = result.get(Shield.class);
+//                    if (shield != null) {
+//                        shields.add(shield);
+//                        addView();
+//                        if (onShieldDialogListener != null)
+//                            onShieldDialogListener.onAddShield(s, shields);
+//                        // //添加屏蔽词成功，通知房间其他人去获取屏蔽词
+//                        // RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_ADD_SHIELD, s, null);
+//                        // //通知自己获取屏蔽词
+//                        // EventBus.get().emit(UPDATE_SHIELD, shields);
+//                    }
+//                } else {
+//                    ToastUtils.s(getDialog().getContext(), "添加敏感词失败");
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                super.onError(code, msg);
+//                ToastUtils.s(getDialog().getContext(), "添加敏感词失败");
+//            }
+//        });
     }
 
     private void deleteShield(Shield shield) {
-        OkApi.get(VRApi.deleteShield(shield.getId()), null, new WrapperCallBack() {
-
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    shields.remove(shield);
-                    if (shields.size() < max_tag) {
-                        if (shields.size() > 0 && !shields.get(0).isDefault()) {
-                            //第一个不是默认加的情况下，添加上
-                            ShieldDialog.this.shields.add(0, Shield.buildDefault());
-                        }
-                    }
-                    addView();
-                    if (onShieldDialogListener != null)
-                        onShieldDialogListener.onDeleteShield(shield, shields);
-                    // RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_DELETE_SHIELD, shield.getName(), null);
-
-                    // EventBus.get().emit(UPDATE_SHIELD, shields);
-                } else {
-                    ToastUtils.s(getDialog().getContext(), "删除敏感词失败");
-                }
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                super.onError(code, msg);
-                ToastUtils.s(getDialog().getContext(), "删除敏感词失败");
-            }
-        });
+        //todo 222
+//        OkApi.get(VRApi.deleteShield(shield.getId()), null, new WrapperCallBack() {
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    shields.remove(shield);
+//                    if (shields.size() < max_tag) {
+//                        if (shields.size() > 0 && !shields.get(0).isDefault()) {
+//                            //第一个不是默认加的情况下，添加上
+//                            ShieldDialog.this.shields.add(0, Shield.buildDefault());
+//                        }
+//                    }
+//                    addView();
+//                    if (onShieldDialogListener != null)
+//                        onShieldDialogListener.onDeleteShield(shield, shields);
+//                    // RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_DELETE_SHIELD, shield.getName(), null);
+//
+//                    // EventBus.get().emit(UPDATE_SHIELD, shields);
+//                } else {
+//                    ToastUtils.s(getDialog().getContext(), "删除敏感词失败");
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                super.onError(code, msg);
+//                ToastUtils.s(getDialog().getContext(), "删除敏感词失败");
+//            }
+//        });
     }
 
     public interface OnShieldDialogListener {

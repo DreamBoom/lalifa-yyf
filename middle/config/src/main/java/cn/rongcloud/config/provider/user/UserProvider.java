@@ -5,11 +5,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.wapper.IResultBack;
 
 import java.util.ArrayList;
@@ -132,32 +127,33 @@ public class UserProvider implements IProvider<UserInfo> {
             if (null != resultBack) resultBack.onResult(null);
             return;
         }
-        Map<String, Object> params = new HashMap<>(2);
-        params.put("userIds", ids);
-        OkApi.post(API_BATCH, params, new WrapperCallBack() {
-            @Override
-            public void onError(int code, String msg) {
-                Log.e(TAG, "provideFromService#onError code  = " + code + " message = " + msg);
-                if (null != resultBack) resultBack.onResult(null);
-            }
-
-            @Override
-            public void onResult(Wrapper result) {
-                List<User> users = result.getList(User.class);
-                Log.e(TAG, "provideFromService: size = " + (null == users ? 0 : users.size()));
-                //返回集
-                List<UserInfo> userInfos = new ArrayList<>();
-                if (null != users && !users.isEmpty()) {
-                    for (User user : users) {
-                        UserInfo info = user.toUserInfo();
-                        //跟新cache UserObserver执行回调 ->observer
-                        RongUserInfoManager.getInstance().refreshUserInfoCache(user.toUserInfo());
-                        userInfos.add(info);
-                    }
-                }
-                if (null != resultBack) resultBack.onResult(userInfos);
-            }
-        });
+        //todo 222
+//        Map<String, Object> params = new HashMap<>(2);
+//        params.put("userIds", ids);
+//        OkApi.post(API_BATCH, params, new WrapperCallBack() {
+//            @Override
+//            public void onError(int code, String msg) {
+//                Log.e(TAG, "provideFromService#onError code  = " + code + " message = " + msg);
+//                if (null != resultBack) resultBack.onResult(null);
+//            }
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                List<User> users = result.getList(User.class);
+//                Log.e(TAG, "provideFromService: size = " + (null == users ? 0 : users.size()));
+//                //返回集
+//                List<UserInfo> userInfos = new ArrayList<>();
+//                if (null != users && !users.isEmpty()) {
+//                    for (User user : users) {
+//                        UserInfo info = user.toUserInfo();
+//                        //跟新cache UserObserver执行回调 ->observer
+//                        RongUserInfoManager.getInstance().refreshUserInfoCache(user.toUserInfo());
+//                        userInfos.add(info);
+//                    }
+//                }
+//                if (null != resultBack) resultBack.onResult(userInfos);
+//            }
+//        });
     }
 
     public void getFromService(List<String> ids, @Nullable IResultBack<List<User>> resultBack) {
@@ -165,21 +161,22 @@ public class UserProvider implements IProvider<UserInfo> {
             if (null != resultBack) resultBack.onResult(null);
             return;
         }
-        Map<String, Object> params = new HashMap<>(2);
-        params.put("userIds", ids);
-        OkApi.post(API_BATCH, params, new WrapperCallBack() {
-            @Override
-            public void onError(int code, String msg) {
-                Log.e(TAG, "provideFromService#onError code  = " + code + " message = " + msg);
-                if (null != resultBack) resultBack.onResult(null);
-            }
-
-            @Override
-            public void onResult(Wrapper result) {
-                List<User> users = result.getList(User.class);
-                Log.e(TAG, "provideFromService: size = " + (null == users ? 0 : users.size()));
-                if (null != resultBack) resultBack.onResult(users);
-            }
-        });
+        //todo 222
+//        Map<String, Object> params = new HashMap<>(2);
+//        params.put("userIds", ids);
+//        OkApi.post(API_BATCH, params, new WrapperCallBack() {
+//            @Override
+//            public void onError(int code, String msg) {
+//                Log.e(TAG, "provideFromService#onError code  = " + code + " message = " + msg);
+//                if (null != resultBack) resultBack.onResult(null);
+//            }
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                List<User> users = result.getList(User.class);
+//                Log.e(TAG, "provideFromService: size = " + (null == users ? 0 : users.size()));
+//                if (null != resultBack) resultBack.onResult(users);
+//            }
+//        });
     }
 }

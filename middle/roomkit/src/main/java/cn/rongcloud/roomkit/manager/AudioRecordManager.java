@@ -1,6 +1,5 @@
 package cn.rongcloud.roomkit.manager;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
@@ -11,7 +10,6 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,15 +19,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.api.body.FileBody;
-import com.lalifa.oklib.wrapper.Wrapper;
-
 import java.io.File;
 
-import cn.rongcloud.config.UserManager;
-import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.message.RCChatroomVoice;
 import io.rong.common.RLog;
 import io.rong.imkit.IMCenter;
@@ -389,28 +380,29 @@ public class AudioRecordManager implements Handler.Callback {
             }
             //上传音频
             int duration = (int) (SystemClock.elapsedRealtime() - smStartRecTime) / 1000;
-            FileBody body = new FileBody("multipart/form-data", file);
-            OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
-                @Override
-                public void onResult(Wrapper result) {
-                    String url = result.getBody().getAsString();
-                    if (result.ok() && !TextUtils.isEmpty(url)) {
-                        Log.e(TAG, "onResult: ");
-                        //自定义msg，然后发送
-                        String path = VRApi.FILE_PATH + url;
-                        RCChatroomVoice rcvrVoiceMessage = new RCChatroomVoice();
-                        rcvrVoiceMessage.setDuration(duration + "");
-                        rcvrVoiceMessage.setPath(path);
-                        rcvrVoiceMessage.setUserName(UserManager.get().getUserName());
-                        rcvrVoiceMessage.setUserId(UserManager.get().getUserId());
-                        if (onSendVoiceMessageClickListener != null) {
-                            onSendVoiceMessageClickListener.onSendVoiceMessage(rcvrVoiceMessage);
-                        }
-                    } else {
-                        Log.e(TAG, "onResult: ");
-                    }
-                }
-            });
+            //todo 222
+            // FileBody body = new FileBody("multipart/form-data", file);
+//            OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
+//                @Override
+//                public void onResult(Wrapper result) {
+//                    String url = result.getBody().getAsString();
+//                    if (result.ok() && !TextUtils.isEmpty(url)) {
+//                        Log.e(TAG, "onResult: ");
+//                        //自定义msg，然后发送
+//                        String path = VRApi.FILE_PATH + url;
+//                        RCChatroomVoice rcvrVoiceMessage = new RCChatroomVoice();
+//                        rcvrVoiceMessage.setDuration(duration + "");
+//                        rcvrVoiceMessage.setPath(path);
+//                        rcvrVoiceMessage.setUserName(UserManager.get().getUserName());
+//                        rcvrVoiceMessage.setUserId(UserManager.get().getUserId());
+//                        if (onSendVoiceMessageClickListener != null) {
+//                            onSendVoiceMessageClickListener.onSendVoiceMessage(rcvrVoiceMessage);
+//                        }
+//                    } else {
+//                        Log.e(TAG, "onResult: ");
+//                    }
+//                }
+//            });
 
         }
     }

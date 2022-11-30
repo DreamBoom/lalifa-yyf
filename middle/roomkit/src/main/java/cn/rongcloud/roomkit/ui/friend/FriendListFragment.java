@@ -1,27 +1,18 @@
 package cn.rongcloud.roomkit.ui.friend;
 
 
-import android.view.View;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.ui.BaseFragment;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.rongcloud.roomkit.R;
-import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.ui.friend.model.Friend;
 
 public class FriendListFragment extends BaseFragment implements FriendAdapter.OnFollowClickListener {
@@ -79,31 +70,32 @@ public class FriendListFragment extends BaseFragment implements FriendAdapter.On
         if (isRefresh) {
             page = 1;
         }
-        Map<String, Object> params = new HashMap<>(8);
-        params.put("type", mType);
-        params.put("page", page);
-        params.put("size", 10);
-        OkApi.get(VRApi.FOLLOW_LIST, params, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                List<Friend> friends = result.getList("list", Friend.class);
-                if (friends != null && !friends.isEmpty()) {
-                    mAdapter.setData(friends, isRefresh);
-                    if (page == 1) {
-                        refreshLayout.finishRefresh();
-                    } else {
-                        refreshLayout.finishLoadMore();
-                    }
-                    emptyView.setVisibility(View.GONE);
-                    page++;
-                } else {
-                    refreshLayout.setNoMoreData(true);
-                    if (page == 1) {
-                        emptyView.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        });
+        //todo 222
+//        Map<String, Object> params = new HashMap<>(8);
+//        params.put("type", mType);
+//        params.put("page", page);
+//        params.put("size", 10);
+//        OkApi.get(VRApi.FOLLOW_LIST, params, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                List<Friend> friends = result.getList("list", Friend.class);
+//                if (friends != null && !friends.isEmpty()) {
+//                    mAdapter.setData(friends, isRefresh);
+//                    if (page == 1) {
+//                        refreshLayout.finishRefresh();
+//                    } else {
+//                        refreshLayout.finishLoadMore();
+//                    }
+//                    emptyView.setVisibility(View.GONE);
+//                    page++;
+//                } else {
+//                    refreshLayout.setNoMoreData(true);
+//                    if (page == 1) {
+//                        emptyView.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -127,22 +119,22 @@ public class FriendListFragment extends BaseFragment implements FriendAdapter.On
         Friend.FollowStatus status = friend.getFollowStatus(mType);
         friend.changeFollowStatus(mType);
         mAdapter.notifyDataSetChanged();
-
-        OkApi.get(VRApi.followUrl(friend.getUid()), null, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (!result.ok()) {
-                    friend.setFollowStatus(status);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                friend.setFollowStatus(status);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+        //todo 222
+//        OkApi.get(VRApi.followUrl(friend.getUid()), null, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (!result.ok()) {
+//                    friend.setFollowStatus(status);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                friend.setFollowStatus(status);
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     @Override

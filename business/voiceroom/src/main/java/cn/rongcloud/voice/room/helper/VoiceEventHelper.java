@@ -11,10 +11,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.drake.logcat.LogCat;
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.OkParams;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.ui.UIStack;
 import com.lalifa.utils.GsonUtil;
 import com.lalifa.utils.KToast;
@@ -23,7 +19,6 @@ import com.lalifa.wapper.IRoomCallBack;
 import com.lalifa.widget.dialog.dialog.VRCenterDialog;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,11 +27,6 @@ import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.config.provider.user.User;
 import cn.rongcloud.config.provider.user.UserProvider;
 import cn.rongcloud.music.MusicControlManager;
-import cn.rongcloud.pk.PKManager;
-import cn.rongcloud.pk.bean.PKInviteInfo;
-import cn.rongcloud.pk.bean.PKResponse;
-import cn.rongcloud.pk.bean.PKState;
-import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.manager.RCChatRoomMessageManager;
 import cn.rongcloud.roomkit.message.RCChatroomAdmin;
 import cn.rongcloud.roomkit.message.RCChatroomBarrage;
@@ -125,7 +115,6 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     protected void unInit() {
         RCVoiceRoomEngine.getInstance().setVoiceRoomEventListener(null);
         MusicControlManager.getInstance().release();
-        PKManager.get().unInit();
         if (null != mSeatInfos) mSeatInfos.clear();
         if (null != listeners) listeners.clear();
         if (null != statusListeners) statusListeners.clear();
@@ -328,7 +317,6 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
         if (rcVoiceRoomEventListener != null) {
             rcVoiceRoomEventListener.onMessageReceived(message);
         }
-        PKManager.get().onMessageReceived(message);
         if (message.getConversationType() == Conversation.ConversationType.CHATROOM) {
             addMessage(message.getContent());
         }
@@ -696,13 +684,12 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
 
     @Override
     public void onPKGoing(RCPKInfo rcpkInfo) {
-        PKInviteInfo pkInviteInfo = new PKInviteInfo(rcpkInfo.getInviterId(), rcpkInfo.getInviterRoomId(), rcpkInfo.getInviteeId(), rcpkInfo.getInviteeRoomId());
-        PKManager.get().onPKBegin(pkInviteInfo);
+
     }
 
     @Override
     public void onPKFinish() {
-        PKManager.get().onPKFinish();
+
     }
 
     @Override
@@ -711,7 +698,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
         UserProvider.provider().getAsyn(inviterUserId, new IResultBack<UserInfo>() {
             @Override
             public void onResult(UserInfo userInfo) {
-                PKManager.get().onReceivePKInvitation(inviterRoomId, inviterUserId);
+
             }
         });
     }
@@ -719,19 +706,16 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     @Override
     public void onPKInvitationCanceled(String inviterRoomId, String inviterUserId) {
         LogCat.d(TAG, "onPKInvitationCanceled");
-        PKManager.get().onPKInvitationCanceled(inviterRoomId, inviterUserId);
     }
 
     @Override
     public void onPKInvitationRejected(String s, String s1) {
         LogCat.d(TAG, "onPKInvitationRejected");
-        PKManager.get().onPKInvitationRejected(s, s1, PKResponse.reject);
     }
 
     @Override
     public void onPKInvitationIgnored(String s, String s1) {
         LogCat.d(TAG, "onPKInvitationIgnored");
-        PKManager.get().onPKInvitationRejected(s, s1, PKResponse.ignore);
     }
 
     @Override
@@ -972,17 +956,18 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     //更改所属房间
     @Override
     public void changeUserRoom(String roomId) {
-        HashMap<String, Object> params = new OkParams()
-                .add("roomId", roomId)
-                .build();
-        OkApi.get(VRApi.USER_ROOM_CHANGE, params, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    Log.e(TAG, "onResult: " + result.getMessage());
-                }
-            }
-        });
+        //todo 222
+//        HashMap<String, Object> params = new OkParams()
+//                .add("roomId", roomId)
+//                .build();
+//        OkApi.get(VRApi.USER_ROOM_CHANGE, params, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    Log.e(TAG, "onResult: " + result.getMessage());
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -1106,10 +1091,6 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
         });
     }
 
-    @Override
-    public PKState getPKState() {
-        return PKManager.get().getPkState();
-    }
 
     /**
      * 获取可用麦位索引
@@ -1182,7 +1163,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
                         if (messageContent instanceof RCChatroomAdmin) {
                             //发送成功，回调给接收的地方，统一去处理，避免多个地方处理 通知刷新管理员信息
                             RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_MANAGER_LIST_CHANGE, "", null);
-                            MemberCache.getInstance().refreshAdminData(roomId);
+                            MemberCache.Companion.get().refreshAdminData(roomId);
                         }
                         return null;
                     }

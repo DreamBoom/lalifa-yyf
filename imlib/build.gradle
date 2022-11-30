@@ -20,6 +20,6 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.google.code.gson:gson:2.8.9'
     implementation 'cn.rongcloud.sdk:crash:1.0.4'
 }

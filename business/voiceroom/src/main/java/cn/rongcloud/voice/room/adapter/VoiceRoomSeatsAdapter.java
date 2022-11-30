@@ -99,7 +99,7 @@ public class VoiceRoomSeatsAdapter extends RecyclerView.Adapter<VoiceRoomSeatsAd
 
                 }
                 holder.tv_gift_count.setText(uiSeatModel.getGiftCount() + "");
-                if (MemberCache.getInstance().isAdmin(uiSeatModel.getUserId())) {
+                if (MemberCache.Companion.get().isAdmin(uiSeatModel.getUserId())) {
                     holder.tv_member_name.setCompoundDrawablesWithIntrinsicBounds(
                             cn.rongcloud.roomkit.R.drawable.ic_is_admin,
                             0,

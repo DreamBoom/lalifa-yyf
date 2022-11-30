@@ -12,20 +12,19 @@ import cn.rongcloud.config.api.roomDetail
 import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.music.MusicControlManager
 import cn.rongcloud.roomkit.manager.RCChatRoomMessageManager
-import cn.rongcloud.roomkit.ui.room.model.MemberCache
 import cn.rongcloud.voice.Constant
 import cn.rongcloud.voice.model.UiRoomModel
 import cn.rongcloud.voice.model.UiSeatModel
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomEventListener
-import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomResultCallback
 import cn.rongcloud.voiceroom.model.RCPKInfo
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
 import com.drake.logcat.LogCat.d
 import com.drake.logcat.LogCat.e
 import com.drake.net.utils.scopeNet
+import com.lalifa.extension.noEN
 import com.lalifa.ui.mvp.BaseModel
 import com.lalifa.utils.GsonUtil
 import com.lalifa.utils.KToast
@@ -43,7 +42,7 @@ import io.rong.imlib.model.Message
  * 语聊房的逻辑处理
  */
 class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
-    BaseModel<VoiceRoomPresenter?>(present, lifecycle), RCVoiceRoomEventListener {
+    BaseModel<VoiceRoomPresenter?>(present, lifecycle!!), RCVoiceRoomEventListener {
     private val TAG = "NewVoiceRoomModel"
 
     //线程调度器
@@ -371,26 +370,27 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
      */
     val requestSeatUserIds: Unit
         get() {
-            RCVoiceRoomEngine.getInstance()
-                .getRequestSeatUserIds(object : RCVoiceRoomResultCallback<List<String>> {
-                    override fun onSuccess(requestUserIds: List<String>) {
-                        //获取到当前房间所有用户,申请人需要在房间，并且不在麦位上
-                        e(TAG, "requestUserIds = " + GsonUtil.obj2Json(requestUserIds))
-                        val users = MemberCache.getInstance().memberList.value!!
-                        requestSeats.clear()
-                        for (requestUserId in requestUserIds) {
-                            for (user in users) {
-                                if (user.userId == requestUserId && getSeatInfoByUserId(user.userId) == null) {
-                                    requestSeats.add(user)
-                                    break
-                                }
-                            }
-                        }
-                        obRequestSeatListChangeSuject.onNext(requestSeats)
-                    }
-
-                    override fun onError(i: Int, s: String) {}
-                })
+            //todo 111
+//            RCVoiceRoomEngine.getInstance()
+//                .getRequestSeatUserIds(object : RCVoiceRoomResultCallback<List<String>> {
+//                    override fun onSuccess(requestUserIds: List<String>) {
+//                        //获取到当前房间所有用户,申请人需要在房间，并且不在麦位上
+//                        e(TAG, "requestUserIds = " + GsonUtil.obj2Json(requestUserIds))
+//                        val users = MemberCache.getInstance().memberList.value!!
+//                        requestSeats.clear()
+//                        for (requestUserId in requestUserIds) {
+//                            for (user in users) {
+//                                if (user.userId == requestUserId && getSeatInfoByUserId(user.userId) == null) {
+//                                    requestSeats.add(user)
+//                                    break
+//                                }
+//                            }
+//                        }
+//                        obRequestSeatListChangeSuject.onNext(requestSeats)
+//                    }
+//
+//                    override fun onError(i: Int, s: String) {}
+//                })
         }
 
     /**
@@ -484,7 +484,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
      */
     private fun queryRoomInfoFromServer(roomId: String?) {
         scopeNet {
-            val roomDetails = roomDetail(roomId!!)
+            val roomDetails = roomDetail(roomId!!.noEN())
             if(null!=roomDetails){
               //  currentUIRoomInfo.roomBean = roomDetails
             }

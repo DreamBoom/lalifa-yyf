@@ -341,7 +341,7 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
                     info.start = start;
                     start += 2;
                     info.end = start;
-                } else if (MemberCache.getInstance().isAdmin(info.getClickId())) {
+                } else if (MemberCache.Companion.get().isAdmin(info.getClickId())) {
                     SpannableString icon = new SpannableString(" ");
                     Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_is_admin);
                     drawable.setBounds(0, 0, iconSize, iconSize);

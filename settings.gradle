@@ -2,7 +2,7 @@ rootProject.name = "yyf"
 include ':app'
 include ':Base'
 include ':business:main',':business:voiceroom'
-include ':middle:config',':middle:roomkit',':middle:pk',':middle:gift',':middle:music', ':middle:thirdcdn'
+include ':middle:config',':middle:roomkit',':middle:gift',':middle:music', ':middle:thirdcdn'
 
 if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !(properties.get("VOICE_ROOM_REMOTE_DEPENDENCE").toBoolean())) {
     println("------------------>>>>load local voiceroom sdk module")

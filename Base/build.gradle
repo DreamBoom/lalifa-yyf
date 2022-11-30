@@ -110,12 +110,10 @@ dependencies {
 
     //》》》》》》》》》网络请求相关》》》》》》》》》》》
     //网络请求库 https://liangjingkanji.github.io/Net/
-    //okhttp
     api 'com.github.liangjingkanji:Net:3.4.10'
     //okhttp
-    api 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
-    api "com.squareup.okhttp3:okhttp:4.9.3"
-    api 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    api "com.squareup.okhttp3:okhttp:$okhttp"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttp"
     //协程库
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'

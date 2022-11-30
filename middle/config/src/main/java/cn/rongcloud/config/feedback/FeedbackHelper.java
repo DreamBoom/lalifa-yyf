@@ -12,10 +12,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.utils.SPUtil;
 import com.lalifa.utils.UIKit;
 import com.lalifa.wapper.IResultBack;
@@ -203,15 +199,16 @@ public class FeedbackHelper implements IFeedback {
      * 点赞
      */
     private void sendFovLikes() {
-        reportFeedback(true, "", new IResultBack<Wrapper>() {
-            @Override
-            public void onResult(Wrapper feedResult) {
-                boolean success = null != feedResult && feedResult.getCode() == 10000;
-                Toast.makeText(UIKit.getContext(), success ? "点赞成功" : "点赞失败", Toast.LENGTH_LONG).show();
-                alreadyScore();
-                dismissDialog();
-            }
-        });
+        //todo 222
+//        reportFeedback(true, "", new IResultBack<Wrapper>() {
+//            @Override
+//            public void onResult(Wrapper feedResult) {
+//                boolean success = null != feedResult && feedResult.getCode() == 10000;
+//                Toast.makeText(UIKit.getContext(), success ? "点赞成功" : "点赞失败", Toast.LENGTH_LONG).show();
+//                alreadyScore();
+//                dismissDialog();
+//            }
+//        });
     }
 
     /**
@@ -229,16 +226,17 @@ public class FeedbackHelper implements IFeedback {
             releason = builder.substring(0, builder.length() - 1);
         }
         Log.e(TAG, "releason = " + releason);
-        reportFeedback(false, releason, new IResultBack<Wrapper>() {
-            @Override
-            public void onResult(Wrapper feedResult) {
-                boolean success = null != feedResult && feedResult.getCode() == 10000;
-                Toast.makeText(UIKit.getContext(), success ? "反馈成功" : "反馈失败", Toast.LENGTH_LONG).show();
-                alreadyScore();
-                // 提交成功后显示推荐活动
-                showLastPromotion();
-            }
-        });
+        //todo 222
+//        reportFeedback(false, releason, new IResultBack<Wrapper>() {
+//            @Override
+//            public void onResult(Wrapper feedResult) {
+//                boolean success = null != feedResult && feedResult.getCode() == 10000;
+//                Toast.makeText(UIKit.getContext(), success ? "反馈成功" : "反馈失败", Toast.LENGTH_LONG).show();
+//                alreadyScore();
+//                // 提交成功后显示推荐活动
+//                showLastPromotion();
+//            }
+//        });
     }
 
     /**
@@ -369,22 +367,23 @@ public class FeedbackHelper implements IFeedback {
      * @param reason       原因
      * @param resultBack
      */
-    private void reportFeedback(boolean goodFeedback, String reason, IResultBack<Wrapper> resultBack) {
-        Map<String, Object> params = new HashMap<>(4);
-        params.put("isGoodFeedback", goodFeedback);
-        params.put("reason", reason);
-        String url = ApiConfig.HOST + "feedback/create";
-        OkApi.post(url, params, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                Log.e(TAG, "code = " + result.getCode());
-                resultBack.onResult(result);
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                resultBack.onResult(null);
-            }
-        });
-    }
+    //todo 222
+//    private void reportFeedback(boolean goodFeedback, String reason, IResultBack<Wrapper> resultBack) {
+//        Map<String, Object> params = new HashMap<>(4);
+//        params.put("isGoodFeedback", goodFeedback);
+//        params.put("reason", reason);
+//        String url = ApiConfig.HOST + "feedback/create";
+////        OkApi.post(url, params, new WrapperCallBack() {
+////            @Override
+////            public void onResult(Wrapper result) {
+////                Log.e(TAG, "code = " + result.getCode());
+////                resultBack.onResult(result);
+////            }
+////
+////            @Override
+////            public void onError(int code, String msg) {
+////                resultBack.onResult(null);
+////            }
+////        });
+//    }
 }

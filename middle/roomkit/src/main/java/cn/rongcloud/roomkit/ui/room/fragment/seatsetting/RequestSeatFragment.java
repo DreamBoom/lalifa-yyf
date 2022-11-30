@@ -123,19 +123,7 @@ public class RequestSeatFragment extends BaseFragment {
                         }
                     });
             TextView tvRejecet = baseViewHolder.getView(R.id.tv_reject);
-            if (getSeatOperationViewPagerFragment().getRoomOwnerType() == RoomOwnerType.LIVE_OWNER) {
-                tvRejecet.setVisibility(View.VISIBLE);
-                baseViewHolder.setText(R.id.tv_reject, "拒绝");
-                RxView.clicks(tvRejecet).throttleFirst(1, TimeUnit.SECONDS)
-                        .subscribe(new Consumer<Unit>() {
-                            @Override
-                            public void accept(Unit unit) throws Throwable {
-                                rejectRequest(user.getUserId());
-                            }
-                        });
-            } else {
-                tvRejecet.setVisibility(View.GONE);
-            }
+            tvRejecet.setVisibility(View.GONE);
         }
     }
 

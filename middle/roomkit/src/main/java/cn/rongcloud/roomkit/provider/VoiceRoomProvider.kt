@@ -9,7 +9,9 @@ import cn.rongcloud.roomkit.api.roomList
 import cn.rongcloud.roomkit.manager.LocalDataManager
 import cn.rongcloud.roomkit.ui.RoomOwnerType
 import cn.rongcloud.roomkit.ui.RoomType
+import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNet
+import com.lalifa.extension.noEN
 import com.lalifa.wapper.IResultBack
 
 class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1),
@@ -28,7 +30,7 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
         // TODO
         val roomId = ids[0]
         scopeNet {
-            val roomDetail = roomDetail(roomId)
+            val roomDetail = roomDetail(roomId.noEN())
             if(null!=roomDetail){
                 //todo 测试
               //  resultBack?.onResult(roomDetail)
@@ -90,12 +92,13 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
      * @param RoomDetailBean 当前房间
      * @return 房间类型
      */
-    fun getRoomOwnerType(RoomDetailBean: RoomDetailBean?): RoomOwnerType {
-        if (RoomDetailBean == null || RoomDetailBean.userInfo == null) {
+    fun getRoomOwnerType(roomDetailBean: RoomDetailBean?): RoomOwnerType {
+        LogCat.e("======>>>>>"+roomDetailBean?.userInfo.toString())
+        if (roomDetailBean?.userInfo == null) {
             throw NullPointerException("RoomDetailBean is null")
         }
         val userId = UserManager.get()!!.userId
-        return if (TextUtils.equals(userId, RoomDetailBean.userInfo!!.userId)) {
+        return if (TextUtils.equals(userId, roomDetailBean.userInfo!!.userId)) {
             RoomOwnerType.VOICE_OWNER
         } else {
             RoomOwnerType.VOICE_VIEWER

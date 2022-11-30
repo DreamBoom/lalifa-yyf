@@ -6,9 +6,6 @@ import android.text.TextUtils;
 
 import com.drake.logcat.LogCat;
 import com.lalifa.ext.Config;
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.utils.GsonUtil;
 import com.lalifa.utils.KToast;
 import com.lalifa.utils.UIKit;
@@ -151,18 +148,19 @@ public class ConnectModule implements IModule {
      * 上报设备状态，处理自定登录踢除web端
      */
     private static void reportDevice(IResultBack<Boolean> resultBack) {
-        OkApi.post(DEVICE, null, new WrapperCallBack() {
-            @Override
-            public void onError(int code, String msg) {
-                LogCat.e(TAG, "reportDevice#onError code  = " + code + " message = " + msg);
-                if (null != resultBack) resultBack.onResult(false);
-            }
-
-            @Override
-            public void onResult(Wrapper result) {
-                LogCat.e(TAG, "reportDevice#onResult code  = " + result.getCode() + " message = " + result.getMessage());
-                if (null != resultBack) resultBack.onResult(null != result && result.ok());
-            }
-        });
+        //todo 222
+//        OkApi.post(DEVICE, null, new WrapperCallBack() {
+//            @Override
+//            public void onError(int code, String msg) {
+//                LogCat.e(TAG, "reportDevice#onError code  = " + code + " message = " + msg);
+//                if (null != resultBack) resultBack.onResult(false);
+//            }
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                LogCat.e(TAG, "reportDevice#onResult code  = " + result.getCode() + " message = " + result.getMessage());
+//                if (null != resultBack) resultBack.onResult(null != result && result.ok());
+//            }
+//        });
     }
 }

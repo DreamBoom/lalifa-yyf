@@ -17,11 +17,6 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.FragmentActivity;
 
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.api.body.BitmapBody;
-import com.lalifa.oklib.api.body.FileBody;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.utils.ImageLoader;
 import com.lalifa.utils.RealPathFromUriUtils;
 import com.lalifa.utils.UiUtils;
@@ -29,17 +24,11 @@ import com.lalifa.widget.ChineseLengthFilter;
 import com.lalifa.widget.dialog.BottomDialog;
 import com.lalifa.widget.loading.LoadTag;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
-import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
 import cn.rongcloud.roomkit.api.Office;
-import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.manager.LocalDataManager;
 import cn.rongcloud.roomkit.ui.RoomType;
 import cn.rongcloud.roomkit.widget.InputPasswordDialog;
@@ -193,48 +182,50 @@ public class CreateRoomDialog extends BottomDialog {
         // 选择本地图片后，先上传本地图片
         if (!TextUtils.isEmpty(mCoverUrl)) {
             mLoading.show();
-            FileBody body = new FileBody("multipart/form-data", new File(mCoverUrl));
-            OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
-                @Override
-                public void onResult(Wrapper result) {
-                    String url = result.getBody().getAsString();
-                    if (result.ok() && !TextUtils.isEmpty(url)) {
-                        createRoom(roomName, VRApi.FILE_PATH + url);
-                    } else {
-                        ToastUtils.s(mActivity, result.getMessage());
-                        mLoading.dismiss();
-                    }
-                }
-
-                @Override
-                public void onError(int code, String msg) {
-                    super.onError(code, msg);
-                    ToastUtils.s(mActivity, msg);
-                    mLoading.dismiss();
-                }
-            });
+            //todo 222
+//            FileBody body = new FileBody("multipart/form-data", new File(mCoverUrl));
+//            OkApi.file(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
+//                @Override
+//                public void onResult(Wrapper result) {
+//                    String url = result.getBody().getAsString();
+//                    if (result.ok() && !TextUtils.isEmpty(url)) {
+//                        createRoom(roomName, VRApi.FILE_PATH + url);
+//                    } else {
+//                        ToastUtils.s(mActivity, result.getMessage());
+//                        mLoading.dismiss();
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(int code, String msg) {
+//                    super.onError(code, msg);
+//                    ToastUtils.s(mActivity, msg);
+//                    mLoading.dismiss();
+//                }
+//            });
         } else if (themeBitmap != null) {
             mLoading.show();
-            BitmapBody body = new BitmapBody(null, themeBitmap);
-            OkApi.bitmap(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
-                @Override
-                public void onResult(Wrapper result) {
-                    String url = result.getBody().getAsString();
-                    if (result.ok() && !TextUtils.isEmpty(url)) {
-                        createRoom(roomName, VRApi.FILE_PATH + url);
-                    } else {
-                        ToastUtils.s(mActivity, result.getMessage());
-                        mLoading.dismiss();
-                    }
-                }
-
-                @Override
-                public void onError(int code, String msg) {
-                    super.onError(code, msg);
-                    ToastUtils.s(mActivity, msg);
-                    mLoading.dismiss();
-                }
-            });
+            //todo 222
+//            BitmapBody body = new BitmapBody(null, themeBitmap);
+//            OkApi.bitmap(VRApi.FILE_UPLOAD, "file", body, new WrapperCallBack() {
+//                @Override
+//                public void onResult(Wrapper result) {
+//                    String url = result.getBody().getAsString();
+//                    if (result.ok() && !TextUtils.isEmpty(url)) {
+//                        createRoom(roomName, VRApi.FILE_PATH + url);
+//                    } else {
+//                        ToastUtils.s(mActivity, result.getMessage());
+//                        mLoading.dismiss();
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(int code, String msg) {
+//                    super.onError(code, msg);
+//                    ToastUtils.s(mActivity, msg);
+//                    mLoading.dismiss();
+//                }
+//            });
         } else {
             mLoading.show();
             createRoom(roomName, "");
@@ -248,39 +239,40 @@ public class CreateRoomDialog extends BottomDialog {
      * @param themeUrl
      */
     private void createRoom(String roomName, String themeUrl) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", roomName);
-        params.put("themePictureUrl", themeUrl);
-        params.put("isPrivate", mPrivateButton.isChecked() ? 1 : 0);
-        params.put("password", mPassword);
-        params.put("backgroundUrl", mRoomBackground);
-        params.put("kv", new ArrayList());
-        params.put("roomType", mRoomType.getType());
-        OkApi.post(VRApi.ROOM_CREATE, params, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (mCreateRoomCallBack != null) {
-                    RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
-                    if (result.ok() && voiceRoomBean != null) {
-                        dismiss();
-                    //    mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);
-                    } else if (30016 == result.getCode() && voiceRoomBean != null) {
-                        dismiss();
-                      //  mCreateRoomCallBack.onCreateExist(voiceRoomBean);
-                    } else {
-                        ToastUtils.s(mActivity, result.getMessage());
-                    }
-                }
-                mLoading.dismiss();
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                super.onError(code, msg);
-                ToastUtils.s(mActivity, msg);
-                mLoading.dismiss();
-            }
-        });
+        //todo 创建房间
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("name", roomName);
+//        params.put("themePictureUrl", themeUrl);
+//        params.put("isPrivate", mPrivateButton.isChecked() ? 1 : 0);
+//        params.put("password", mPassword);
+//        params.put("backgroundUrl", mRoomBackground);
+//        params.put("kv", new ArrayList());
+//        params.put("roomType", mRoomType.getType());
+//        OkApi.post(VRApi.ROOM_CREATE, params, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (mCreateRoomCallBack != null) {
+//                    RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
+//                    if (result.ok() && voiceRoomBean != null) {
+//                        dismiss();
+//                    //    mCreateRoomCallBack.onCreateSuccess(voiceRoomBean);
+//                    } else if (30016 == result.getCode() && voiceRoomBean != null) {
+//                        dismiss();
+//                      //  mCreateRoomCallBack.onCreateExist(voiceRoomBean);
+//                    } else {
+//                        ToastUtils.s(mActivity, result.getMessage());
+//                    }
+//                }
+//                mLoading.dismiss();
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                super.onError(code, msg);
+//                ToastUtils.s(mActivity, msg);
+//                mLoading.dismiss();
+//            }
+//        });
     }
 
     /**
@@ -299,6 +291,6 @@ public class CreateRoomDialog extends BottomDialog {
     public interface CreateRoomCallBack {
         void onCreateSuccess(Office voiceRoomBean);
 
-        void onCreateExist(Office voiceRoomBean);
+        void onCreateExist(String roomId);
     }
 }

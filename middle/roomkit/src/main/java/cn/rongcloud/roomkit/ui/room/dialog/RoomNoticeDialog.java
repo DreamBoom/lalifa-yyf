@@ -14,15 +14,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
-import com.lalifa.utils.KToast;
 import com.lalifa.utils.ScreenUtil;
 import com.lalifa.widget.ChineseLengthFilter;
 
 import cn.rongcloud.roomkit.R;
-import cn.rongcloud.roomkit.api.VRApi;
 
 /**
  * @author gyn
@@ -91,25 +86,26 @@ public class RoomNoticeDialog extends Dialog {
     }
 
     void audit(String notice, OnSaveNoticeListener confirmListener) {
-        OkApi.post(VRApi.AUDIT + notice, null, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    if (confirmListener != null) {
-                        confirmListener.saveNotice(notice);
-                    }
-                } else {
-                    String message = result.getMessage();
-                    KToast.show(!TextUtils.isEmpty(message) ? message : "修改失败");
-                }
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                super.onError(code, msg);
-                KToast.show(!TextUtils.isEmpty(msg) ? msg : "修改失败");
-            }
-        });
+        //todo 222
+//        OkApi.post(VRApi.AUDIT + notice, null, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    if (confirmListener != null) {
+//                        confirmListener.saveNotice(notice);
+//                    }
+//                } else {
+//                    String message = result.getMessage();
+//                    KToast.show(!TextUtils.isEmpty(message) ? message : "修改失败");
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                super.onError(code, msg);
+//                KToast.show(!TextUtils.isEmpty(msg) ? msg : "修改失败");
+//            }
+//        });
     }
 
     public interface OnSaveNoticeListener {

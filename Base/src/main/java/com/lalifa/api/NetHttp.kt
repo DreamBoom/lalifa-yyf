@@ -64,8 +64,9 @@ object NetHttp {
                 override fun onError(e: Throwable) {
                     if (e is NetResponseException) {
                         error.invoke(e)
-                    } else super.onError(e)
-                  //  LogCat.e(e)
+                    } else {
+                        super.onError(e)
+                    }
                 }
             })
         }

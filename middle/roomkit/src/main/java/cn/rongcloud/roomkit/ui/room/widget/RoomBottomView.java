@@ -70,10 +70,7 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
      * 发送礼物
      */
     private ImageView mSendGiftView;
-    /**
-     * 发起pk或挂断pk
-     */
-    private ImageView mPkView;
+
     /**
      * 申请上麦
      */
@@ -107,9 +104,8 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         mPrivateMessageView = mRootView.findViewById(R.id.iv_send_message);
         mPrivateMessageCountView = mRootView.findViewById(R.id.tv_unread_message_number);
         mSendGiftView = mRootView.findViewById(R.id.iv_send_gift);
-        mPkView = mRootView.findViewById(R.id.iv_request_pk);
         mMicSwitch = mRootView.findViewById(R.id.iv_mic_switch);
-        mPkView.setSelected(false);
+
         mRequestSeatView = mRootView.findViewById(R.id.iv_request_enter_seat);
         mSendMessageView.setOnClickListener(v -> {
             inputBarDialog = new InputBarDialog(getContext(), new InputBar.InputBarListener() {
@@ -269,9 +265,6 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
             mSeatOrder.setOnClickListener(v -> {
                 onBottomOptionClickListener.clickSeatOrder();
             });
-            mPkView.setOnClickListener(v -> {
-                onBottomOptionClickListener.clickPk();
-            });
             mSendGiftView.setOnClickListener(v -> {
                 onBottomOptionClickListener.onSendGift();
             });
@@ -289,22 +282,6 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         mMicSwitch.setSelected(!isOn);
     }
 
-    public void refreshPkState(PKViewState pkViewState) {
-        if (null != mPkView) {
-            switch (pkViewState) {
-                case pk:
-                    mPkView.setImageResource(R.drawable.ic_request_pk);
-                    break;
-                case wait:
-                    mPkView.setImageResource(R.drawable.ic_wait_enter_seat);
-                    break;
-                case stop:
-                    mPkView.setImageResource(R.drawable.ic_pk_close);
-                    break;
-            }
-        }
-    }
-
     /**
      * 控制各种房间状态下按钮的显示
      *
@@ -313,9 +290,7 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
     private void setViewState(RoomOwnerType roomOwnerType) {
         switch (roomOwnerType) {
             case VOICE_OWNER:
-            case LIVE_OWNER:
                 mSeatOrder.setVisibility(VISIBLE);
-                mPkView.setVisibility(VISIBLE);
                 mSendGiftView.setVisibility(VISIBLE);
                 mPrivateMessageView.setVisibility(VISIBLE);
                 mRequestSeatView.setVisibility(GONE);
@@ -323,52 +298,12 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
                 mSendVoiceMassageView.setVisibility(GONE);
                 break;
             case VOICE_VIEWER:
-            case LIVE_VIEWER:
                 mSeatOrder.setVisibility(GONE);
-                mPkView.setVisibility(GONE);
                 mSendGiftView.setVisibility(VISIBLE);
                 mPrivateMessageView.setVisibility(VISIBLE);
                 mRequestSeatView.setVisibility(VISIBLE);
                 mSettingView.setVisibility(GONE);
                 mSendVoiceMassageView.setVisibility(VISIBLE);
-                break;
-            case RADIO_OWNER:
-                mSeatOrder.setVisibility(GONE);
-                mPkView.setVisibility(GONE);
-                mSendGiftView.setVisibility(VISIBLE);
-                mPrivateMessageView.setVisibility(VISIBLE);
-                mSettingView.setVisibility(VISIBLE);
-                mRequestSeatView.setVisibility(GONE);
-                mSendVoiceMassageView.setVisibility(GONE);
-                break;
-            case RADIO_VIEWER:
-                mSeatOrder.setVisibility(GONE);
-                mPkView.setVisibility(GONE);
-                mSendGiftView.setVisibility(VISIBLE);
-                mPrivateMessageView.setVisibility(VISIBLE);
-                mSettingView.setVisibility(GONE);
-                mRequestSeatView.setVisibility(GONE);
-                mSendVoiceMassageView.setVisibility(VISIBLE);
-                break;
-            case GAME_OWNER:
-                mSeatOrder.setVisibility(VISIBLE);
-                mPkView.setVisibility(GONE);
-                mSendGiftView.setVisibility(VISIBLE);
-                mPrivateMessageView.setVisibility(VISIBLE);
-                mRequestSeatView.setVisibility(GONE);
-                mSettingView.setVisibility(VISIBLE);
-                mSendVoiceMassageView.setVisibility(GONE);
-                mMicSwitch.setVisibility(GONE);
-                break;
-            case GAME_VIEWER:
-                mSeatOrder.setVisibility(GONE);
-                mPkView.setVisibility(GONE);
-                mSendGiftView.setVisibility(VISIBLE);
-                mPrivateMessageView.setVisibility(VISIBLE);
-                mRequestSeatView.setVisibility(GONE);
-                mSettingView.setVisibility(GONE);
-                mSendVoiceMassageView.setVisibility(VISIBLE);
-                mMicSwitch.setVisibility(GONE);
                 break;
         }
     }
@@ -385,10 +320,6 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         super.onDetachedFromWindow();
     }
 
-    public enum PKViewState {
-        pk, wait, stop
-    }
-
     public interface OnBottomOptionClickListener {
         void clickSendMessage(String message);
 
@@ -397,8 +328,6 @@ public class RoomBottomView extends ConstraintLayout implements UnReadMessageMan
         void clickSeatOrder();
 
         void clickSettings();
-
-        void clickPk();
 
         void clickRequestSeat();
 

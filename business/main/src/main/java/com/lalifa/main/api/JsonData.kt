@@ -48,7 +48,18 @@ data class Carousel(
 ) : Serializable
 
 data class Captain(
-    val avatar: String
+    val avatar: String,
+    val end_time: String,
+    val id: Int,
+    val isPrivate: Int,
+    val password: String,
+    val password_type: Int,
+    val roomid: String,
+    val start_time: String,
+    val uid: Int,
+    val userId: String,
+    val userName: String,
+    val user_id: Int
 )
 
 data class Notice(
@@ -89,13 +100,17 @@ data class Room(
 )
 
 data class Host(
-    val create_time: String,
-    val flowing_water: String,
-    val hot: Int,
+    val avatar: String,
+    val end_time: String,
     val id: Int,
-    val office_id: Int,
-    val status: Int,
-    val type: String,
+    val isPrivate: Int,
+    val password: String,
+    val password_type: Int,
+    val roomid: String,
+    val start_time: String,
+    val uid: Int,
+    val userId: String,
+    val userName: String,
     val user_id: Int
 )
 

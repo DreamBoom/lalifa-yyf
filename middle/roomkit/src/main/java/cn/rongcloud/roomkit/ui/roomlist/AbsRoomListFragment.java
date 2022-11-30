@@ -10,10 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lalifa.adapter.BannerImageAdapter;
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.OkParams;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.ui.mvp.BaseMvpFragment;
 import com.lalifa.widget.dialog.dialog.VRCenterDialog;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -23,14 +19,11 @@ import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.roomkit.R;
-import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.intent.IntentWrap;
 import cn.rongcloud.roomkit.provider.VoiceRoomProvider;
 import cn.rongcloud.roomkit.ui.OnItemClickRoomListListener;
@@ -189,27 +182,28 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
     }
 
     private void createRoom() {
-        showLoading("");
-        // 创建之前检查是否已有创建的房间
-        OkApi.put(
-                VRApi.ROOM_CREATE_CHECK,
-                null,
-                new WrapperCallBack() {
-                    @Override
-                    public void onResult(Wrapper result) {
-                        dismissLoading();
-                        if (result.ok()) {
-                            showCreateRoomDialog();
-                        } else if (result.getCode() == 30016) {
-                            RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
-                            if (voiceRoomBean != null) {
-                                onCreateExist(voiceRoomBean);
-                            } else {
-                                showCreateRoomDialog();
-                            }
-                        }
-                    }
-                });
+        //todo 222
+//        showLoading("");
+//        // 创建之前检查是否已有创建的房间
+//        OkApi.put(
+//                VRApi.ROOM_CREATE_CHECK,
+//                null,
+//                new WrapperCallBack() {
+//                    @Override
+//                    public void onResult(Wrapper result) {
+//                        dismissLoading();
+//                        if (result.ok()) {
+//                            showCreateRoomDialog();
+//                        } else if (result.getCode() == 30016) {
+//                            RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
+//                            if (voiceRoomBean != null) {
+//                                onCreateExist(voiceRoomBean);
+//                            } else {
+//                                showCreateRoomDialog();
+//                            }
+//                        }
+//                    }
+//                });
     }
 
     /**
@@ -307,33 +301,35 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
             // 如果有小窗口存在的情况下，不显示
             return;
         }
-        Map<String, Object> params = new HashMap<>(2);
-        OkApi.get(VRApi.USER_ROOM_CHECK, params, new WrapperCallBack() {
 
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
-                    if (voiceRoomBean != null) {
-                        // 说明已经在房间内了，那么给弹窗
-                        confirmDialog = new VRCenterDialog(requireActivity(), null);
-                        confirmDialog.replaceContent("您正在直播的房间中\n是否返回？", getString(R.string.cancel), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        changeUserRoom();
-                                    }
-                                },
-                                getString(R.string.confirm), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        jumpRoom(voiceRoomBean);
-                                    }
-                                }, null);
-                        confirmDialog.show();
-                    }
-                }
-            }
-        });
+        //todo 222
+//        Map<String, Object> params = new HashMap<>(2);
+//        OkApi.get(VRApi.USER_ROOM_CHECK, params, new WrapperCallBack() {
+//
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    RoomDetailBean voiceRoomBean = result.get(RoomDetailBean.class);
+//                    if (voiceRoomBean != null) {
+//                        // 说明已经在房间内了，那么给弹窗
+//                        confirmDialog = new VRCenterDialog(requireActivity(), null);
+//                        confirmDialog.replaceContent("您正在直播的房间中\n是否返回？", getString(R.string.cancel), new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        changeUserRoom();
+//                                    }
+//                                },
+//                                getString(R.string.confirm), new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        jumpRoom(voiceRoomBean);
+//                                    }
+//                                }, null);
+//                        confirmDialog.show();
+//                    }
+//                }
+//            }
+//        });
     }
 
     /**
@@ -353,11 +349,12 @@ public abstract class AbsRoomListFragment extends BaseMvpFragment
 
     // 更改所属房间
     private void changeUserRoom() {
-        HashMap<String, Object> params = new OkParams().add("roomId", "").build();
-        OkApi.get(VRApi.USER_ROOM_CHANGE, params, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-            }
-        });
+        //todo 222
+//        HashMap<String, Object> params = new OkParams().add("roomId", "").build();
+//        OkApi.get(VRApi.USER_ROOM_CHANGE, params, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//            }
+//        });
     }
 }

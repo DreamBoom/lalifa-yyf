@@ -24,6 +24,9 @@ import com.lalifa.main.activity.*
 import com.lalifa.main.adapter.mainList1
 import com.lalifa.main.adapter.mainList2
 import com.lalifa.main.adapter.mainList3
+import com.lalifa.main.api.Captain
+import com.lalifa.main.api.Host
+import com.lalifa.main.api.Room
 import com.lalifa.main.api.index
 import com.lalifa.main.databinding.ViewMainHomeBinding
 import com.youth.banner.holder.BannerImageHolder
@@ -62,13 +65,28 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
             binding.apply {
                 mList1.mainList1().apply {
                     R.id.itemRoom.onClick {
+                        val roomId = getModel<Captain>().roomid
                         val list: ArrayList<String> = ArrayList()
-                        list.add("1")
-                        launchRoomActivity("1", list, 0, false)
+                        list.add(roomId)
+                        launchRoomActivity(roomId, list, 0, false)
                     }
                 }.models = index!!.captain
-                mList2.mainList2().models = index.host
-                mList3.mainList3().models = index.room
+                mList2.mainList2().apply {
+                    R.id.itemRoom.onClick {
+                        val roomId = getModel<Host>().roomid
+                        val list: ArrayList<String> = ArrayList()
+                        list.add(roomId)
+                        launchRoomActivity(roomId, list, 0, false)
+                    }
+                }.models = index.host
+                mList3.mainList3().apply {
+                    R.id.rl.onClick {
+                        val roomId = getModel<Room>().roomid
+                        val list: ArrayList<String> = ArrayList()
+                        list.add(roomId)
+                        launchRoomActivity(roomId, list, 0, false)
+                    }
+                }.models = index.room
                 gg.text = "${index.notice.n_title}:${index.notice.n_message_content}"
                 if (index.carousel.isNotEmpty()) {
                     val imgList = arrayListOf<String>()

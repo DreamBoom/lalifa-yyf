@@ -4,23 +4,16 @@ import android.content.Context
 import android.text.TextUtils
 import androidx.multidex.MultiDex
 import cn.rongcloud.config.AppConfig
-import cn.rongcloud.config.UserManager
 import cn.rongcloud.config.init.ModuleManager
 import cn.rongcloud.config.router.ARouterWrapper
 import cn.rongcloud.roomkit.RoomKitInit
 import cn.rongcloud.thirdcdn.ThirdCDNConstant
 import com.alibaba.android.arouter.launcher.ARouter
-import com.drake.channel.sendTag
-import com.drake.net.utils.TipUtils
-import com.lalifa.api.JsonHttpConverter
-import com.lalifa.api.NetHttp
 import com.lalifa.base.BaseApplication
-import com.lalifa.ext.Config
-import com.lalifa.extension.pk
+import com.lalifa.utils.ImPushUtil
 import com.lalifa.utils.SystemUtil
 import com.lalifa.yyf.BuildConfig.*
 import com.lalifa.yyf.app.App
-import com.lalifa.utils.ImPushUtil
 
 class MApplication : BaseApplication() {
 

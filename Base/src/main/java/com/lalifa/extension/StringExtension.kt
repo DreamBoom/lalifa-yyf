@@ -264,3 +264,7 @@ fun String.encodeUnicode(): String {
     }
     return builder.toString()
 }
+
+fun String.noEN():String{
+    return this.replace(Regex("[a-zA-Z]"),"" )
+}

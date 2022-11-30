@@ -48,16 +48,7 @@ public class ExitRoomPopupWindow extends PopupWindow {
         LinearLayout leaveRoomView = mRootView.findViewById(R.id.ll_leave_room);
         LinearLayout closeRoomView = mRootView.findViewById(R.id.ll_close_room);
         switch (roomOwnerType) {
-            case RADIO_VIEWER:
             case VOICE_VIEWER:
-            case LIVE_VIEWER:
-                closeRoomView.setVisibility(View.GONE);
-                break;
-            case GAME_OWNER:
-                packUpRoomView.setVisibility(View.GONE);
-                break;
-            case GAME_VIEWER:
-                packUpRoomView.setVisibility(View.GONE);
                 closeRoomView.setVisibility(View.GONE);
                 break;
         }

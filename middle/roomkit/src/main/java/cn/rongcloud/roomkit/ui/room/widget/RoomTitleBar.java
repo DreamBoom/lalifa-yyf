@@ -13,25 +13,18 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.jakewharton.rxbinding4.view.RxView;
-import com.lalifa.oklib.OkApi;
-import com.lalifa.oklib.OkParams;
-import com.lalifa.oklib.WrapperCallBack;
-import com.lalifa.oklib.wrapper.Wrapper;
 import com.lalifa.utils.ImageLoader;
 import com.lalifa.utils.UiUtils;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import cn.rongcloud.config.UserManager;
 import cn.rongcloud.roomkit.R;
-import cn.rongcloud.roomkit.api.VRApi;
 import cn.rongcloud.roomkit.message.RCFollowMsg;
 import cn.rongcloud.roomkit.ui.RoomOwnerType;
 import cn.rongcloud.roomkit.ui.room.model.Member;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.core.Observable;
-import io.rong.imkit.picture.tools.ToastUtils;
 
 /**
  * @author gyn
@@ -108,12 +101,7 @@ public class RoomTitleBar extends ConstraintLayout {
         this.onFollowClickListener = onFollowClickListener;
         this.roomOwnerType = roomOwnerType;
         setViewState();
-        if (roomOwnerType == RoomOwnerType.LIVE_OWNER || roomOwnerType == RoomOwnerType.LIVE_VIEWER) {
-            //如果是直播房，那么房间名直接显示创建者的ID
-            setCreatorName(name);
-        } else {
-            setRoomName(name);
-        }
+        setRoomName(name);
         setRoomId(id);
         getFollowStatus(roomUserId);
     }
@@ -185,19 +173,20 @@ public class RoomTitleBar extends ConstraintLayout {
             return;
         }
         isShowFollow = true;
-        OkApi.post(VRApi.GET_USER, new OkParams().
-                add("userIds", new String[]{roomUserId}).build(), new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    List<Member> members = result.getList(Member.class);
-                    if (members != null && members.size() > 0) {
-                        member = members.get(0);
-                        setFollow(member.isFollow());
-                    }
-                }
-            }
-        });
+        //todo 222
+//        OkApi.post(VRApi.GET_USER, new OkParams().
+//                add("userIds", new String[]{roomUserId}).build(), new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    List<Member> members = result.getList(Member.class);
+//                    if (members != null && members.size() > 0) {
+//                        member = members.get(0);
+//                        setFollow(member.isFollow());
+//                    }
+//                }
+//            }
+//        });
     }
 
     public void setFollow(boolean isFollow) {
@@ -225,44 +214,45 @@ public class RoomTitleBar extends ConstraintLayout {
             return;
         }
         boolean isFollow = !this.member.isFollow();
-        OkApi.get(VRApi.followUrl(member.getUserId()), null, new WrapperCallBack() {
-            @Override
-            public void onResult(Wrapper result) {
-                if (result.ok()) {
-                    if (isFollow) {
-                        ToastUtils.s(getContext(), "关注成功");
-                        if (onFollowClickListener != null) {
-                            RCFollowMsg followMsg = new RCFollowMsg();
-                            followMsg.setUser(UserManager.get());
-                            followMsg.setTargetUser(member.toUser());
-                            onFollowClickListener.clickFollow(true, followMsg);
-                        }
-                    } else {
-                        ToastUtils.s(getContext(), "取消关注成功");
-                        if (onFollowClickListener != null) {
-                            onFollowClickListener.clickFollow(false, null);
-                        }
-                    }
-                    member.setStatus(isFollow ? 1 : 0);
-                    setFollow(isFollow);
-                } else {
-                    if (isFollow) {
-                        ToastUtils.s(getContext(), "关注失败");
-                    } else {
-                        ToastUtils.s(getContext(), "取消关注失败");
-                    }
-                }
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-                if (isFollow) {
-                    ToastUtils.s(getContext(), "关注失败");
-                } else {
-                    ToastUtils.s(getContext(), "取消关注失败");
-                }
-            }
-        });
+        //todo 222
+//        OkApi.get(VRApi.followUrl(member.getUserId()), null, new WrapperCallBack() {
+//            @Override
+//            public void onResult(Wrapper result) {
+//                if (result.ok()) {
+//                    if (isFollow) {
+//                        ToastUtils.s(getContext(), "关注成功");
+//                        if (onFollowClickListener != null) {
+//                            RCFollowMsg followMsg = new RCFollowMsg();
+//                            followMsg.setUser(UserManager.get());
+//                            followMsg.setTargetUser(member.toUser());
+//                            onFollowClickListener.clickFollow(true, followMsg);
+//                        }
+//                    } else {
+//                        ToastUtils.s(getContext(), "取消关注成功");
+//                        if (onFollowClickListener != null) {
+//                            onFollowClickListener.clickFollow(false, null);
+//                        }
+//                    }
+//                    member.setStatus(isFollow ? 1 : 0);
+//                    setFollow(isFollow);
+//                } else {
+//                    if (isFollow) {
+//                        ToastUtils.s(getContext(), "关注失败");
+//                    } else {
+//                        ToastUtils.s(getContext(), "取消关注失败");
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                if (isFollow) {
+//                    ToastUtils.s(getContext(), "关注失败");
+//                } else {
+//                    ToastUtils.s(getContext(), "取消关注失败");
+//                }
+//            }
+//        });
     }
 
     /**
@@ -270,53 +260,16 @@ public class RoomTitleBar extends ConstraintLayout {
      */
     public void setViewState() {
         LayoutParams layoutParams = (LayoutParams) mNameTextView.getLayoutParams();
-        switch (roomOwnerType) {
-            case LIVE_OWNER:
-                layoutParams.bottomToTop = mDelayTextView.getId();
-                mNameTextView.setLayoutParams(layoutParams);
-                mDelayTextView.setVisibility(VISIBLE);
-                mCreaterImageview.setVisibility(VISIBLE);
-                mLeftView.setBackgroundResource(R.drawable.bg_live_room_title_left);
-                mOnlineTextView.setVisibility(GONE);
-                tvRoomOnlineCount.setVisibility(VISIBLE);
-                mIDTextView.setVisibility(GONE);
-                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_live_room));
-                setmLeftViewMarginStart(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding));
-                break;
-            case LIVE_VIEWER:
-                mDelayTextView.setVisibility(GONE);
-                mCreaterImageview.setVisibility(VISIBLE);
-                mLeftView.setBackgroundResource(R.drawable.bg_live_room_title_left);
-                mOnlineTextView.setVisibility(GONE);
-                mIDTextView.setVisibility(GONE);
-                tvRoomOnlineCount.setVisibility(VISIBLE);
-                setmLeftViewMarginStart(getResources().getDimensionPixelOffset(R.dimen.dimen_room_padding));
-                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
-                break;
-
-            case GAME_OWNER:
-                mTvSwitchGame.setVisibility(VISIBLE);
-                mBtnNotice.setVisibility(VISIBLE);
-                tvRoomOnlineCount.setVisibility(GONE);
-                break;
-            case GAME_VIEWER:
-                mTvSwitchGame.setVisibility(GONE);
-                mBtnNotice.setVisibility(VISIBLE);
-                tvRoomOnlineCount.setVisibility(GONE);
-                break;
-            default:
-                //非直播房
-                layoutParams.bottomToTop = mIDTextView.getId();
-                mNameTextView.setLayoutParams(layoutParams);
-                mCreaterImageview.setVisibility(GONE);
-                mLeftView.setBackgroundResource(R.drawable.bg_room_title_left);
-                mOnlineTextView.setVisibility(VISIBLE);
-                mIDTextView.setVisibility(VISIBLE);
-                tvRoomOnlineCount.setVisibility(GONE);
-                mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
-                setmLeftViewMarginStart(0);
-                break;
-        }
+        //非直播房
+        layoutParams.bottomToTop = mIDTextView.getId();
+        mNameTextView.setLayoutParams(layoutParams);
+        mCreaterImageview.setVisibility(GONE);
+        mLeftView.setBackgroundResource(R.drawable.bg_room_title_left);
+        mOnlineTextView.setVisibility(VISIBLE);
+        mIDTextView.setVisibility(VISIBLE);
+        tvRoomOnlineCount.setVisibility(GONE);
+        mMenuButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
+        setmLeftViewMarginStart(0);
     }
 
     public void setSwitchGameVisible(boolean visible) {

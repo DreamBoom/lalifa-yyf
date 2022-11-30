@@ -7,7 +7,6 @@ import java.util.List;
 
 import cn.rongcloud.config.api.RoomDetailBean;
 import cn.rongcloud.config.provider.user.User;
-import cn.rongcloud.pk.bean.PKState;
 import cn.rongcloud.roomkit.ui.miniroom.OnCloseMiniRoomListener;
 import cn.rongcloud.roomkit.ui.room.dialog.shield.Shield;
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback;
@@ -181,13 +180,6 @@ public interface IVoiceRoomHelp extends OnCloseMiniRoomListener {
      * @param resultBack 回调
      */
     void getRequestSeatUserIds(IResultBack<List<String>> resultBack);
-
-    /**
-     * 获取当前PK状态
-     *
-     * @return pk状态
-     */
-    PKState getPKState();
 
     /**
      * 获取当前房间ID
