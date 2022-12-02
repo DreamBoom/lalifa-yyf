@@ -65,7 +65,7 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         ImPushUtil.getInstance(this@SettingActivity).logout()
                         SPUtil.set(Config.IS_LOGIN, false)
                         toast("注销成功！")
-                        finish()
+                        mFinish()
                         start(LoginActivity::class.java)
                     }
                 }
@@ -77,7 +77,7 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         ImPushUtil.getInstance(this@SettingActivity).logout()
                         SPUtil.set(Config.IS_LOGIN, false)
                         toast("退出成功！")
-                        finish()
+                        mFinish()
                         start(LoginActivity::class.java)
                     }
                 }

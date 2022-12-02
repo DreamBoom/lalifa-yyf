@@ -99,17 +99,6 @@ android {
             buildConfigField("String", "APP_KEY", "\"lmxuhwagl3jsd\"")
             // 融云demo对应服务器的测试地址，开发者可用来测试
             buildConfigField("String", "BASE_SERVER_ADDRES", "\"http://api-sealtalk.rongcloud.cn/\"")
-
-            // 这里是连接测试服务器的token，需要到 https://rcrtc-api.rongcloud.net/code 申请
-            buildConfigField("String", "BUSINESS_TOKEN", "\"xxxxx\"")
-            // 可选，友盟AppKey
-            buildConfigField("String", "UM_APP_KEY", "\"这里是友盟AppKey\"")
-            // 可选，bugly id
-            buildConfigField("String", "BUGLY_ID", "\"这里是Bugly的Id\"")
-            // 可选，视频直播三方CDN推流地址，不用三方CDN推拉流可空着
-            buildConfigField("String", "THIRD_CDN_PUSH_URL", "\"\"")
-            // 可选，视频直播三方CDN拉流地址，不用三方CDN推拉流可空着
-            buildConfigField("String", "THIRD_CDN_PULL_URL", "\"\"")
             // 区分国内/国际 国内环境不显示UI 选择地区
             buildConfigField("Boolean", "INTERIAL", "false")
             manifestPlaceholders = [
@@ -126,11 +115,7 @@ android {
             buildConfigField("String", "APP_KEY", "\"lmxuhwagl3jsd\"")
             buildConfigField("String", "UM_APP_KEY", "\"xxxxxxx\"")
             buildConfigField("String", "BASE_SERVER_ADDRES","\"http://api-sealtalk.rongcloud.cn/\"")
-            buildConfigField("String", "BUGLY_ID", "\"xxxxxxxx\"")
-            buildConfigField("String", "BUSINESS_TOKEN", "\"xxxxxxxxxx\"")
             buildConfigField("Boolean", "INTERIAL", "false")
-            buildConfigField("String", "THIRD_CDN_PUSH_URL", "\"\"")
-            buildConfigField("String", "THIRD_CDN_PULL_URL", "\"\"")
             manifestPlaceholders = [
                     APP_NAME         : "@string/app_name",
                     // hifive音乐服务的 appid和servercode

@@ -23,13 +23,11 @@ class AppConfig {
 
     fun init(
         appKey: String,
-        umengAppKey: String,
         baseServerAddress: String,
         international: Boolean,
         busiModes: Array<String?>?
     ) {
         this.appKey = appKey
-        this.umengAppKey = umengAppKey
         this.baseServerAddress = baseServerAddress
         isInternational = international
         if (null == modes) modes = ArrayList<String?>()
@@ -49,8 +47,6 @@ class AppConfig {
     }
 
     var appKey = ""
-        private set
-    var umengAppKey = ""
         private set
     var baseServerAddress = ""
         private set

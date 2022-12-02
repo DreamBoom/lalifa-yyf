@@ -1,14 +1,13 @@
 package cn.rongcloud.roomkit.ui.room.model
 
 import androidx.lifecycle.MutableLiveData
-import cn.rongcloud.config.api.getManage
-import cn.rongcloud.config.api.getMembers
 import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.user.UserProvider
-import com.drake.logcat.LogCat.e
-import kotlin.jvm.JvmOverloads
+import cn.rongcloud.roomkit.api.getManage
+import cn.rongcloud.roomkit.api.getMembers
 import cn.rongcloud.roomkit.ui.room.fragment.ClickCallback
 import com.drake.logcat.LogCat
+import com.drake.logcat.LogCat.e
 import com.drake.net.utils.scopeNet
 import com.lalifa.extension.noEN
 
@@ -25,9 +24,12 @@ class MemberCache {
      *
      * @param roomId
      */
-    fun fetchData(roomId: String?) {
+    fun fetchData(roomId: String?, manager: Int) {
         refreshMemberData(roomId)
-        refreshAdminData(roomId)
+        if (manager == 1) {
+            refreshAdminData(roomId)
+        }
+
     }
 
     /**
@@ -39,12 +41,12 @@ class MemberCache {
     fun refreshMemberData(roomId: String?, callback: ClickCallback<Boolean>? = null) {
         scopeNet {
             val member = getMembers(roomId!!.noEN())
-            if (member != null) {
+            if (member != null&&member.isNotEmpty()) {
                 memberList.value = member!!
                 member.forEach { user ->
                     UserProvider.provider().update(user.toUserInfo())
                 }
-                if (callback != null) callback.onResult(true, "");
+                callback!!.onResult(true, "")
             }
         }
     }
@@ -82,13 +84,13 @@ class MemberCache {
     /**
      * 删除某个成员
      *
-     * @param user
+     * @param member
      */
-    fun removeMember(user: User) {
+    fun removeMember(member: User) {
         e("removeMember")
         val list = members
-        if (list.contains(user)) {
-            list.remove(user)
+        if (list.contains(member)) {
+            list.remove(member)
             memberList.value = list
         }
     }
@@ -97,7 +99,7 @@ class MemberCache {
      * 通过userId，拿到对应的成员
      */
     fun getMember(userId: String): User? {
-        val members: List<User> = members
+        val members: MutableList<User> = members
         for (member in members) {
             if (member.userId == userId) {
                 return member
@@ -113,7 +115,7 @@ class MemberCache {
      */
     fun addMember(user: User) {
         e("addMember")
-        val list = members
+        val list =  members
         if (!list.contains(user)) {
             list.add(user)
             memberList.value = list

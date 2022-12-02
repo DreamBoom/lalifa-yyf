@@ -6,20 +6,20 @@ import android.os.Message
 import android.text.Editable
 import android.text.TextUtils
 import cn.rongcloud.roomkit.R
-import cn.rongcloud.roomkit.api.Rule
-import cn.rongcloud.roomkit.api.pay
-import cn.rongcloud.roomkit.api.recharge
+import cn.rongcloud.roomkit.api.*
 import cn.rongcloud.roomkit.databinding.ActivityMySxBinding
 import cn.rongcloud.roomkit.databinding.ItemCzBinding
 import com.alipay.sdk.app.PayTask
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
-import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
+import com.lalifa.ext.Config
 import com.lalifa.extension.AbsTextWatcher
 import com.lalifa.extension.onClick
 import com.lalifa.extension.toast
+import com.tencent.mm.opensdk.modelpay.PayReq
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 
 
 class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
@@ -32,7 +32,7 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
     }
 
     override fun initView() {
-       binding.etMoney.addTextChangedListener(
+        binding.etMoney.addTextChangedListener(
             object : AbsTextWatcher() {
                 override fun afterTextChanged(s: Editable) {
                     if (!TextUtils.isEmpty(s.toString())) {
@@ -81,6 +81,7 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
     object : Handler() {
         override fun handleMessage(msg: Message) {
             val payResult = PayResult(msg.obj as Map<String?, String?>)
+
             /**
              * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
              */
@@ -89,12 +90,12 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
             // 判断resultStatus 为9000则代表支付成功
             if (TextUtils.equals(resultStatus, "9000")) {
                 // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                if(!TextUtils.isEmpty(resultInfo)){
+                if (!TextUtils.isEmpty(resultInfo)) {
                     toast(resultInfo)
                 }
             } else {
                 // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                if(!TextUtils.isEmpty(resultInfo)){
+                if (!TextUtils.isEmpty(resultInfo)) {
                     toast(resultInfo)
                 }
             }
@@ -120,14 +121,15 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
                         return@onClick
                     }
                 }
+
                 scopeNetLife {
-                    if(payType==2){
-                        toast("微信支付正在开发...")
-                        return@scopeNetLife
-                    }
-                    val pay1 = pay(payId.toString(), money.toString(), payType.toString())
-                    if(payType == 1){
-                        val orderInfo = pay1 // 订单信息
+                    if (payType == 1) {
+                        val orderInfo = ZfbPay(payId.toString(), money.toString(), payType.toString())
+                        if (null == orderInfo) {
+                            toast("订单异常，请稍后重试")
+                            return@scopeNetLife
+                        }
+                        // 订单信息
                         val payRunnable = Runnable {
                             val alipay = PayTask(this@MySxActivity)
                             val result = alipay.payV2(orderInfo, true)
@@ -139,9 +141,32 @@ class MySxActivity : BaseTitleActivity<ActivityMySxBinding>() {
                         // 必须异步调用
                         val payThread = Thread(payRunnable)
                         payThread.start()
+                    }else{
+                        val orderInfo = WxPay(payId.toString(), money.toString(), payType.toString())
+                        if (null == orderInfo) {
+                            toast("订单异常，请稍后重试")
+                            return@scopeNetLife
+                        }
+
+                        val api = WXAPIFactory.createWXAPI(mContext, Config.WXKey)
+                        //判断有没有安装微信，没有就做相应提示
+                            if (api.isWXAppInstalled) {
+                                val req = PayReq()
+                                req.appId = orderInfo.appid
+                                req.partnerId = orderInfo.partnerid
+                                req.prepayId = orderInfo.prepayid
+                                req.packageValue = orderInfo.`package`
+                                req.nonceStr = orderInfo.noncestr
+                                req.timeStamp = orderInfo.timestamp
+                                req.sign = orderInfo.sign
+//                                req.extData = orderInfo
+                                api.sendReq(req)
+                            } else {
+                                toast("未安装微信，请安装微信支付")
+                            }
                     }
-                }
             }
         }
     }
+}
 }

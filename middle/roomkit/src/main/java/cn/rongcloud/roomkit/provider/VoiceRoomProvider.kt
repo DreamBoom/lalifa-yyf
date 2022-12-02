@@ -33,7 +33,7 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
             val roomDetail = roomDetail(roomId.noEN())
             if(null!=roomDetail){
                 //todo 测试
-              //  resultBack?.onResult(roomDetail)
+                //resultBack?.onResult(roomDetail!!)
             }else{
                 resultBack?.onResult(null)
             }

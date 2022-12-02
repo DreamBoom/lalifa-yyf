@@ -111,7 +111,7 @@ public class ShieldDialog extends BottomDialog {
     }
 
     private void getShield() {
-        //todo 222
+        //todo 222 获取屏蔽词 暂时取消
 //        OkApi.get(VRApi.getShield(mRoomId), null, new WrapperCallBack() {
 //
 //            @Override
@@ -157,7 +157,7 @@ public class ShieldDialog extends BottomDialog {
     }
 
     private void addShield(final String s) {
-        //todo 222
+        //todo 222 屏蔽词 暂时取消
 //        OkApi.post(VRApi.ADD_SHIELD, new OkParams().add("roomId", mRoomId).add("name", s).build(), new WrapperCallBack() {
 //
 //            @Override
@@ -189,7 +189,7 @@ public class ShieldDialog extends BottomDialog {
     }
 
     private void deleteShield(Shield shield) {
-        //todo 222
+        //todo 222 屏蔽词 暂时取消
 //        OkApi.get(VRApi.deleteShield(shield.getId()), null, new WrapperCallBack() {
 //
 //            @Override

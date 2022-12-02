@@ -4,6 +4,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="590dp">
 
@@ -44,7 +45,7 @@
         android:id="@+id/rg1"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,78 +77,82 @@
             android:textSize="16sp" />
     </RadioGroup>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="t1,t2,pattern,rank" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/t1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:padding="10dp"
         android:text="模式"
         android:textColor="@color/whiteTextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
         app:layout_constraintTop_toBottomOf="@+id/rg1" />
 
-    <RadioGroup
-        android:id="@+id/rg2"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/et_room_name"
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/pattern"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="21dp"
+        app:arrowTint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/t1"
-        app:layout_constraintTop_toTopOf="@+id/t1">
+        app:layout_constraintEnd_toEndOf="@+id/et_room_name"
+        app:layout_constraintTop_toTopOf="@+id/t1"
+        app:textTint="@color/black" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_wechat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/btn_create_room_is_public"
-            android:checked="true"
-            android:gravity="center_vertical"
-            android:paddingStart="5dp"
-            android:text="微信"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="16sp" />
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/rb_qq"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:button="@drawable/btn_create_room_is_public"
-            android:gravity="center_vertical"
-            android:paddingStart="5dp"
-            android:text="QQ"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="16sp" />
-    </RadioGroup>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/t2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:padding="10dp"
         android:text="段位"
         android:textColor="@color/whiteTextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
         app:layout_constraintTop_toBottomOf="@+id/t1" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/rank"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        app:arrowTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/t2"
+        app:layout_constraintEnd_toEndOf="@+id/pattern"
+        app:layout_constraintTop_toTopOf="@+id/t2"
+        app:textTint="@color/black" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/t3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:padding="10dp"
         android:text="标签"
         android:textColor="@color/whiteTextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
         app:layout_constraintTop_toBottomOf="@+id/t2" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/label"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        app:arrowTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/t3"
+        app:layout_constraintEnd_toEndOf="@+id/pattern"
+        app:layout_constraintTop_toTopOf="@+id/t3"
+        app:textTint="@color/black" />
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_room_name"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="42dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_create_voice_room_name"
         android:gravity="center|left"
         android:hint="@string/please_input_room_name"
@@ -158,9 +163,11 @@
         android:singleLine="true"
         android:textColor="#020037"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/t3" />
+        app:layout_constraintTop_toBottomOf="@+id/t3"
+        tools:layout_editor_absoluteX="42dp" />
+
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/iv_room_cover"
+        android:id="@+id/iv_room_bg"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginTop="24dp"
@@ -177,8 +184,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/ic_select_room_theme"
-        app:layout_constraintBottom_toBottomOf="@id/iv_room_cover"
-        app:layout_constraintEnd_toEndOf="@id/iv_room_cover" />
+        app:layout_constraintBottom_toBottomOf="@id/iv_room_bg"
+        app:layout_constraintEnd_toEndOf="@id/iv_room_bg" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/label_setting_background"
         android:layout_width="wrap_content"
@@ -189,6 +197,7 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
         app:layout_constraintTop_toBottomOf="@id/et_room_name" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_create_room"
         android:layout_width="0dp"
@@ -197,7 +206,7 @@
         android:background="@drawable/bg_create_voice_room_btn"
         app:layout_constraintEnd_toEndOf="@id/et_room_name"
         app:layout_constraintStart_toStartOf="@id/et_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/iv_room_cover">
+        app:layout_constraintTop_toBottomOf="@+id/iv_room_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

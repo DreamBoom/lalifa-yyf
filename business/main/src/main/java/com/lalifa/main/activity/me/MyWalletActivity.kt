@@ -76,7 +76,7 @@ class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {
                     if (it <= 0) {
                         toast("请输入提现金额")
                     } else {
-                      //todo 提现接口
+                      //提现接口
 
                     }
                 }

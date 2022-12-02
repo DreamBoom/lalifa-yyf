@@ -27,6 +27,24 @@ android {
         }
     }
 
+    //配置keystore签名
+    signingConfigs {
+        release {
+            storeFile file("E:/work/yyf/app/key.jks")
+            storePassword "lalifa"
+            keyAlias "key1"
+            keyPassword "lalifa"
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+
 
     buildTypes {
         release {
@@ -79,7 +97,7 @@ dependencies {
     api 'io.github.scwang90:refresh-header-classics:2.0.5'
     //图片加载库 https://github.com/bumptech/glide
     //中文文档 https://muyangmin.github.io/glide-docs-cn/
-    api 'com.github.bumptech.glide:glide:4.12.0'
+    api 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     api "com.github.goweii:Layer:1.0.3"
@@ -118,7 +136,7 @@ dependencies {
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
 
-    api 'androidx.startup:startup-runtime:1.1.0'
+    api 'androidx.startup:startup-runtime:1.1.1'
 
 //下拉刷新上拉加载
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
@@ -127,13 +145,13 @@ dependencies {
     //eventbus事件总线
     api 'org.greenrobot:eventbus:3.0.0'
     //fastJson解析json
-    api 'com.alibaba:fastjson:1.1.70.android'
+    api 'com.alibaba:fastjson:1.2.69'
 
     // https://github.com/HarlonWang/AVLoadingIndicatorView
     api "com.wang.avi:library:2.1.3"
 
     // rxjava 相关
-    api "io.reactivex.rxjava3:rxjava:3.0.2"
+    api "io.reactivex.rxjava3:rxjava:3.0.3"
     api "io.reactivex.rxjava3:rxandroid:3.0.0"
     api "com.jakewharton.rxbinding4:rxbinding:4.0.0"
 
@@ -147,5 +165,12 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
 
     //支付宝
+    //noinspection GradleDynamicVersion
     api 'com.alipay.sdk:alipaysdk-android:+@aar'
+    //微信
+    //noinspection GradleDynamicVersion
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    //spinner
+    api 'com.github.arcadefire:nice-spinner:1.3.1'
 }

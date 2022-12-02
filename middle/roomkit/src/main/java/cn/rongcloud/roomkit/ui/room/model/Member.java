@@ -18,12 +18,12 @@ public class Member implements Serializable {
     private String userName;
     private String avatar;
     // 是否是管理
-    private int isAdmin = 0;
+    private int manageType = 0;
     // 是否已关注
-    private int status = 0;
+    private int collectionType = 0;
     // 麦位
     private int seatIndex = -1;
-
+    public  boolean isFollow = getCollectionType()==1;
     public String getUserId() {
         return userId;
     }
@@ -54,29 +54,20 @@ public class Member implements Serializable {
                 : avatar;
     }
 
-
-    public boolean isAdmin() {
-        return isAdmin == 1;
+    public int getManageType() {
+        return manageType;
     }
 
-    public boolean isFollow() {
-        return status == 1;
+    public void setManageType(int manageType) {
+        this.manageType = manageType;
     }
 
-    public int getIsAdmin() {
-        return isAdmin;
+    public int getCollectionType() {
+        return collectionType;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCollectionType(int collectionType) {
+        this.collectionType = collectionType;
     }
 
     public int getSeatIndex() {

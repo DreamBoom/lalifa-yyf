@@ -14,7 +14,7 @@ import com.lalifa.base.R
  * @Author lwj
  * @Email 1036046880@qq.com
  * @Date 2022/1/5 18:20
- * todo 加载库设置占位图会出现单张图片自适应大小错误
+ * 加载库设置占位图会出现单张图片自适应大小错误
  */
 
 /**

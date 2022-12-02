@@ -15,6 +15,10 @@ open class BaseBean<T> : Serializable {
     var data: T? = null
     var time: Long = 0
 }
+data class ImgBean(
+    val fullurl: String,
+    val url: String
+)
 
 data class GiftBean(
     val image: String,
@@ -26,6 +30,8 @@ data class GiftBean(
  * @Des 房间详情
  */
 data class RoomDetailBean(
+    var notice:String = "",
+    var establish_type:Int, //1 可以创建队伍 else 不可以
     var userInfo: User?,
     var background: String,
     var Chatroom_id: String,
@@ -139,7 +145,8 @@ data class RoomGiftFrequency(
 )
 
 data class RoomCheckBean(
-    val RoomId: String
+    val RoomId: String,
+    val userId: String
 )
 
 

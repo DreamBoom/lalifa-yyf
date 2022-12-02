@@ -39,8 +39,9 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/header"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:scaleType="fitXY"
         android:layout_centerHorizontal="true"
         app:shapeAppearance="@style/CircleStyle" />
 </RelativeLayout>

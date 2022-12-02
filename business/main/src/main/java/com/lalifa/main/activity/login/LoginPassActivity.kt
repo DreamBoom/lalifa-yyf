@@ -59,6 +59,9 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                         UserProvider.provider().update(user.userinfo.toUserInfo())
                         AppConfig.initNetHttp(this@LoginPassActivity)
                         initRongIM(user.userinfo)
+                    }else{
+                        toast("登录失败")
+                        login.enable()
                     }
                 }
             }
@@ -67,8 +70,8 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
     }
 
     private fun initRongIM(user: User) {
-        if (!TextUtils.isEmpty(user.token)) {
-            RongIM.connect(user.token, object : RongIMClient.ConnectCallback() {
+        if (!TextUtils.isEmpty(user.imToken)) {
+            RongIM.connect(user.imToken, object : RongIMClient.ConnectCallback() {
                 override fun onSuccess(t: String) {
                     start(MainActivity::class.java)
                     finish()

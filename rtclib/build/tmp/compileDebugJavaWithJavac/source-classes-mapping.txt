@@ -1,0 +1,2 @@
+cn/rongcloud/rtclib/BuildConfig.java
+ cn.rongcloud.rtclib.BuildConfig

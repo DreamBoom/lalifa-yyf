@@ -20,10 +20,7 @@ import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.ext.Config
-import com.lalifa.extension.disable
-import com.lalifa.extension.enable
-import com.lalifa.extension.onClick
-import com.lalifa.extension.start
+import com.lalifa.extension.*
 import com.lalifa.main.activity.MainActivity
 import com.lalifa.main.api.login
 import com.lalifa.main.databinding.ActivityLoginBinding
@@ -78,6 +75,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 //                start(ForgetPasswordActivity::class.java)
 //            }
             login.onClick {
+                toast("请进行密码登录")
+                return@onClick
                 login.disable()
                 //登录
                 loginUser()
@@ -100,8 +99,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun loginUser() {
         scopeNetLife {
-          //  val user = login("13462439645", "111111")
-            val user = login("15500000003", "123456")
+            val user = login("13462439645", "111111")
+          //  val user = login("15500000003", "123456")
             if (null != user) {
                 binding.login.enable()
                 //在jpush上设置别名
@@ -119,6 +118,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 SPUtil.set(Config.IS_LOGIN, true)
                 AppConfig.initNetHttp(this@LoginActivity)
                 initRongIM(user.userinfo)
+            }else{
+                binding.login.enable()
             }
         }
     }

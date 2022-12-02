@@ -27,12 +27,17 @@ import com.lalifa.extension.onClick
 abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
     private lateinit var mainBinding: CommonLayoutBinding
     lateinit var binding: T
-    public var TAG= "=======>"
+    public var TAG = "=======>"
+    open fun mFinish() {
+        finish()
+    }
+
     //标题文本
     open fun title(): String = ""
     open fun rightText(): String = ""
     open fun isCanExit(): Boolean = false
-    open fun rightClick(){}
+    open fun rightClick() {}
+
     //空数据返回
     open fun String?.pk(def: String = ""): String {
         return if (this.isNullOrEmpty()) {
@@ -50,7 +55,7 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
 
     open fun topBar(): CommonTopBarBinding = mainBinding.topBar
 
-    var mContext:Context?=null
+    var mContext: Context? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
@@ -64,7 +69,7 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
         onClick()
     }
 
-    protected fun getRootView()=mainBinding.root
+    protected fun getRootView() = mainBinding.root
 
     private fun initTitleBar() {
         mainBinding.topBar.root.applyVisible(!topBarHide())
@@ -72,24 +77,46 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
             finishAfterTransition()
         }
         mainBinding.topBar.rightText.onClick { rightClick() }
-        if(getRightIcon()!=null){
+        if (getRightIcon() != null) {
             mainBinding.topBar.rightIcon.setBackgroundDrawable(getRightIcon()!!)
         }
         mainBinding.topBar.title.text = title()
         mainBinding.topBar.rightText.text = rightText()
-        if(darkMode()){
-            immersive(ContextCompat.getColor(this,R.color.white),darkMode = darkMode())
-        }else{
-            immersive(ContextCompat.getColor(this,R.color.black),darkMode = darkMode())
+        if (darkMode()) {
+            immersive(ContextCompat.getColor(this, R.color.white), darkMode = darkMode())
+        } else {
+            immersive(ContextCompat.getColor(this, R.color.black), darkMode = darkMode())
         }
     }
-    open fun setTitle(title:String){
+
+    open fun setTitle(title: String) {
         mainBinding.topBar.title.text = title
     }
 
-    open fun getRightIcon(): Drawable?=null
+    open fun getRightIcon(): Drawable? = null
     abstract fun getViewBinding(): T
     abstract fun initView()
-    open fun initViewBundle(savedInstanceState: Bundle?){}
+    open fun initViewBundle(savedInstanceState: Bundle?) {}
     open fun onClick() {}
+
+    private var exitTime: Long = 0
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (isCanExit()) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+                if (System.currentTimeMillis() - exitTime > 2000) {
+                    Toast.makeText(
+                        applicationContext,
+                        "再按一次退出",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    exitTime = System.currentTimeMillis()
+                } else {
+                    BaseApplication.get().exit()
+                }
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 }

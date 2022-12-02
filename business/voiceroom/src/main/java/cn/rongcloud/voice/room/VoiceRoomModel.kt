@@ -12,12 +12,14 @@ import cn.rongcloud.config.api.roomDetail
 import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.music.MusicControlManager
 import cn.rongcloud.roomkit.manager.RCChatRoomMessageManager
+import cn.rongcloud.roomkit.ui.room.model.MemberCache
 import cn.rongcloud.voice.Constant
 import cn.rongcloud.voice.model.UiRoomModel
 import cn.rongcloud.voice.model.UiSeatModel
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomEventListener
+import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomResultCallback
 import cn.rongcloud.voiceroom.model.RCPKInfo
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
@@ -370,27 +372,26 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
      */
     val requestSeatUserIds: Unit
         get() {
-            //todo 111
-//            RCVoiceRoomEngine.getInstance()
-//                .getRequestSeatUserIds(object : RCVoiceRoomResultCallback<List<String>> {
-//                    override fun onSuccess(requestUserIds: List<String>) {
-//                        //获取到当前房间所有用户,申请人需要在房间，并且不在麦位上
-//                        e(TAG, "requestUserIds = " + GsonUtil.obj2Json(requestUserIds))
-//                        val users = MemberCache.getInstance().memberList.value!!
-//                        requestSeats.clear()
-//                        for (requestUserId in requestUserIds) {
-//                            for (user in users) {
-//                                if (user.userId == requestUserId && getSeatInfoByUserId(user.userId) == null) {
-//                                    requestSeats.add(user)
-//                                    break
-//                                }
-//                            }
-//                        }
-//                        obRequestSeatListChangeSuject.onNext(requestSeats)
-//                    }
-//
-//                    override fun onError(i: Int, s: String) {}
-//                })
+            RCVoiceRoomEngine.getInstance()
+                .getRequestSeatUserIds(object : RCVoiceRoomResultCallback<List<String>> {
+                    override fun onSuccess(requestUserIds: List<String>) {
+                        //获取到当前房间所有用户,申请人需要在房间，并且不在麦位上
+                        e(TAG, "requestUserIds = " + GsonUtil.obj2Json(requestUserIds))
+                        val users = MemberCache.get().memberList.value
+                        requestSeats.clear()
+                        for (requestUserId in requestUserIds) {
+                            for (user in users!!) {
+                                if (user.userId == requestUserId && getSeatInfoByUserId(user.userId) == null) {
+                                    requestSeats.add(user)
+                                    break
+                                }
+                            }
+                        }
+                        obRequestSeatListChangeSuject.onNext(requestSeats)
+                    }
+
+                    override fun onError(i: Int, s: String) {}
+                })
         }
 
     /**
@@ -463,34 +464,6 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
     override fun onPKInvitationIgnored(s: String, s1: String) {}
 
     /**
-     * 获取房间信息
-     */
-    fun getRoomInfo(roomId: String?): Single<RoomDetailBean> {
-        return Single.create {
-            val roomBean = currentUIRoomInfo.roomBean
-            if (roomBean != null) {
-                currentUIRoomInfo.roomBean = roomBean
-            } else {
-                //通过网络去获取
-                queryRoomInfoFromServer(roomId)
-            }
-        }
-    }
-
-    /**
-     * 通过网络去获取最新的房间信息
-     * @param roomId
-     * @return
-     */
-    private fun queryRoomInfoFromServer(roomId: String?) {
-        scopeNet {
-            val roomDetails = roomDetail(roomId!!.noEN())
-            if(null!=roomDetails){
-                currentUIRoomInfo.roomBean = roomDetails
-            }
-        }
-    }
-    /**
      * 音乐的所有操作
      * TODO =================================================================
      */
@@ -508,7 +481,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
      * @param users
      */
     fun onMemberListener(users: List<User>) {
-        d(TAG, "onMemberListener")
+        d(TAG, "onMemberListener"+users.toString())
         //房间观众发生变化
         requestSeatUserIds
 

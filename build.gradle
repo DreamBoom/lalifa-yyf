@@ -90,8 +90,8 @@ ext {
     tinygameLib = "1.0.2"
 
     //动态配置
-    versionCode = 24
-    versionName = "4.4.3"
+    versionCode = 1
+    versionName = "1.0.0"
 
     mode = 0
     android_ui = [

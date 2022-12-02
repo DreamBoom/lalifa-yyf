@@ -3,6 +3,10 @@ import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.wrapper.Provide
 import java.io.Serializable
 
+data class ImgBean(
+    val fullurl: String,
+    val url: String
+)
 /**
  *
  * @ClassName JsonBean
@@ -99,4 +103,14 @@ data class RankBean(
     var userName: String,
     var user_id: Int,
     var yield: String
+)
+
+data class WxPayBean(
+    val appid: String,
+    val noncestr: String,
+    val `package`: String,
+    val partnerid: String,
+    val prepayid: String,
+    val sign: String,
+    val timestamp: String
 )

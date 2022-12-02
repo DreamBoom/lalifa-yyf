@@ -88,7 +88,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     public static final int STATUS_WAIT_FOR_SEAT = 2;
     protected int currentStatus;
     private VRCenterDialog inviteDialog;
-    protected String roomId;
+    protected String roomId = "";
     private List<Shield> shields = new ArrayList<>();
     private RoomDetailBean voiceRoomBean;
 
@@ -1160,7 +1160,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
                         if (messageContent instanceof RCChatroomAdmin) {
                             //发送成功，回调给接收的地方，统一去处理，避免多个地方处理 通知刷新管理员信息
                             RCVoiceRoomEngine.getInstance().notifyVoiceRoom(EVENT_MANAGER_LIST_CHANGE, "", null);
-                            MemberCache.Companion.get().refreshAdminData(roomId);
+                            //MemberCache.Companion.get().refreshAdminData(roomId);
                         }
                         return null;
                     }

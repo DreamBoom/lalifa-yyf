@@ -190,7 +190,13 @@ public class User implements Serializable, Provide {
     public UserInfo toUserInfo() {
         return new UserInfo(userId, userName, getPortraitUri());
     }
-
+    public User toUser() {
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserName(userName);
+        user.setAvatar(avatar);
+        return user;
+    }
     @Override
     public String getKey() {
         return userId;

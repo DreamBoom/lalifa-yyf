@@ -1,0 +1,2 @@
+io/rong/calllib/BuildConfig.java
+ io.rong.calllib.BuildConfig

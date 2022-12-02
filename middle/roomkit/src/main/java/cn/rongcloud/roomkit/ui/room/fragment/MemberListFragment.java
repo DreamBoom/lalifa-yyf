@@ -2,8 +2,10 @@ package cn.rongcloud.roomkit.ui.room.fragment;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.drake.logcat.LogCat;
 import com.lalifa.adapter.adapter.RcyHolder;
 import com.lalifa.adapter.adapter.RcySAdapter;
+import com.lalifa.ext.Config;
 import com.lalifa.utils.ImageLoader;
 import com.lalifa.widget.dialog.dialog.BaseBottomSheetDialog;
 
@@ -19,11 +21,13 @@ public class MemberListFragment extends BaseBottomSheetDialog {
     private RecyclerView mRecyclerView;
     private RcySAdapter adapter;
     private String roomId;
+    private int officeType;
     private OnClickUserListener mOnClickUserListener;
 
-    public MemberListFragment(String roomId, OnClickUserListener onClickUserListener) {
+    public MemberListFragment(String roomId,int officeType,OnClickUserListener onClickUserListener) {
         this(R.layout.fragment_member_list);
         this.roomId = roomId;
+        this.officeType = officeType;
         this.mOnClickUserListener = onClickUserListener;
     }
 
@@ -51,7 +55,8 @@ public class MemberListFragment extends BaseBottomSheetDialog {
             @Override
             public void convert(RcyHolder holder, User user, int position) {
                 holder.setText(R.id.tv_member_name, user.getUserName());
-                ImageLoader.loadUrl(holder.getView(R.id.iv_member_portrait), user.getPortraitUrl(), R.drawable.default_portrait);
+                ImageLoader.loadUrl(holder.getView(R.id.iv_member_portrait),
+                        Config.FILE_PATH+user.getPortraitUrl(), R.drawable.default_portrait);
                 holder.itemView.setOnClickListener(v -> {
                     if (mOnClickUserListener != null) {
 //                        dismiss();
@@ -60,12 +65,13 @@ public class MemberListFragment extends BaseBottomSheetDialog {
                 });
             }
         };
+        LogCat.e("MemberList==="+MemberCache.Companion.get().getMemberList().getValue().toString());
         mRecyclerView.setAdapter(adapter);
         adapter.setData(MemberCache.Companion.get().getMemberList().getValue(), true);
         MemberCache.Companion.get().getMemberList().observe(this, members -> {
             adapter.setData(members, true);
         });
-        MemberCache.Companion.get().fetchData(roomId);
+        MemberCache.Companion.get().fetchData(roomId,officeType);
     }
 
     public interface OnClickUserListener {

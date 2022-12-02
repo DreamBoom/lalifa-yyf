@@ -639,7 +639,7 @@ public class PercentLayoutHelper {
 //                info.mPreservedParams.height == ViewGroup.LayoutParams.WRAP_CONTENT;
 //    }
 
-    // TODO: 2020/6/2  androidx 适配
+    // 2020/6/2  androidx 适配
     private static boolean shouldHandleMeasuredWidthTooSmall(View view, PercentLayoutInfo info) {
         int state = view.getMeasuredWidthAndState()& View.MEASURED_STATE_MASK;
         if (info == null || info.widthPercent == null) {

@@ -29,6 +29,7 @@ import com.lalifa.main.api.Host
 import com.lalifa.main.api.Room
 import com.lalifa.main.api.index
 import com.lalifa.main.databinding.ViewMainHomeBinding
+import com.lalifa.widget.loading.LoadTag
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
@@ -37,8 +38,13 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = ViewMainHomeBinding.inflate(layoutInflater)
-
+    var loadTag:LoadTag?=null
     override fun initView() {
+         loadTag = LoadTag(
+            activity, requireActivity().getString(
+                R.string.text_loading
+            )
+        )
         initData()
     }
 
@@ -60,6 +66,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
 
     @SuppressLint("SetTextI18n")
     private fun initData() {
+        loadTag!!.show()
         scopeNetLife {
             val index = index()
             binding.apply {
@@ -109,6 +116,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
                         })
                         .indicator = CircleIndicator(context)
                 }
+                loadTag!!.dismiss()
             }
         }
     }

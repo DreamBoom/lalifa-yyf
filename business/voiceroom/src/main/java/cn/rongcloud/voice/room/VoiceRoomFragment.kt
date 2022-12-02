@@ -8,8 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +21,6 @@ import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.user.UserProvider
 import cn.rongcloud.music.MusicControlManager
 import cn.rongcloud.music.MusicMiniView
-import cn.rongcloud.roomkit.api.Office
 import cn.rongcloud.roomkit.intent.IntentWrap
 import cn.rongcloud.roomkit.manager.RCChatRoomMessageManager
 import cn.rongcloud.roomkit.message.RCAllBroadcastMessage
@@ -67,9 +64,12 @@ import cn.rongcloud.voice.room.adapter.VoiceRoomSeatsAdapter
 import cn.rongcloud.voice.room.helper.VoiceEventHelper
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
-import com.drake.logcat.LogCat.e
+import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.ext.Config
+import com.lalifa.extension.gone
+import com.lalifa.extension.noEN
+import com.lalifa.extension.visible
 import com.lalifa.ui.UIStack
 import com.lalifa.utils.ImageLoader
 import com.lalifa.utils.UiUtils
@@ -87,7 +87,7 @@ import io.rong.imlib.model.UserInfo
  */
 class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFragmentView,
     OnClickMessageUserListener, OnBottomOptionClickListener, OnClickUserListener,
-    View.OnClickListener, OnClickBroadcast , CreateRoomDialog.CreateRoomCallBack {
+    View.OnClickListener, OnClickBroadcast, CreateRoomDialog.CreateRoomCallBack {
     private var mBackgroundImageView: ImageView? = null
     private var mGiftAnimationView: GiftAnimationView? = null
     private var mRoomTitleBar: RoomTitleBar? = null
@@ -115,6 +115,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     private var clVoiceRoomView: ConstraintLayout? = null
     private var rlRoomFinishedId: RelativeLayout? = null
     private var btnGoBackList: Button? = null
+    private var create: TextView? = null
     override fun setLayoutId(): Int {
         return R.layout.fragment_new_voice_room
     }
@@ -122,7 +123,8 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     override fun init() {
         mRoomId = requireArguments().getString(ROOM_ID)
         isCreate = requireArguments().getBoolean(IntentWrap.KEY_IS_CREATE)
-        clVoiceRoomView = requireView().findViewById<View>(R.id.cl_voice_room_view) as ConstraintLayout
+        clVoiceRoomView =
+            requireView().findViewById<View>(R.id.cl_voice_room_view) as ConstraintLayout
 
         // 双击点赞的view
         mGiftAnimationView = requireView().findViewById(R.id.gift_view)
@@ -134,10 +136,12 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         val layoutParams = clVoiceRoomView!!.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.topMargin = StatusBarUtil.getStatusBarHeight(requireContext())
         clVoiceRoomView!!.layoutParams = layoutParams
-        rlRoomFinishedId = requireView().findViewById<View>(R.id.rl_room_finished_id) as RelativeLayout
+        rlRoomFinishedId =
+            requireView().findViewById<View>(R.id.rl_room_finished_id) as RelativeLayout
         btnGoBackList = requireView().findViewById<View>(R.id.btn_go_back_list) as Button
         mRoomSettingFragment = RoomSettingFragment(present)
-        getView<TextView>(R.id.create).setOnClickListener { createRoom() }
+        create = getView(R.id.create)
+        create!!.setOnClickListener { createRoom() }
         // 全局广播View
         mAllBroadcastView = getView(R.id.view_all_broadcast)
         mAllBroadcastView!!.setOnClickBroadcast(OnClickBroadcast { message: RCAllBroadcastMessage ->
@@ -151,6 +155,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         mRoomTitleBar!!.setOnMemberClickListener().subscribe { //添加防抖动
             mMemberListFragment = MemberListFragment(
                 present!!.roomId,
+                present!!.officeType,
                 this@VoiceRoomFragment
             )
             mMemberListFragment!!.show(childFragmentManager)
@@ -173,11 +178,11 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         mNoticeView!!.setOnClickListener { v: View? -> showNoticeDialog(false) }
         // 背景
         mBackgroundImageView = getView(R.id.iv_background)
-        provider().getAsyn(mRoomId!!, object :IResultBack<RoomDetailBean?> {
+        provider().getAsyn(mRoomId!!, object : IResultBack<RoomDetailBean?> {
             override fun onResult(t: RoomDetailBean?) {
                 setRoomBackground(
-                Config.FILE_PATH + t!!.background
-            )
+                    Config.FILE_PATH + t!!.background
+                )
             }
         })
         // 房主座位
@@ -194,7 +199,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         // 弹幕消息列表
         mMessageView = getView(R.id.rv_message)
         val linearLayoutManager = LinearLayoutManager(context)
-        mMessageView!!.setLayoutManager(linearLayoutManager)
+        mMessageView!!.layoutManager = linearLayoutManager
         mMessageView!!.addItemDecoration(
             DefaultItemDecoration(
                 Color.TRANSPARENT,
@@ -203,7 +208,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
             )
         )
         mRoomMessageAdapter = RoomMessageAdapter(context, mMessageView, this, RoomType.VOICE_ROOM)
-        mMessageView!!.setAdapter(mRoomMessageAdapter)
+        mMessageView!!.adapter = mRoomMessageAdapter
         voiceRoom = getView(R.id.voice_room)
         if (null == mNoticeDialog) {
             mNoticeDialog = RoomNoticeDialog(activity)
@@ -211,11 +216,11 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
 
         // 音乐小窗口
         mMusicMiniView = getView(R.id.mmv_view)
-        mMusicMiniView!!.setOnMusicClickListener(View.OnClickListener { v: View? ->
+        mMusicMiniView!!.setOnMusicClickListener { v: View? ->
             if (present!!.roomOwnerType == RoomOwnerType.VOICE_OWNER) {
                 showMusicDialog()
             }
-        })
+        }
     }
 
     /**
@@ -228,44 +233,35 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         scopeNetLife {
             val roomCheck = roomCheck()
             if (null != roomCheck) {
-                if (TextUtils.isEmpty(roomCheck.RoomId)) {
-                    showCreateRoomDialog()
-                } else {
+                if (TextUtils.equals(roomCheck.userId, UserManager.get()!!.userId)) {
                     onCreateExist(roomCheck.RoomId)
+                } else {
+                    showCreateRoomDialog(mRoomId!!)
                 }
             }
         }
     }
+
     private var mCreateRoomDialog: CreateRoomDialog? = null
     private var confirmDialog: VRCenterDialog? = null
-    /**
-     * 展示创建房间弹窗
-     */
-    private var mLauncher: ActivityResultLauncher<*>? = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result != null && result.data != null && result.data!!.data != null && mCreateRoomDialog != null
-        ) {
-            mCreateRoomDialog!!.setCoverUri(result.data!!.data)
-        }
-    }
-    private fun showCreateRoomDialog() {
+
+    private fun showCreateRoomDialog(roomId: String) {
         mCreateRoomDialog = CreateRoomDialog(
+            roomId,
             requireActivity(),
-            mLauncher,
             this@VoiceRoomFragment
         )
         mCreateRoomDialog!!.show()
     }
 
-    override fun onCreateExist(roomId: String) {
+    override fun onCreateExist(roomId: String?) {
         confirmDialog = VRCenterDialog(requireActivity(), null)
         confirmDialog!!.replaceContent(
             getString(cn.rongcloud.roomkit.R.string.text_you_have_created_room),
             getString(cn.rongcloud.roomkit.R.string.cancel),
             null,
             getString(cn.rongcloud.roomkit.R.string.confirm),
-            { jumpRoom(roomId) },
+            { jumpRoom(roomId!!) },
             null
         )
         confirmDialog!!.show()
@@ -280,12 +276,11 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         IntentWrap.launchRoom(requireContext(), roomId)
     }
 
-    override fun onCreateSuccess(roomid: String) {
+    override fun onCreateSuccess(roomid: String?) {
 //        mAdapter.getData().add(0, voiceRoomBean)
 //        mAdapter.notifyItemInserted(0)
-
         val list: ArrayList<String> = ArrayList()
-        list.add(roomid)
+        list.add(roomid!!)
         launchRoomActivity(roomid, list, 0, isCreate)
     }
 
@@ -302,6 +297,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
             )
         }
     }
+
     /**
      * 显示公告弹窗
      *
@@ -310,6 +306,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     override fun showNoticeDialog(isEdit: Boolean) {
         mNoticeDialog!!.show(present!!.notice, isEdit) { notice: String? ->
             //修改公告信息
+            LogCat.e("修改公告信息===$notice")
             present!!.modifyNotice(notice)
         }
     }
@@ -325,7 +322,9 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         // pk中房主才提示
         if (TextUtils.equals(
                 UserManager.get()!!.userId,
-                present!!.createUserId)) {
+                present!!.createUserId
+            )
+        ) {
             return
         }
         mExitRoomPopupWindow =
@@ -400,7 +399,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
                 present!!.showNewSelfSettingFragment(seatModel).show(childFragmentManager)
             } else {
                 // 点击别人头像
-                present!!.getUserInfo(seatModel.userId)
+                present!!.getUserInfo(seatModel.userId,present!!.roomId.noEN())
             }
         }
     }
@@ -420,7 +419,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         } else if (seatModel.seatStatus == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing) {
             //弹窗设置弹窗
             // 点击别人头像
-            present!!.getUserInfo(seatModel.userId)
+            present!!.getUserInfo(seatModel.userId,present!!.roomId.noEN())
         }
     }
 
@@ -479,7 +478,6 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     }
 
 
-
     override fun refreshMessageList() {
         mRoomMessageAdapter!!.notifyDataSetChanged()
     }
@@ -515,25 +513,36 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
     override fun setRoomData(voiceRoomBean: RoomDetailBean?) {
         clVoiceRoomView!!.visibility = View.VISIBLE
         rlRoomFinishedId!!.visibility = View.GONE
+        //加载公告
+        mNoticeView!!.text = voiceRoomBean!!.notice
         // 加载背景
         //todo config.filepath
         ImageLoader.loadUrl(
             mBackgroundImageView!!,
-            voiceRoomBean!!.background,
+            voiceRoomBean.background,
             com.lalifa.base.R.color.black
         )
         // 设置title数据
         mRoomTitleBar!!.setData(
+            voiceRoomBean.userInfo!!,
+            voiceRoomBean.collection_type==1,
             present!!.roomOwnerType,
             voiceRoomBean.title,
             voiceRoomBean.id,
             voiceRoomBean.uid.toString(),
             present
         )
-
+        val canCreate = voiceRoomBean.establish_type
+        if (canCreate == 1) {
+            create!!.visible()
+        } else {
+            create!!.gone()
+        }
         // 设置底部按钮
-        mRoomBottomView!!.setData(present!!.roomOwnerType,
-            this, voiceRoomBean.Chatroom_id)
+        mRoomBottomView!!.setData(
+            present!!.roomOwnerType,
+            this, voiceRoomBean.Chatroom_id
+        )
         // 设置消息列表数据
         mRoomMessageAdapter!!.setRoomCreateId(voiceRoomBean.userInfo!!.userId)
     }
@@ -761,7 +770,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
         if (TextUtils.equals(user.userId, UserManager.get()!!.userId)) {
             return
         }
-        present!!.getUserInfo(user.userId)
+        present!!.getUserInfo(user.id.toString(),present!!.roomId.noEN())
     }
 
     override fun showSetPasswordDialog(item: MutableLiveData<BaseFun?>) {
@@ -781,7 +790,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
                         return
                     }
                     mInputPasswordDialog!!.dismiss()
-                    present!!.setRoomPassword(true, password, item)
+                    present!!.setRoomPassword(password, item)
                 }
             })
         mInputPasswordDialog!!.show()

@@ -7,7 +7,7 @@
     <string name="friend_follower">粉丝</string>
     <string name="friend_follow">关注</string>
     <string name="please_select_room_cover">选择封面</string>
-    <string name="please_input_room_name">请输入房间名</string>
+    <string name="please_input_room_name">请输入房间说明</string>
     <string name="label_setting_background">设置背景</string>
     <string name="label_is_a_public_room">房间是否公开</string>
     <string name="private_voice_room">私密</string>

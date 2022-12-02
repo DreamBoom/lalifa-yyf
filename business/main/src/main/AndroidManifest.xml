@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lalifa.main">
-
+    <permission
+        android:name="com.lalifa.main.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.lalifa.main.permission.JPUSH_MESSAGE" />
     <application>
+        <!--微信支付-->
         <activity
-            android:name=".WardActivity"
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".activity.me.WardActivity"
             android:exported="false" />
         <activity
             android:name=".activity.me.GiftHistoryActivity"

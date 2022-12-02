@@ -56,7 +56,6 @@ class MApplication : BaseApplication() {
         ARouter.init(this);
         AppConfig.get().init(
             APP_KEY,
-            UM_APP_KEY,
             BASE_SERVER_ADDRES,
             INTERIAL,
             YYF!!
@@ -64,11 +63,6 @@ class MApplication : BaseApplication() {
         // init rong
         ModuleManager.manager()
             .register(RoomKitInit())
-        // 设置三方CDN推拉流地址
-        ThirdCDNConstant.setPushAndPullUrl(
-            THIRD_CDN_PUSH_URL,
-            THIRD_CDN_PULL_URL
-        )
     }
 
     override fun onTerminate() {

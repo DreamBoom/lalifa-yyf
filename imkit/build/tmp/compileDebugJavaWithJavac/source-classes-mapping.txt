@@ -1,0 +1,2 @@
+io/rong/imkit/BuildConfig.java
+ io.rong.imkit.BuildConfig

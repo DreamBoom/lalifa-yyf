@@ -9,5 +9,5 @@
     <string name="re_loading">加载中…</string>
     <string name="basis_preview">预览</string>
     <string name="basis_loading">加载中</string>
-
+    <string name="text_loading">正在加载数据...</string>
 </resources>
