@@ -1,5 +1,6 @@
 package com.lalifa.main.adapter
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.BindingAdapter
@@ -561,6 +562,33 @@ fun RecyclerView.giftHistoryAdapter(): BindingAdapter {
                 giftIm.load(Config.FILE_PATH + bean.image)
                 name.text = bean.userName
                 giftTime.text = bean.create_time.substring(0, 10)
+            }
+        }
+    }
+}
+
+/**
+ * 守护列表
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+@SuppressLint("SetTextI18n")
+fun RecyclerView.guardAdapter(): BindingAdapter {
+    return linear().setup {
+        addType<GuardBean>(R.layout.item_guard)
+        onBind {
+            val bean = getModel<GuardBean>()
+            getBinding<ItemGuardBinding>().apply {
+                itemNum.text = (layoutPosition+1).toString()
+                itemGuardHeader.load(Config.FILE_PATH + bean.avatar)
+                name.text = bean.userName
+                mId.text = bean.user_id.toString()
+                gxNum.text = "${bean.yield}贡献值"
+                if (bean.gender == 1) {
+                imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+            } else {
+                imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+            }
             }
         }
     }

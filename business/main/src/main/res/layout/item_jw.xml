@@ -28,6 +28,7 @@
             android:gravity="center"
             android:paddingStart="10dp"
             android:textSize="@dimen/font_18"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/header"

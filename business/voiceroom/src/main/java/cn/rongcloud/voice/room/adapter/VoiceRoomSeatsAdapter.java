@@ -93,7 +93,7 @@ public class VoiceRoomSeatsAdapter extends RecyclerView.Adapter<VoiceRoomSeatsAd
                                 holder.tv_member_name.setText("");
                             }
                             ImageLoader.loadUri(holder.iv_user_portrait,
-                                    userInfo.getPortraitUri(), com.lalifa.base.R.mipmap.icon_header);
+                                    userInfo.getPortraitUri(), com.lalifa.base.R.mipmap.icon_5);
                         }
                     });
 

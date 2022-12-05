@@ -39,7 +39,8 @@
         android:layout_height="68dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="-15dp"
-        android:background="@mipmap/icon_header"
+        android:scaleType="fitXY"
+        app:shapeAppearance="@style/CircleStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bgTop" />
 
@@ -59,7 +60,6 @@
         android:id="@+id/sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_icon_boy"
         app:layout_constraintBottom_toBottomOf="@+id/header"
         app:layout_constraintStart_toEndOf="@+id/name"
         app:layout_constraintTop_toTopOf="@+id/header" />

@@ -75,8 +75,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 //                start(ForgetPasswordActivity::class.java)
 //            }
             login.onClick {
-                toast("请进行密码登录")
-                return@onClick
+//                toast("请进行密码登录")
+//                return@onClick
                 login.disable()
                 //登录
                 loginUser()

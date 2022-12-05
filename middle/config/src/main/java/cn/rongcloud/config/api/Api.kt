@@ -125,4 +125,15 @@ suspend fun CoroutineScope.editRoom(
         param("notice", notice)
     }.await().data
 }
+/**
+ * 关闭房间
+ * @return
+ */
+suspend fun CoroutineScope.closeRoom(id: String): String? {
+    return Post<BaseBean<String>>("chat_room/destruction") {
+        param("id", id)
+    }.await().data
+}
+
+
 

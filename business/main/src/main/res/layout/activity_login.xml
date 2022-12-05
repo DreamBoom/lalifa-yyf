@@ -9,11 +9,9 @@
         android:id="@+id/imHeader"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:visibility="invisible"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
-        android:background="@drawable/default_avatar"
-        app:shapeAppearance="@style/CircleStyle" />
+        android:background="@mipmap/logo"/>
 
     <EditText
         android:id="@+id/etPhone"

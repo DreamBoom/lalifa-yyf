@@ -15,6 +15,17 @@
     app:layout_constraintEnd_toEndOf="parent"
     android:layout_width="130dp"
     android:layout_height="130dp"/>
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/code"
+        android:textColor="@color/white"
+        android:drawablePadding="5dp"
+        android:text="在线时间：9:00 - 17:30"
+        android:padding="15dp"
+        android:drawableStart="@mipmap/icontime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <RelativeLayout
         android:layout_marginTop="50dp"
         android:background="@drawable/bg_tm8"
@@ -26,6 +37,7 @@
             android:id="@+id/kf"
             android:textColor="@color/white"
             android:drawablePadding="5dp"
+            android:layout_centerVertical="true"
             android:text="官方客服"
             android:padding="15dp"
             android:drawableStart="@mipmap/zxkf"
@@ -38,14 +50,6 @@
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_below="@+id/kf"
-            android:textColor="@color/white"
-            android:drawablePadding="5dp"
-            android:text="在线时间：9:00 - 17:30"
-            android:padding="15dp"
-            android:drawableStart="@mipmap/icontime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

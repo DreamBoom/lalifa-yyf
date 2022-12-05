@@ -61,7 +61,8 @@ public class SelfSettingFragment extends BaseBottomSheetDialog {
         btnMuteSelf = (AppCompatTextView) getView().findViewById(R.id.btn_mute_self);
         btnOutOfSeat = (AppCompatTextView) getView().findViewById(R.id.btn_out_of_seat);
 
-        ImageLoader.loadUrl(ivMemberPortrait, user.getPortraitUrl(), com.lalifa.base.R.mipmap.icon_header);
+        ImageLoader.loadUrl(ivMemberPortrait, user.getPortraitUrl(),
+                com.lalifa.base.R.mipmap.icon_5);
         tvMemberName.setText(user.getUserName());
         btnMuteSelf.setOnClickListener(new View.OnClickListener() {
             @Override

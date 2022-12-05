@@ -14,9 +14,9 @@ import com.lalifa.main.R
 import com.lalifa.main.activity.che.CheInfoActivity
 import com.lalifa.main.activity.me.EditMyInfoActivity
 import com.lalifa.main.adapter.cheMyList
-import com.lalifa.main.api.Dynamic
-import com.lalifa.main.api.dzChe
-import com.lalifa.main.api.release
+import com.lalifa.main.adapter.giftAdapter
+import com.lalifa.main.adapter.guardAdapter
+import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityMeInfoBinding
 import com.lalifa.main.fragment.MeTab1Fragment
 
@@ -26,23 +26,22 @@ class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     @SuppressLint("SetTextI18n")
     override fun initView() {
         binding.apply {
-            header.load(Config.FILE_PATH+ UserManager.get()!!.avatar)
+            header.load(Config.FILE_PATH + UserManager.get()!!.avatar)
             name.text = UserManager.get()!!.userName
 
-            if(UserManager.get()!!.gender==0){
-                sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_boy)
-            }else{
-                sex.setImageResource( com.lalifa.base.R.drawable.ic_icon_gril)
+            if (UserManager.get()!!.gender == 0) {
+                sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+            } else {
+                sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
             }
             mId.text = "ID:${UserManager.get()!!.id}"
             viewPager.fragmentAdapter(
-                supportFragmentManager,
-                arrayListOf("关于TA", "动态", "守护神", "礼物")
+                supportFragmentManager, arrayListOf("关于TA", "动态", "守护神", "礼物")
             ) {
                 add(MeTab1Fragment())
                 add(CheFrag())
-                add(MeTab1Fragment())
-                add(MeTab1Fragment())
+                add(GuardFrag())
+                add(GiftFrag())
             }.pageChangedListener {
                 tabLayout.indicatorColor = Color.parseColor("#FF9D48")
                 tabLayout.textSelectColor =
@@ -107,6 +106,40 @@ class CheFrag() : BaseListFragment() {
         scopeNetLife {
             val dynamic = release(index)!!.dynamic
             addData(dynamic)
+        }
+    }
+}
+
+class GuardFrag() : BaseListFragment() {
+    override fun initView() {
+        super.initView()
+        binding.recyclerView.guardAdapter()
+    }
+
+    override fun PageRefreshLayout.getData() {
+        scopeNetLife {
+            val guardList = guard()
+            if (null != guardList) {
+                addData(guardList)
+            }
+        }
+    }
+}
+
+class GiftFrag() : BaseListFragment() {
+    override fun initView() {
+        super.initView()
+        binding.recyclerView.giftAdapter()
+    }
+
+    private var list = arrayListOf<Gift>()
+    override fun PageRefreshLayout.getData() {
+        scopeNetLife {
+            val giftList = getGiftList()
+            giftList?.theme?.forEach {
+                list.addAll(it.gift)
+            }
+            addData(list)
         }
     }
 }

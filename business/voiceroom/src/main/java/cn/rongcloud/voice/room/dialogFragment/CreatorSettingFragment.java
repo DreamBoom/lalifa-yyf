@@ -57,7 +57,8 @@ public class CreatorSettingFragment extends BaseBottomSheetDialog implements Vie
             btnMuteSelf.setText(uiSeatModel.getExtra().isDisableRecording() ? "打开麦克风" : "关闭麦克风");
         }
         tvMemberName.setText(user.getUserName());
-        ImageLoader.loadUrl(ivMemberPortrait, user.getPortraitUrl(), com.lalifa.base.R.mipmap.icon_header);
+        ImageLoader.loadUrl(ivMemberPortrait, user.getPortraitUrl(),
+                com.lalifa.base.R.mipmap.icon_5);
     }
 
     @Override

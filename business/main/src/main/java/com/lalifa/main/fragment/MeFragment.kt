@@ -58,6 +58,8 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
             nm1.onClick { start(FanActivity::class.java) }
             num3.onClick { start(FanActivity::class.java) }
             nm3.onClick { start(FanActivity::class.java) }
+            num4.onClick { start(WardActivity::class.java) }
+            nm4.onClick { start(WardActivity::class.java) }
             pack.onClick { start(Knapsack::class.java) }
             kf.onClick { start(CallUs::class.java) }
             share.onClick { start(MyChe::class.java) }

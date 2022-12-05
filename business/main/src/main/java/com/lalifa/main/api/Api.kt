@@ -453,4 +453,14 @@ suspend fun CoroutineScope.giftHistory(): List<GiftHistoryBean>? {
     }.await().data
 }
 
+/**
+ * 守护
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.guard(): List<GuardBean>? {
+    return Post<BaseBean<List<GuardBean>>>("user/guard") {
+    }.await().data
+}
+
 

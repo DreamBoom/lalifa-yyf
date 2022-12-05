@@ -11,7 +11,6 @@
         android:layout_width="63dp"
         android:layout_height="63dp"
         android:layout_margin="10dp"
-        android:background="@mipmap/bg_room"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +32,6 @@
         android:layout_width="27dp"
         android:layout_height="27dp"
         android:layout_marginStart="10dp"
-        android:background="@mipmap/icon_header"
         app:layout_constraintBottom_toBottomOf="@+id/item_header"
         app:layout_constraintStart_toEndOf="@+id/item_header" />
 

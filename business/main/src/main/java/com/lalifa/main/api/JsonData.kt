@@ -466,3 +466,17 @@ data class GiftHistoryBean(
     val uid: Int,
     val userName: String
 )
+/**
+ *
+ * @ClassName 守护
+ * @Des
+ */
+data class GuardBean(
+    val avatar: String,
+    val create_time: String,
+    val gender: Int,
+    val member_id: Int,
+    val userName: String,
+    val user_id: Int,
+    val yield: String
+)
