@@ -12,8 +12,9 @@
         android:id="@+id/header"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:shapeAppearance="@style/CircleStyle" />
 
     <TextView

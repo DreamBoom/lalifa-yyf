@@ -1,5 +1,6 @@
 package com.lalifa.main.api
 
+import com.lalifa.ext.User
 import java.io.Serializable
 
 /**
@@ -366,20 +367,20 @@ data class CheListBean(
 
 data class Dynamic(
     val avatar: String? = "",
-    val browse: String= "",
-    val comment_count: Int=0,
-    val content: String= "",
-    val create_time: String= "",
-    val fabulous: Int=0,
-    val fabulous_type: Int=0,
-    val gender: Int?=0,
+    val browse: String = "",
+    val comment_count: Int = 0,
+    val content: String = "",
+    val create_time: String = "",
+    val fabulous: Int = 0,
+    val fabulous_type: Int = 0,
+    val gender: Int? = 0,
     val id: Int,
     val image: List<String>,
-    val level: String= "",
-    val num: Int=0,
-    val share: Int=0,
-    val status: Int=0,
-    val uid: Int=0,
+    val level: String = "",
+    val num: Int = 0,
+    val share: Int = 0,
+    val status: Int = 0,
+    val uid: Int = 0,
     val userName: String? = ""
 )
 
@@ -428,6 +429,7 @@ data class ChildInfo(
     val uid: Int,
     val userName: String
 )
+
 /**
  *
  * @ClassName 礼物墙
@@ -451,6 +453,7 @@ data class Gift(
     val image: String,
     val name: String
 )
+
 /**
  *
  * @ClassName 礼物记录
@@ -466,6 +469,7 @@ data class GiftHistoryBean(
     val uid: Int,
     val userName: String
 )
+
 /**
  *
  * @ClassName 守护
@@ -479,4 +483,335 @@ data class GuardBean(
     val userName: String,
     val user_id: Int,
     val yield: String
+)
+
+/**
+ *
+ * @ClassName 客服
+ * @Des
+ */
+data class CallBean(
+    val avatar: String,
+    val follow: String,
+    val gender: Int,
+    val id: Int,
+    val userId: String,
+    val userName: String
+)
+
+/**
+ *
+ * @ClassName 我的主页
+ * @Des
+ */
+data class MeInfoBean(
+    val age: Int,
+    val avatar: String,
+    val background: String,
+    val bio: String,
+    val birthday: String,
+    val constellation: String,
+    val count: Int,
+    val `dynamic`: List<Dynamic>,
+    val fans: Int,
+    val follow: Int,
+    val frame: String,
+    val gender: Int,
+    val gift_count: Int,
+    val id: Int,
+    val level: Int,
+    val medal: List<MeXz>,
+    val medal_count: Int,
+    val member_id: Int,
+    val patron_saint: List<GuardBean>,
+    val room_record: List<MeRoom>,
+    val theme: List<Theme>,
+    val userId: String,
+    val userName: String
+)
+
+data class MeRoom(
+    val title: String,
+    val image: String
+)
+
+data class MeXz(
+    val image: String,
+    val name: String
+)
+
+data class GiftBean(
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+/**
+ * @Des 房间详情
+ */
+data class RoomDetailBean(
+    /**
+     * 公告
+     */
+    var notice:String = "",
+    /**
+     * 1 可以创建队伍 else 不可以
+     */
+    var establish_type:Int,
+    /**
+     * 房主信息
+     */
+    var userInfo: User?,
+    /**
+     * 房间背景
+     */
+    var background: String,
+    /**
+     * 融云房间id
+     */
+    var Chatroom_id: String,
+    /**
+     * 广告位信息
+     */
+    var advertisement: List<Advertisement>,
+    /**
+     * 盲盒
+     */
+    var blind_box: List<BlindBox>,
+    /**
+     * 1：收藏  0：未收藏
+     */
+    var collection_type: Int,
+    /**
+     * 结束时间
+     */
+    var end_time: String,
+    /**
+     * 车队房间列表
+     */
+    var fleet: List<Any>,
+    /**
+     * 礼物
+     */
+    var gift: List<Gift1>,
+    /**
+     * 礼包
+     */
+    var gift_bag: List<GiftBag>,
+    /**
+     * 礼盒礼包开启次数
+     */
+    var gift_box_frequency: List<GiftBoxFrequency>,
+    /**
+     * 赠送礼物次数
+     */
+    var gift_frequency: List<GiftFrequency>,
+    /**
+     * id
+     */
+    var id: Int,
+    /**
+     * 房间头像
+     */
+    var image: String,
+    /**
+     * 背包
+     */
+    var knapsack: List<Any>,
+    /**
+     * 1：管理员  0：不是
+     */
+    var manage_type: Int,
+    /**
+     * 1：厅管  0：不是
+     */
+    var office_type: Int,
+    /**
+     * 密码
+     */
+    var password: String,
+    /**
+     * 0：未加密  1：加密
+     */
+    var password_type: Int,
+    /**
+     * 开始时间
+     */
+    var start_time: String,
+    /**
+     * 副标题
+     */
+    var subheading: String,
+    /**
+     * 房间名称
+     */
+    var title: String,
+    /**
+     * 背包总价值
+     */
+    var total_price: Int,
+    /**
+     * 房主ID
+     */
+    var uid: Int
+)
+
+data class Advertisement(
+    var details: String,
+    var id: Int,
+    var image: String
+)
+
+data class BlindBox(
+    var id: Int,
+    var image: String,
+    var name: String,
+    var price: String
+)
+
+data class Gift1(
+    var image: String,
+    var name: String,
+    var price: String
+)
+
+data class GiftBag(
+    var id: Int,
+    var image: String,
+    var name: String,
+    var price: String
+)
+
+data class GiftBoxFrequency(
+    var frequency: String,
+    var id: Int,
+    var name: String
+)
+
+data class GiftFrequency(
+    var frequency: String,
+    var id: Int,
+    var name: String
+)
+/**
+ * @Des 房间详情
+ */
+data class RoomGiftBean(
+    val blind_box: List<RoomBlindBox>,
+    val gift: List<RoomGift>,
+    val gift_bag: List<RoomGiftBag>,
+    val gift_box_frequency: List<RoomGiftBoxFrequency>,
+    val gift_frequency: List<RoomGiftFrequency>,
+    val knapsack: List<Any>,
+    val total_price: Int
+)
+
+data class RoomBlindBox(
+    val id: Int,
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+data class RoomGift(
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+data class RoomGiftBag(
+    val id: Int,
+    val image: String,
+    val name: String,
+    val price: String
+)
+
+data class RoomGiftBoxFrequency(
+    val frequency: String,
+    val id: Int,
+    val name: String
+)
+
+data class RoomGiftFrequency(
+    val frequency: String,
+    val id: Int,
+    val name: String
+)
+
+data class RoomCheckBean(
+    val RoomId: String,
+    val userId: String
+)
+
+/**
+ * @Des 聊天室首页
+ */
+data class RoomIndexBean(
+    var carousel: List<Carousel1>,
+    var classify: List<Classify1>,
+    var notice: Notice1
+)
+
+data class Carousel1(
+    var create_time: String,
+    var id: Int,
+    var image: String,
+    var sort: Int
+)
+
+data class Classify1(
+    var id: Int,
+    var name: String
+)
+
+data class Notice1(
+    var create_time: String,
+    var id: Int,
+    var image: String,
+    var n_message_content: String,
+    var n_title: String,
+    var status: Int
+)
+/**
+ * @Des 聊天室列表
+ */
+data class RoomListBean(
+    var count: Int,
+    var office: List<Office>
+)
+
+data class Office (
+    var uid: Int,
+    var id: Int,
+    var image: String,
+    var notice: String,
+    var password_type: Int, //0开放 1加密
+    var roomid: String,
+    var userId: String,
+    var title: String,
+    var type_id: Int,
+    var type_name: String,
+    var users: List<Any>
+)
+/**
+ * @Des 排行榜
+ */
+data class RankBean(
+    var avatar: String,
+    var create_time: String,
+    var gender: Int,
+    var member_id: Int,
+    var userName: String,
+    var user_id: Int,
+    var yield: String
+)
+
+data class WxPayBean(
+    val appid: String,
+    val noncestr: String,
+    val `package`: String,
+    val partnerid: String,
+    val prepayid: String,
+    val sign: String,
+    val timestamp: String
 )

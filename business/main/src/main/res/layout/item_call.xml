@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    android:id="@+id/itemCall"
+    android:layout_height="wrap_content">
+        <com.google.android.material.imageview.ShapeableImageView
+           app:shapeAppearance="@style/CircleStyle"
+            android:scaleType="fitXY"
+            android:id="@+id/callHeader"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+        <TextView
+            android:id="@+id/callName"
+            android:layout_toEndOf="@+id/callHeader"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/callUs"
+            android:src="@mipmap/zxkf"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+</RelativeLayout>

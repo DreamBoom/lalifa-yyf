@@ -161,16 +161,22 @@ dependencies {
     //极光
     api 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
     api 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
-
     implementation 'org.jsoup:jsoup:1.13.1'
-
     //支付宝
     //noinspection GradleDynamicVersion
     api 'com.alipay.sdk:alipaysdk-android:+@aar'
     //微信
     //noinspection GradleDynamicVersion
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-
     //spinner
     api 'com.github.arcadefire:nice-spinner:1.3.1'
+    api project(":callkit")
+    //加载SVGA 动画
+    api 'com.github.yyued:SVGAPlayer-Android:2.6.1'
+
+    //表情库
+    // https://github.com/vanniktech/Emoji
+    api "com.vanniktech:emoji-ios:$emojiIos"
+    // https://github.com/vdurmont/emoji-java
+    api "com.vdurmont:emoji-java:$emojiJava"
 }

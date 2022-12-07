@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
     <RelativeLayout
         android:layout_marginHorizontal="50dp"
@@ -18,19 +19,20 @@
             android:layout_alignParentEnd="true"
             android:padding="10dp"
             android:src="@mipmap/pop_close" />
-        <ImageView
-            android:id="@+id/im"
+        <com.opensource.svgaplayer.SVGAImageView
+            android:id="@+id/svgaImage"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginVertical="10dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/close"
-            android:layout_width="65dp"
-            android:layout_marginVertical="10dp"
-            android:layout_height="65dp"/>
-
+            app:autoPlay="true"
+            app:loopCount="0" />
         <TextView
             android:id="@id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/im"
+            android:layout_below="@+id/svgaImage"
             android:padding="10dp"
             android:text="商品名称"
             android:textColor="@color/white"
@@ -40,7 +42,7 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/im"
+            android:layout_below="@+id/svgaImage"
             android:layout_alignParentEnd="true"
             android:padding="10dp"
             android:text="0"

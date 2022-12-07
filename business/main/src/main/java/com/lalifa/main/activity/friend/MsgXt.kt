@@ -4,7 +4,7 @@ import android.graphics.Color
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
-import com.lalifa.main.adapter.friendList
+import com.lalifa.main.fragment.adapter.friendList
 import com.lalifa.main.api.friendsList
 
 class MsgXt : BaseListActivity() {

@@ -2,23 +2,26 @@ package com.lalifa.main.activity.me
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import cn.rongcloud.config.UserManager
+import com.drake.brv.BindingAdapter
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
+import com.lalifa.base.BaseFragment
 import com.lalifa.base.BaseListFragment
 import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.che.CheInfoActivity
-import com.lalifa.main.activity.me.EditMyInfoActivity
-import com.lalifa.main.adapter.cheMyList
-import com.lalifa.main.adapter.giftAdapter
-import com.lalifa.main.adapter.guardAdapter
 import com.lalifa.main.api.*
+import com.lalifa.main.databinding.ActivityGiftBinding
 import com.lalifa.main.databinding.ActivityMeInfoBinding
-import com.lalifa.main.fragment.MeTab1Fragment
+import com.lalifa.main.databinding.ActivityWardBinding
+import com.lalifa.main.databinding.MeTab1FragmentBinding
+import com.lalifa.main.fragment.adapter.*
 
 class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     override fun getViewBinding() = ActivityMeInfoBinding.inflate(layoutInflater)
@@ -35,21 +38,33 @@ class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
                 sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
             }
             mId.text = "ID:${UserManager.get()!!.id}"
-            viewPager.fragmentAdapter(
-                supportFragmentManager, arrayListOf("关于TA", "动态", "守护神", "礼物")
-            ) {
-                add(MeTab1Fragment())
-                add(CheFrag())
-                add(GuardFrag())
-                add(GiftFrag())
-            }.pageChangedListener {
-                tabLayout.indicatorColor = Color.parseColor("#FF9D48")
-                tabLayout.textSelectColor =
-                    ContextCompat.getColor(this@MeInfoActivity, R.color.textColor2)
-                tabLayout.textUnselectColor = Color.WHITE
+            scopeNetLife {
+                val bean = homepage(UserManager.get()!!.id.toString())
+                if (null != bean) {
+                    bgTop.load(Config.FILE_PATH + bean.background)
+                    viewPager.fragmentAdapter(
+                        supportFragmentManager, arrayListOf("关于TA", "动态", "守护神", "礼物")
+                    ) {
+                        add(
+                            MeTab1Fragment(
+                                bean.room_record,
+                                bean.bio,
+                                bean.medal
+                            )
+                        )
+                        add(CheFrag(bean.dynamic))
+                        add(GuardFrag(bean.patron_saint))
+                        add(GiftFrag(bean.theme, bean.gift_count))
+                    }.pageChangedListener {
+                        tabLayout.indicatorColor = Color.parseColor("#FF9D48")
+                        tabLayout.textSelectColor =
+                            ContextCompat.getColor(this@MeInfoActivity, R.color.textColor2)
+                        tabLayout.textUnselectColor = Color.WHITE
+                    }
+                    tabLayout.setViewPager(viewPager)
+                    tabLayout.currentTab = 0
+                }
             }
-            tabLayout.setViewPager(viewPager)
-            tabLayout.currentTab = 0
         }
     }
 
@@ -67,13 +82,30 @@ class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
             }
         }
     }
+}
 
+class MeTab1Fragment(val room: List<MeRoom>, val string: String, val xz: List<MeXz>) :
+    BaseFragment<MeTab1FragmentBinding>() {
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = MeTab1FragmentBinding.inflate(layoutInflater)
+
+    override fun initView() {
+        binding.apply {
+            list1.meRoomAdapter().models = room
+            bio.text = string.pk("本宝宝还没想好签名")
+            list2.meXzAdapter().models = xz
+        }
+    }
 
 }
 
-class CheFrag() : BaseListFragment() {
+class CheFrag(val dynamic: List<Dynamic>) : BaseListFragment() {
     override fun initView() {
         super.initView()
+        binding.refreshLayout.setEnableRefresh(false)
+        binding.refreshLayout.setEnableLoadMore(false)
         binding.recyclerView.cheMyList().apply {
             R.id.item_info.onClick {
                 start(CheInfoActivity::class.java) {
@@ -99,47 +131,54 @@ class CheFrag() : BaseListFragment() {
                     putExtra("id", getModel<Dynamic>().id)
                 }
             }
-        }
-    }
-
-    override fun PageRefreshLayout.getData() {
-        scopeNetLife {
-            val dynamic = release(index)!!.dynamic
-            addData(dynamic)
-        }
+        }.models = dynamic
     }
 }
 
-class GuardFrag() : BaseListFragment() {
-    override fun initView() {
-        super.initView()
-        binding.recyclerView.guardAdapter()
-    }
+class GuardFrag(val guard: List<GuardBean>) : BaseFragment<ActivityWardBinding>() {
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = ActivityWardBinding.inflate(layoutInflater)
 
-    override fun PageRefreshLayout.getData() {
-        scopeNetLife {
-            val guardList = guard()
-            if (null != guardList) {
-                addData(guardList)
+    override fun initView() {
+        binding.apply {
+            binding.apply {
+                guardHeader.load(Config.FILE_PATH + guard[0].avatar)
+                guardName.text = guard[0].userName
+                header.load(Config.FILE_PATH + UserManager.get()!!.avatar)
+                name.text = UserManager.get()!!.userName
+                if (guard.size > 1) {
+                    val subList = guard.subList(1, guard.size - 1)
+                    guardList.guardAdapter().models = subList
+                }
             }
         }
     }
 }
 
-class GiftFrag() : BaseListFragment() {
-    override fun initView() {
-        super.initView()
-        binding.recyclerView.giftAdapter()
-    }
+class GiftFrag(val list: List<Theme>, val giftNum: Int) : BaseFragment<ActivityGiftBinding>() {
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = ActivityGiftBinding.inflate(layoutInflater)
 
-    private var list = arrayListOf<Gift>()
-    override fun PageRefreshLayout.getData() {
-        scopeNetLife {
-            val giftList = getGiftList()
-            giftList?.theme?.forEach {
-                list.addAll(it.gift)
+    var giftAdapter: BindingAdapter? = null
+    override fun initView() {
+        binding.apply {
+            UserManager.get().apply {
+                header.load(Config.FILE_PATH + this?.avatar)
+                name.text = this?.userName
             }
-            addData(list)
+            num.text = "已收集$giftNum 件礼物"
+            giftGroup.giftGroupAdapter().apply {
+                R.id.groupName.onClick {
+                    giftAdapter!!.models = getModel<Theme>().gift
+                }
+            }.models = list
+            giftAdapter = giftList.giftAdapter()
+            giftAdapter!!.models = list[0].gift
         }
     }
+
 }

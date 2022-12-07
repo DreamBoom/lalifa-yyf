@@ -4,7 +4,7 @@ import android.graphics.Color
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
-import com.lalifa.main.adapter.blackList
+import com.lalifa.main.fragment.adapter.blackList
 import com.lalifa.main.api.friendsList
 
 class BlackListActivity : BaseListActivity() {

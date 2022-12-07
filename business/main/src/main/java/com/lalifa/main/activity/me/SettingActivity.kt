@@ -1,9 +1,8 @@
 package com.lalifa.main.activity.me
-
-import cn.rongcloud.config.UserManager
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.extension.toast

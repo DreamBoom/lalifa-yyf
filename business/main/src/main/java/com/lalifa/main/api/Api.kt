@@ -1,8 +1,9 @@
 package com.lalifa.main.api
 
-import cn.rongcloud.config.provider.user.LoginUserBean
 import com.drake.logcat.LogCat
+import com.drake.net.Get
 import com.drake.net.Post
+import com.lalifa.ext.User
 import com.lalifa.extension.string
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -462,5 +463,252 @@ suspend fun CoroutineScope.guard(): List<GuardBean>? {
     return Post<BaseBean<List<GuardBean>>>("user/guard") {
     }.await().data
 }
+
+/**
+ * 客服
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.getCallList(): List<CallBean>? {
+    return Post<BaseBean<List<CallBean>>>("user/customer_service") {
+    }.await().data
+}
+
+/**
+ * 主页信息
+ * @receiver CoroutineScope
+ * @return CheInfoBean?
+ */
+suspend fun CoroutineScope.homepage(id: String): MeInfoBean? {
+    return Post<BaseBean<MeInfoBean>>("user/homepage") {
+        param("id", id)
+    }.await().data
+}
+
+/**
+ * 商品详情
+ * @receiver CoroutineScope
+ * @return shopBean?
+ */
+suspend fun CoroutineScope.giftList(): List<GiftBean>? {
+    return Post<BaseBean<List<GiftBean>>>("user/gift") {
+    }.await().data
+}
+
+/**
+ * 创建队伍
+ * @receiver CoroutineScope
+ * @param id 当前所在房间ID
+ * @param type 类型 1-游戏 2-娱乐
+ * @param label 标签
+ * @param rank 段位
+ * @param explain 说明
+ * @param background 背景图
+ * @param pattern 模式
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.createRoom(
+    id: String, type: String, label: String, rank: String, explain: String,
+    background: String, pattern: String,
+): RoomDetailBean? {
+    return Post<BaseBean<RoomDetailBean>>("chat_room/add_fleet") {
+        param("id", id)
+        param("type", type)
+        param("label", label)
+        param("rank", rank)
+        param("explain", explain)
+        param("background", background)
+        param("pattern", pattern)
+    }.await().data
+}
+
+/**
+ * 聊天室详情
+ * @receiver CoroutineScope
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.roomDetail(id: String): RoomDetailBean? {
+    return Post<BaseBean<RoomDetailBean>>("chat_room/room_details") {
+        param("id", id)
+    }.await().data
+}
+
+/**
+ * 获取房间内礼物列表
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.roomGift(): RoomGiftBean? {
+    return Post<BaseBean<RoomGiftBean>>("chat_room/gift") {
+    }.await().data
+}
+
+/**
+ * 检查当前用户所属房间
+ * @return
+ */
+suspend fun CoroutineScope.roomCheck(): RoomCheckBean? {
+    return Post<BaseBean<RoomCheckBean>>("chat_room/check") {
+    }.await().data
+}
+
+/**
+ * 关注/取消关注好友
+ * @return
+ */
+suspend fun CoroutineScope.follow(id: String): String? {
+    return Post<BaseBean<String>>("user/follow") {
+        param("id", id)
+    }.await().data
+}
+
+/**
+ * 收藏取消房间
+ * @return
+ */
+suspend fun CoroutineScope.collection(id: String): String? {
+    return Post<BaseBean<String>>("chat_room/collection") {
+        param("office_id", id)
+    }.await().data
+}
+
+/**
+ * 收藏取消房间
+ * @return
+ */
+suspend fun CoroutineScope.editRoom(
+    id: String, title: String, image: String,
+    background: String, passwordType: String,
+    password: String, notice: String
+): String? {
+    return Post<BaseBean<String>>("chat_room/edit_room") {
+        param("id", id)
+        param("title", title)
+        param("image", image)
+        param("background", background)
+        param("password_type", passwordType)
+        param("password", password)
+        param("notice", notice)
+    }.await().data
+}
+/**
+ * 关闭房间
+ * @return
+ */
+suspend fun CoroutineScope.closeRoom(id: String): String? {
+    return Post<BaseBean<String>>("chat_room/destruction") {
+        param("id", id)
+    }.await().data
+}
+
+/**
+ * 充值列表
+ * @receiver CoroutineScope
+ * @return RechargeBean?
+ */
+suspend fun CoroutineScope.recharge(): RechargeBean? {
+    return Get<BaseBean<RechargeBean>>("user/recharge") {
+    }.await().data
+}
+
+/**
+ * 充值钻石
+ * @receiver CoroutineScope
+ * @return String?
+ */
+suspend fun CoroutineScope.ZfbPay(id:String,price:String,payType:String): String? {
+    return Post<BaseBean<String>>("user/recharge") {
+        param("id", id)
+        param("price", price)
+        param("payType", payType)
+    }.await().data
+}
+
+suspend fun CoroutineScope.WxPay(id:String,price:String,payType:String): WxPayBean? {
+    return Post<BaseBean<WxPayBean>>("user/recharge") {
+        param("id", id)
+        param("price", price)
+        param("payType", payType)
+    }.await().data
+}
+
+/**
+ * 聊天室首页
+ * @receiver CoroutineScope
+ * @return RoomIndexBean?
+ */
+suspend fun CoroutineScope.roomIndex(): RoomIndexBean? {
+    return Post<BaseBean<RoomIndexBean>>("chat_room/index") {
+    }.await().data
+}
+
+/**
+ * 聊天室列表
+ * @receiver CoroutineScope
+ * @param id 分类id
+ * @param offset 页码
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.roomList(id:String,offset:String): RoomListBean? {
+    return Post<BaseBean<RoomListBean>>("chat_room/ChatRoom") {
+        param("id", id)
+        param("offset", offset)
+    }.await().data
+}
+
+/**
+ * 排行榜
+ * @receiver CoroutineScope
+ * @param type 1：财富榜  2：魅力榜
+ * @param category 1：日榜  2：周榜 3月榜
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.ranking(type:String,category:String,): List<RankBean>? {
+    return Post<BaseBean<List<RankBean>>>("user/ranking") {
+        param("category", category)
+        param("type", type)
+    }.await().data
+}
+
+/**
+ * 用户信息
+ * @receiver CoroutineScope
+ * @param id 用户ID
+ * @param office_id 房间ID
+ * @return RoomListBean?
+ */
+suspend fun CoroutineScope.userInfo(id:String,office_id:String): Member? {
+    return Post<BaseBean<Member>>("chat_room/usre_information") {
+        param("id", id)
+        param("office_id", office_id)
+    }.await().data
+}
+
+/**
+ * 获取房间内管理员列表
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.getManage(id:String): MutableList<User>? {
+    return Post<BaseBean<MutableList<User>>>("chat_room/manage") {
+        param("office_id", id)
+    }.await().data
+}
+
+
+/**
+ * 获取房间内成员列表
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.getMembers(id:String): MutableList<User>? {
+    return Post<BaseBean<MutableList<User>>>("chat_room/members") {
+        param("id", id)
+    }.await().data
+}
+
 
 

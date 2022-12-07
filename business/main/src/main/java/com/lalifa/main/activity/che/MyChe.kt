@@ -6,7 +6,7 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
 import com.lalifa.extension.start
 import com.lalifa.main.R
-import com.lalifa.main.adapter.cheList
+import com.lalifa.main.fragment.adapter.cheList
 import com.lalifa.main.api.Dynamic
 import com.lalifa.main.api.delDynamic
 import com.lalifa.main.api.dzChe

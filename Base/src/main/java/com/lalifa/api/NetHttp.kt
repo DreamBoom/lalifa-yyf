@@ -13,7 +13,9 @@ import com.drake.net.okhttp.*
 import com.drake.net.request.BaseRequest
 import com.drake.net.utils.TipUtils
 import com.drake.tooltip.dialog.BubbleDialog
+import com.lalifa.base.BaseApplication
 import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.pk
 import java.util.concurrent.TimeUnit
 

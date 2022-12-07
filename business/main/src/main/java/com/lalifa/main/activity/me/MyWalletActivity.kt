@@ -2,20 +2,20 @@ package com.lalifa.main.activity.me
 
 import android.graphics.Color
 import androidx.core.content.ContextCompat
-import cn.rongcloud.roomkit.ui.other.MySxActivity
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListFragment
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.extension.*
 import com.lalifa.main.R
-import com.lalifa.main.adapter.moneyList
+import com.lalifa.main.activity.MySxActivity
 import com.lalifa.main.api.Exchange
 import com.lalifa.main.api.exchangeDrill
 import com.lalifa.main.api.wallet
 import com.lalifa.main.databinding.ActivityMyMoneyBinding
 import com.lalifa.main.ext.showDh
 import com.lalifa.main.ext.showTx
+import com.lalifa.main.fragment.adapter.moneyList
 
 
 class MyWalletActivity : BaseTitleActivity<ActivityMyMoneyBinding>() {

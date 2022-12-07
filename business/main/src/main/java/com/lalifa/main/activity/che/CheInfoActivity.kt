@@ -5,7 +5,7 @@ import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
 import com.lalifa.extension.*
 import com.lalifa.main.R
-import com.lalifa.main.adapter.cheInfoList
+import com.lalifa.main.fragment.adapter.cheInfoList
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityCheInfoBinding
 

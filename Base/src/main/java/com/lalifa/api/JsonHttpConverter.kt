@@ -26,10 +26,18 @@ class JsonHttpConverter : NetConverter {
                     val bodyString = response.body?.string() ?: return null
                     return try {
                         val json = JSONObject(bodyString) // 获取JSON中后端定义的错误码和错误信息
-                        when (json.getInt("code")) {
+                        val code = json.getInt("code")
+                        when (code) {
                             200 -> {
                                 //数据请求成功
                                 bodyString.parseBody<R>(succeed)
+                            }
+                            0->{
+                                throw NetResponseException(
+                                    json.getInt("code"),
+                                    response,
+                                    json.getString("msg")
+                                )
                             }
                             else -> {
                                 if(!TextUtils.isEmpty(json.getString("msg"))){

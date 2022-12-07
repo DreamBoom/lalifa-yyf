@@ -3,15 +3,6 @@
     package="cn.rongcloud.roomkit">
 
     <application>
-        <activity
-            android:name=".ui.other.MainSearchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.other.PHActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.other.MySxActivity"
-            android:exported="false" />
         <service
             android:name="cn.rongcloud.roomkit.service.RTCNotificationService"
             android:permission="true" />

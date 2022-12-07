@@ -40,15 +40,8 @@ dependencies {
     implementation android_ui.material
     implementation project(path: ':middle:music')
     api project(path: ':middle:roomkit')
-    Properties properties = new Properties()
-    File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
-    properties.load(propertyFile.newDataInputStream())
-    if (properties.get("VOICE_ROOM_REMOTE_DEPENDENCE") != null && !properties.get("VOICE_ROOM_REMOTE_DEPENDENCE").toBoolean()) {
-        println("------------------------>>>>use local module")
-        implementation "cn.rongcloud.sdk:rclogger_lib:1.0.5"
-    } else {
-        implementation "cn.rongcloud.sdk:rclogger_lib:1.0.5"
-      //  api "cn.rongcloud.sdk:voiceroom_lib:$voiceroomLib"
-    }
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation "cn.rongcloud.sdk:rclogger_lib:1.0.5"
+    implementation "cn.rongcloud.sdk:voiceroom_lib:2.1.2"
     kapt  "com.alibaba:arouter-compiler:$arouter"
 }

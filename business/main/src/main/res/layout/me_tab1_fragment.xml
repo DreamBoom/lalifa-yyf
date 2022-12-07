@@ -52,14 +52,14 @@
         android:layout_width="0dp"
         android:layout_height="3dp"/>
     <TextView
-        android:id="@+id/sign"
+        android:id="@+id/bio"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
         android:layout_marginVertical="10dp"
         app:layout_constraintTop_toBottomOf="@+id/im2"
         android:textColor="@color/white"
         android:textSize="14dp"
-        android:text="本宝宝还没想好签名·"
+        android:text="本宝宝还没想好签名"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
@@ -68,7 +68,7 @@
         android:textSize="14dp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="10dp"
-        app:layout_constraintTop_toBottomOf="@id/sign"
+        app:layout_constraintTop_toBottomOf="@id/bio"
         app:layout_constraintStart_toStartOf="parent"
         android:text="勋章墙"
         android:layout_width="wrap_content"

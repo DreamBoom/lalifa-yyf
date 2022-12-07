@@ -5,7 +5,7 @@
     android:layout_gravity="center"
     android:layout_marginStart="38dp"
     android:layout_marginEnd="38dp"
-    android:background="@drawable/shape_round28_white"
+    android:background="@drawable/shape_round12_zs"
     android:orientation="vertical">
 
     <TextView
@@ -47,6 +47,7 @@
             android:textSize="@dimen/font_16" />
 
         <ImageView
+            android:id="@+id/line"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#f8f8f8" />

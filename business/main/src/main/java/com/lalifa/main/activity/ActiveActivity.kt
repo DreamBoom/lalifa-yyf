@@ -6,7 +6,7 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
 import com.lalifa.extension.start
 import com.lalifa.main.R
-import com.lalifa.main.adapter.activeList
+import com.lalifa.main.fragment.adapter.activeList
 import com.lalifa.main.api.ActivityBean
 import com.lalifa.main.api.getActivity
 

@@ -18,7 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.*
 import com.drake.channel.receiveEvent
+import com.lalifa.api.GiftBean
 import com.lalifa.base.R
+import com.lalifa.base.databinding.ItemChatGiftBinding
+import com.lalifa.ext.Config
 import com.lalifa.extension.*
 import per.goweii.layer.core.anim.AnimStyle
 import per.goweii.layer.core.anim.NullAnimatorCreator
@@ -56,6 +59,7 @@ fun Activity.showTipDialog(
             findViewById<TextView>(R.id.cancel_btn)?.text = cancelText
             findViewById<TextView>(R.id.content)?.text = content
             findViewById<TextView>(R.id.cancel_btn)?.applyVisible(isShowCancelBtn)
+            findViewById<ImageView>(R.id.line)?.applyVisible(isShowCancelBtn)
         }.show()
 }
 
@@ -130,7 +134,38 @@ fun Fragment.showTipDialog(
 //            requireViewById<TextView>(R.id.title).text = title
 //        }.show()
 //}
-
+fun showGiftDialog(bean: List<GiftBean>, callback: (bean: GiftBean) -> Unit = {}) {
+    DialogLayer()
+        .contentView(R.layout.dialog_chat_gift)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .onInitialize {
+            val giftList = findViewById<RecyclerView>(R.id.giftList)
+            //giftList.height = 50
+            giftList?.apply {
+                grid(4).divider {
+                    setDivider(8.dp)
+                    orientation = DividerOrientation.VERTICAL
+                }.divider {
+                    setDivider(8.dp)
+                    orientation = DividerOrientation.HORIZONTAL
+                }.setup {
+                    addType<GiftBean>(R.layout.item_chat_gift)
+                    onBind {
+                        val bind = getBinding<ItemChatGiftBinding>()
+                        val model = getModel<GiftBean>()
+                        bind.im.load(Config.FILE_PATH + model.image)
+                        bind.name.text = model.name
+                        bind.price.text = "¥${model.price}"
+                        bind.itemGift.onClick {
+                            callback.invoke(getModel())
+                            dismiss()
+                        }
+                    }
+                }.models = bean
+            }
+        }.show()
+}
 /**
  * 显示一个在键盘上方的弹框
  * @receiver Activity

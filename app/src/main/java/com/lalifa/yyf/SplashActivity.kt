@@ -1,7 +1,6 @@
 package com.lalifa.yyf
 
 import android.annotation.SuppressLint
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -11,15 +10,14 @@ import com.lalifa.extension.start
 import com.lalifa.extension.toast
 import com.lalifa.extension.uiTask
 import com.lalifa.main.activity.MainActivity
+import com.lalifa.main.activity.login.LoginActivity
 import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.databinding.ActivitySplashBinding
-import com.lalifa.main.activity.login.LoginActivity
 
 /**
  * 起始页
  */
 @SuppressLint("CustomSplashScreen")
-@Route(path = "/app/splash")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)
 
@@ -44,7 +42,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                     }
                     uiTask(1000) {
                         if (SPUtil.getBoolean(Config.IS_LOGIN)) {
-                            start(MainActivity::class.java)
+                            start(MainActivity::class.java){
+                                putExtra("initIm",false)
+                            }
                             finish()
                         } else {
                             start(LoginActivity::class.java)

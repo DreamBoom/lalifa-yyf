@@ -5,7 +5,7 @@ import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
 import com.lalifa.main.R
-import com.lalifa.main.adapter.applyList
+import com.lalifa.main.fragment.adapter.applyList
 import com.lalifa.main.api.ApplyBean
 import com.lalifa.main.api.applyFriend
 import com.lalifa.main.api.applyList

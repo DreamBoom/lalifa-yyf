@@ -1,20 +1,23 @@
 package com.lalifa.main.activity
 
-import cn.rongcloud.config.router.RouterPath
-import cn.rongcloud.voice.room.RoomListFragment
-import com.alibaba.android.arouter.facade.annotation.Route
+import cn.jpush.android.api.JPushInterface
+import com.drake.logcat.LogCat
 import com.lalifa.base.BaseActivity
-import com.lalifa.extension.fragmentAdapter
-import com.lalifa.extension.onClick
-import com.lalifa.extension.pageChangedListener
-import com.lalifa.extension.start
+import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
+import com.lalifa.extension.*
 import com.lalifa.main.activity.che.CheActivity
+import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.databinding.ActivityHomeBinding
 import com.lalifa.main.fragment.MainFragment
 import com.lalifa.main.fragment.MeFragment
 import com.lalifa.main.fragment.MessageFragment
+import com.lalifa.main.fragment.RoomListFragment
+import com.lalifa.utils.SPUtil
+import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
+import io.rong.imlib.RongIMClient.ConnectionStatusListener.ConnectionStatus
 
-@Route(path = RouterPath.ROUTER_MAIN)
 class MainActivity : BaseActivity<ActivityHomeBinding>() {
     override fun isCanExit() = true
     override fun initView() {
@@ -33,6 +36,26 @@ class MainActivity : BaseActivity<ActivityHomeBinding>() {
 
             tabGroup.setViewPager(vp)
         }
+        val initIm = getIntentBoolean("initIm", false)
+        if(!initIm){
+            toInitIm()
+        }
+    }
+
+    private fun toInitIm() {
+        RongIM.connect(UserManager.get()!!.imToken, object : RongIMClient.ConnectCallback() {
+            override fun onSuccess(t: String) {
+
+            }
+
+            override fun onError(e: RongIMClient.ConnectionErrorCode?) {
+                toast("Im链接异常：${e.toString()}")
+            }
+
+            override fun onDatabaseOpened(code: RongIMClient.DatabaseOpenStatus?) {
+
+            }
+        })
     }
 
     override fun onClick() {

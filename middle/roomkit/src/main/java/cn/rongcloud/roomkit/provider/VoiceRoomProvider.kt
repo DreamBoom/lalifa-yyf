@@ -32,8 +32,9 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
         scopeNet {
             val roomDetail = roomDetail(roomId.noEN())
             if(null!=roomDetail){
-                //todo 测试
-                //resultBack?.onResult(roomDetail!!)
+                val arrayList = ArrayList<RoomDetailBean>()
+                arrayList.add(roomDetail)
+                resultBack?.onResult(arrayList)
             }else{
                 resultBack?.onResult(null)
             }
@@ -56,8 +57,7 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
 
     override fun loadPage(
         isRefresh: Boolean,
-        roomType: RoomType,
-        resultBack: IResultBack<List<RoomDetailBean?>>
+        roomType: RoomType
     ) {
         if (isRefresh) {
             page = 1
@@ -73,15 +73,9 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
                     }
                     LocalDataManager.saveBackGroundUrl(images)
                 }
-                //todo 测试
-               // updateCache(roomList.office)
                 if (roomList.count==10) {
                     page++
                 }
-                //todo 测试
-              //  resultBack.onResult(roomList.office)
-            }else{
-                resultBack.onResult(null)
             }
         }
     }
@@ -97,8 +91,8 @@ class VoiceRoomProvider private constructor() : AbsProvider<RoomDetailBean?>(-1)
         if (roomDetailBean?.userInfo == null) {
             throw NullPointerException("RoomDetailBean is null")
         }
-        val userId = UserManager.get()!!.userId
-        return if (TextUtils.equals(userId, roomDetailBean.userInfo!!.userId)) {
+        val userId = UserManager.get()!!.id
+        return if (userId==roomDetailBean.uid) {
             RoomOwnerType.VOICE_OWNER
         } else {
             RoomOwnerType.VOICE_VIEWER

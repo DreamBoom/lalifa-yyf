@@ -43,6 +43,7 @@ import cn.rongcloud.voice.Constant
 import cn.rongcloud.voice.model.UiSeatModel
 import cn.rongcloud.voice.room.dialogFragment.CreatorSettingFragment
 import cn.rongcloud.voice.room.dialogFragment.SelfSettingFragment
+import cn.rongcloud.voice.room.helper.VoiceEventHelper
 import cn.rongcloud.voice.room.helper.VoiceEventHelper.helper
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
@@ -53,6 +54,7 @@ import com.drake.logcat.LogCat.d
 import com.drake.logcat.LogCat.e
 import com.drake.net.utils.scopeNet
 import com.drake.tooltip.toast
+import com.lalifa.ext.Config
 import com.lalifa.extension.noEN
 import com.lalifa.ui.mvp.BasePresenter
 import com.lalifa.utils.GsonUtil
@@ -127,7 +129,6 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         scopeNet {
             val roomDetail = roomDetail(roomId.noEN())
             if (null != roomDetail) {
-                voiceRoomModel!!.currentUIRoomInfo.roomBean = roomDetail
                 mVoiceRoomBean = roomDetail
                 if (!isInRoom) {
                     //如果已经在房间里面了,那么需要重新设置监听
@@ -136,8 +137,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                     mView!!.changeStatus(currentStatus)
                     voiceRoomModel!!.currentUIRoomInfo.isMute =
                         helper().muteAllRemoteStreams
-                    //todo
-                    // voiceRoomModel.onSeatInfoUpdate(VoiceEventHelper.helper().rcVoiceSeatInfoList)
+                    voiceRoomModel.onSeatInfoUpdate(helper().rcVoiceSeatInfoList)
                     setCurrentRoom(roomDetail)
                     mView!!.dismissLoading()
                     if (roomOwnerType != RoomOwnerType.VOICE_OWNER) {
@@ -182,8 +182,8 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         helper().register(roomId)
         helper().setRoomBean(mVoiceRoomBean)
         initListener(roomId)
-        //重置底部状态
-        currentStatus = STATUS_NOT_ON_SEAT
+        //重置底部状态 222
+        currentStatus = STATUS_WAIT_FOR_SEAT
         mView!!.changeStatus(currentStatus)
         if (isCreate) {
             // 构建一个 RCRTCConfig，可根据自己需求配置信息。
@@ -193,7 +193,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
             // 设置房间名称
             rcVoiceRoomInfo.roomName = mVoiceRoomBean!!.title
             // 设置麦位数量
-            rcVoiceRoomInfo.seatCount = 10
+            rcVoiceRoomInfo.seatCount = 9
             // 设置上麦模式（ture是自由上麦 false为申请上麦）
             rcVoiceRoomInfo.isFreeEnterSeat = false
             // 设置全麦锁座
@@ -281,8 +281,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         } else ""
     val themePictureUrl: String
         get() = if (mVoiceRoomBean != null) {
-            //todo 这里是主题背景，暂时使用房间图片代替，后期联系后台添加
-            mVoiceRoomBean!!.image
+            Config.FILE_PATH+mVoiceRoomBean!!.background
         } else ""
 
     /**
@@ -293,11 +292,15 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
     override fun setCurrentRoom(mVoiceRoomBean: RoomDetailBean?) {
         roomOwnerType = VoiceRoomProvider.provider().getRoomOwnerType(mVoiceRoomBean)
         // 房主进入房间，如果不在麦位上那么自动上麦
-        if (roomOwnerType == RoomOwnerType.VOICE_OWNER && !voiceRoomModel!!.userInSeat() && !isInRoom) {
+        if (roomOwnerType == RoomOwnerType.VOICE_OWNER &&
+            !voiceRoomModel!!.userInSeat() && !isInRoom) {
+            LogCat.e("===111"+mVoiceRoomBean!!.Chatroom_id)
             roomOwnerEnterSeat(true)
         } else if (voiceRoomModel!!.userInSeat()) {
             // 第一次进房间 房主的disableRecord状态置为false
+            LogCat.e("===222"+mVoiceRoomBean!!.Chatroom_id)
             if (null == voiceRoomModel) return
+            LogCat.e("===333"+mVoiceRoomBean!!.Chatroom_id)
             RCVoiceRoomEngine.getInstance().disableAudioRecording(!voiceRoomModel.isRecordingStatus)
             //            UiSeatModel seatModel = voiceRoomModel.getUiSeatModels().get(0);
 //            if (null != seatModel && null != seatModel.getExtra()) {
@@ -743,9 +746,10 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         if (voiceRoomModel!!.uiSeatModels.size > 0) {
             val uiSeatModel = voiceRoomModel.uiSeatModels[0]
             if (uiSeatModel != null) {
-                if (!TextUtils.isEmpty(uiSeatModel.userId) && uiSeatModel.userId == UserManager.get()!!
-                        .userId
+                if (!TextUtils.isEmpty(uiSeatModel.userId) &&
+                    uiSeatModel.userId == UserManager.get()!!.userId
                 ) {
+                    LogCat.e("===444"+mVoiceRoomBean!!.Chatroom_id)
                     //如果在麦位上
                     val creatorSettingFragment = CreatorSettingFragment(
                         voiceRoomModel,
@@ -754,6 +758,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
                     )
                     creatorSettingFragment.show(fragmentManager!!)
                 } else {
+                    LogCat.e("===555"+mVoiceRoomBean!!.Chatroom_id)
                     //如果不在麦位上，直接上麦
                     roomOwnerEnterSeat(false)
                 }
@@ -884,7 +889,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
      * 点击底部送礼物，礼物可以送给麦位和房主，无论房主是否在房间
      */
     fun sendGift() {
-        val memberArrayList = ArrayList<Member?>()
+        val memberArrayList = ArrayList<Member>()
         //房间内所有人
         val uiSeatModels = voiceRoomModel!!.uiSeatModels
         e(TAG, "uiSeatModels:" + uiSeatModels.size)
@@ -926,8 +931,7 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
         memberArrayList.sortWith(Comparator { o1, o2 -> o1!!.seatIndex - o2!!.seatIndex })
         e(TAG, "getCreateUserId:$createUserId")
         e(TAG, "memberArrayList:" + GsonUtil.obj2Json(memberArrayList))
-        //todo 测试
-        // mView!!.showSendGiftDialog(mVoiceRoomBean!!, createUserId, memberArrayList!!)
+         mView!!.showSendGiftDialog(mVoiceRoomBean!!, createUserId, memberArrayList)
     }
 
     /**
@@ -1398,7 +1402,6 @@ class VoiceRoomPresenter(mView: IVoiceRoomFragmentView?, lifecycle: Lifecycle?) 
     fun setRoomName(name: String?) {
         mVoiceRoomBean!!.title = name!!
         if (edit()) {
-            LogCat.e("===11111")
             mView!!.setVoiceName(name!!)
             mVoiceRoomBean!!.title = name
             val rcRoomInfo = voiceRoomModel!!.currentUIRoomInfo.rcRoomInfo

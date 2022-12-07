@@ -116,7 +116,7 @@ public class InputBar extends LinearLayout {
         this.inputBarListener = inputBarListener;
     }
 
-    public interface InputBarListener {
+    interface InputBarListener {
 
         void onClickSend(String message);
 

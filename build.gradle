@@ -17,7 +17,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
         // 2.注册MobSDK 三方登录
         classpath "com.mob.sdk:MobSDK:2018.0319.1724"
 
@@ -85,8 +85,6 @@ ext {
     // 融云相关库
     musicLib = "1.0.1"
     corekitLib = "1.0.0"
-    voiceroomLib = "2.0.9.1"
-    liveroomLib = "2.1.2.1"
     tinygameLib = "1.0.2"
 
     //动态配置

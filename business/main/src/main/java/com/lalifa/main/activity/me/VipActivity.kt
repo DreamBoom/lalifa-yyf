@@ -5,8 +5,8 @@ import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
 import com.lalifa.extension.preview
 import com.lalifa.main.R
-import com.lalifa.main.adapter.tiList
-import com.lalifa.main.adapter.titlesList
+import com.lalifa.main.fragment.adapter.tiList
+import com.lalifa.main.fragment.adapter.titlesList
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityVipBinding
 

@@ -5,10 +5,10 @@ import com.drake.brv.utils.models
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.main.R
-import com.lalifa.main.adapter.goodsList
-import com.lalifa.main.adapter.knapsackList
-import com.lalifa.main.adapter.knapsacksList
-import com.lalifa.main.adapter.shopList
+import com.lalifa.main.fragment.adapter.goodsList
+import com.lalifa.main.fragment.adapter.knapsackList
+import com.lalifa.main.fragment.adapter.knapsacksList
+import com.lalifa.main.fragment.adapter.shopList
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityKnapsackBinding
 

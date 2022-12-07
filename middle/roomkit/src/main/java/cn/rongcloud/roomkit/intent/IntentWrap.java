@@ -67,7 +67,6 @@ public class IntentWrap {
      * @param isCreate 是否是创建
      */
     public static void launchVoiceRoom(Context context, ArrayList<String> roomIds, int position, boolean isCreate) {
-        LogCat.e("路由跳转===ROUTER_VOICE_ROOM");
         ARouter.getInstance().build(RouterPath.ROUTER_VOICE_ROOM)
                 .withStringArrayList(KEY_ROOM_IDS, roomIds)
                 .withInt(KEY_ROOM_POSITION, position)

@@ -49,6 +49,6 @@ dependencies {
         println("------------------------>>>> third cdn module use live module")
         compileOnly project(path: ':RCliveroom')
     } else {
-        compileOnly "cn.rongcloud.sdk:liveroom_lib:$liveroomLib"
+        compileOnly "cn.rongcloud.sdk:liveroom_lib:2.1.2.1"
     }
 }

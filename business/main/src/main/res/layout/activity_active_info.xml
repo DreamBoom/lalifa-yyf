@@ -19,6 +19,7 @@
 <TextView
     android:id="@+id/tvActive"
     android:text="活动时间:"
+    android:visibility="gone"
     android:textSize="10dp"
     android:textColor="@color/textColor2"
     android:background="@drawable/bghs"
@@ -38,6 +39,7 @@
 
     <TextView
         android:id="@+id/tvRule"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"

@@ -8,8 +8,8 @@ import com.drake.brv.utils.setup
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.main.R
-import com.lalifa.main.adapter.goodsList
-import com.lalifa.main.adapter.shopList
+import com.lalifa.main.fragment.adapter.goodsList
+import com.lalifa.main.fragment.adapter.shopList
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityShopBinding
 import com.lalifa.main.ext.showPriceDialog

@@ -1,4 +1,5 @@
 package cn.rongcloud.roomkit.api
+import cn.rongcloud.config.api.RoomDetailBean
 import cn.rongcloud.config.provider.user.User
 import cn.rongcloud.config.provider.wrapper.Provide
 import java.io.Serializable

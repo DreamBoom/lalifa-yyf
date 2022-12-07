@@ -196,7 +196,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
      */
     override fun onUserEnterSeat(i: Int, s: String) {
         Log.e(TAG, "onUserEnterSeat: ")
-        //        present.refreshRoomMember();
+        present!!.refreshRoomMember()
     }
 
     /**
@@ -208,7 +208,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
     override fun onUserLeaveSeat(i: Int, s: String) {
         Log.e(TAG, "onUserLeaveSeat: ")
         //如果是房主的话，那么去更新房主的信息
-//        present.refreshRoomMember();
+        present!!.refreshRoomMember()
     }
 
     /**
@@ -231,7 +231,7 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
      */
     override fun onSeatLock(i: Int, b: Boolean) {
         //锁住的位置，和状态
-//        present.refreshRoomMember();
+        present!!.refreshRoomMember()
         Log.e(TAG, "onSeatLock: ")
     }
 
@@ -462,6 +462,9 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
     override fun onPKInvitationCanceled(s: String, s1: String) {}
     override fun onPKInvitationRejected(s: String, s1: String) {}
     override fun onPKInvitationIgnored(s: String, s1: String) {}
+    override fun onUserAudioRecordingDisable(roomId: String?, userId: String?, disable: Boolean) {
+
+    }
 
     /**
      * 音乐的所有操作

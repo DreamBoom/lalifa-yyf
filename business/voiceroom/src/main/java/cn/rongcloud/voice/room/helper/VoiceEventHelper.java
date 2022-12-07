@@ -51,6 +51,7 @@ import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomEventListener;
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomResultCallback;
+import cn.rongcloud.voiceroom.model.AudioLevel;
 import cn.rongcloud.voiceroom.model.RCPKInfo;
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo;
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo;
@@ -308,6 +309,12 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     public void onUserSpeakingStateChanged(String s, int i) {
 
     }
+
+    @Override
+    public void onSpeakingStateChanged(List<AudioLevel> audioLevels) {
+        RCVoiceRoomEventListener.super.onSpeakingStateChanged(audioLevels);
+    }
+
 
     @Override
     public void onMessageReceived(Message message) {
@@ -716,6 +723,12 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     }
 
     @Override
+    public void onUserAudioRecordingDisable(String roomId, String userId, boolean disable) {
+
+    }
+
+
+    @Override
     public boolean isInitlaized() {
         return !TextUtils.isEmpty(roomId);
     }
@@ -953,18 +966,7 @@ public class VoiceEventHelper implements IVoiceRoomHelp, RCVoiceRoomEventListene
     //更改所属房间
     @Override
     public void changeUserRoom(String roomId) {
-        //todo 222
-//        HashMap<String, Object> params = new OkParams()
-//                .add("roomId", roomId)
-//                .build();
-//        OkApi.get(VRApi.USER_ROOM_CHANGE, params, new WrapperCallBack() {
-//            @Override
-//            public void onResult(Wrapper result) {
-//                if (result.ok()) {
-//                    Log.e(TAG, "onResult: " + result.getMessage());
-//                }
-//            }
-//        });
+
     }
 
     @Override

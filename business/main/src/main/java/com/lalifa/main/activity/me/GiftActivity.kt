@@ -1,15 +1,15 @@
 package com.lalifa.main.activity.me
 
-import cn.rongcloud.config.UserManager
 import com.drake.brv.BindingAdapter
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.load
 import com.lalifa.extension.start
 import com.lalifa.main.R
-import com.lalifa.main.adapter.giftAdapter
-import com.lalifa.main.adapter.giftGroupAdapter
+import com.lalifa.main.fragment.adapter.giftAdapter
+import com.lalifa.main.fragment.adapter.giftGroupAdapter
 import com.lalifa.main.api.Theme
 import com.lalifa.main.api.getGiftList
 import com.lalifa.main.databinding.ActivityGiftBinding

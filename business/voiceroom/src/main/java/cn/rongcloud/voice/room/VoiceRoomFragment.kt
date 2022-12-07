@@ -579,7 +579,7 @@ class VoiceRoomFragment : AbsRoomFragment<VoiceRoomPresenter?>(), IVoiceRoomFrag
             mRoomSeatView!!.setGiftCount(0L)
         } else {
 //            Log.e(TAG, "refreshRoomOwner: " + uiSeatModel.toString());
-            UserProvider.provider().getAsyn(uiSeatModel.userId, object : IResultBack<UserInfo?> {
+            UserProvider.provider().getAsyn(uiSeatModel.userId, object : IResultBack<UserInfo> {
                 override fun onResult(userInfo: UserInfo?) {
                     if (userInfo != null) {
                         mRoomSeatView!!.setData(userInfo.name, userInfo.portraitUri.toString())

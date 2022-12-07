@@ -40,20 +40,20 @@ android {
         buildConfigField("String[]", "YYF", "${modes()}")
     }
 
-    signingConfigs {
-        debug {
-            keyAlias "key0"
-            keyPassword "lalifa"
-            storeFile file("./key.jks")
-            storePassword 'lalifa'
-        }
-        release {
-            keyAlias "key0"
-            keyPassword "lalifa"
-            storeFile file("./key.jks")
-            storePassword 'lalifa'
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            keyAlias "key0"
+//            keyPassword "lalifa"
+//            storeFile file("./key.jks")
+//            storePassword 'lalifa'
+//        }
+//        release {
+//            keyAlias "key0"
+//            keyPassword "lalifa"
+//            storeFile file("./key.jks")
+//            storePassword 'lalifa'
+//        }
+//    }
     buildFeatures{
         dataBinding = true
         viewBinding = true
@@ -62,12 +62,10 @@ android {
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -85,7 +83,7 @@ android {
     }
 
     flavorDimensions("environment")
-//    flavorDimensions("channel")// 线上环境
+   // flavorDimensions("channel")// 线上环境
 //    def developFlag = true
 
     productFlavors {
@@ -98,9 +96,7 @@ android {
             // 融云demo的AppKey，开发者可用来测试
             buildConfigField("String", "APP_KEY", "\"lmxuhwagl3jsd\"")
             // 融云demo对应服务器的测试地址，开发者可用来测试
-            buildConfigField("String", "BASE_SERVER_ADDRES", "\"http://api-sealtalk.rongcloud.cn/\"")
-            // 区分国内/国际 国内环境不显示UI 选择地区
-            buildConfigField("Boolean", "INTERIAL", "false")
+            buildConfigField("String", "BASE_SERVER_ADDRES", "\"http://96yuyinfang.136.dianchuiguan.com.cn/\"")
             manifestPlaceholders = [
                     APP_NAME         : "@string/app_name",
                     // hifive音乐服务的 appid和servercode
@@ -113,9 +109,7 @@ android {
             dimension 'environment'
             applicationId "com.lalifa.yyf"
             buildConfigField("String", "APP_KEY", "\"lmxuhwagl3jsd\"")
-            buildConfigField("String", "UM_APP_KEY", "\"xxxxxxx\"")
             buildConfigField("String", "BASE_SERVER_ADDRES","\"http://api-sealtalk.rongcloud.cn/\"")
-            buildConfigField("Boolean", "INTERIAL", "false")
             manifestPlaceholders = [
                     APP_NAME         : "@string/app_name",
                     // hifive音乐服务的 appid和servercode
@@ -145,15 +139,13 @@ dependencies {
     implementation files('..\\libs\\commons-io-1.4.jar')
     implementation android_ui.appcompat
     implementation android_ui.material
-
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    annotationProcessor "com.alibaba:arouter-compiler:$arouter"
-    // config
-    implementation project(path: ':business:voiceroom')
+
     implementation project(path: ':business:main')
-    implementation project(path: ':middle:thirdcdn')
     implementation project(path: ':Base')
+    implementation "cn.rongcloud.sdk:rclogger_lib:1.0.5"
+    implementation "cn.rongcloud.sdk:voiceroom_lib:2.1.2"
 }
 
 def containMode(mode) {

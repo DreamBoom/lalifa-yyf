@@ -5,7 +5,7 @@ import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
 import com.lalifa.main.R
-import com.lalifa.main.adapter.newFriendList
+import com.lalifa.main.fragment.adapter.newFriendList
 import com.lalifa.main.api.FriendBean
 import com.lalifa.main.api.NewFriendBean
 import com.lalifa.main.api.newFriendsList

@@ -2,19 +2,20 @@ package com.lalifa.main.activity.login
 
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
-import cn.rongcloud.config.AppConfig
-import cn.rongcloud.config.UserManager
-import cn.rongcloud.config.provider.user.User
-import cn.rongcloud.config.provider.user.UserProvider
-import cn.rongcloud.config.router.RouterPath
-import com.alibaba.android.arouter.launcher.ARouter
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
+import com.lalifa.api.InitNet
 import com.lalifa.base.BaseActivity
+import com.lalifa.ext.Config
+import com.lalifa.ext.User
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.activity.MainActivity
+import com.lalifa.ext.Account
+import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.api.login
 import com.lalifa.main.databinding.ActivityLoginPassBinding
+import com.lalifa.utils.SPUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 
@@ -45,21 +46,9 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                     val user = login(etPhone.text(), etPass.text())
                     if (null != user) {
                         login.enable()
-                        //在jpush上设置别名
-                        JPushInterface.setAlias(
-                            this@LoginPassActivity, user.userinfo.userId
-                        ) { i, s, set ->
-                            if (i == 0) {
-                                LogCat.e("设置别名成功")
-                            } else {
-                                LogCat.e("设置别名失败")
-                            }
-                        }
-                        UserManager.save(user.userinfo)
-                        UserProvider.provider().update(user.userinfo.toUserInfo())
-                        AppConfig.initNetHttp(this@LoginPassActivity)
+                        InitNet.initNetHttp(this@LoginPassActivity)
                         initRongIM(user.userinfo)
-                    }else{
+                    } else {
                         toast("登录失败")
                         login.enable()
                     }
@@ -73,7 +62,16 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
         if (!TextUtils.isEmpty(user.imToken)) {
             RongIM.connect(user.imToken, object : RongIMClient.ConnectCallback() {
                 override fun onSuccess(t: String) {
-                    start(MainActivity::class.java)
+                    //在jpush上设置别名
+                    JPushInterface.setAlias(
+                        this@LoginPassActivity, user.userId
+                    ) { i, s, set -> }
+                    UserManager.save(user)
+                    SPUtil.set(Config.IS_LOGIN, true)
+                    AccountManager.setAccount(user.toAccount(), true)
+                    start(MainActivity::class.java){
+                        putExtra("initIm",true)
+                    }
                     finish()
                 }
 

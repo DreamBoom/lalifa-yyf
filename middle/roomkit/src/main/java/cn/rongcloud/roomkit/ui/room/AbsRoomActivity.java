@@ -123,40 +123,11 @@ public abstract class AbsRoomActivity extends BaseActivity {
     }
 
     protected void refresh() {
-        VoiceRoomProvider.provider().loadPage(true, getRoomType(), voiceRoomBeans -> {
-            if (voiceRoomBeans == null) {
-                getRefreshLayout().finishRefresh(false);
-            } else {
-                List<String> ids = new ArrayList<>();
-                for (RoomDetailBean voiceRoomBean : voiceRoomBeans) {
-                    if (voiceRoomBean.getPassword_type()==1 &&
-                            !TextUtils.equals(voiceRoomBean.getUserInfo().getUserId(),
-                                    UserManager.get().getUserId())) {
-                        ids.add(voiceRoomBean.getChatroom_id());
-                    }
-                }
-                refreshViewPagerFinished(ids);
-            }
-        });
+
     }
 
     protected void loadMore() {
-        VoiceRoomProvider.provider().loadPage(false, getRoomType(), voiceRoomBeans -> {
-            if (voiceRoomBeans == null) {
-                getRefreshLayout().finishLoadMore();
-                getRefreshLayout().setNoMoreData(true);
-            } else {
-                List<String> ids = new ArrayList<>();
-                for (RoomDetailBean voiceRoomBean : voiceRoomBeans) {
-                    if (voiceRoomBean.getPassword_type()==1 &&
-                            !TextUtils.equals(voiceRoomBean.getUserInfo().getUserId(),
-                                    UserManager.get().getUserId())) {
-                        ids.add(voiceRoomBean.getChatroom_id());
-                    }
-                }
-                loadMoreViewPagerFinished(ids);
-            }
-        });
+
     }
 
     private void switchViewPager(String roomId) {

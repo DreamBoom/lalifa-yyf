@@ -1,5 +1,7 @@
 package com.lalifa.ext
 
+import com.opensource.svgaplayer.SVGAParser
+
 class Config {
     companion object{
         //融云APP_key
@@ -8,5 +10,6 @@ class Config {
         const val HOST = "http://96yuyinfang.136.dianchuiguan.com.cn/api/"
         const val FILE_PATH = "http://96yuyinfang.136.dianchuiguan.com.cn"
         const val WXKey = "wx8042c6adb793164b"
+        val parser = SVGAParser.shareParser()
     }
 }

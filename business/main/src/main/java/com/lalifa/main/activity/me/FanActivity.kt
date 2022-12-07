@@ -10,7 +10,7 @@ import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.pageChangedListener
 import com.lalifa.main.R
-import com.lalifa.main.adapter.fanList
+import com.lalifa.main.fragment.adapter.fanList
 import com.lalifa.main.api.friends
 import com.lalifa.main.databinding.ActivityFanBinding
 

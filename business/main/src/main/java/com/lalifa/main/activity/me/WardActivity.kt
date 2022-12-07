@@ -1,17 +1,17 @@
 package com.lalifa.main.activity.me
 
-import cn.rongcloud.config.UserManager
 import com.drake.net.utils.scopeNet
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
-import com.lalifa.main.adapter.guardAdapter
+import com.lalifa.main.fragment.adapter.guardAdapter
 import com.lalifa.main.api.guard
 import com.lalifa.main.databinding.ActivityWardBinding
 
 class WardActivity : BaseTitleActivity<ActivityWardBinding>() {
     override fun getViewBinding() = ActivityWardBinding.inflate(layoutInflater)
-
+    override fun title() = "守护神"
     override fun initView() {
         getData()
     }

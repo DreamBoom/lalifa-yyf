@@ -9,7 +9,7 @@ import com.lalifa.base.BaseListFragment
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.NoticeActivity
-import com.lalifa.main.adapter.cheList
+import com.lalifa.main.fragment.adapter.cheList
 import com.lalifa.main.api.Dynamic
 import com.lalifa.main.api.cheList
 import com.lalifa.main.api.dzChe
