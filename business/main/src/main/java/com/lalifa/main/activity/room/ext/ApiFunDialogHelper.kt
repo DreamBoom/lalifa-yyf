@@ -19,6 +19,7 @@ import com.kit.UIKit
 import com.kit.wapper.IResultBack
 import com.lalifa.ext.Account
 import com.lalifa.extension.noEN
+import com.lalifa.extension.pk
 import com.lalifa.main.R
 import com.lalifa.main.api.getMembers
 import com.lalifa.main.activity.room.widght.QDialog
@@ -301,7 +302,7 @@ class ApiFunDialogHelper {
         }
 
         override fun convert(holder: RcyHolder, s: ApiFun, position: Int) {
-            holder.setText(R.id.api_fun, s.value)
+            holder.setText(R.id.api_fun, s.value.pk(""))
             holder.itemView.setOnClickListener { view: View? ->
                 listener?.onApiClick(view, s)
                 seatApi.dismissDialog()

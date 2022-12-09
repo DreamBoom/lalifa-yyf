@@ -5,7 +5,8 @@
     <!-- Required -->
     <permission
         android:name="com.lalifa.yyf.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature"
+        tools:ignore="UniquePermission" />
     <uses-permission android:name="com.lalifa.yyf.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -59,7 +60,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="ScopedStorage"
             android:value="true" />

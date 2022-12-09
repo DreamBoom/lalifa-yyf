@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.text.InputType
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -43,7 +44,7 @@ fun Activity.showTipDialog(
     content: String, title: String = "提示",
     isShowCancelBtn: Boolean = true,
     cancelText: String = "取消",
-    sureText: String = "完成",
+    sureText: String = "确定",
     callback: () -> Unit = {}
 ) {
     DialogLayer(this)
@@ -65,11 +66,12 @@ fun Activity.showTipDialog(
 
 fun Fragment.showTipDialog(
     content: String, title: String = "温馨提示",
-    isShowCancelBtn: Boolean = false,
+    isShowCancelBtn: Boolean = true,
     cancelText: String = "取消", sureText: String = "确定",
     callback: () -> Unit = {}
 ) {
-    requireActivity().showTipDialog(content, title, isShowCancelBtn, cancelText, sureText, callback)
+    requireActivity().showTipDialog(content, title,
+        isShowCancelBtn, cancelText, sureText, callback)
 }
 //
 ///**
@@ -177,6 +179,7 @@ fun Activity.showInputDialog(
     hint: String = "请输入",
     content: String = "",
     l:Int,
+    inputType: Int = InputType.TYPE_CLASS_TEXT,
     callback: (content: String) -> Unit
 ) {
     DialogLayer(this)
@@ -188,6 +191,7 @@ fun Activity.showInputDialog(
         .onPreShow {
             val et = requireViewById<EditText>(R.id.et_input)
             et.requestFocus()
+            et.inputType = inputType
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(et, InputMethodManager.SHOW_FORCED)
         }.onPreDismiss {

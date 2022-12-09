@@ -23,7 +23,7 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="35dp"
                 android:orientation="horizontal"
-                tools:listitem="@layout/item_activity2" />
+                tools:listitem="@layout/item_activity_two" />
 
             <TextView
                 android:id="@+id/get"

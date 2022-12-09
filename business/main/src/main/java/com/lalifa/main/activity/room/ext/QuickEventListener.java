@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.drake.logcat.LogCat;
 import com.kit.cache.GsonUtil;
 import com.kit.utils.KToast;
 import com.kit.wapper.IResultBack;
@@ -27,35 +28,30 @@ import io.rong.imlib.model.Message;
 
 public class QuickEventListener implements RCVoiceRoomEventListener {
 
+    public interface MessageObserver {
+        void onMessage(Message message);
+    }
+
     public interface SeatListObserver {
         void onSeatList(List<Seat> seatInfos);
     }
 
     public interface RoomInforObserver {
         void onRoomInfo(RCVoiceRoomInfo roomInfo);
-
-        void onOnLineCount();
+        void onUserIn(String userId);
+        void onOnLineCount(int userNumber);
     }
 
     public interface SeatObserver {
         void onSeat(int index, Seat info);
     }
 
-
-    public interface PKObserver {
-        void onPK(PKType type);
-    }
-
-    public enum PKType {
-        nomal, pk
-    }
-
     private final static Object obj = new Object();
     private SeatListObserver seatListObserver;
+    private MessageObserver messageObserver;
     private RoomInforObserver roomInforObserver;
     private SeatObserver seatObserver;
-    private PKObserver pkObserver;
-    private static String TAG = "_QuickEventListener";
+    private static String TAG = "======";
     private static QuickEventListener listener = new QuickEventListener();
     //设置监听标识
     private WeakReference<IRCVoiceRoomEngine> reference;
@@ -85,6 +81,14 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         mAudienceIds = new ArrayList<>();
         return this;
     }
+    /**
+     * 监听消息
+     *
+     * @param observer
+     */
+    public void observeMessage(MessageObserver observer) {
+        this.messageObserver = observer;
+    }
 
     /**
      * 监听麦位列表变化
@@ -112,10 +116,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      */
     public void observeRoomInfo(RoomInforObserver observer) {
         this.roomInforObserver = observer;
-    }
-
-    public void observePKState(PKObserver observer) {
-        this.pkObserver = observer;
     }
 
     /**
@@ -234,12 +234,10 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     @Override
     public void onSeatInfoUpdate(List<RCVoiceSeatInfo> list) {
         int count = list.size();
-        Log.d(TAG, "onSeatInfoUpdate: count = " + count);
+        LogCat.e(TAG, "更新麦位: count = " + count);
         synchronized (obj) {
             mSeatInfos.clear();
             for (int i = 0; i < count; i++) {
-                RCVoiceSeatInfo info = list.get(i);
-                Log.d(TAG, "index = " + i + "  " + GsonUtil.obj2Json(info));
                 mSeatInfos.add(new Seat(list.get(i)));
             }
             if (null != seatListObserver) seatListObserver.onSeatList(mSeatInfos);
@@ -283,7 +281,10 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         if (null != mAudienceIds && !mAudienceIds.contains(userId)) {
             mAudienceIds.add(userId);
         }
-        if (null != roomInforObserver) roomInforObserver.onOnLineCount();
+        if (null != roomInforObserver) {
+            roomInforObserver.onOnLineCount(mAudienceIds.size());
+            roomInforObserver.onUserIn(userId);
+        }
     }
 
     /**
@@ -296,7 +297,9 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         Log.d(TAG, "onAudienceExit: userId = " + userId);
         // 移除观众id
         if (null != mAudienceIds) mAudienceIds.remove(userId);
-        if (null != roomInforObserver) roomInforObserver.onOnLineCount();
+        if (null != roomInforObserver) {
+            roomInforObserver.onOnLineCount(mAudienceIds.size());
+        }
     }
 
     /**
@@ -322,7 +325,8 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     @Override
     public void onMessageReceived(Message message) {
-//        Log.v(TAG, "onMessageReceived: " + GsonUtil.obj2Json(message));
+        LogCat.e("onMessageReceived==="+message.toString());
+        if (null != messageObserver) messageObserver.onMessage(message);
     }
 
     /**
@@ -520,17 +524,13 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     }
 
     @Override
-    public void onPKGoing(@NonNull RCPKInfo rcpkInfo) {
-        Log.d(TAG, "onPKgoing: rcpkInfo = " + rcpkInfo.toJson());
-        KToast.show("PK开始");
-        if (null != pkObserver) pkObserver.onPK(PKType.pk);
+    public void onPKGoing(RCPKInfo rcpkInfo) {
+
     }
 
     @Override
     public void onPKFinish() {
-        Log.d(TAG, "onPKFinish: onPKFinish");
-        KToast.show("PK结束");
-        if (null != pkObserver) pkObserver.onPK(PKType.nomal);
+
     }
 
     @Override
@@ -557,24 +557,17 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     @Override
     public void onPKInvitationCanceled(String inviterRoomId, String inviterUserId) {
-        Log.d(TAG, "onPKInvitationCanceled: inviterRoomId = " + inviterRoomId + " inviterUserId = " + inviterUserId);
-        ApiFunDialogHelper.helper().dismissDialog();
-        KToast.show("PK邀请已取消");
-        if (null != pkObserver) pkObserver.onPK(PKType.nomal);
+
     }
 
     @Override
-    public void onPKInvitationRejected(String inviterRoomId, String inviterUserId) {
-        Log.d(TAG, "onPKInvitationRejected: inviterRoomId = " + inviterRoomId + " inviterUserId = " + inviterUserId);
-        KToast.show("您的PK邀请被拒绝");
-        if (null != pkObserver) pkObserver.onPK(PKType.nomal);
+    public void onPKInvitationRejected(String inviteeRoomId, String inviteeUserId) {
+
     }
 
     @Override
     public void onPKInvitationIgnored(String inviteeRoomId, String inviteeUserId) {
-        Log.d(TAG, "onPKInvitationRejected: inviterRoomId = " + inviteeRoomId + " inviterUserId = " + inviteeUserId);
-        KToast.show("您的PK邀请被忽略");
-        if (null != pkObserver) pkObserver.onPK(PKType.nomal);
+
     }
 
     @Override

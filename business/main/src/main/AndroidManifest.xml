@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lalifa.main">
+
     <permission
         android:name="com.lalifa.main.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.lalifa.main.permission.JPUSH_MESSAGE" />
+
     <application>
-        <!--微信支付-->
+        <activity
+            android:name=".activity.room.ManageListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.room.RoomSettingActivity"
+            android:exported="false" /> <!-- 微信支付 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.MainSearchActivity"
             android:exported="false" />

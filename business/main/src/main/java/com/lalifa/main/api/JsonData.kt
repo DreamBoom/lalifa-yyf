@@ -567,6 +567,11 @@ data class RoomDetailBean(
      */
     var background: String,
     /**
+     * 房间背景id
+     */
+    var background_id: String,
+
+    /**
      * 融云房间id
      */
     var Chatroom_id: String,
@@ -654,45 +659,45 @@ data class RoomDetailBean(
      * 房主ID
      */
     var uid: Int
-)
+):Serializable
 
 data class Advertisement(
     var details: String,
     var id: Int,
     var image: String
-)
+):Serializable
 
 data class BlindBox(
     var id: Int,
     var image: String,
     var name: String,
     var price: String
-)
+):Serializable
 
 data class Gift1(
     var image: String,
     var name: String,
     var price: String
-)
+):Serializable
 
 data class GiftBag(
     var id: Int,
     var image: String,
     var name: String,
     var price: String
-)
+):Serializable
 
 data class GiftBoxFrequency(
     var frequency: String,
     var id: Int,
     var name: String
-)
+):Serializable
 
 data class GiftFrequency(
     var frequency: String,
     var id: Int,
     var name: String
-)
+):Serializable
 /**
  * @Des 房间详情
  */
@@ -814,4 +819,10 @@ data class WxPayBean(
     val prepayid: String,
     val sign: String,
     val timestamp: String
+)
+
+data class RoomBgBean(
+    var check:Boolean = false,
+    val id: Int,
+    val image: String
 )

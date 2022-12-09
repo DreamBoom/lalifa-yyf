@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/textColor2"
+    tools:context=".activity.room.RoomSettingActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        app:divider="@drawable/divider"
+        app:showDividers="middle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="50dp"
+                android:layout_height="44dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_base_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="7dp"
+                android:gravity="center"
+                android:text="房间设置"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/roomHeader"
+                android:layout_width="85dp"
+                android:scaleType="fitXY"
+                android:layout_height="85dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title1"
+                app:shapeAppearance="@style/Round12Style" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_room_change"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="更换封面"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_14"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/roomHeader"
+                app:layout_constraintEnd_toEndOf="@+id/roomHeader"
+                app:layout_constraintStart_toStartOf="@+id/roomHeader" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="房间标题"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@mipmap/ic_right_back"
+                android:drawablePadding="8dp"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="房间背景"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bgList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="10dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="房间设置"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+
+            <RadioGroup
+                android:id="@+id/rdg"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingEnd="15dp">
+
+                <RadioButton
+                    android:id="@+id/open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="15dp"
+                    android:buttonTint="@color/white"
+                    android:text="公开"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size16" />
+
+                <RadioButton
+                    android:id="@+id/noOpen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:buttonTint="@color/white"
+                    android:text="保密"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size16" />
+            </RadioGroup>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="房间密码"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+
+            <TextView
+                android:id="@+id/tvPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@mipmap/ic_right_back"
+                android:drawablePadding="8dp"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="房间公告"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size16" />
+
+            <TextView
+                android:id="@+id/roomGg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/bg_black008"
+                android:hint="请输入房间公告"
+                android:layout_marginBottom="15dp"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/size16" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>

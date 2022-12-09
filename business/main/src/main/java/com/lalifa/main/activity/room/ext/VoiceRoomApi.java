@@ -275,13 +275,12 @@ public class VoiceRoomApi implements Api {
         RCVoiceRoomEngine.getInstance().joinRoom(config, roomId, new RCVoiceRoomCallback() {
             @Override
             public void onSuccess() {
-                KToast.show("joinRoom#onSuccess");
                 if (null != resultBack) resultBack.onResult(true);
             }
 
             @Override
             public void onError(int code, String message) {
-                String info = "joinRoom#onError [" + code + "]:" + message;
+                String info = "加入房间失败 [" + code + "]:" + message;
                 Logger.e(TAG, info);
                 KToast.show(info);
                 if (null != resultBack) resultBack.onResult(false);
@@ -294,13 +293,12 @@ public class VoiceRoomApi implements Api {
         RCVoiceRoomEngine.getInstance().leaveRoom(new RCVoiceRoomCallback() {
             @Override
             public void onSuccess() {
-                KToast.show("leaveRoom#onSuccess");
                 if (null != resultBack) resultBack.onResult(true);
             }
 
             @Override
             public void onError(int code, String message) {
-                String info = "leaveRoom#onError [" + code + "]:" + message;
+                String info = "离开房间失败 [" + code + "]:" + message;
                 KToast.show(info);
                 if (null != resultBack) resultBack.onResult(false);
             }

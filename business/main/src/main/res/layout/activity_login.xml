@@ -156,7 +156,7 @@
         android:drawableTop="@mipmap/icon_qq"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="qq"
+        android:text="QQ"
         android:textColor="@color/white"
         android:textSize="@dimen/size14" />
 
@@ -171,7 +171,7 @@
         android:drawableTop="@mipmap/icon_wx"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="qq"
+        android:text="微信"
         android:textColor="@color/white"
         android:textSize="@dimen/size14" />
 </RelativeLayout>

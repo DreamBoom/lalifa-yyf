@@ -9,27 +9,16 @@
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/zs"
         android:scaleType="centerCrop" />
-
-    <ImageView
-        android:id="@+id/closeRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:paddingStart="10dp"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/roomHeader"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/roomHeader" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/roomHeader"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toEndOf="@+id/closeRoom"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearance="@style/CircleStyle"
         tools:background="@drawable/app_icon" />
@@ -40,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/size18"
+        android:textSize="@dimen/size16"
         app:layout_constraintStart_toEndOf="@+id/roomHeader"
         app:layout_constraintTop_toTopOf="@+id/roomHeader"
         tools:text="111" />
@@ -51,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/size16"
+        android:textSize="@dimen/size14"
         app:layout_constraintBottom_toBottomOf="@+id/roomHeader"
         app:layout_constraintStart_toEndOf="@+id/roomHeader"
         tools:text="ID:111" />
@@ -76,36 +65,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/roomHeader" />
     <!--    房主 老板位 信息 -->
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/ll1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/roomHeader">
-
-        <include
-            android:id="@+id/creater"
-            layout="@layout/layout_seat_item" />
-
-        <include
-            android:id="@+id/boss"
-            layout="@layout/layout_seat_item" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/seat_boss"
+        app:layout_constraintTop_toBottomOf="@+id/roomHeader"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"/>
 
     <!--    麦位列表-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rl_seat"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/ll1" />
+        app:layout_constraintTop_toBottomOf="@+id/seat_boss" />
+    <!--    消息列表-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rl_message"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl_seat" />
+
     <TextView
         android:id="@+id/task"
         android:text="任务"
         android:gravity="center"
         android:textSize="@dimen/size12"
         android:textColor="@color/white"
-        android:background="@drawable/rl_zs"
+        android:background="@drawable/bg_round_tm"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/create"
@@ -118,7 +109,7 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:textSize="@dimen/size12"
-        android:background="@drawable/rl_zs"
+        android:background="@drawable/bg_round_tm"
         android:layout_margin="15dp"
         app:layout_constraintBottom_toTopOf="@+id/train"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +121,7 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:textSize="@dimen/size12"
-        android:background="@drawable/rl_zs"
+        android:background="@drawable/bg_round_tm"
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toTopOf="@+id/btLl"
         android:layout_marginBottom="25dp"
@@ -177,6 +168,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"/>
         <ImageView
+            android:id="@+id/setting"
             android:background="@drawable/ic_room_setting"
             android:layout_width="36dp"
             android:layout_height="36dp"/>

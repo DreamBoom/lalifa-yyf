@@ -3,10 +3,10 @@ package com.lalifa.main.ext
 import android.content.Context
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
@@ -26,6 +26,8 @@ import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
 import com.opensource.svgaplayer.SVGAVideoEntity
+import per.goweii.layer.core.Layer
+import per.goweii.layer.core.ktx.animator
 import per.goweii.layer.core.ktx.onInitialize
 import per.goweii.layer.dialog.DialogLayer
 import per.goweii.layer.dialog.ktx.*
@@ -180,6 +182,45 @@ fun roomTopDialog(isLike: Boolean, callback: (type: Int) -> Unit = {}) {
             }
             findViewById<LinearLayout>(R.id.ll_gb_room)!!.onClick {
                 callback.invoke(4)
+                dismiss()
+            }
+        }
+        .show()
+}
+
+fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
+    DialogLayer()
+        .contentView(R.layout.popup_set_room)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .onInitialize {
+            findViewById<LinearLayout>(R.id.ll1)!!.onClick {
+                callback.invoke(1)
+                dismiss()
+            }
+            findViewById<LinearLayout>(R.id.ll2)!!.onClick {
+                callback.invoke(2)
+                dismiss()
+            }
+            findViewById<LinearLayout>(R.id.ll3)!!.onClick {
+                callback.invoke(3)
+                dismiss()
+            }
+            findViewById<LinearLayout>(R.id.ll4)!!.onClick {
+                callback.invoke(4)
+                dismiss()
+            }
+            findViewById<LinearLayout>(R.id.ll5)!!.onClick {
+                callback.invoke(5)
+                dismiss()
+            }
+            findViewById<LinearLayout>(R.id.ll6)!!.onClick {
+                callback.invoke(6)
+                dismiss()
+            }
+            findViewById<LinearLayout>(R.id.ll7)!!.onClick {
+                callback.invoke(7)
                 dismiss()
             }
         }

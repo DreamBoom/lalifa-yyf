@@ -27,11 +27,11 @@ import com.lalifa.main.databinding.FragmentRoomListBinding
 import com.lalifa.main.ext.inputPasswordDialog
 import com.lalifa.main.fragment.adapter.roomListAdapter
 import com.lalifa.widget.dialog.dialog.VRCenterDialog
+import com.lalifa.yyf.ext.showTipDialog
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
 class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
-    private var confirmDialog: VRCenterDialog? = null
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -128,14 +128,14 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
             val roomCheck = roomCheck()
             if (null != roomCheck && !TextUtils.isEmpty(roomCheck.RoomId)) {
                 // 说明已经在房间内了，那么给弹窗
-                confirmDialog = VRCenterDialog(requireActivity(), null)
-                confirmDialog!!.replaceContent(
-                    "您正在直播的房间中\n是否返回？", "取消",
-                    { },
-                    "确定",
-                    { jumpRoom(roomCheck.userId, roomCheck.RoomId) }, null
-                )
-                confirmDialog!!.show()
+                showTipDialog("您正在直播的房间中\n是否返回？"){
+                    val userId = roomCheck.userId
+                    if(TextUtils.equals(userId,AccountManager.getCurrentId())){
+                        jumpRoom(true, roomCheck.RoomId)
+                    }else{
+                        jumpRoom(false, roomCheck.RoomId)
+                    }
+                }
             }
         }
     }
@@ -145,10 +145,8 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
      *
      * @param voiceRoomBean
      */
-    private fun jumpRoom(userId: String, roomId: String) {
-        val owner = TextUtils.equals(userId, AccountManager.getCurrentId())
-        jumpToVoiceRoom(roomId, owner, false)
-
+    private fun jumpRoom(owner: Boolean, roomId: String) {
+        jumpToVoiceRoom(roomId, owner)
     }
 
     override fun onDestroy() {
@@ -162,8 +160,8 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
      * @param roomId 房间Id
      * @param owner  是不是房主
      */
-    private fun jumpToVoiceRoom(roomId: String, owner: Boolean, enter: Boolean) {
-        RoomActivity.joinVoiceRoom(requireActivity(), roomId, owner, enter)
+    private fun jumpToVoiceRoom(roomId: String, owner: Boolean) {
+        RoomActivity.joinVoiceRoom(requireActivity(), roomId, owner)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -177,24 +175,24 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
         item: Office,
         isCreate: Boolean
     ) {
-        if (TextUtils.equals(item.uid.toString(), UserManager.get()!!.userId)) {
+        if (TextUtils.equals(item.userId, UserManager.get()!!.userId)) {
             val list: ArrayList<String> = ArrayList()
             list.add(item.roomid)
-            // launchRoomActivity(item.roomid, list, 0, isCreate)
+            jumpRoom(true, item.roomid)
             LogCat.e("进入自己创建的房间====${item.roomid}")
         } else if (item.password_type == 1) {
             inputPasswordDialog() {
                 scopeNetLife {
-                    val roomDetail = roomDetail(item.id.toString())
-                    if (roomDetail != null) {
-                        jumpRoom(item.userId, item.roomid)
-                    }
+//                    val roomDetail = roomDetail(item.id.toString())
+//                    if (roomDetail != null&&) {
+//                        jumpRoom(item.userId, item.roomid)
+//                    }
                 }
             }
             LogCat.e("进入密码房间====${item.roomid}")
         } else {
             LogCat.e("进入非创建无密码房间====${item.roomid}")
-            jumpRoom(item.userId, item.roomid)
+            jumpRoom(false, item.roomid)
         }
     }
 

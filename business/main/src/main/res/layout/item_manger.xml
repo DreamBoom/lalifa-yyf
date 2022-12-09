@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_tm8">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="65dp"
+        android:id="@+id/mHeader"
+        android:layout_height="65dp"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/Round8Style" />
+    <TextView
+        android:id="@+id/mName"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size16"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/mHeader"
+        app:layout_constraintTop_toTopOf="@+id/mHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/mId"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size14"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/mHeader"
+        app:layout_constraintBottom_toBottomOf="@+id/mHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/remove"
+        android:text="删除管理员"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mHeader"
+        app:layout_constraintBottom_toBottomOf="@+id/mHeader"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size14"
+        android:background="@drawable/bg_zs30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

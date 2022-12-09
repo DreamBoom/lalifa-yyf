@@ -151,7 +151,6 @@ class VoiceRoomModel(present: VoiceRoomPresenter?, lifecycle: Lifecycle?) :
     }
 
     override fun onRoomInfoUpdate(rcVoiceRoomInfo: RCVoiceRoomInfo) {
-        Log.e(TAG, "onRoomInfoUpdate: ")
         currentUIRoomInfo.rcRoomInfo = rcVoiceRoomInfo
     }
 

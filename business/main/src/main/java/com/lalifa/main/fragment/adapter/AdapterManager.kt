@@ -3,6 +3,7 @@ package com.lalifa.main.fragment.adapter
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
 import com.drake.brv.BindingAdapter
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
@@ -10,8 +11,10 @@ import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.lalifa.ext.Config
+import com.lalifa.ext.User
 import com.lalifa.extension.*
 import com.lalifa.main.R
+import com.lalifa.main.activity.room.ext.*
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
 
@@ -249,10 +252,10 @@ fun RecyclerView.activeInfoList(): BindingAdapter {
  */
 fun RecyclerView.activeInfo2List(): BindingAdapter {
     return grid(3).setup {
-        addType<ActivityDetail>(R.layout.item_activity2)
+        addType<ActivityDetail>(R.layout.item_activity_two)
         onBind {
             val bean = getModel<ActivityDetail>()
-            getBinding<ItemActivity2Binding>().apply {
+            getBinding<ItemActivityTwoBinding>().apply {
                 im.load(Config.FILE_PATH + bean.goods.image)
             }
         }
@@ -579,16 +582,16 @@ fun RecyclerView.guardAdapter(): BindingAdapter {
         onBind {
             val bean = getModel<GuardBean>()
             getBinding<ItemGuardBinding>().apply {
-                itemNum.text = (layoutPosition+1).toString()
+                itemNum.text = (layoutPosition + 1).toString()
                 itemGuardHeader.load(Config.FILE_PATH + bean.avatar)
                 name.text = bean.userName
                 mId.text = bean.user_id.toString()
                 gxNum.text = "${bean.yield}贡献值"
                 if (bean.gender == 1) {
-                imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
-            } else {
-                imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
-            }
+                    imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                } else {
+                    imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                }
             }
         }
     }
@@ -674,7 +677,7 @@ fun RecyclerView.roomListAdapter(): BindingAdapter {
                 header.load(Config.FILE_PATH + bean.image)
                 name.text = bean.title
                 type.text = bean.type_name
-                if(bean.users.isNotEmpty()){
+                if (bean.users.isNotEmpty()) {
                     userHeader.load(Config.FILE_PATH + bean.image)
                 }
             }
@@ -695,7 +698,7 @@ fun RecyclerView.phAdapter(): BindingAdapter {
         onBind {
             val bean = getModel<RankBean>()
             getBinding<ItemPhBinding>().apply {
-                num.text = "${4+layoutPosition}"
+                num.text = "${4 + layoutPosition}"
                 header.load(Config.FILE_PATH + bean.avatar)
                 name.text = bean.userName
                 cf.text = "财富值:${bean.yield}"
@@ -704,6 +707,134 @@ fun RecyclerView.phAdapter(): BindingAdapter {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
                 } else {
                     sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 主播老板麦位
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.seatBossAdapter(): BindingAdapter {
+    return grid(2).divider {
+        setDivider(8.dp)
+        orientation = DividerOrientation.VERTICAL
+    }.divider {
+        setDivider(35.dp)
+        orientation = DividerOrientation.HORIZONTAL
+    }.setup {
+        //{"audioLevel":0,"mute":false,"speaking":false,"status":0}
+        addType<Seat>(R.layout.layout_seat_item)
+        onBind {
+            val seatInfo = getModel<Seat>()
+            val useing = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing
+            val lock = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
+            getBinding<LayoutSeatItemBinding>().apply {
+                if (useing) {
+                    val account = AccountManager.getAccount(seatInfo.userId)
+                    if (null != account) {
+                        ivPortrait.load(account.avatar, R.mipmap.ic_room_seat)
+                        //麦位上用户名称
+                        memberName.text = account.userName
+                    }
+                } else {
+                    //麦位上用户名称
+                    memberName.text = if (layoutPosition == 0) "主播" else "老板位"
+                }
+                //是否锁定
+                if (lock) seatLocked.visible() else seatLocked.gone()
+                //是否静音
+                if (seatInfo.isMute) seatMute.visible() else seatMute.gone()
+            }
+        }
+    }
+}
+
+/**
+ * 麦位
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.seatAdapter(): BindingAdapter {
+    //{"audioLevel":0,"mute":false,"speaking":false,"status":0}
+    return grid(4).divider {
+        setDivider(8.dp)
+        orientation = DividerOrientation.VERTICAL
+    }.divider {
+        setDivider(25.dp)
+        orientation = DividerOrientation.HORIZONTAL
+    }.setup {
+        addType<Seat>(R.layout.layout_seat_item)
+        onBind {
+            val seatInfo = getModel<Seat>()
+            val useing = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing
+            val lock = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
+            getBinding<LayoutSeatItemBinding>().apply {
+                if (useing) {
+                    val account = AccountManager.getAccount(seatInfo.userId)
+                    if (null != account) {
+                        ivPortrait.load(account.avatar, R.mipmap.ic_room_seat)
+                        //麦位上用户名称
+                        memberName.text = account.userName
+                    }
+                } else {
+                    //麦位上用户名称
+                    memberName.text = "观众"
+                }
+                //是否锁定
+                if (lock) seatLocked.visible() else seatLocked.gone()
+                //是否静音
+                if (seatInfo.isMute) seatMute.visible() else seatMute.gone()
+            }
+        }
+    }
+}
+
+/**
+ * 房间管理员
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+@SuppressLint("SetTextI18n")
+fun RecyclerView.roomManagerAdapter(): BindingAdapter {
+    return linear().setup {
+        addType<User>(R.layout.item_manger)
+        onBind {
+            val bean = getModel<User>()
+            getBinding<ItemMangerBinding>().apply {
+                mHeader.load(Config.FILE_PATH + bean.avatar)
+                mName.text = bean.userName
+                mId.text = bean.user_id.toString()
+            }
+        }
+    }
+}
+
+/**
+ * 房间背景
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.roomBgAdapter(): BindingAdapter {
+    return grid(4).divider {
+        setDivider(8.dp)
+        orientation = DividerOrientation.VERTICAL
+    }.divider {
+        setDivider(8.dp)
+        orientation = DividerOrientation.HORIZONTAL
+    }.setup {
+        addType<RoomBgBean>(R.layout.item_room_bg)
+        onBind {
+            val bean = getModel<RoomBgBean>()
+            getBinding<ItemRoomBgBinding>().apply {
+                itemRoomBg.load(Config.FILE_PATH + bean.image)
+                if (bean.check) {
+                    check.setImageResource(R.drawable.ic_check1)
+                } else {
+                    check.setImageResource(R.drawable.ic_check)
                 }
             }
         }

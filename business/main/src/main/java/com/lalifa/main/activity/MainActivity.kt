@@ -43,6 +43,7 @@ class MainActivity : BaseActivity<ActivityHomeBinding>() {
     }
 
     private fun toInitIm() {
+        AccountManager.setAccount(UserManager.get()!!.toAccount(),true)
         RongIM.connect(UserManager.get()!!.imToken, object : RongIMClient.ConnectCallback() {
             override fun onSuccess(t: String) {
 

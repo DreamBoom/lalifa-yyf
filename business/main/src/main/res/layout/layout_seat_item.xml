@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="0dp"
-    android:layout_weight="1"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/iv_portrait"
+        android:id="@+id/ivPortrait"
         android:layout_width="56dp"
+        android:scaleType="fitXY"
         android:layout_height="56dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bg_seat_empty"
+        android:background="@mipmap/ic_room_seat"
         app:layout_constraintBottom_toTopOf="@+id/member_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +24,8 @@
         android:layout_marginBottom="3dp"
         android:scaleType="centerCrop"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/iv_portrait"
-        app:layout_constraintEnd_toEndOf="@+id/iv_portrait"
+        app:layout_constraintBottom_toBottomOf="@id/ivPortrait"
+        app:layout_constraintEnd_toEndOf="@+id/ivPortrait"
         app:srcCompat="@mipmap/ic_is_mute"
         tools:visibility="visible" />
 
@@ -38,8 +38,8 @@
         android:background="@drawable/bg_lock"
         android:scaleType="centerCrop"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/iv_portrait"
-        app:layout_constraintLeft_toLeftOf="@+id/iv_portrait"
+        app:layout_constraintBottom_toBottomOf="@id/ivPortrait"
+        app:layout_constraintLeft_toLeftOf="@+id/ivPortrait"
         app:srcCompat="@mipmap/ic_seat_locked"
         tools:visibility="visible" />
 
@@ -53,38 +53,8 @@
         android:textAlignment="textStart"
         android:textColor="@color/black"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/member_extra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_portrait"
-        tools:text="@string/app_name" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/member_extra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textAlignment="textStart"
-        android:textColor="@color/black"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/member_audio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/member_name"
-        tools:text="@string/app_name" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/member_audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:textAlignment="textStart"
-        android:textColor="@color/black"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/member_extra"
+        app:layout_constraintTop_toBottomOf="@+id/ivPortrait"
         tools:text="@string/app_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

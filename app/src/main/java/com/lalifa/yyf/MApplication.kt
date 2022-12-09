@@ -15,6 +15,7 @@ import com.lalifa.api.InitNet
 import com.lalifa.base.BaseApplication
 import com.lalifa.ext.*
 import com.lalifa.ext.Config.Companion.parser
+import com.lalifa.main.activity.room.message.*
 import com.lalifa.utils.ImPushUtil
 import com.lalifa.utils.SystemUtil
 import com.lalifa.yyf.BuildConfig.YYF
@@ -99,6 +100,18 @@ class MApplication : BaseApplication() {
         RongExtensionManager.getInstance().extensionConfig = MyGiftConfig()
         initToast()
         InitNet.initNetHttp(this)
+        initMessageType()
+    }
+
+
+    private fun initMessageType(){
+        //初始化消息类型
+        RongIMClient.registerMessageType(
+            object : java.util.ArrayList<Class<out MessageContent?>?>() {
+                init {
+                    add(RCChatroomBarrage::class.java)
+                }
+            })
     }
     //表情库
     class MyEmojiProvider : EmojiProvider {
@@ -118,4 +131,5 @@ class MApplication : BaseApplication() {
             val emojiProviderInstance = MyEmojiProvider()
         }
     }
+
 }

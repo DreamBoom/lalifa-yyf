@@ -574,11 +574,11 @@ suspend fun CoroutineScope.collection(id: String): String? {
 }
 
 /**
- * 收藏取消房间
+ * 编辑房间信息
  * @return
  */
 suspend fun CoroutineScope.editRoom(
-    id: String, title: String, image: String,
+    id: String, title: String, image: String,background_id: String,
     background: String, passwordType: String,
     password: String, notice: String
 ): String? {
@@ -587,6 +587,7 @@ suspend fun CoroutineScope.editRoom(
         param("title", title)
         param("image", image)
         param("background", background)
+        param("background_id", background_id)
         param("password_type", passwordType)
         param("password", password)
         param("notice", notice)
@@ -707,6 +708,16 @@ suspend fun CoroutineScope.getManage(id:String): MutableList<User>? {
 suspend fun CoroutineScope.getMembers(id:String): MutableList<User>? {
     return Post<BaseBean<MutableList<User>>>("chat_room/members") {
         param("id", id)
+    }.await().data
+}
+
+/**
+ * 获取房间背景列表
+ *
+ * @return
+ */
+suspend fun CoroutineScope.getRoomBg(): MutableList<RoomBgBean>? {
+    return Post<BaseBean<MutableList<RoomBgBean>>>("chat_room/background") {
     }.await().data
 }
 
