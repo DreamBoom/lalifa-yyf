@@ -9,6 +9,8 @@ import com.lalifa.utils.ObjToSP;
 
 import java.util.List;
 
+import io.rong.imkit.RongIM;
+
 /**
  * @author: BaiCQ
  * @ClassName: UserManager
@@ -34,6 +36,10 @@ public class UserManager extends ObjToSP<User> {
 
     public static void logout() {
         _manager.clear();
+        //允许推送
+      //  RongIM.getInstance().disconnect();
+        //不允许推送
+        RongIM.getInstance().logout();
         //通知ui
         List<IBasis> iBasess = UIStack.getInstance().getIbasiss();
         for (IBasis b : iBasess) {

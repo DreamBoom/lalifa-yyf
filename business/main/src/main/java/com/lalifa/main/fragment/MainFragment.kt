@@ -1,6 +1,7 @@
 package com.lalifa.main.fragment
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,11 +9,14 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.load
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.main.R
 import com.lalifa.main.activity.*
+import com.lalifa.main.activity.room.RoomActivity
+import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.api.Captain
 import com.lalifa.main.api.Host
 import com.lalifa.main.api.Room
@@ -40,20 +44,14 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         initData()
     }
 
-    private fun launchRoomActivity(
-        roomId: String, roomIds: ArrayList<String>, position: Int, isCreate: Boolean
-    ) {
-        // 如果在其他房间有悬浮窗，先关闭再跳转
-//        MiniRoomManager.getInstance().finish(
-//            roomId
-//        ) {
-//            IntentWrap.launchRoom(
-//                requireContext(),
-//                roomIds,
-//                position,
-//                isCreate
-//            )
-//        }
+    /**
+     * 跳转到语聊房界面
+     *
+     * @param roomId 房间Id
+     * @param owner  是不是房主
+     */
+    private fun jumpRoom(owner: Boolean, roomId: String) {
+        RoomActivity.joinVoiceRoom(requireActivity(), roomId, owner)
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,26 +62,32 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
             binding.apply {
                 mList1.mainList1().apply {
                     R.id.itemRoom.onClick {
-                        val roomId = getModel<Captain>().roomid
-                        val list: ArrayList<String> = ArrayList()
-                        list.add(roomId)
-                        launchRoomActivity(roomId, list, 0, false)
+                        val room = getModel<Captain>()
+                        if(TextUtils.equals(room.userId, AccountManager.getCurrentId())){
+                            jumpRoom(true, room.roomid)
+                        }else{
+                            jumpRoom(false, room.roomid)
+                        }
                     }
                 }.models = index!!.captain
                 mList2.mainList2().apply {
                     R.id.itemRoom.onClick {
-                        val roomId = getModel<Host>().roomid
-                        val list: ArrayList<String> = ArrayList()
-                        list.add(roomId)
-                        launchRoomActivity(roomId, list, 0, false)
+                        val room = getModel<Host>()
+                        if(TextUtils.equals(room.userId, AccountManager.getCurrentId())){
+                            jumpRoom(true, room.roomid)
+                        }else{
+                            jumpRoom(false, room.roomid)
+                        }
                     }
                 }.models = index.host
                 mList3.mainList3().apply {
                     R.id.rl.onClick {
-                        val roomId = getModel<Room>().roomid
-                        val list: ArrayList<String> = ArrayList()
-                        list.add(roomId)
-                        launchRoomActivity(roomId, list, 0, false)
+                        val room = getModel<Room>()
+                        if(room.uid==UserManager.get()!!.id){
+                            jumpRoom(true, room.roomid)
+                        }else{
+                            jumpRoom(false, room.roomid)
+                        }
                     }
                 }.models = index.room
                 gg.text = "${index.notice.n_title}:${index.notice.n_message_content}"

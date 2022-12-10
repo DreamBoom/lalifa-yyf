@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountManager {
-    private final static List<Account> accounts = new ArrayList<>(16);
+    private final static List<Account> accounts = new ArrayList<>(500);
 
     private static String currentId;//当前账号
 

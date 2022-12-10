@@ -1,10 +1,9 @@
 package com.lalifa.main.ext
 
-import android.content.Context
 import android.text.TextUtils
 import android.view.Gravity
-import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +14,16 @@ import com.drake.brv.utils.setup
 import com.drake.tooltip.toast
 import com.lalifa.ext.Config
 import com.lalifa.ext.Config.Companion.parser
-import com.lalifa.extension.*
+import com.lalifa.ext.User
+import com.lalifa.ext.UserManager
+import com.lalifa.extension.double
+import com.lalifa.extension.dp
+import com.lalifa.extension.load
+import com.lalifa.extension.onClick
 import com.lalifa.main.R
 import com.lalifa.main.api.Exchange
 import com.lalifa.main.api.GoodInfoBean
+import com.lalifa.main.api.Member
 import com.lalifa.main.api.Spec
 import com.lalifa.main.databinding.ItemCzBinding
 import com.lalifa.main.databinding.ItemDayBinding
@@ -26,11 +31,11 @@ import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
 import com.opensource.svgaplayer.SVGAVideoEntity
-import per.goweii.layer.core.Layer
-import per.goweii.layer.core.ktx.animator
 import per.goweii.layer.core.ktx.onInitialize
 import per.goweii.layer.dialog.DialogLayer
-import per.goweii.layer.dialog.ktx.*
+import per.goweii.layer.dialog.ktx.backgroundDimDefault
+import per.goweii.layer.dialog.ktx.contentView
+import per.goweii.layer.dialog.ktx.gravity
 import java.net.URL
 
 
@@ -221,6 +226,90 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
             }
             findViewById<LinearLayout>(R.id.ll7)!!.onClick {
                 callback.invoke(7)
+                dismiss()
+            }
+        }
+        .show()
+}
+
+//管理查看麦位
+fun roomUserDialog(user: Member, callback: (type: Int) -> Unit = {}) {
+    DialogLayer()
+        .contentView(R.layout.popup_info)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .onInitialize {
+            findViewById<TextView>(R.id.name)!!.text = user.userName
+            findViewById<TextView>(R.id.mId)!!.text = "ID:${user.userId}"
+            findViewById<TextView>(R.id.level)!!.text = user.level
+            val sex = findViewById<ImageView>(R.id.sex)
+            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH+user.avatar)
+            if (UserManager.get()!!.gender == 0) {
+                sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+            } else {
+                sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+            }
+            val gz = findViewById<TextView>(R.id.gz)
+            findViewById<ImageView>(R.id.popClose)!!.onClick { dismiss() }
+            gz!!.text = if (user.isFollow) "取消关注" else "关注"
+            gz.onClick {
+
+                dismiss()
+            }
+            findViewById<TextView>(R.id.at)!!.onClick {
+                callback.invoke(1)
+                dismiss()
+            }
+            findViewById<TextView>(R.id.message)!!.onClick {
+                callback.invoke(2)
+                dismiss()
+            }
+            findViewById<TextView>(R.id.send)!!.onClick {
+                callback.invoke(3)
+                dismiss()
+            }
+            findViewById<TextView>(R.id.ac1)!!.onClick {
+                callback.invoke(4)
+                dismiss()
+            }
+            findViewById<TextView>(R.id.ac2)!!.onClick {
+                callback.invoke(5)
+                dismiss()
+            }
+            findViewById<TextView>(R.id.ac3)!!.onClick {
+                callback.invoke(6)
+                dismiss()
+            }
+            findViewById<TextView>(R.id.ac4)!!.onClick {
+                callback.invoke(7)
+                dismiss()
+            }
+        }
+        .show()
+}
+
+//本人查看麦位
+fun roomMyDialog(user: User,callback: () -> Unit = {}) {
+    DialogLayer()
+        .contentView(R.layout.popup_info_me)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .onInitialize {
+            findViewById<TextView>(R.id.name)!!.text = user.userName
+            findViewById<TextView>(R.id.mId)!!.text = "ID:${user.userId}"
+            findViewById<TextView>(R.id.level)!!.text = user.level
+            val sex = findViewById<ImageView>(R.id.sex)
+            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH+user.avatar)
+            if (UserManager.get()!!.gender == 0) {
+                sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+            } else {
+                sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+            }
+            findViewById<ImageView>(R.id.popClose)!!.onClick { dismiss() }
+            findViewById<TextView>(R.id.out)!!.onClick {
+                callback()
                 dismiss()
             }
         }

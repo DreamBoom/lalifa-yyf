@@ -26,7 +26,7 @@ import com.lalifa.yyf.ext.showTipDialog
 class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
     override fun getViewBinding() = ActivityRoomSettingBinding.inflate(layoutInflater)
     private var id = ""
-    private var title = ""
+    private var mTitle = ""
     private var image = ""
     private var background = ""
     private var background_id = ""
@@ -44,7 +44,7 @@ class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
             )
         )
         id = room!!.id.toString()
-        title = room.title
+        mTitle = room.title
         image = room.image
         background = room.background
         background_id = room.background_id
@@ -53,7 +53,7 @@ class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
         notice = room.notice
         binding.apply {
             roomHeader.load(Config.FILE_PATH + room.image)
-            tvName.text = title
+            tvName.text = mTitle
             roomGg.text = notice
             tvPass.text = password
             if (password_type == "0") open.isChecked = true else noOpen.isChecked = true
@@ -97,7 +97,7 @@ class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
             roomHeader.onClick { changeImg() }
             llName.onClick {
                 showInputDialog(l = 24) {
-                    title = it
+                    mTitle = it
                     tvName.text = it
                     up()
                 }
@@ -150,7 +150,7 @@ class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
     private fun up() {
        loadTag!!.show()
         scopeNetLife {
-            val editRoom = editRoom(id, title, image, background_id,background,
+            val editRoom = editRoom(id, mTitle, image, background_id,background,
                 password_type, password, notice)
             if (null != editRoom) {
                 isChange = true

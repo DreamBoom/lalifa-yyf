@@ -17,6 +17,7 @@ import com.lalifa.main.R
 import com.lalifa.main.activity.room.ext.*
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
+import com.lalifa.utils.ImageLoader
 
 /**
  * 商城
@@ -742,6 +743,7 @@ fun RecyclerView.seatBossAdapter(): BindingAdapter {
                     }
                 } else {
                     //麦位上用户名称
+                    ivPortrait.loadLocal(R.mipmap.ic_room_seat)
                     memberName.text = if (layoutPosition == 0) "主播" else "老板位"
                 }
                 //是否锁定
@@ -782,6 +784,7 @@ fun RecyclerView.seatAdapter(): BindingAdapter {
                     }
                 } else {
                     //麦位上用户名称
+                    ivPortrait.loadLocal(R.mipmap.ic_room_seat)
                     memberName.text = "观众"
                 }
                 //是否锁定

@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String nickname;//昵称
     private String mobile;//手机号
     private String avatar;//头像
+    private String level;//爵位
     private int score;//账户余额
     private String imToken;//融云TOKEN
     private String userId;
@@ -40,6 +41,7 @@ public class User implements Serializable {
                 ", nickname='" + nickname + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", level='" + level + '\'' +
                 ", score=" + score +
                 ", imToken='" + imToken + '\'' +
                 ", userId='" + userId + '\'' +
@@ -74,6 +76,14 @@ public class User implements Serializable {
 
     public void setAuthorization(String authorization) {
 
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public int getId() {

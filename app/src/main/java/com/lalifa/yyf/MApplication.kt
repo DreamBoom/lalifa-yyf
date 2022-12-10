@@ -1,5 +1,6 @@
 package com.lalifa.yyf
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.text.TextUtils
@@ -29,11 +30,12 @@ import io.rong.imkit.conversation.extension.RongExtensionManager
 import io.rong.imlib.RongCoreClient
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.MessageContent
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MApplication : BaseApplication() {
-
     companion object {
-        private lateinit var INSTANCE: BaseApplication
+        private lateinit var INSTANCE: MApplication
         fun get() = INSTANCE
     }
 
@@ -54,6 +56,7 @@ class MApplication : BaseApplication() {
         modes!!.clear()
         modes!!.add(YYF!!.toString())
         manager().onInit()
+        ActivityManager.getInstance().init(this)
         initConfig()
     }
     private var modes: MutableList<String?>? = null

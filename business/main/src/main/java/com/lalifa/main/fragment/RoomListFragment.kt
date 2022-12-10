@@ -141,27 +141,18 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
     }
 
     /**
-     * 跳转到相应的房间
-     *
-     * @param voiceRoomBean
-     */
-    private fun jumpRoom(owner: Boolean, roomId: String) {
-        jumpToVoiceRoom(roomId, owner)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
-
-    /**
      * 跳转到语聊房界面
      *
      * @param roomId 房间Id
      * @param owner  是不是房主
      */
-    private fun jumpToVoiceRoom(roomId: String, owner: Boolean) {
+    private fun jumpRoom(owner: Boolean, roomId: String) {
         RoomActivity.joinVoiceRoom(requireActivity(), roomId, owner)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

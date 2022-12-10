@@ -34,6 +34,17 @@ import com.lalifa.widget.XBaseAdapter
  * @Date 2021/12/24 17:10
  *
  */
+
+/**
+ * 加载图片
+ * @receiver ImageView
+ * @param url String
+ * @param resourceId Int
+ */
+fun ImageView.loadLocal(resourceId: Int = R.drawable.mx_common_divider) {
+    Glide.with(this.context).load(resourceId).into(this)
+}
+
 /**
  * 加载图片
  * @receiver ImageView

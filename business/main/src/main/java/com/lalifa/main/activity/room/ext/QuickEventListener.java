@@ -28,10 +28,6 @@ import io.rong.imlib.model.Message;
 
 public class QuickEventListener implements RCVoiceRoomEventListener {
 
-    public interface MessageObserver {
-        void onMessage(Message message);
-    }
-
     public interface SeatListObserver {
         void onSeatList(List<Seat> seatInfos);
     }
@@ -48,7 +44,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     private final static Object obj = new Object();
     private SeatListObserver seatListObserver;
-    private MessageObserver messageObserver;
     private RoomInforObserver roomInforObserver;
     private SeatObserver seatObserver;
     private static String TAG = "======";
@@ -80,14 +75,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         mSeatInfos = new ArrayList<>();
         mAudienceIds = new ArrayList<>();
         return this;
-    }
-    /**
-     * 监听消息
-     *
-     * @param observer
-     */
-    public void observeMessage(MessageObserver observer) {
-        this.messageObserver = observer;
     }
 
     /**
@@ -234,7 +221,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     @Override
     public void onSeatInfoUpdate(List<RCVoiceSeatInfo> list) {
         int count = list.size();
-        LogCat.e(TAG, "更新麦位: count = " + count);
         synchronized (obj) {
             mSeatInfos.clear();
             for (int i = 0; i < count; i++) {
@@ -326,7 +312,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     @Override
     public void onMessageReceived(Message message) {
         LogCat.e("onMessageReceived==="+message.toString());
-        if (null != messageObserver) messageObserver.onMessage(message);
     }
 
     /**

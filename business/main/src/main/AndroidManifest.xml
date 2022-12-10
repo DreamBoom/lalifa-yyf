@@ -11,11 +11,9 @@
     <application>
         <activity
             android:name=".activity.room.ManageListActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"/>
         <activity
             android:name=".activity.room.RoomSettingActivity"
             android:exported="false" /> <!-- 微信支付 -->

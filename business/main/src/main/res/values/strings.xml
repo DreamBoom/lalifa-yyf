@@ -6,4 +6,5 @@
     <string name="main_me">我的</string>
     <string name="active">活动规则： \n1.领取奖励后，物品发放到背包中 \n2.本活动时间有效</string>
     <string name="my_gift">礼物</string>
+    <string name="ta">\@TA</string>
 </resources>

@@ -12,7 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_bg"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/Round4Style" />

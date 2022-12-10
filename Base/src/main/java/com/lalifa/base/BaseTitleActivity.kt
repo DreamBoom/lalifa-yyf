@@ -28,9 +28,6 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
     private lateinit var mainBinding: CommonLayoutBinding
     lateinit var binding: T
     public var TAG = "=======>"
-    open fun mFinish() {
-        finish()
-    }
 
     //标题文本
     open fun title(): String = ""

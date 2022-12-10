@@ -14,6 +14,8 @@ public class Member implements Serializable {
     private String userId;
     private String userName;
     private String avatar;
+    private String level;
+    private int gender;
     // 是否是管理
     private int manageType = 0;
     // 是否已关注
@@ -71,6 +73,22 @@ public class Member implements Serializable {
 
     public void setSeatIndex(int seatIndex) {
         this.seatIndex = seatIndex;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     @Override

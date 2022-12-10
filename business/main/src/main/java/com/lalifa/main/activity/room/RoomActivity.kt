@@ -4,12 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.text.TextUtils
 import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
 import cn.rongcloud.voiceroom.model.RCVoiceRoomInfo
 import com.drake.brv.BindingAdapter
 import com.drake.logcat.LogCat
-import com.drake.logcat.LogCat.e
 import com.drake.net.utils.scopeNetLife
 import com.kit.utils.KToast
 import com.lalifa.base.BaseActivity
@@ -22,25 +19,26 @@ import com.lalifa.main.activity.room.ext.NotificationService
 import com.lalifa.main.activity.room.ext.QuickEventListener.*
 import com.lalifa.main.activity.room.ext.Seat
 import com.lalifa.main.activity.room.ext.VoiceRoomApi
-import com.lalifa.main.activity.room.message.RCChatroomBarrage
 import com.lalifa.main.activity.room.widght.CreateRoomDialog
 import com.lalifa.main.activity.room.widght.InputBar
 import com.lalifa.main.activity.room.widght.InputBarDialog
-import com.lalifa.main.api.RoomDetailBean
-import com.lalifa.main.api.collection
-import com.lalifa.main.api.getMembers
-import com.lalifa.main.api.roomDetail
+import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityRoomBinding
 import com.lalifa.main.ext.roomBottomDialog
+import com.lalifa.main.ext.roomMyDialog
 import com.lalifa.main.ext.roomTopDialog
+import com.lalifa.main.ext.roomUserDialog
 import com.lalifa.main.fragment.adapter.seatAdapter
 import com.lalifa.main.fragment.adapter.seatBossAdapter
-import com.lalifa.widget.dialog.dialog.VRCenterDialog
 import com.lalifa.yyf.ext.showTipDialog
-import io.rong.imlib.*
+import io.rong.imkit.IMCenter
+import io.rong.imkit.MessageInterceptor
+import io.rong.imlib.IRongCallback
+import io.rong.imlib.RongIMClient
 import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import io.rong.imlib.model.MessageContent
+import io.rong.imlib.model.ReceivedProfile
 import io.rong.message.TextMessage
 
 
@@ -51,7 +49,7 @@ import io.rong.message.TextMessage
  * 3.房主上麦 seatIndex = 0
  */
 class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
-    RoomInforObserver, MessageObserver, CreateRoomDialog.CreateRoomCallBack {
+    RoomInforObserver, CreateRoomDialog.CreateRoomCallBack, MessageInterceptor {
     companion object {
         const val ACTION_ROOM = 1000
         private const val KET_ROOM_ID = "room_id"
@@ -80,8 +78,8 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         //设置监听
         get().observeSeatList(this)
         get().observeRoomInfo(this)
-        get().observeMessage(this)
         get().register(this, owner)
+        IMCenter.getInstance().setMessageInterceptor(this)
         joinRoom()
     }
 
@@ -90,12 +88,110 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     private fun init() {
         seatBoss = binding.seatBoss.seatBossAdapter().apply {
             R.id.ivPortrait.onClick {
-                toast("选择上麦观众")
+                clickSeat(true, layoutPosition)
             }
         }
         seat = binding.rlSeat.seatAdapter().apply {
             R.id.ivPortrait.onClick {
-                toast("选择上麦观众")
+                clickSeat(false,layoutPosition)
+            }
+        }
+    }
+
+    //点击麦位逻辑
+    private fun clickSeat(isBoss: Boolean, position: Int) {
+        //主播老板位
+        if (isBoss) {
+            val models = seatBoss!!.getModel<Seat>(position)
+            if(models.userId == AccountManager.getCurrentId()){
+                //展示本人
+                roomMyDialog(UserManager.get()!!){
+                    VoiceRoomApi.getApi().leaveSeat(true,null)
+                }
+                return
+            }
+            if (null != models&&mRoomDetail!!.manage_type==1) {
+                scopeNetLife {
+                    val userInfo = userInfo(models.userId.noEN(), roomId!!.noEN())
+                    if (null != userInfo) {
+                        roomUserDialog(userInfo) {
+                            when (it) {
+                                1 -> {
+                                    //@ta
+                                }
+                                2 -> {
+                                    //发消息
+                                }
+                                3 -> {
+                                    //送礼物
+                                }
+                                4 -> {
+                                    //抱下麦
+                                }
+                                5 -> {
+                                    //闭麦
+                                }
+                                6 -> {
+                                    //禁言
+                                }
+                                7 -> {
+                                    //踢出房间
+                                }
+                            }
+                        }
+                    } else {
+                        toast("获取用户信息失败")
+                    }
+                }
+            } else {
+                //申请上麦
+
+            }
+        } else {
+            //观众位
+            val models = seat!!.getModel<Seat>(position)
+            if(models.userId == AccountManager.getCurrentId()){
+                //展示本人
+                roomMyDialog(UserManager.get()!!){
+                    VoiceRoomApi.getApi().leaveSeat(true,null)
+                }
+                return
+            }
+            if (null != models&&mRoomDetail!!.manage_type==1) {
+                scopeNetLife {
+                    val userInfo = userInfo(models.userId.noEN(), roomId!!.noEN())
+                    if (null != userInfo) {
+                        roomUserDialog(userInfo) {
+                            when (it) {
+                                1 -> {
+                                    //@ta
+                                }
+                                2 -> {
+                                    //发消息
+                                }
+                                3 -> {
+                                    //送礼物
+                                }
+                                4 -> {
+                                    //抱下麦
+                                }
+                                5 -> {
+                                    //闭麦
+                                }
+                                6 -> {
+                                    //禁言
+                                }
+                                7 -> {
+                                    //踢出房间
+                                }
+                            }
+                        }
+                    } else {
+                        toast("获取用户信息失败")
+                    }
+                }
+            } else {
+                //申请上麦
             }
         }
     }
@@ -291,11 +387,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 }
                 3 -> {
                     //房间管理
-                    if(null!=mRoomDetail){
+                    if (null != mRoomDetail) {
                         startCode(RoomSettingActivity::class.java) {
                             putExtra("room", mRoomDetail!!)
                         }
-                    }else{
+                    } else {
                         toast("获取房间信息，请稍后重试")
                     }
                 }
@@ -305,8 +401,8 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 }
                 5 -> {
                     //管理员
-                    start(ManageListActivity::class.java){
-                        putExtra("roomId",roomId)
+                    start(ManageListActivity::class.java) {
+                        putExtra("roomId", roomId)
                     }
                 }
                 6 -> {
@@ -377,46 +473,73 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         val conversationType = Conversation.ConversationType.CHATROOM
         val messageContent = TextMessage.obtain(content)
         val message = Message.obtain(targetId, conversationType, messageContent)
-
         RongIMClient.getInstance()
-            .sendMessage(message, null, null, object : IRongCallback.ISendMessageCallback {
-                override fun onAttached(message: Message) {}
-                override fun onSuccess(message: Message) {}
-                override fun onError(message: Message, errorCode: RongIMClient.ErrorCode) {}
+            .sendMessage(message, null, null, object :
+                IRongCallback.ISendMessageCallback {
+                override fun onAttached(message: Message) {
+                    LogCat.e("===onAttached=$message")
+                }
+
+                override fun onSuccess(message: Message) {
+                    LogCat.e("===onSuccess=$message")
+                }
+
+                override fun onError(message: Message, errorCode: RongIMClient.ErrorCode) {
+                    LogCat.e("===onError=$message===$errorCode")
+                }
             })
-
-
-//        RongCoreClient.getInstance().sendMessage(
-//            Conversation.ConversationType.CHATROOM, roomId, content,
-//            null,
-//            null,
-//            object : IRongCoreCallback.ISendMessageCallback {
-//                override fun onAttached(message: Message) {
-//                    LogCat.e("===onAttached=$message")
-//                }
-//                override fun onSuccess(message: Message) {
-//                    LogCat.e("===onSuccess=$message")
-//                }
-//                override fun onError(message: Message, coreErrorCode:
-//                IRongCoreEnum.CoreErrorCode) {
-//                    LogCat.e("===onError=$message===$coreErrorCode")
-//                }
-//            })
-    }
-
-    override fun onMessage(message: Message?) {
-        e("====888888" + message!!.toString())
-        if (message!!.conversationType == Conversation.ConversationType.CHATROOM) {
-            LogCat.e("=====222==$message")
-        }
     }
 
     //创建房间成功返回
     override fun onCreateSuccess(roomId: String?) {
 
     }
+
     //创建房间退出
     override fun onCreateExist(roomId: String?) {
 
+    }
+
+    override fun interceptReceivedMessage(
+        message: Message?,
+        left: Int,
+        hasPackage: Boolean,
+        offline: Boolean
+    ): Boolean {
+        LogCat.e("====000===$message")
+        return true
+    }
+
+    override fun interceptOnSendMessage(message: Message?): Boolean {
+        LogCat.e("====111SendMessage===$message")
+        return true
+    }
+
+    override fun interceptOnSentMessage(message: Message?): Boolean {
+        LogCat.e("====222SentMessage===$message")
+        return true
+    }
+
+    override fun interceptOnInsertOutgoingMessage(
+        type: Conversation.ConversationType?,
+        targetId: String?,
+        sentStatus: Message.SentStatus?,
+        content: MessageContent?,
+        sentTime: Long
+    ): Boolean {
+        LogCat.e("====333===$content")
+        return true
+    }
+
+    override fun interceptOnInsertIncomingMessage(
+        type: Conversation.ConversationType?,
+        targetId: String?,
+        senderId: String?,
+        receivedStatus: Message.ReceivedStatus?,
+        content: MessageContent?,
+        sentTime: Long
+    ): Boolean {
+        LogCat.e("====444=$senderId=$targetId=$content")
+        return true
     }
 }

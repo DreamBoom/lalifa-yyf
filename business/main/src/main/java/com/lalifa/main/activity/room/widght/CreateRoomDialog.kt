@@ -9,13 +9,19 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.drake.brv.BindingAdapter
 import com.drake.net.utils.scopeNet
+import com.drake.net.utils.scopeNetLife
 import com.drake.tooltip.toast
 import com.google.android.material.imageview.ShapeableImageView
 import com.lalifa.extension.*
 import com.lalifa.main.R
+import com.lalifa.main.api.RoomBgBean
 import com.lalifa.main.api.createRoom
+import com.lalifa.main.api.getRoomBg
 import com.lalifa.main.api.upload
+import com.lalifa.main.fragment.adapter.roomBgAdapter
 import com.lalifa.utils.UiUtils
 import com.lalifa.widget.ChineseLengthFilter
 import com.lalifa.widget.dialog.BottomDialog
@@ -34,10 +40,14 @@ class CreateRoomDialog(
     private val mCreateRoomCallBack: CreateRoomCallBack
 ) : BottomDialog(activity as FragmentActivity?) {
     //封面
-    private var mImUrl: String? = null
+    private var mImUrl: String = ""
+    //背景
+    private var mBgUrl: String = ""
     private var mImView: ShapeableImageView? = null
     private var mRoomNameEditText: EditText? = null
     private var mLoading: LoadTag? = null
+    private var background_id = ""
+    private var background = ""
     var type = 1
     var mPattern = "微信"
     var mRank = "青铜"
@@ -101,6 +111,35 @@ class CreateRoomDialog(
         mRoomNameEditText = contentView.findViewById(R.id.et_room_name)
         mRoomNameEditText!!.filters = arrayOf<InputFilter>(ChineseLengthFilter(20))
         mLoading = LoadTag(mActivity, "加载中")
+        val bgList = contentView.findViewById<RecyclerView>(R.id.bgList)
+        apply = bgList.roomBgAdapter().apply {
+            R.id.itemRoomBg.onClick {
+                data.forEach {
+                    it.check = false
+                }
+                data[layoutPosition].check = true
+                background_id = data[layoutPosition].id.toString()
+                background = data[layoutPosition].image
+                apply!!.models = data
+            }
+        }
+        getBg()
+    }
+
+    var apply: BindingAdapter?=null
+    var data :MutableList<RoomBgBean> = ArrayList()
+    private fun getBg(){
+        mLoading!!.show()
+        scopeNet {
+            val roomBg = getRoomBg()
+            if(null!=roomBg&&roomBg.isNotEmpty()){
+                data = roomBg
+                apply!!.models = data
+                mLoading!!.dismiss()
+            } else{
+                mLoading!!.dismiss()
+            }
+        }
     }
 
     /**
@@ -135,8 +174,6 @@ class CreateRoomDialog(
     private fun create(roomName: String, mImUrl: String) {
         mLoading!!.show()
         scopeNet {
-//            id:String,type:String,label:String,rank:String,explain:String,
-//            background:String,pattern:String,
             val createRoom =
                 createRoom(
                     roomId!!.noEN(), type.toString(),

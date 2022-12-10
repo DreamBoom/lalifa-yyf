@@ -1,12 +1,12 @@
 package com.lalifa.main.activity.me
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
+import com.lalifa.ext.ActivityManager
 import com.lalifa.ext.Config
 import com.lalifa.ext.UserManager
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.extension.toast
-import com.lalifa.groupavatars.cache.DiskLruCacheHelper
 import com.lalifa.main.activity.login.ForgetPasswordActivity
 import com.lalifa.main.activity.login.LoginActivity
 import com.lalifa.main.databinding.ActivitySettingBinding
@@ -15,8 +15,6 @@ import com.lalifa.utils.ImPushUtil
 import com.lalifa.utils.SPUtil
 import com.lalifa.yyf.ext.showTipDialog
 import java.util.*
-import kotlin.collections.HashMap
-import kotlin.concurrent.thread
 
 class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
     override fun getViewBinding() = ActivitySettingBinding.inflate(layoutInflater)
@@ -64,7 +62,8 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         ImPushUtil.getInstance(this@SettingActivity).logout()
                         SPUtil.set(Config.IS_LOGIN, false)
                         toast("注销成功！")
-                        mFinish()
+                        ActivityManager.getInstance()
+                            .finishAllActivities(LoginActivity::class.java)
                         start(LoginActivity::class.java)
                     }
                 }
@@ -76,8 +75,9 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         ImPushUtil.getInstance(this@SettingActivity).logout()
                         SPUtil.set(Config.IS_LOGIN, false)
                         toast("退出成功！")
-                        mFinish()
-                        start(LoginActivity::class.java)
+                        ActivityManager.getInstance()
+                            .finishAllActivities(LoginActivity::class.java)
+                        //start(LoginActivity::class.java)
                     }
                 }
             }

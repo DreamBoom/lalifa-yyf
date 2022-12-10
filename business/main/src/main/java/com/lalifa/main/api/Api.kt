@@ -393,7 +393,6 @@ suspend fun CoroutineScope.cheInfo(id: Int): CheInfoBean? {
  * @return CheInfoBean?
  */
 suspend fun CoroutineScope.upChe(content: String, image: List<String>): CheInfoBean? {
-    LogCat.e("==111===" + image.string())
     return Post<BaseBean<CheInfoBean>>("user/dynamic") {
         param("content", content)
         param("image", image.string())
