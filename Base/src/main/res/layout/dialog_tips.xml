@@ -5,7 +5,7 @@
     android:layout_gravity="center"
     android:layout_marginStart="38dp"
     android:layout_marginEnd="38dp"
-    android:background="@drawable/shape_round12_zs"
+    android:background="@drawable/bg_zs"
     android:orientation="vertical">
 
     <TextView

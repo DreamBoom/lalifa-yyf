@@ -21,6 +21,7 @@ import com.lalifa.extension.dp
 import com.lalifa.extension.load
 import com.lalifa.extension.onClick
 import com.lalifa.main.R
+import com.lalifa.main.activity.room.ext.Tool
 import com.lalifa.main.api.Exchange
 import com.lalifa.main.api.GoodInfoBean
 import com.lalifa.main.api.Member
@@ -244,7 +245,7 @@ fun roomUserDialog(user: Member, callback: (type: Int) -> Unit = {}) {
             findViewById<TextView>(R.id.mId)!!.text = "ID:${user.userId}"
             findViewById<TextView>(R.id.level)!!.text = user.level
             val sex = findViewById<ImageView>(R.id.sex)
-            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH+user.avatar)
+            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
             if (UserManager.get()!!.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
             } else {
@@ -290,7 +291,7 @@ fun roomUserDialog(user: Member, callback: (type: Int) -> Unit = {}) {
 }
 
 //本人查看麦位
-fun roomMyDialog(user: User,callback: () -> Unit = {}) {
+fun roomMyDialog(user: User, callback: () -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.popup_info_me)
         .gravity(Gravity.BOTTOM)
@@ -301,7 +302,7 @@ fun roomMyDialog(user: User,callback: () -> Unit = {}) {
             findViewById<TextView>(R.id.mId)!!.text = "ID:${user.userId}"
             findViewById<TextView>(R.id.level)!!.text = user.level
             val sex = findViewById<ImageView>(R.id.sex)
-            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH+user.avatar)
+            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
             if (UserManager.get()!!.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
             } else {
@@ -309,6 +310,39 @@ fun roomMyDialog(user: User,callback: () -> Unit = {}) {
             }
             findViewById<ImageView>(R.id.popClose)!!.onClick { dismiss() }
             findViewById<TextView>(R.id.out)!!.onClick {
+                callback()
+                dismiss()
+            }
+        }
+        .show()
+}
+
+//麦位申请
+fun requestSeatDialog(state: Int, callback: () -> Unit = {}) {
+    DialogLayer()
+        .contentView(R.layout.pop_seat_request)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .onInitialize {
+            val title = findViewById<TextView>(R.id.tvTitle)!!
+            val request = findViewById<TextView>(R.id.request)!!
+            when(state){
+                Tool.STATUS_HAVE_SEAT->{
+                    title.text = "下麦"
+                    request.text = "从当前麦位下麦"
+                }
+                Tool.STATUS_NOT_ON_SEAT->{
+                    title.text = "申请上麦"
+                    request.text = "申请上麦当前麦位"
+                }
+                Tool.STATUS_WAIT_FOR_SEAT->{
+                    title.text = "已申请上麦"
+                    request.text = "撤回连线申请"
+                }
+            }
+            findViewById<TextView>(R.id.cancel)!!.onClick { dismiss() }
+            request.onClick {
                 callback()
                 dismiss()
             }

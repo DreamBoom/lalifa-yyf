@@ -551,6 +551,10 @@ data class GiftBean(
  */
 data class RoomDetailBean(
     /**
+     * 1:可加入零号麦 0不可加入零号麦
+     */
+    var wheat_type:Int,
+    /**
      * 公告
      */
     var notice:String = "",

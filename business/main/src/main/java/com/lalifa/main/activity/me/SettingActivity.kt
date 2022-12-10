@@ -55,7 +55,7 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                 val cacheSize = CacheDataManager.getTotalCacheSize(this@SettingActivity)
                 cache.text = cacheSize
             }
-            zx.onClick {                 //注销账号
+            zx.onClick {
                 showTipDialog("注销账号将删除所有账户信息，确定要注销吗？") {
                     scopeNetLife {
                         UserManager.logout()
@@ -68,7 +68,7 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                     }
                 }
             }
-            logOut.onClick {                 //注销账号
+            logOut.onClick {
                 showTipDialog("确定退出当前账户？") {
                     scopeNetLife {
                         UserManager.logout()
@@ -77,7 +77,7 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         toast("退出成功！")
                         ActivityManager.getInstance()
                             .finishAllActivities(LoginActivity::class.java)
-                        //start(LoginActivity::class.java)
+                        start(LoginActivity::class.java)
                     }
                 }
             }
