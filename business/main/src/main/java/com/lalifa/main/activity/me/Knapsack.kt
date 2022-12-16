@@ -1,9 +1,11 @@
 package com.lalifa.main.activity.me
 
 import android.annotation.SuppressLint
+import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.models
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
+import com.lalifa.extension.toast
 import com.lalifa.main.R
 import com.lalifa.main.fragment.adapter.goodsList
 import com.lalifa.main.fragment.adapter.knapsackList
@@ -19,34 +21,43 @@ class Knapsack : BaseTitleActivity<ActivityKnapsackBinding>() {
         initData()
     }
 
-    private val list = arrayListOf<KnapsackInfo>()
+
+    private fun initData() {
+        getData()
+    }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun initData() {
+    private fun getData(){
         scopeNetLife {
             val shop = knapsack()
             binding.apply {
                 typeList.apply {
                     knapsackList().apply {
                         R.id.im.onClick {
-                            val bean = getModel<Classify>()
-                            list.clear()
-                            list.addAll(bean.knapsack)
-                            //goodList.adapter!!.notifyDataSetChanged()
-                            goodList.models = list
+                            goodList.bindingAdapter.models = getModel<Classify>().knapsack
                         }
                     }
-                    models = shop!![0].classify
-                }
-                list.clear()
-                for (item in shop!![0].classify) {
-                    list.addAll(item.knapsack)
+                    models = shop!!.classify
                 }
                 goodList.apply {
                     knapsacksList().apply {
-                        models = list
+                        models = shop!!.classify[0].knapsack
+                        R.id.use.onClick {
+                            useMyDress(getModel<KnapsackInfo>().id.toString())
+                        }
                     }
                 }
+            }
+        }
+    }
+
+    private fun useMyDress(id:String){
+        scopeNetLife {
+            val useDress = useDress(id)
+            if(null!=useDress){
+                getData()
+            }else{
+                toast("使用异常，请重新尝试")
             }
         }
     }

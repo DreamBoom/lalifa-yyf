@@ -67,19 +67,23 @@
     <!--    房主 老板位 信息 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/seatBossList"
+        android:orientation="horizontal"
+        tools:listitem="@layout/layout_seat_item"
         app:layout_constraintTop_toBottomOf="@+id/roomHeader"
         android:layout_width="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="82dp"/>
 
     <!--    麦位列表-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rl_seat"
+        android:orientation="horizontal"
+        tools:listitem="@layout/layout_seat_item"
         android:layout_width="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="0dp"
+        android:layout_height="164dp"
         app:layout_constraintTop_toBottomOf="@+id/seatBossList" />
     <!--    消息列表-->
     <androidx.recyclerview.widget.RecyclerView
@@ -89,7 +93,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/rl_seat" />
-
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_seat"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="10dp"
+        app:banner_indicator_gravity="center"
+        app:banner_indicator_normal_color="#80FFFFFF"
+        app:banner_indicator_normal_width="6dp"
+        app:banner_indicator_selected_color="#FFFFFF"
+        app:banner_indicator_selected_width="6dp"
+        app:banner_indicator_space="6dp"
+        app:banner_radius="4dp" />
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svgGift"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl_seat"
+        app:layout_constraintBottom_toTopOf="@+id/btLl"
+        app:autoPlay="true"
+        app:loopCount="0" />
     <TextView
         android:id="@+id/task"
         android:text="任务"
@@ -149,6 +175,7 @@
             android:textColor="@color/white"
             android:textSize="12sp" />
         <ImageView
+            android:id="@+id/gift"
             android:layout_marginStart="35dp"
             android:background="@drawable/ic_send_gift"
             android:layout_width="36dp"
@@ -207,4 +234,10 @@
             android:textSize="25sp"
             android:textStyle="bold" />
     </RelativeLayout>
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svgIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoPlay="true"
+        app:loopCount="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,14 +35,8 @@ class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
     private var password = ""
     private var notice = ""
 
-    var loadTag: LoadTag?=null
     override fun initView() {
         val room = getIntentSerializable<RoomDetailBean>("room")
-        loadTag = LoadTag(
-            this, this.getString(
-                R.string.text_loading
-            )
-        )
         id = room!!.id.toString()
         mTitle = room.title
         image = room.image

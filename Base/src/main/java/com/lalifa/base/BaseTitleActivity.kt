@@ -15,6 +15,7 @@ import com.lalifa.base.databinding.CommonLayoutBinding
 import com.lalifa.base.databinding.CommonTopBarBinding
 import com.lalifa.extension.applyVisible
 import com.lalifa.extension.onClick
+import com.lalifa.widget.loading.LoadTag
 
 /**
  *
@@ -53,8 +54,14 @@ abstract class BaseTitleActivity<T : ViewBinding>() : AppCompatActivity() {
     open fun topBar(): CommonTopBarBinding = mainBinding.topBar
 
     var mContext: Context? = null
+    var loadTag: LoadTag?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadTag = LoadTag(
+            this,getString(
+                R.string.text_loading
+            )
+        )
         mContext = this
         mainBinding = CommonLayoutBinding.inflate(LayoutInflater.from(this))
         setContentView(mainBinding.root)

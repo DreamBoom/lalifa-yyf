@@ -15,6 +15,10 @@ public class Member implements Serializable {
     private String userName;
     private String avatar;
     private String level;
+    private String frame;//头像框
+    private String car;//座驾
+    private String bubble;//气泡
+    private String sound;//音波
     private int gender;
     // 是否是管理
     private int manageType = 0;
@@ -89,6 +93,46 @@ public class Member implements Serializable {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getFrame() {
+        return frame;
+    }
+
+    public void setFrame(String frame) {
+        this.frame = frame;
+    }
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
+    }
+
+    public String getBubble() {
+        return bubble;
+    }
+
+    public void setBubble(String bubble) {
+        this.bubble = bubble;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
     }
 
     @Override

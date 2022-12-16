@@ -3,19 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="82dp">
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivPortrait"
-        android:layout_width="56dp"
+        android:layout_width="40dp"
         android:scaleType="fitXY"
-        android:layout_height="56dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="40dp"
         android:background="@mipmap/ic_room_seat"
-        app:layout_constraintBottom_toTopOf="@+id/member_name"
+        app:layout_constraintBottom_toBottomOf="@+id/wvoice"
+        app:layout_constraintEnd_toEndOf="@+id/wvoice"
+        app:layout_constraintStart_toStartOf="@+id/wvoice"
+        app:layout_constraintTop_toTopOf="@+id/wvoice"
+        app:shapeAppearance="@style/CircleStyle"/>
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/wvoice"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearance="@style/CircleStyle"/>
+        app:autoPlay="true"
+        app:loopCount="0" />
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svg"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:autoPlay="true"
+        app:loopCount="0" />
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/seat_mute"
         android:layout_width="15dp"
@@ -47,7 +64,6 @@
         android:id="@+id/member_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAlignment="textStart"
@@ -55,6 +71,6 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPortrait"
+        app:layout_constraintTop_toBottomOf="@+id/wvoice"
         tools:text="@string/app_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

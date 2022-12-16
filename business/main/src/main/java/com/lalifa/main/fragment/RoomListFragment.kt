@@ -7,16 +7,17 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.get
 import com.drake.brv.BindingAdapter
+import com.drake.brv.utils.bindingAdapter
+import com.drake.brv.utils.page
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
 import com.lalifa.ext.UserManager
-import com.lalifa.extension.load
-import com.lalifa.extension.onClick
-import com.lalifa.extension.start
+import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.MainSearchActivity
 import com.lalifa.main.activity.PHActivity
@@ -28,6 +29,7 @@ import com.lalifa.main.ext.inputPasswordDialog
 import com.lalifa.main.fragment.adapter.roomListAdapter
 import com.lalifa.widget.dialog.dialog.VRCenterDialog
 import com.lalifa.yyf.ext.showTipDialog
+import com.squareup.picasso.Callback.EmptyCallback
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
@@ -37,8 +39,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
         container: ViewGroup?
     ) = FragmentRoomListBinding.inflate(layoutInflater)
 
-    var apply: BindingAdapter? = null
-
+    private var type = 1
     @SuppressLint("SetTextI18n")
     override fun initView() {
         binding.apply {
@@ -67,51 +68,31 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
                         }).indicator = CircleIndicator(context)
                 }
             }
-            apply = xrvRoom.roomListAdapter().apply {
-                R.id.itemRoom.onClick {
-                    clickItem(getModel(), false)
+            xrvRoom.apply {
+                roomListAdapter().apply {
+                    R.id.itemRoom.onClick {
+                        clickItem(getModel(), false)
+                    }
                 }
-            }
-            layoutRefresh.setOnRefreshListener {
-                page = 1
-                loadRoomList()
-            }
-            layoutRefresh.setOnLoadMoreListener {
-                loadRoomList()
+                page().onRefresh {
+                    scopeNetLife {
+                        addData(roomList(type.toString(), index.toString())!!.office)
+                    }
+//                    if (isRefreshing) {
+//                        loadRoomList()
+//                    }
+                }.autoRefresh()
             }
         }
         checkUserRoom()
-        loadRoomList()
     }
 
-    private var page = 1
-    private var type = 1
-    private var list = ArrayList<Office>()
-    private fun loadRoomList() {
-        scopeNetLife {
-            val roomList = roomList(type.toString(), page.toString())
-            if (roomList != null) {
-                if (page == 1) {
-                    binding.layoutRefresh.finishRefresh()
-                    list.clear()
-                } else {
-                    binding.layoutRefresh.finishLoadMore()
-                }
-                if (roomList.count == 10) {
-                    page++
-                }
-                list.addAll(roomList.office)
-                apply!!.models = list
-            }
-        }
-    }
 
     override fun onClick() {
         super.onClick()
         binding.apply {
             search.onClick { start(MainSearchActivity::class.java) }
             ph.onClick { start(PHActivity::class.java) }
-            layoutEmpty.onClick { loadRoomList() }
         }
     }
 
@@ -130,7 +111,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
                 // 说明已经在房间内了，那么给弹窗
                 showTipDialog("您正在直播的房间中\n是否返回？"){
                     val userId = roomCheck.userId
-                    if(TextUtils.equals(userId,AccountManager.getCurrentId())){
+                    if(TextUtils.equals(userId,AccountManager.currentId)){
                         jumpRoom(true, roomCheck.RoomId)
                     }else{
                         jumpRoom(false, roomCheck.RoomId)
@@ -158,7 +139,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == RoomActivity.ACTION_ROOM) {
-            loadRoomList()
+         //   loadRoomList()
         }
     }
 

@@ -3,20 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lalifa.yyf">
     <!-- Required -->
-    <permission
-        android:name="com.lalifa.yyf.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature"
-        tools:ignore="UniquePermission" />
-    <uses-permission android:name="com.lalifa.yyf.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="com.lalifa.yyf.permission.JPUSH_MESSAGE"
+        tools:ignore="WrongManifestParent" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 适配Android13，弹出通知必须权限-->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- Optional. Required for location feature -->
     <!-- 为了提高sdk识别唯一用户的能力，保证消息推送的精准送达，建议集成以下权限（可选）-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -60,6 +59,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="ScopedStorage"
             android:value="true" />
@@ -85,7 +85,8 @@
         <!-- Since JCore2.0.0 Required SDK核心功能-->
         <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
         <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
-        <service android:name=".jpush.JPushService"
+        <service
+            android:name=".jpush.JPushService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -100,7 +101,7 @@
         <receiver
             android:name=".jpush.JPushReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="com.lalifa.yyf" />

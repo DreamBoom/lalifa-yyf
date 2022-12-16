@@ -155,14 +155,14 @@ class ApiFunDialogHelper {
         }
         refresh.layoutManager = LinearLayoutManager(dialog!!.context)
         adapter.setRefreshView(refresh)
-        scopeNet {
-            getMembers(roomId!!.noEN())?.forEach {
-                //将自己排除
-                if (!it.userId.equals(AccountManager.getCurrentId())) {
-                    AccountManager.setAccount(it.toAccount(), false)
-                }
-            }
-        }
+//        scopeNet {
+//            getMembers(roomId!!.noEN())?.forEach {
+//                //将自己排除
+//                if (!it.userId.equals(AccountManager.currentId)) {
+//                    AccountManager.setAccount(it.toAccount(), false)
+//                }
+//            }
+//        }
         adapter.setData(AccountManager.getAccounts(), true)
         dialog!!.replaceContent(
             title,
@@ -207,7 +207,7 @@ class ApiFunDialogHelper {
             for (a in accounts) {
                 val id = a.userId
                 // 排除自己
-                if (id != AccountManager.getCurrentId() && QuickEventListener.get().audienceIds.contains(
+                if (id != AccountManager.currentId && QuickEventListener.get().audienceIds.contains(
                         a.userId
                     )
                 ) {

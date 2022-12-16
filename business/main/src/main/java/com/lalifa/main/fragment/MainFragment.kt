@@ -34,13 +34,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = ViewMainHomeBinding.inflate(layoutInflater)
-    var loadTag:LoadTag?=null
     override fun initView() {
-         loadTag = LoadTag(
-            activity, requireActivity().getString(
-                R.string.text_loading
-            )
-        )
         initData()
     }
 
@@ -63,7 +57,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
                 mList1.mainList1().apply {
                     R.id.itemRoom.onClick {
                         val room = getModel<Captain>()
-                        if(TextUtils.equals(room.userId, AccountManager.getCurrentId())){
+                        if(TextUtils.equals(room.userId, AccountManager.currentId)){
                             jumpRoom(true, room.roomid)
                         }else{
                             jumpRoom(false, room.roomid)
@@ -73,7 +67,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
                 mList2.mainList2().apply {
                     R.id.itemRoom.onClick {
                         val room = getModel<Host>()
-                        if(TextUtils.equals(room.userId, AccountManager.getCurrentId())){
+                        if(TextUtils.equals(room.userId, AccountManager.currentId)){
                             jumpRoom(true, room.roomid)
                         }else{
                             jumpRoom(false, room.roomid)

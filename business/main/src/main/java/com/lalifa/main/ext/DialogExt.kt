@@ -194,13 +194,15 @@ fun roomTopDialog(isLike: Boolean, callback: (type: Int) -> Unit = {}) {
         .show()
 }
 
-fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
+fun roomBottomDialog(showIn:Boolean,callback: (type: Int) -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.popup_set_room)
         .gravity(Gravity.BOTTOM)
         .backgroundDimDefault()
         .setOutsideTouchToDismiss(true)
         .onInitialize {
+            val tvShowIn = findViewById<TextView>(R.id.tvShowIn)
+            tvShowIn!!.text = if(showIn) "礼物动画关闭" else "礼物动画开启"
             findViewById<LinearLayout>(R.id.ll1)!!.onClick {
                 callback.invoke(1)
                 dismiss()
@@ -303,14 +305,23 @@ fun roomMyDialog(user: User, callback: () -> Unit = {}) {
             findViewById<TextView>(R.id.level)!!.text = user.level
             val sex = findViewById<ImageView>(R.id.sex)
             findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
-            if (UserManager.get()!!.gender == 0) {
+            val svg = findViewById<SVGAImageView>(R.id.svg)!!
+            if(!TextUtils.isEmpty(user.frame)){
+               MUtils.loadSvg(svg,user.frame!!){
+
+               }
+            }
+            if (user.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
             } else {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
             }
-            findViewById<ImageView>(R.id.popClose)!!.onClick { dismiss() }
+            findViewById<ImageView>(R.id.popClose)!!.onClick {
+                svg.clear()
+                dismiss() }
             findViewById<TextView>(R.id.out)!!.onClick {
                 callback()
+                svg.clear()
                 dismiss()
             }
         }
@@ -328,13 +339,9 @@ fun requestSeatDialog(state: Int, callback: () -> Unit = {}) {
             val title = findViewById<TextView>(R.id.tvTitle)!!
             val request = findViewById<TextView>(R.id.request)!!
             when(state){
-                Tool.STATUS_HAVE_SEAT->{
-                    title.text = "下麦"
-                    request.text = "从当前麦位下麦"
-                }
                 Tool.STATUS_NOT_ON_SEAT->{
                     title.text = "申请上麦"
-                    request.text = "申请上麦当前麦位"
+                    request.text = "申请上麦"
                 }
                 Tool.STATUS_WAIT_FOR_SEAT->{
                     title.text = "已申请上麦"

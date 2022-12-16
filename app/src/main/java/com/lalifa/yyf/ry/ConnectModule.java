@@ -11,7 +11,6 @@ import com.lalifa.ext.UserManager;
 import com.lalifa.utils.GsonUtil;
 import com.lalifa.utils.KToast;
 import com.lalifa.utils.UIKit;
-import com.lalifa.wapper.IResultBack;
 import com.lalifa.yyf.ry.shumei.RCDeviceMessage;
 import com.lalifa.yyf.ry.shumei.RCSMMessage;
 
@@ -94,36 +93,6 @@ public class ConnectModule implements IModule {
         if (TextUtils.isEmpty(imToken)) {
             return;
         }
-        //兼容踢web端，需要先上报状态，才能连接 否则web端无法接收到服务分发的设备消息
-        reportDevice(new IResultBack<Boolean>() {
-            @Override
-            public void onResult(Boolean aBoolean) {
-                if (!aBoolean) return;
-                UIKit.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 用户已登录则连接im
-                        RongIM.connect(imToken, new RongIMClient.ConnectCallback() {
-                            @Override
-                            public void onSuccess(String t) {
-                                LogCat.e(TAG, "connect#onSuccess:" + t);
-                            }
-
-                            @Override
-                            public void onError(RongIMClient.ConnectionErrorCode e) {
-                                LogCat.e(TAG, "connect#onError:" + GsonUtil.obj2Json(e));
-                            }
-
-                            @Override
-                            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
-                                LogCat.e(TAG, "connect#onDatabaseOpened:code = " + code);
-                            }
-                        });
-                    }
-                }, 200);
-            }
-        });
-
     }
 
     @Override
@@ -133,25 +102,5 @@ public class ConnectModule implements IModule {
     @Override
     public void onRegisterMessageType() {
         RongIMClient.registerMessageType(Arrays.asList(RCDeviceMessage.class, RCSMMessage.class));
-    }
-
-    /**
-     * 上报设备状态，处理自定登录踢除web端
-     */
-    private static void reportDevice(IResultBack<Boolean> resultBack) {
-        //todo 222
-//        OkApi.post(DEVICE, null, new WrapperCallBack() {
-//            @Override
-//            public void onError(int code, String msg) {
-//                LogCat.e(TAG, "reportDevice#onError code  = " + code + " message = " + msg);
-//                if (null != resultBack) resultBack.onResult(false);
-//            }
-//
-//            @Override
-//            public void onResult(Wrapper result) {
-//                LogCat.e(TAG, "reportDevice#onResult code  = " + result.getCode() + " message = " + result.getMessage());
-//                if (null != resultBack) resultBack.onResult(null != result && result.ok());
-//            }
-//        });
     }
 }

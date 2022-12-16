@@ -24,7 +24,7 @@
                 android:id="@+id/rc_conversation_portrait"
                 android:layout_width="@dimen/rc_conversation_portrait_size"
                 android:layout_height="@dimen/rc_conversation_portrait_size"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY" />
 
 
             <RelativeLayout

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:background="@color/textColor2">
+
+    <ImageView
+        android:id="@+id/popClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingHorizontal="10dp"
+        android:layout_gravity="end"
+        android:src="@mipmap/icon_close_white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/peopleList"
+        android:paddingHorizontal="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tab_layout"
+        app:tl_tab_space_equal="true"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        app:tl_indicator_color="#3888F6"
+        app:tl_indicator_corner_radius="3dp"
+        app:tl_indicator_height="3dp"
+        app:tl_indicator_width="14sp"
+        app:tl_textBold="SELECT"
+        app:tl_textSelectColor="@color/white"
+        app:tl_textUnselectColor="#888A9C"
+        app:tl_textsize="16sp" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/map_viewPager"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/t1"
+            android:text="钻石："
+            android:textSize="@dimen/size16"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:text="0"
+            android:textSize="@dimen/size18"
+            android:textColor="@color/red"
+            android:padding="8dp"
+            android:drawablePadding="5dp"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/t1"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:background="@drawable/bg_tm30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="120dp"
+            android:layout_height="35dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

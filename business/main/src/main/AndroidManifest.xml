@@ -11,9 +11,9 @@
     <application>
         <activity
             android:name=".activity.room.ManageListActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:exported="false"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.room.RoomSettingActivity"
             android:exported="false" /> <!-- 微信支付 -->
@@ -30,6 +30,9 @@
         <activity
             android:name=".activity.MySxActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.room.AdActivity"
+            android:exported="false"/>
         <activity
             android:name=".activity.room.RoomActivity"
             android:exported="false" />

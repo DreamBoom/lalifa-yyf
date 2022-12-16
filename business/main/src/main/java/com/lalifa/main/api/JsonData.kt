@@ -1,6 +1,8 @@
 package com.lalifa.main.api
 
+import com.lalifa.ext.Account
 import com.lalifa.ext.User
+import com.lalifa.ext.UserManager
 import java.io.Serializable
 
 /**
@@ -161,12 +163,15 @@ data class KnapsackBean(
 data class Classify(
     val id: Int,
     val knapsack: ArrayList<KnapsackInfo>,
-    val name: String
+    val name: String,
+    val image: String
 )
 
 data class KnapsackInfo(
     val id: Int,
-    val name: String
+    val type: Int,
+    val name: String,
+    val image: String
 )
 
 /**
@@ -177,10 +182,13 @@ data class UserInfoBean(
     val avatar: String,
     val bio: String,
     val birthday: String,
+    val bubble: String,
+    val car: String,
     val core_currency: String,
     val core_drill: String,
     val fans: Int,
     val follow: Int,
+    val frame: String,
     val friends: Int,
     val gender: Int,
     val id: Int,
@@ -189,8 +197,35 @@ data class UserInfoBean(
     val logintime_text: String,
     val patron_saint: Int,
     val prevtime_text: String,
+    val sound: String,
     val userName: String
-)
+){
+     fun toUser(){
+        UserManager.get()!!.userName = userName
+        UserManager.get()!!.avatar = avatar
+        UserManager.get()!!.frame = frame
+        UserManager.get()!!.car = car
+        UserManager.get()!!.bubble = bubble
+        UserManager.get()!!.sound = sound
+        UserManager.get()!!.level = level
+        UserManager.get()!!.score = core_drill.toDouble()
+        UserManager.get()!!.sound = sound
+        UserManager.get()!!.sound = sound
+    }
+        fun toAccount(): Account {
+            return Account(
+                UserManager.get()!!.userId!!,
+                userName,
+                avatar,
+                UserManager.get()!!.imToken!!,
+                frame,
+                car,
+                bubble,
+                sound
+            )
+        }
+
+}
 
 /**
  * @Des 钱包列表
@@ -553,15 +588,15 @@ data class RoomDetailBean(
     /**
      * 1:可加入零号麦 0不可加入零号麦
      */
-    var wheat_type:Int,
+    var wheat_type: Int,
     /**
      * 公告
      */
-    var notice:String = "",
+    var notice: String = "",
     /**
      * 1 可以创建队伍 else 不可以
      */
-    var establish_type:Int,
+    var establish_type: Int,
     /**
      * 房主信息
      */
@@ -584,10 +619,6 @@ data class RoomDetailBean(
      */
     var advertisement: List<Advertisement>,
     /**
-     * 盲盒
-     */
-    var blind_box: List<BlindBox>,
-    /**
      * 1：收藏  0：未收藏
      */
     var collection_type: Int,
@@ -599,14 +630,7 @@ data class RoomDetailBean(
      * 车队房间列表
      */
     var fleet: List<Any>,
-    /**
-     * 礼物
-     */
-    var gift: List<Gift1>,
-    /**
-     * 礼包
-     */
-    var gift_bag: List<GiftBag>,
+
     /**
      * 礼盒礼包开启次数
      */
@@ -623,10 +647,7 @@ data class RoomDetailBean(
      * 房间头像
      */
     var image: String,
-    /**
-     * 背包
-     */
-    var knapsack: List<Any>,
+
     /**
      * 1：管理员  0：不是
      */
@@ -656,79 +677,63 @@ data class RoomDetailBean(
      */
     var title: String,
     /**
-     * 背包总价值
-     */
-    var total_price: Int,
-    /**
      * 房主ID
      */
     var uid: Int
-):Serializable
+) : Serializable
 
 data class Advertisement(
     var details: String,
     var id: Int,
     var image: String
-):Serializable
+) : Serializable
 
 data class BlindBox(
     var id: Int,
     var image: String,
     var name: String,
     var price: String
-):Serializable
+) : Serializable
 
 data class Gift1(
     var image: String,
     var name: String,
     var price: String
-):Serializable
+) : Serializable
 
 data class GiftBag(
     var id: Int,
     var image: String,
     var name: String,
     var price: String
-):Serializable
+) : Serializable
 
 data class GiftBoxFrequency(
     var frequency: String,
     var id: Int,
     var name: String
-):Serializable
+) : Serializable
 
 data class GiftFrequency(
     var frequency: String,
     var id: Int,
     var name: String
-):Serializable
+) : Serializable
+
 /**
  * @Des 房间详情
  */
 data class RoomGiftBean(
-    val blind_box: List<RoomBlindBox>,
-    val gift: List<RoomGift>,
-    val gift_bag: List<RoomGiftBag>,
+    val blind_box: List<RoomGift>,//盲盒
+    val gift: List<RoomGift>,//礼物
+    val gift_bag: List<RoomGift>, //礼包
+    val knapsack: List<RoomGift>, //背包
     val gift_box_frequency: List<RoomGiftBoxFrequency>,
     val gift_frequency: List<RoomGiftFrequency>,
-    val knapsack: List<Any>,
     val total_price: Int
 )
 
-data class RoomBlindBox(
-    val id: Int,
-    val image: String,
-    val name: String,
-    val price: String
-)
-
 data class RoomGift(
-    val image: String,
-    val name: String,
-    val price: String
-)
-
-data class RoomGiftBag(
     val id: Int,
     val image: String,
     val name: String,
@@ -781,6 +786,7 @@ data class Notice1(
     var n_title: String,
     var status: Int
 )
+
 /**
  * @Des 聊天室列表
  */
@@ -789,7 +795,7 @@ data class RoomListBean(
     var office: List<Office>
 )
 
-data class Office (
+data class Office(
     var uid: Int,
     var id: Int,
     var image: String,
@@ -802,6 +808,7 @@ data class Office (
     var type_name: String,
     var users: List<Any>
 )
+
 /**
  * @Des 排行榜
  */
@@ -826,7 +833,16 @@ data class WxPayBean(
 )
 
 data class RoomBgBean(
-    var check:Boolean = false,
+    var check: Boolean = false,
     val id: Int,
     val image: String
+)
+
+
+data class ManageListBean(
+    val avatar: String,
+    val id: Int,
+    val manage_type: Int,
+    val member_id: Int,
+    val userName: String
 )

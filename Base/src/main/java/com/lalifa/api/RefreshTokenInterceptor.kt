@@ -1,6 +1,5 @@
 package com.lalifa.api
 
-import android.os.UserManager
 import com.drake.net.Net
 import com.lalifa.ext.Config
 import com.lalifa.utils.SPUtil
@@ -17,7 +16,7 @@ class RefreshTokenInterceptor : Interceptor {
         val response = chain.proceed(request) // 如果token失效
 
         return synchronized(RefreshTokenInterceptor::class.java) {
-            val isLogin = SPUtil.getBoolean(Config.IS_LOGIN)
+            val isLogin = SPUtil.getBoolean(Config.IS_LOGIN, false)
             if (response.code == 401 && isLogin && !request.url.pathSegments.contains("token")) {
                 chain.proceed(request)
             } else {

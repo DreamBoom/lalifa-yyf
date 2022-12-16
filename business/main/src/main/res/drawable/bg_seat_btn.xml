@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+      ~ Copyright © 2021 RongCloud. All rights reserved.
+      -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+android:shape="rectangle">
+<gradient
+    android:startColor="#fff1bd68"
+    android:endColor="#ffff9d48"
+    android:type="linear" />
+<corners android:radius="56dp" />
+</shape>

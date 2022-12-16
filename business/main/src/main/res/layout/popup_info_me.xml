@@ -31,11 +31,20 @@
         android:scaleType="fitXY"
         android:layout_height="55dp"
         android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/svg"
+        app:layout_constraintStart_toStartOf="@+id/svg"
+        app:layout_constraintTop_toTopOf="@+id/svg"
+        app:layout_constraintBottom_toBottomOf="@+id/svg"
+        app:shapeAppearance="@style/CircleStyle" />
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svg"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearance="@style/CircleStyle" />
-
+        app:autoPlay="true"
+        app:loopCount="0" />
     <TextView
         android:id="@+id/level"
         android:layout_width="wrap_content"

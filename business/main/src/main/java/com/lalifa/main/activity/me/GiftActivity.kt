@@ -22,7 +22,7 @@ class GiftActivity : BaseTitleActivity<ActivityGiftBinding>() {
     override fun initView() {
         binding.apply {
             UserManager.get().apply {
-                header.load(Config.FILE_PATH + this?.avatar)
+                header.load(Config.FILE_PATH + this!!.avatar)
                 name.text = this?.userName
             }
             scopeNetLife {

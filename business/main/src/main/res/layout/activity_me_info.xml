@@ -35,14 +35,25 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/header"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="-15dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:scaleType="fitXY"
-        app:shapeAppearance="@style/CircleStyle"
+        app:layout_constraintBottom_toBottomOf="@+id/svg"
+        app:layout_constraintEnd_toEndOf="@+id/svg"
+        app:layout_constraintStart_toStartOf="@+id/svg"
+        app:layout_constraintTop_toTopOf="@+id/svg"
+        app:shapeAppearance="@style/CircleStyle" />
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svg"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginVertical="30dp"
+        android:layout_marginStart="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bgTop" />
+        app:layout_constraintTop_toBottomOf="@+id/bgTop"
+        app:autoPlay="true"
+        app:loopCount="0"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/name"
@@ -52,9 +63,9 @@
         android:text="泡泡"
         android:textColor="@color/white"
         android:textSize="@dimen/font_16"
-        app:layout_constraintBottom_toBottomOf="@+id/header"
-        app:layout_constraintStart_toEndOf="@+id/header"
-        app:layout_constraintTop_toTopOf="@+id/header" />
+        app:layout_constraintBottom_toBottomOf="@+id/svg"
+        app:layout_constraintStart_toEndOf="@+id/svg"
+        app:layout_constraintTop_toTopOf="@+id/svg" />
 
     <ImageView
         android:id="@+id/sex"

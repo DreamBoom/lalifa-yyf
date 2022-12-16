@@ -99,8 +99,19 @@ suspend fun CoroutineScope.upload(list: ArrayList<String>): ArrayList<String> {
  * @receiver CoroutineScope
  * @return KnapsackBean?
  */
-suspend fun CoroutineScope.knapsack(): List<KnapsackBean>? {
-    return Post<BaseBean<List<KnapsackBean>>>("user/knapsack") {
+suspend fun CoroutineScope.knapsack(): KnapsackBean? {
+    return Post<BaseBean<KnapsackBean>>("user/knapsack") {
+    }.await().data
+}
+
+/**
+ * 使用背包物品
+ * @receiver CoroutineScope
+ * @return KnapsackBean?
+ */
+suspend fun CoroutineScope.useDress(id:String): String? {
+    return Post<BaseBean<String>>("user/use_dress_up") {
+        param("id", id)
     }.await().data
 }
 
@@ -691,12 +702,49 @@ suspend fun CoroutineScope.userInfo(id:String,office_id:String): Member? {
  * @param id
  * @return
  */
-suspend fun CoroutineScope.getManage(id:String): MutableList<User>? {
-    return Post<BaseBean<MutableList<User>>>("chat_room/manage") {
+suspend fun CoroutineScope.getManageList(id:String): MutableList<ManageListBean>? {
+    return Post<BaseBean<MutableList<ManageListBean>>>("chat_room/manage") {
         param("office_id", id)
     }.await().data
 }
 
+/**
+ * 搜索管理员
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.getManage(userId:String,roomId:String): MutableList<ManageListBean>? {
+    return Post<BaseBean<MutableList<ManageListBean>>>("chat_room/search_manage") {
+        param("userId", userId)
+        param("office_id", roomId)
+    }.await().data
+}
+
+/**
+ * 添加管理员
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.addManage(userId:String,roomId:String): String? {
+    return Post<BaseBean<String>>("chat_room/add_manage") {
+        param("uid", userId)
+        param("office_id", roomId)
+    }.await().data
+}
+/**
+ * 删除管理员
+ *
+ * @param id
+ * @return
+ */
+suspend fun CoroutineScope.removeManage(userId:String,roomId:String): String? {
+    return Post<BaseBean<String>>("chat_room/del_manage") {
+        param("id", userId)
+        param("office_id", roomId)
+    }.await().data
+}
 
 /**
  * 获取房间内成员列表
@@ -717,6 +765,18 @@ suspend fun CoroutineScope.getMembers(id:String): MutableList<User>? {
  */
 suspend fun CoroutineScope.getRoomBg(): MutableList<RoomBgBean>? {
     return Post<BaseBean<MutableList<RoomBgBean>>>("chat_room/background") {
+    }.await().data
+}
+
+/**
+ * 举报房间
+ *
+ * @return
+ */
+suspend fun CoroutineScope.reportRoom(roomId:String,content:String): String? {
+    return Post<BaseBean<String>>("chat_room/report") {
+        param("room_id", roomId)
+        param("content", content)
     }.await().data
 }
 

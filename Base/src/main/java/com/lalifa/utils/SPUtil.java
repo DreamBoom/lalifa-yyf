@@ -183,9 +183,10 @@ public class SPUtil {
      * 获取键对应的值，找不到则返回""
      *
      * @param key key
+     * @param b
      * @return value
      */
-    public static boolean getBoolean(String key) {
+    public static boolean getBoolean(String key, boolean b) {
         return get(SP_FILE_NAME, key, false);
     }
 

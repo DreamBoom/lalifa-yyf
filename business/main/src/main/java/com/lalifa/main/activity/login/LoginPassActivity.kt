@@ -68,7 +68,6 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                     ) { i, s, set -> }
                     UserManager.save(user)
                     SPUtil.set(Config.IS_LOGIN, true)
-                    AccountManager.setAccount(user.toAccount(), true)
                     start(MainActivity::class.java){
                         putExtra("initIm",true)
                     }

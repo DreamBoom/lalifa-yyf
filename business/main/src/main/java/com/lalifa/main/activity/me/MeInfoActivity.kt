@@ -21,7 +21,12 @@ import com.lalifa.main.databinding.ActivityGiftBinding
 import com.lalifa.main.databinding.ActivityMeInfoBinding
 import com.lalifa.main.databinding.ActivityWardBinding
 import com.lalifa.main.databinding.MeTab1FragmentBinding
+import com.lalifa.main.ext.MUtils
 import com.lalifa.main.fragment.adapter.*
+import com.opensource.svgaplayer.SVGADrawable
+import com.opensource.svgaplayer.SVGAParser
+import com.opensource.svgaplayer.SVGAVideoEntity
+import java.net.URL
 
 class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     override fun getViewBinding() = ActivityMeInfoBinding.inflate(layoutInflater)
@@ -30,8 +35,10 @@ class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     override fun initView() {
         binding.apply {
             header.load(Config.FILE_PATH + UserManager.get()!!.avatar)
-            name.text = UserManager.get()!!.userName
+            MUtils.loadSvg(binding.svg,UserManager.get()!!.frame!!){
 
+            }
+            name.text = UserManager.get()!!.userName
             if (UserManager.get()!!.gender == 0) {
                 sex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
             } else {

@@ -1,15 +1,20 @@
 package com.lalifa.yyf
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.multidex.MultiDex
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.drake.logcat.LogCat
+import com.drake.statelayout.StateConfig
 import com.drake.tooltip.ToastConfig
 import com.drake.tooltip.interfaces.ToastFactory
 import com.lalifa.api.InitNet
@@ -25,13 +30,16 @@ import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.EmojiProvider
 import com.vanniktech.emoji.emoji.EmojiCategory
 import com.vanniktech.emoji.ios.category.*
+import io.rong.imkit.GlideKitImageEngine
 import io.rong.imkit.RongIM
+import io.rong.imkit.config.RongConfigCenter
 import io.rong.imkit.conversation.extension.RongExtensionManager
 import io.rong.imlib.RongCoreClient
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.Message
 import io.rong.imlib.model.MessageContent
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class MApplication : BaseApplication() {
     companion object {
@@ -101,6 +109,21 @@ class MApplication : BaseApplication() {
         RongIMClient.registerMessageType(myMessages)
         //注册自定义键盘
         RongExtensionManager.getInstance().extensionConfig = MyGiftConfig()
+        //自定义聊天头像为圆形
+//        RongConfigCenter.featureConfig().kitImageEngine =
+//            object : GlideKitImageEngine() {
+//                override fun loadConversationPortrait(
+//                    context: Context,
+//                    url: String,
+//                    imageView: ImageView,
+//                    message: Message?
+//                ) {
+//                    super.loadConversationPortrait(context, url, imageView, message)
+//                    Glide.with(context).load(url)
+//                        .apply(RequestOptions.bitmapTransform(CircleCrop()))
+//                        .into(imageView)
+//                }
+//            }
         initToast()
         InitNet.initNetHttp(this)
         initMessageType()

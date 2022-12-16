@@ -41,7 +41,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                         return
                     }
                     uiTask(1000) {
-                        if (SPUtil.getBoolean(Config.IS_LOGIN)) {
+                        if (SPUtil.getBoolean(Config.IS_LOGIN, false)) {
                             start(MainActivity::class.java){
                                 putExtra("initIm",false)
                             }

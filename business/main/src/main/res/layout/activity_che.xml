@@ -12,6 +12,7 @@
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
+        app:tl_tab_space_equal="true"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         app:tl_indicator_color="@color/transparent"

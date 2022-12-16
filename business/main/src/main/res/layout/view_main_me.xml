@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
@@ -25,7 +26,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_18"
                 app:layout_constraintBottom_toTopOf="@+id/line"
-                app:layout_constraintStart_toEndOf="@+id/header" />
+                app:layout_constraintStart_toEndOf="@+id/svg" />
 
             <View
                 android:id="@+id/info"
@@ -33,18 +34,26 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/header"
                 app:layout_constraintTop_toTopOf="@+id/header" />
-
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/header"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/svg"
+                app:layout_constraintEnd_toEndOf="@+id/svg"
+                app:layout_constraintStart_toStartOf="@+id/svg"
+                app:layout_constraintTop_toTopOf="@+id/svg"
+                app:shapeAppearance="@style/CircleStyle" />
+            <com.opensource.svgaplayer.SVGAImageView
+                android:id="@+id/svg"
+                android:layout_width="77dp"
+                android:layout_height="77dp"
                 android:layout_marginVertical="30dp"
                 android:layout_marginStart="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/CircleStyle" />
-
+                app:autoPlay="true"
+                app:loopCount="0" />
             <TextView
                 android:id="@+id/vip"
                 android:layout_width="wrap_content"
@@ -75,7 +84,7 @@
                 android:text="ID:"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_18"
-                app:layout_constraintStart_toEndOf="@+id/header"
+                app:layout_constraintStart_toEndOf="@+id/svg"
                 app:layout_constraintTop_toBottomOf="@+id/line" />
 
             <TextView
@@ -104,7 +113,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/num2"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header" />
+                app:layout_constraintTop_toBottomOf="@+id/svg" />
 
             <TextView
                 android:id="@+id/num2"
@@ -118,7 +127,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/num3"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/num1"
-                app:layout_constraintTop_toBottomOf="@+id/header" />
+                app:layout_constraintTop_toBottomOf="@+id/svg" />
 
             <TextView
                 android:id="@+id/num3"
@@ -132,7 +141,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/num4"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/num2"
-                app:layout_constraintTop_toBottomOf="@+id/header" />
+                app:layout_constraintTop_toBottomOf="@+id/svg" />
 
             <TextView
                 android:id="@+id/num4"
@@ -146,7 +155,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/num3"
-                app:layout_constraintTop_toBottomOf="@+id/header" />
+                app:layout_constraintTop_toBottomOf="@+id/svg" />
 
             <TextView
                 android:id="@+id/nm1"

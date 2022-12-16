@@ -101,7 +101,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun loginUser() {
         scopeNetLife {
             val user = login("13462439645", "111111")
-         //     val user = login("15500000003", "123456")
+             // val user = login("15500000003", "123456")
             if (null != user) {
                 binding.login.enable()
                 InitNet.initNetHttp(this@LoginActivity)
@@ -128,7 +128,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     }
                     UserManager.save(user)
                     SPUtil.set(Config.IS_LOGIN, true)
-                    AccountManager.setAccount(user.toAccount(), true)
                     start(MainActivity::class.java){
                         putExtra("initIm",true)
                     }

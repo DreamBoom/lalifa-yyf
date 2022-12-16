@@ -30,12 +30,15 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     public interface SeatListObserver {
         void onSeatList(List<Seat> seatInfos);
+        void requestSeatAccepted(int index);
+        void seatSpeak(int index, int audioLevel);
     }
 
-    public interface RoomInforObserver {
+    public interface RoomInfoObserver {
         void onRoomInfo(RCVoiceRoomInfo roomInfo);
         void onUserIn(String userId);
         void onOnLineCount(int userNumber);
+        void onReady();
     }
 
     public interface SeatObserver {
@@ -44,7 +47,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     private final static Object obj = new Object();
     private SeatListObserver seatListObserver;
-    private RoomInforObserver roomInforObserver;
+    private RoomInfoObserver roomInfoObserver;
     private SeatObserver seatObserver;
     private static String TAG = "======";
     private static QuickEventListener listener = new QuickEventListener();
@@ -101,8 +104,8 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      *
      * @param observer
      */
-    public void observeRoomInfo(RoomInforObserver observer) {
-        this.roomInforObserver = observer;
+    public void observeRoomInfo(RoomInfoObserver observer) {
+        this.roomInfoObserver = observer;
     }
 
     /**
@@ -163,6 +166,21 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     }
 
     /**
+     * 获取可用麦位
+     *
+     * @return 麦位是否可用
+     */
+    private boolean seatIsEmpty(int index) {
+        synchronized (obj) {
+            RCVoiceSeatInfo seat = mSeatInfos.get(index);
+            if (RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusEmpty == seat.getStatus()) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    /**
      * 获取可用麦位索引
      *
      * @return 可用麦位索引
@@ -183,12 +201,13 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     @Override
     public void onRoomKVReady() {
-        Log.d(TAG, "onRoomKVReady");
+        if (null != roomInfoObserver) {
+            roomInfoObserver.onReady();
+        }
     }
 
     @Override
     public void onRoomDestroy() {
-        Log.d(TAG, "onRoomDestroy");
         KToast.show("房间已销毁");
         if (activity != null && activity.get() != null) {
             activity.get().setResult(Activity.RESULT_OK);
@@ -210,7 +229,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         roomInfo.setLockAll(room.isLockAll());
         roomInfo.setSeatCount(room.getSeatCount());
         Log.d(TAG, "onRoomInfoUpdate:" + GsonUtil.obj2Json(roomInfo));
-        if (null != roomInforObserver) roomInforObserver.onRoomInfo(roomInfo);
+        if (null != roomInfoObserver) roomInfoObserver.onRoomInfo(roomInfo);
     }
 
     /**
@@ -267,9 +286,9 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         if (null != mAudienceIds && !mAudienceIds.contains(userId)) {
             mAudienceIds.add(userId);
         }
-        if (null != roomInforObserver) {
-            roomInforObserver.onOnLineCount(mAudienceIds.size());
-            roomInforObserver.onUserIn(userId);
+        if (null != roomInfoObserver) {
+            roomInfoObserver.onOnLineCount(mAudienceIds.size());
+            roomInfoObserver.onUserIn(userId);
         }
     }
 
@@ -283,8 +302,8 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         Log.d(TAG, "onAudienceExit: userId = " + userId);
         // 移除观众id
         if (null != mAudienceIds) mAudienceIds.remove(userId);
-        if (null != roomInforObserver) {
-            roomInforObserver.onOnLineCount(mAudienceIds.size());
+        if (null != roomInfoObserver) {
+            roomInfoObserver.onOnLineCount(mAudienceIds.size());
         }
     }
 
@@ -297,11 +316,12 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     @Override
     public void onSpeakingStateChanged(int index, int audioLevel) {
 //        Log.d(TAG, "onSpeakingStateChanged: index = " + index + " audioLevel = " + audioLevel);
-        Seat seat = getSeatInfo(index);
-        if (null != seat) {
-            seat.setAudioLevel(audioLevel);
-            if (null != seatListObserver) seatListObserver.onSeatList(mSeatInfos);
-        }
+        if (null != seatListObserver) seatListObserver.seatSpeak(index,audioLevel);
+//        Seat seat = getSeatInfo(index);
+//        if (null != seat) {
+//            seat.setAudioLevel(audioLevel);
+//            if (null != seatListObserver) seatListObserver.onSeatList(mSeatInfos);
+//        }
     }
 
     @Override
@@ -377,13 +397,14 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     @Override
     public void onRequestSeatAccepted() {
         Log.d(TAG, "onRequestSeatAccepted: ");
-        RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_AGREE_PICK, AccountManager.getCurrentId(), null);
-        //获取可用麦位索引
-        int availableIndex = getAvailableSeatIndex();
-        if (availableIndex > -1) {
+        RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_AGREE_PICK,
+                AccountManager.getCurrentId(), null);
+        if (seatIsEmpty(Tool.Companion.getCurrentSeatIndex())) {
+            if (null != seatListObserver) seatListObserver.requestSeatAccepted(Tool.Companion.getCurrentSeatIndex());
             KToast.show("您的上麦申请被同意啦");
-            VoiceRoomApi.getApi().enterSeat(availableIndex,false, null);
+            VoiceRoomApi.getApi().enterSeat(Tool.Companion.getCurrentSeatIndex(),false, null);
         } else {
+            if (null != seatListObserver) seatListObserver.requestSeatAccepted(-1);
             KToast.show("当前没有空余的麦位");
         }
     }

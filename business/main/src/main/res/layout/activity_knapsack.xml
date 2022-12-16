@@ -21,7 +21,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/goodList"
-        tools:listitem="@layout/item_good"
+        tools:listitem="@layout/item_bb"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

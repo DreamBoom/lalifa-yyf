@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.lalifa.widget.loading.LoadTag
 
 /**
  *
@@ -19,9 +20,14 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class BaseFragment<T : ViewBinding>() : Fragment() {
     lateinit var binding: T
-
+    var loadTag: LoadTag?=null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadTag = LoadTag(
+            requireActivity(),getString(
+                R.string.text_loading
+            )
+        )
         initView()
         onClick()
     }

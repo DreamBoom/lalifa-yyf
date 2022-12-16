@@ -7,5 +7,6 @@ class Tool {
         val STATUS_NOT_ON_SEAT = 0
         val STATUS_WAIT_FOR_SEAT = 1
         val STATUS_HAVE_SEAT = 2
+        var currentSeatIndex = -1
     }
 }

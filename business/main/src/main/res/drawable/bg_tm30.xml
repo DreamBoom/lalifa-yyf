@@ -6,5 +6,5 @@
         android:bottom="5dp"
         android:left="12dp"
         android:right="5dp"
-        android:top="10dp" />
+        android:top="5dp" />
 </shape>
