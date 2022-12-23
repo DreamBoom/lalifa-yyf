@@ -629,7 +629,7 @@ data class RoomDetailBean(
     /**
      * 车队房间列表
      */
-    var fleet: List<Any>,
+    var fleet: List<Fleet>,
 
     /**
      * 礼盒礼包开启次数
@@ -681,6 +681,21 @@ data class RoomDetailBean(
      */
     var uid: Int
 ) : Serializable
+
+data class Fleet(
+    val avatar: String,
+    val background: String,
+    val explain: String,
+    val gender: Int,
+    val id: Int,
+    val pattern: String,
+    val rank: String,
+    val type: Int,
+    val uid: Int,
+    val userName: String,
+    var userId:String,
+    val roomid:String
+)
 
 data class Advertisement(
     var details: String,
@@ -737,7 +752,8 @@ data class RoomGift(
     val id: Int,
     val image: String,
     val name: String,
-    val price: String
+    val price: String,
+    var choose:Boolean = false
 )
 
 data class RoomGiftBoxFrequency(
@@ -806,9 +822,12 @@ data class Office(
     var title: String,
     var type_id: Int,
     var type_name: String,
-    var users: List<Any>
+    var users: List<User1>
 )
-
+data class User1(
+    val id: String,
+    val time: String
+)
 /**
  * @Des 排行榜
  */
@@ -821,7 +840,9 @@ data class RankBean(
     var user_id: Int,
     var yield: String
 )
-
+/**
+ * @Des 微信支付
+ */
 data class WxPayBean(
     val appid: String,
     val noncestr: String,
@@ -831,18 +852,34 @@ data class WxPayBean(
     val sign: String,
     val timestamp: String
 )
-
+/**
+ * @Des 房间背景
+ */
 data class RoomBgBean(
     var check: Boolean = false,
     val id: Int,
     val image: String
 )
 
-
+/**
+ * @Des 管理员列表
+ */
 data class ManageListBean(
     val avatar: String,
     val id: Int,
     val manage_type: Int,
     val member_id: Int,
     val userName: String
+)
+/**
+ * @Des 房间消费排行榜
+ */
+data class RoomRankBean(
+    val avatar: String,
+    val create_time: String,
+    val gender: Int,
+    val member_id: Int,
+    val userName: String,
+    val user_id: Int,
+    val yield: String
 )

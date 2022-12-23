@@ -17,6 +17,8 @@ data class Account(
     var bubble: String= "",
     //音波
     var sound: String= "",
+    //随心值
+    var sx: String= "",
     var select: Boolean = false
 ) : Serializable {
     @JvmName("getAvatar1")

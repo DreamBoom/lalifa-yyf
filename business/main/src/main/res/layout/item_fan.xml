@@ -34,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_icon_boy"
             app:layout_constraintStart_toEndOf="@id/name"
             app:layout_constraintTop_toTopOf="@id/name" />
 

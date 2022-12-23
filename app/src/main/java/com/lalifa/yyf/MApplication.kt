@@ -106,6 +106,10 @@ class MApplication : BaseApplication() {
         //注册自定义消息
         val myMessages = ArrayList<Class<out MessageContent?>>()
         myMessages.add(MyMediaMessageContent::class.java)
+        myMessages.add(RCChatroomBarrage::class.java)
+        myMessages.add(RCChatroomEnter::class.java)
+        myMessages.add(RCChatroomGift::class.java)
+        myMessages.add(RCChatroomGiftAll::class.java)
         RongIMClient.registerMessageType(myMessages)
         //注册自定义键盘
         RongExtensionManager.getInstance().extensionConfig = MyGiftConfig()

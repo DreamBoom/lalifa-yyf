@@ -3,34 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="400dp"
-    android:orientation="vertical"
-    android:background="@color/textColor2">
+    android:background="@color/textColor2"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/popClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingHorizontal="10dp"
         android:layout_gravity="end"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="8dp"
         android:src="@mipmap/icon_close_white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/peopleList"
-        android:paddingHorizontal="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp" />
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_layout"
-        app:tl_tab_space_equal="true"
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="25dp"
+        android:layout_marginTop="5dp"
         app:tl_indicator_color="#3888F6"
         app:tl_indicator_corner_radius="3dp"
         app:tl_indicator_height="3dp"
         app:tl_indicator_width="14sp"
+        app:tl_tab_space_equal="true"
         app:tl_textBold="SELECT"
         app:tl_textSelectColor="@color/white"
         app:tl_textUnselectColor="#888A9C"
@@ -39,8 +39,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/map_viewPager"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bot"
@@ -49,30 +49,66 @@
 
         <TextView
             android:id="@+id/t1"
-            android:text="钻石："
-            android:textSize="@dimen/size16"
-            android:textColor="@color/white"
-            android:padding="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="钻石："
+            android:textColor="@color/white"
+            android:textSize="@dimen/size16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:text="0"
-            android:textSize="@dimen/size18"
-            android:textColor="@color/red"
-            android:padding="8dp"
-            android:drawablePadding="5dp"
-            android:drawableEnd="@drawable/ic_white_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_white_back"
+            android:drawablePadding="5dp"
+            android:padding="8dp"
+            android:text="0"
+            android:textColor="@color/red"
+            android:textSize="@dimen/size18"
             app:layout_constraintStart_toEndOf="@+id/t1"
             app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
-            android:background="@drawable/bg_tm30"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/bg"
             android:layout_width="120dp"
-            android:layout_height="35dp"/>
+            android:layout_height="30dp"
+            android:background="@drawable/bg_tm30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etNum"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="3dp"
+            android:textSize="@dimen/size12"
+            android:text="1"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:inputType="numberSigned"
+            android:maxLength="3"
+            android:background="@drawable/bg_gift_w"
+            app:layout_constraintBottom_toBottomOf="@+id/bg"
+            app:layout_constraintEnd_toStartOf="@+id/btnBuy"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/bg"
+            app:layout_constraintTop_toTopOf="@+id/bg" />
+
+        <TextView
+            android:id="@+id/btnBuy"
+            android:layout_width="35dp"
+            android:layout_height="0dp"
+            android:layout_margin="3dp"
+            android:textSize="@dimen/size12"
+            android:textColor="@color/white"
+            android:text="赠送"
+            android:gravity="center"
+            android:background="@drawable/bg_gift_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bg" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

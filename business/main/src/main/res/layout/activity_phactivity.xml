@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_ph"
-    tools:context=".ui.other.PHActivity">
+    android:background="@mipmap/bg_ph">
     <TextView
         android:text="排行榜"
         app:layout_constraintStart_toStartOf="parent"

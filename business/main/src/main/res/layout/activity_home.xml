@@ -83,7 +83,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="5dp"
             android:onClick="mainClick"
-            android:src="@mipmap/icon_5" />
+            android:src="@mipmap/home_1" />
     </FrameLayout>
 
 

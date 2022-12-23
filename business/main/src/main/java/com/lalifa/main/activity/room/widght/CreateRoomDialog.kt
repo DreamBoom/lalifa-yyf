@@ -4,16 +4,12 @@ import android.app.Activity
 import android.text.InputFilter
 import android.text.TextUtils
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.RadioButton
+import android.widget.*
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.BindingAdapter
 import com.drake.net.utils.scopeNet
-import com.drake.net.utils.scopeNetLife
-import com.drake.tooltip.toast
 import com.google.android.material.imageview.ShapeableImageView
 import com.lalifa.extension.*
 import com.lalifa.main.R
@@ -26,8 +22,6 @@ import com.lalifa.utils.UiUtils
 import com.lalifa.widget.ChineseLengthFilter
 import com.lalifa.widget.dialog.BottomDialog
 import com.lalifa.widget.loading.LoadTag
-import io.rong.imkit.picture.tools.ToastUtils
-import org.angmarch.views.NiceSpinner
 
 
 /**
@@ -79,23 +73,44 @@ class CreateRoomDialog(
         val rbGame = contentView.findViewById<RadioButton>(R.id.rb_game)
         val rbHappy = contentView.findViewById<RadioButton>(R.id.rb_happy)
         val group = contentView.findViewById<Group>(R.id.group)
-        val pattern = contentView.findViewById<NiceSpinner>(R.id.pattern)
-        val rank = contentView.findViewById<NiceSpinner>(R.id.rank)
-        val label = contentView.findViewById<NiceSpinner>(R.id.label)
+        val pattern = contentView.findViewById<Spinner>(R.id.pattern)
+        val rank = contentView.findViewById<Spinner>(R.id.rank)
+        val label = contentView.findViewById<Spinner>(R.id.label)
         val listPattern = activity!!.resources.getStringArray(R.array.pattern_list)
         val listRank = activity.resources.getStringArray(R.array.rank_list)
         val listLabel = activity.resources.getStringArray(R.array.label_list)
-        pattern.attachDataSource(listPattern.toList())
-        rank.attachDataSource(listRank.toList())
-        label.attachDataSource(listLabel.toList())
-        pattern.addOnItemClickListener { _, _, position, _ ->
-            mPattern = listPattern[position]
+        pattern.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                pos: Int,
+                id: Long
+            ) {
+                mPattern = listPattern[pos]
+            }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
-        pattern.addOnItemClickListener { _, _, position, _ ->
-            mRank = listRank[position]
+        rank.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                pos: Int,
+                id: Long
+            ) {
+                mRank = listRank[pos]
+            }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
-        pattern.addOnItemClickListener { _, _, position, _ ->
-            mLabel = listLabel[position]
+        label.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                pos: Int,
+                id: Long
+            ) {
+                mLabel = listLabel[pos]
+            }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
         rbGame.onClick {
             group.visible()
@@ -129,15 +144,11 @@ class CreateRoomDialog(
     var apply: BindingAdapter?=null
     var data :MutableList<RoomBgBean> = ArrayList()
     private fun getBg(){
-        mLoading!!.show()
         scopeNet {
             val roomBg = getRoomBg()
             if(null!=roomBg&&roomBg.isNotEmpty()){
                 data = roomBg
                 apply!!.models = data
-                mLoading!!.dismiss()
-            } else{
-                mLoading!!.dismiss()
             }
         }
     }
@@ -150,7 +161,7 @@ class CreateRoomDialog(
         val roomName =
             if (mRoomNameEditText!!.text == null) "" else mRoomNameEditText!!.text.toString()
         if (TextUtils.isEmpty(roomName)) {
-            ToastUtils.s(mActivity, "请输入房间名称")
+            mActivity!!.toast("请输入房间名称")
             return
         }
         uploadThemePic(roomName)
@@ -161,31 +172,24 @@ class CreateRoomDialog(
         if (!TextUtils.isEmpty(mImUrl)) {
             create(roomName, mImUrl!!)
         } else {
-            toast("请上传背景图")
+            mActivity!!.toast("请上传背景图")
         }
     }
 
     /**
      * 创建房间
-     *
-     * @param roomName
-     * @param themeUrl
      */
     private fun create(roomName: String, mImUrl: String) {
-        mLoading!!.show()
         scopeNet {
-            val createRoom =
-                createRoom(
+            createRoom(
                     roomId!!.noEN(), type.toString(),
                     mLabel, mRank, roomName, mImUrl, mPattern
-                )
-            if (null != createRoom) {
-                dismiss()
-                mLoading!!.dismiss()
-                mCreateRoomCallBack.onCreateSuccess(createRoom.Chatroom_id)
-            } else {
-                mLoading!!.dismiss()
-            }
+                ).apply {
+                    if (null != this) {
+                        mCreateRoomCallBack.onCreateSuccess(this.Chatroom_id)
+                        dismiss()
+                    }
+                }
         }
     }
 

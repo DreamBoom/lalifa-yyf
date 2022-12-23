@@ -10,6 +10,9 @@
 
     <application>
         <activity
+            android:name=".RankActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.room.ManageListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="false"
@@ -32,7 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.room.AdActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activity.room.RoomActivity"
             android:exported="false" />

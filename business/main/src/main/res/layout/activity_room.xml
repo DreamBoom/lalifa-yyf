@@ -46,6 +46,7 @@
         tools:text="ID:111" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rankList"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="10dp"
@@ -88,10 +89,12 @@
     <!--    消息列表-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rl_message"
-        android:layout_width="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btLl"
         app:layout_constraintTop_toBottomOf="@+id/rl_seat" />
     <com.youth.banner.Banner
         android:id="@+id/banner"
@@ -190,12 +193,8 @@
             android:layout_width="36dp"
             android:layout_height="36dp"/>
         <ImageView
-            android:layout_marginHorizontal="5dp"
-            android:background="@mipmap/room_yx"
-            android:layout_width="36dp"
-            android:layout_height="36dp"/>
-        <ImageView
             android:id="@+id/setting"
+            android:layout_marginHorizontal="5dp"
             android:background="@drawable/ic_room_setting"
             android:layout_width="36dp"
             android:layout_height="36dp"/>
@@ -236,6 +235,7 @@
     </RelativeLayout>
     <com.opensource.svgaplayer.SVGAImageView
         android:id="@+id/svgIn"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:autoPlay="true"

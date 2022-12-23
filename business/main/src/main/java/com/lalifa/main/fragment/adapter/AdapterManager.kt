@@ -1,28 +1,36 @@
 package com.lalifa.main.fragment.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
+import android.widget.LinearLayout.HORIZONTAL
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
+import cn.rongcloud.voiceroom.model.messagemodel.RCVoiceRoomRefreshMessage
 import com.drake.brv.BindingAdapter
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
-import com.drake.logcat.LogCat
-import com.drake.statelayout.StateConfig.emptyLayout
 import com.lalifa.ext.Account
 import com.lalifa.ext.Config
-import com.lalifa.ext.User
-import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.room.ext.*
+import com.lalifa.main.activity.room.message.*
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
 import com.lalifa.main.ext.MUtils
-import com.lalifa.utils.ImageLoader
+import com.lalifa.utils.SPUtil
+import io.rong.imlib.model.MessageContent
+import java.io.Serializable
+import java.lang.String
 
 /**
  * 商城
@@ -103,8 +111,8 @@ fun RecyclerView.knapsacksList(): BindingAdapter {
             getBinding<ItemBbBinding>().apply {
                 im.load(Config.FILE_PATH + bean.image)
                 name.text = bean.name
-                use.text = if(bean.type==1)"已使用" else "使用"
-                use.isEnabled = bean.type==0
+                use.text = if (bean.type == 1) "已使用" else "使用"
+                use.isEnabled = bean.type == 0
             }
         }
     }
@@ -728,24 +736,32 @@ fun RecyclerView.seatBossAdapter(): BindingAdapter {
         addType<Seat>(R.layout.layout_seat_item)
         onBind {
             val seatInfo = getModel<Seat>()
+            val showSx = SPUtil.getBoolean(Tool.showSx, true)
             val useing = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing
             val lock = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
             getBinding<LayoutSeatItemBinding>().apply {
                 if (useing) {
                     val account = AccountManager.getAccount(seatInfo.userId)
                     if (null != account) {
-                        if(null!=account.frame&&account.frame.contains("svga")){
-                            MUtils.loadSvg(svg,account.frame){
+                        if (null != account.frame && account.frame.contains("svga")) {
+                            MUtils.loadSvg(svg, account.frame) {
 
                             }
                         }
-                        ivPortrait.load(account.avatar, R.mipmap.ic_room_seat)
+                        ivPortrait.load(Config.FILE_PATH + account.avatar, R.mipmap.ic_room_seat)
                         //麦位上用户名称
                         memberName.text = account.userName
+                        sx.text = account.sx
+                        if (showSx) {
+                            sx.visible()
+                        } else {
+                            sx.invisible()
+                        }
                     }
                 } else {
                     //麦位上用户名称
                     svg.clear()
+                    sx.invisible()
                     ivPortrait.loadLocal(R.mipmap.ic_room_seat)
                     memberName.text = if (layoutPosition == 0) "主播" else "老板位"
                 }
@@ -769,24 +785,33 @@ fun RecyclerView.seatAdapter(): BindingAdapter {
         addType<Seat>(R.layout.layout_seat_item)
         onBind {
             val seatInfo = getModel<Seat>()
+
+            val showSx = SPUtil.getBoolean(Tool.showSx, true)
             val useing = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing
             val lock = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
             getBinding<LayoutSeatItemBinding>().apply {
                 if (useing) {
                     val account = AccountManager.getAccount(seatInfo.userId)
                     if (null != account) {
-                        if(null!=account.frame&&account.frame.contains("svga")){
-                            MUtils.loadSvg(svg,account.frame){
+                        if (null != account.frame && account.frame.contains("svga")) {
+                            MUtils.loadSvg(svg, account.frame) {
 
                             }
                         }
-                        ivPortrait.load(account.avatar, R.mipmap.ic_room_seat)
+                        ivPortrait.load(Config.FILE_PATH + account.avatar, R.mipmap.ic_room_seat)
                         //麦位上用户名称
                         memberName.text = account.userName
+                        sx.text = account.sx
+                        if (showSx) {
+                            sx.visible()
+                        } else {
+                            sx.invisible()
+                        }
                     }
                 } else {
                     //麦位上用户名称
                     svg.clear()
+                    sx.invisible()
                     ivPortrait.loadLocal(R.mipmap.ic_room_seat)
                     memberName.text = "观众"
                 }
@@ -814,7 +839,7 @@ fun RecyclerView.roomManagerAdapter(isManage: Boolean): BindingAdapter {
                 mHeader.load(Config.FILE_PATH + bean.avatar)
                 mName.text = bean.userName
                 mId.text = bean.member_id.toString()
-                btn.text = if(isManage) "删除管理员" else "添加管理员"
+                btn.text = if (isManage) "删除管理员" else "添加管理员"
             }
         }
     }
@@ -854,18 +879,23 @@ fun RecyclerView.roomBgAdapter(): BindingAdapter {
  * @return BindingAdapter
  */
 fun RecyclerView.roomGiftAdapter(): BindingAdapter {
-    return grid(2,LinearLayoutManager.HORIZONTAL)
+    return grid(2, LinearLayoutManager.HORIZONTAL)
         .setup {
-        addType<RoomGift>(R.layout.item_gift_send)
-        onBind {
-            val bean = getModel<RoomGift>()
-            getBinding<ItemGiftSendBinding>().apply {
-                imGift.load(Config.FILE_PATH + bean.image)
-                name.text = bean.name
-                price.text = bean.price
+            addType<RoomGift>(R.layout.item_gift_send)
+            onBind {
+                val bean = getModel<RoomGift>()
+                getBinding<ItemGiftSendBinding>().apply {
+                    imGift.load(Config.FILE_PATH + bean.image)
+                    name.text = bean.name
+                    price.text = bean.price
+                    if (bean.choose) {
+                        name.setTextColor(ContextCompat.getColor(context, R.color.textColor2))
+                    } else {
+                        name.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    }
+                }
             }
         }
-    }
 }
 
 /**
@@ -880,20 +910,84 @@ fun RecyclerView.seatGiftAdapter(): BindingAdapter {
             onBind {
                 val bean = getModel<Account>()
                 getBinding<ItemHeaderBinding>().apply {
-                    if(bean.select){
+                    if (bean.select) {
                         select.visible()
-                    }else{
-                        select.gone()
+                    } else {
+                        select.invisible()
                     }
                     header.load(bean.avatar)
-                    if(layoutPosition==0){
+                    if (layoutPosition == 0) {
                         name.text = "全麦"
-                    }else{
-                        name.text = "${layoutPosition-1} 号麦"
+                    } else {
+                        name.text = "${layoutPosition - 1} 号麦"
                     }
                 }
             }
         }
+}
+
+/**
+ * 房间排行榜
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+@SuppressLint("SetTextI18n")
+fun RecyclerView.roomRankAdapter(): BindingAdapter {
+    return linear(orientation = HORIZONTAL).setup {
+        addType<RoomRankBean>(R.layout.item_room_header)
+        onBind {
+            val bean = getModel<RoomRankBean>()
+            getBinding<ItemRoomHeaderBinding>().apply {
+                header.load(Config.FILE_PATH + bean.avatar)
+            }
+        }
+    }
+}
+
+/**
+ * 房间排行榜页面
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+@SuppressLint("SetTextI18n")
+fun RecyclerView.rankAdapter(): BindingAdapter {
+    return linear().setup {
+        addType<RoomRankBean>(R.layout.item_rank)
+        onBind {
+            val bean = getModel<RoomRankBean>()
+            getBinding<ItemRankBinding>().apply {
+                itemHeader.load(Config.FILE_PATH + bean.avatar)
+                name.text = bean.userName
+                if (bean.gender == 1) {
+                    imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_gril)
+                } else {
+                    imSex.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
+                }
+                info.text = "共送出价值${bean.yield}金币的礼物"
+            }
+        }
+    }
+}
+
+/**
+ * 房间排行榜页面
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+@SuppressLint("SetTextI18n")
+fun RecyclerView.popRoomAdapter(): BindingAdapter {
+    return linear().setup {
+        addType<Fleet>(R.layout.item_pop_room)
+        onBind {
+            val bean = getModel<Fleet>()
+            getBinding<ItemPopRoomBinding>().apply {
+                itemHeader.load(Config.FILE_PATH + bean.avatar)
+                name.text = if (bean.type == 1) "[游戏]" else "[娱乐]"
+                info.text = bean.explain
+                level.text = bean.rank
+            }
+        }
+    }
 }
 
 

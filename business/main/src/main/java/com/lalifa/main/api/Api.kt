@@ -779,6 +779,35 @@ suspend fun CoroutineScope.reportRoom(roomId:String,content:String): String? {
         param("content", content)
     }.await().data
 }
+/**
+ * 房间送礼物
+ * @return
+ */
+suspend fun CoroutineScope.sendRoomGift(
+    type:String,uid:String,roomId:String,
+    num:String,id:String,userType:String): String? {
+    return Post<BaseBean<String>>("chat_room/gifts") {
+        param("office_id", roomId)
+        param("uid", uid)
+        param("type", type)
+        param("id", id)
+        param("num", num)
+        param("user_type", userType)
+    }.await().data
+}
+/**
+ * 房间礼物排行榜
+ * @return
+ */
+suspend fun CoroutineScope.roomRanking(
+    type:String, id:String): List<RoomRankBean>? {
+    return Post<BaseBean<List<RoomRankBean>>>("chat_room/ranking") {
+        param("category", type)
+        param("id", id)
+    }.await().data
+}
+
+
 
 
 

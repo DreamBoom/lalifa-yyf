@@ -11,23 +11,22 @@ import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
+import com.drake.logcat.LogCat
+import com.drake.net.utils.scopeNet
 import com.drake.tooltip.toast
 import com.lalifa.ext.Config
 import com.lalifa.ext.Config.Companion.parser
 import com.lalifa.ext.User
 import com.lalifa.ext.UserManager
-import com.lalifa.extension.double
-import com.lalifa.extension.dp
-import com.lalifa.extension.load
-import com.lalifa.extension.onClick
+import com.lalifa.extension.*
 import com.lalifa.main.R
+import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.activity.room.ext.Tool
-import com.lalifa.main.api.Exchange
-import com.lalifa.main.api.GoodInfoBean
-import com.lalifa.main.api.Member
-import com.lalifa.main.api.Spec
+import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ItemCzBinding
 import com.lalifa.main.databinding.ItemDayBinding
+import com.lalifa.main.fragment.adapter.popRoomAdapter
+import com.lalifa.utils.SPUtil
 import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
@@ -194,17 +193,21 @@ fun roomTopDialog(isLike: Boolean, callback: (type: Int) -> Unit = {}) {
         .show()
 }
 
-fun roomBottomDialog(showIn:Boolean,callback: (type: Int) -> Unit = {}) {
+fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.popup_set_room)
         .gravity(Gravity.BOTTOM)
         .backgroundDimDefault()
         .setOutsideTouchToDismiss(true)
         .onInitialize {
+            val showIn = SPUtil.getBoolean(Tool.showGift, true)
+            val showSx = SPUtil.getBoolean(Tool.showSx, true)
             val tvShowIn = findViewById<TextView>(R.id.tvShowIn)
+            val tvShowSx = findViewById<TextView>(R.id.tvShowSx)
             tvShowIn!!.text = if(showIn) "礼物动画关闭" else "礼物动画开启"
+            tvShowSx!!.text = if(showSx) "隐藏随心值" else "显示随心值"
             findViewById<LinearLayout>(R.id.ll1)!!.onClick {
-                callback.invoke(1)
+                SPUtil.set(Tool.showGift,!showIn)
                 dismiss()
             }
             findViewById<LinearLayout>(R.id.ll2)!!.onClick {
@@ -216,6 +219,8 @@ fun roomBottomDialog(showIn:Boolean,callback: (type: Int) -> Unit = {}) {
                 dismiss()
             }
             findViewById<LinearLayout>(R.id.ll4)!!.onClick {
+                SPUtil.set(Tool.showSx,!showSx)
+                val boolean1 = SPUtil.getBoolean(Tool.showSx, true)
                 callback.invoke(4)
                 dismiss()
             }
@@ -353,6 +358,39 @@ fun requestSeatDialog(state: Int, callback: () -> Unit = {}) {
                 callback()
                 dismiss()
             }
+        }
+        .show()
+}
+
+//队列
+fun roomListDialog(data:List<Fleet>,callback: (roomId:String,owner:Boolean) -> Unit = { s: String, b: Boolean -> }) {
+    DialogLayer()
+        .contentView(R.layout.pop_room_list)
+        .gravity(Gravity.BOTTOM)
+        .backgroundDimDefault()
+        .setOutsideTouchToDismiss(true)
+        .addOnClickToDismissListener(R.id.ivClose)
+        .onInitialize {
+            val empty = findViewById<ImageView>(R.id.empty)!!
+            val list = findViewById<RecyclerView>(R.id.list)!!
+
+               if(null!=data&& data.isNotEmpty()){
+                   empty.gone()
+                   list.visible()
+                   list.popRoomAdapter().apply {
+                       R.id.inRoom.onClick {
+                           if(getModel<Fleet>().userId==AccountManager.currentId){
+                               callback(getModel<Fleet>().roomid,true)
+                           }else{
+                               callback(getModel<Fleet>().roomid,false)
+                           }
+                           dismiss()
+                       }
+                   }.models = data
+               }else{
+                   empty.visible()
+                   list.gone()
+               }
         }
         .show()
 }

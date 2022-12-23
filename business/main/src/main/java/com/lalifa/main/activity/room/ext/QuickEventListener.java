@@ -35,10 +35,10 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     }
 
     public interface RoomInfoObserver {
-        void onRoomInfo(RCVoiceRoomInfo roomInfo);
         void onUserIn(String userId);
         void onOnLineCount(int userNumber);
         void onReady();
+        void onMessage(Message message);
     }
 
     public interface SeatObserver {
@@ -56,7 +56,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     private WeakReference<Activity> activity;
     private List<Seat> mSeatInfos;
     private List<String> mAudienceIds;
-    private RCVoiceRoomInfo roomInfo;
 
     private QuickEventListener() {
     }
@@ -222,14 +221,11 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      */
     @Override
     public void onRoomInfoUpdate(RCVoiceRoomInfo room) {
-        this.roomInfo = room;
-        RCVoiceRoomInfo roomInfo = VoiceRoomApi.getApi().getRoomInfo();
-        roomInfo.setRoomName(room.getRoomName());
-        roomInfo.setMuteAll(room.isMuteAll());
-        roomInfo.setLockAll(room.isLockAll());
-        roomInfo.setSeatCount(room.getSeatCount());
-        Log.d(TAG, "onRoomInfoUpdate:" + GsonUtil.obj2Json(roomInfo));
-        if (null != roomInfoObserver) roomInfoObserver.onRoomInfo(roomInfo);
+//        RCVoiceRoomInfo roomInfo = VoiceRoomApi.getApi().getRoomInfo();
+//        roomInfo.setRoomName(room.getRoomName());
+//        roomInfo.setMuteAll(room.isMuteAll());
+//        roomInfo.setLockAll(room.isLockAll());
+//        roomInfo.setSeatCount(room.getSeatCount());
     }
 
     /**
@@ -287,7 +283,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
             mAudienceIds.add(userId);
         }
         if (null != roomInfoObserver) {
-            roomInfoObserver.onOnLineCount(mAudienceIds.size());
+          //  roomInfoObserver.onOnLineCount(mAudienceIds.size());
             roomInfoObserver.onUserIn(userId);
         }
     }
@@ -331,7 +327,9 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     @Override
     public void onMessageReceived(Message message) {
-        LogCat.e("onMessageReceived==="+message.toString());
+        if (null != roomInfoObserver) {
+            roomInfoObserver.onMessage(message);
+        }
     }
 
     /**

@@ -55,6 +55,7 @@
             android:textSize="@dimen/font_16" />
 
         <Switch
+            android:id="@+id/giftIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"

@@ -6,9 +6,9 @@
     android:layout_height="wrap_content">
 <ImageView
     android:id="@+id/imGift"
-    android:layout_width="60dp"
+    android:layout_width="45dp"
     android:layout_margin="5dp"
-    android:layout_height="60dp"/>
+    android:layout_height="45dp"/>
     <TextView
         android:id="@+id/name"
         android:gravity="center"
