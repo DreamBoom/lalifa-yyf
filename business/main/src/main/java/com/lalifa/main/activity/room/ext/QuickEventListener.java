@@ -39,6 +39,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         void onOnLineCount(int userNumber);
         void onReady();
         void onMessage(Message message);
+        void onOut(String userId);
     }
 
     public interface SeatObserver {
@@ -519,6 +520,9 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      */
     @Override
     public void onUserReceiveKickOutRoom(String targetId, String userId) {
+        if (null != roomInfoObserver) {
+            roomInfoObserver.onOut(targetId);
+        }
         Log.d(TAG, "onUserReceiveKickOutRoom: targetId = " + targetId);
     }
 

@@ -204,10 +204,10 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
             val showSx = SPUtil.getBoolean(Tool.showSx, true)
             val tvShowIn = findViewById<TextView>(R.id.tvShowIn)
             val tvShowSx = findViewById<TextView>(R.id.tvShowSx)
-            tvShowIn!!.text = if(showIn) "礼物动画关闭" else "礼物动画开启"
-            tvShowSx!!.text = if(showSx) "隐藏随心值" else "显示随心值"
+            tvShowIn!!.text = if (showIn) "礼物动画关闭" else "礼物动画开启"
+            tvShowSx!!.text = if (showSx) "隐藏随心值" else "显示随心值"
             findViewById<LinearLayout>(R.id.ll1)!!.onClick {
-                SPUtil.set(Tool.showGift,!showIn)
+                SPUtil.set(Tool.showGift, !showIn)
                 dismiss()
             }
             findViewById<LinearLayout>(R.id.ll2)!!.onClick {
@@ -219,7 +219,7 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
                 dismiss()
             }
             findViewById<LinearLayout>(R.id.ll4)!!.onClick {
-                SPUtil.set(Tool.showSx,!showSx)
+                SPUtil.set(Tool.showSx, !showSx)
                 val boolean1 = SPUtil.getBoolean(Tool.showSx, true)
                 callback.invoke(4)
                 dismiss()
@@ -241,7 +241,7 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
 }
 
 //管理查看麦位
-fun roomUserDialog(user: Member, callback: (type: Int) -> Unit = {}) {
+fun roomUserDialog(user: Member,isMute:Boolean, callback: (type: Int) -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.popup_info)
         .gravity(Gravity.BOTTOM)
@@ -251,7 +251,14 @@ fun roomUserDialog(user: Member, callback: (type: Int) -> Unit = {}) {
             findViewById<TextView>(R.id.name)!!.text = user.userName
             findViewById<TextView>(R.id.mId)!!.text = "ID:${user.userId}"
             findViewById<TextView>(R.id.level)!!.text = user.level
+            findViewById<TextView>(R.id.ac2)!!.text = if(isMute)"开麦" else "闭麦"
             val sex = findViewById<ImageView>(R.id.sex)
+            val svg = findViewById<SVGAImageView>(R.id.svg)!!
+            if (!TextUtils.isEmpty(user.frame)) {
+                MUtils.loadSvg(svg, user.frame!!) {
+
+                }
+            }
             findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
             if (UserManager.get()!!.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
@@ -260,10 +267,14 @@ fun roomUserDialog(user: Member, callback: (type: Int) -> Unit = {}) {
             }
             val gz = findViewById<TextView>(R.id.gz)
             findViewById<ImageView>(R.id.popClose)!!.onClick { dismiss() }
-            gz!!.text = if (user.isFollow) "取消关注" else "关注"
+            gz!!.text = if (user.follow_type==1) "取消关注" else "关注"
             gz.onClick {
-
-                dismiss()
+                scopeNet {
+                    val follow = follow(user.userId)
+                    if (follow != null) {
+                        dismiss()
+                    }
+                }
             }
             findViewById<TextView>(R.id.at)!!.onClick {
                 callback.invoke(1)
@@ -311,10 +322,10 @@ fun roomMyDialog(user: User, callback: () -> Unit = {}) {
             val sex = findViewById<ImageView>(R.id.sex)
             findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
             val svg = findViewById<SVGAImageView>(R.id.svg)!!
-            if(!TextUtils.isEmpty(user.frame)){
-               MUtils.loadSvg(svg,user.frame!!){
+            if (!TextUtils.isEmpty(user.frame)) {
+                MUtils.loadSvg(svg, user.frame!!) {
 
-               }
+                }
             }
             if (user.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
@@ -323,7 +334,8 @@ fun roomMyDialog(user: User, callback: () -> Unit = {}) {
             }
             findViewById<ImageView>(R.id.popClose)!!.onClick {
                 svg.clear()
-                dismiss() }
+                dismiss()
+            }
             findViewById<TextView>(R.id.out)!!.onClick {
                 callback()
                 svg.clear()
@@ -343,12 +355,12 @@ fun requestSeatDialog(state: Int, callback: () -> Unit = {}) {
         .onInitialize {
             val title = findViewById<TextView>(R.id.tvTitle)!!
             val request = findViewById<TextView>(R.id.request)!!
-            when(state){
-                Tool.STATUS_NOT_ON_SEAT->{
+            when (state) {
+                Tool.STATUS_NOT_ON_SEAT -> {
                     title.text = "申请上麦"
                     request.text = "申请上麦"
                 }
-                Tool.STATUS_WAIT_FOR_SEAT->{
+                Tool.STATUS_WAIT_FOR_SEAT -> {
                     title.text = "已申请上麦"
                     request.text = "撤回连线申请"
                 }
@@ -363,7 +375,10 @@ fun requestSeatDialog(state: Int, callback: () -> Unit = {}) {
 }
 
 //队列
-fun roomListDialog(data:List<Fleet>,callback: (roomId:String,owner:Boolean) -> Unit = { s: String, b: Boolean -> }) {
+fun roomListDialog(
+    data: List<Fleet>,
+    callback: (roomId: String, owner: Boolean) -> Unit = { s: String, b: Boolean -> }
+) {
     DialogLayer()
         .contentView(R.layout.pop_room_list)
         .gravity(Gravity.BOTTOM)
@@ -374,23 +389,23 @@ fun roomListDialog(data:List<Fleet>,callback: (roomId:String,owner:Boolean) -> U
             val empty = findViewById<ImageView>(R.id.empty)!!
             val list = findViewById<RecyclerView>(R.id.list)!!
 
-               if(null!=data&& data.isNotEmpty()){
-                   empty.gone()
-                   list.visible()
-                   list.popRoomAdapter().apply {
-                       R.id.inRoom.onClick {
-                           if(getModel<Fleet>().userId==AccountManager.currentId){
-                               callback(getModel<Fleet>().roomid,true)
-                           }else{
-                               callback(getModel<Fleet>().roomid,false)
-                           }
-                           dismiss()
-                       }
-                   }.models = data
-               }else{
-                   empty.visible()
-                   list.gone()
-               }
+            if (null != data && data.isNotEmpty()) {
+                empty.gone()
+                list.visible()
+                list.popRoomAdapter().apply {
+                    R.id.inRoom.onClick {
+                        if (getModel<Fleet>().userId == AccountManager.currentId) {
+                            callback(getModel<Fleet>().roomid, true)
+                        } else {
+                            callback(getModel<Fleet>().roomid, false)
+                        }
+                        dismiss()
+                    }
+                }.models = data
+            } else {
+                empty.visible()
+                list.gone()
+            }
         }
         .show()
 }

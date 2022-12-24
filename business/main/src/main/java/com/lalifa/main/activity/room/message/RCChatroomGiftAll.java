@@ -29,6 +29,7 @@ public class RCChatroomGiftAll extends MessageContent {
     private String userName;
     private String giftId;
     private String giftName;
+    private String giftPath;
     private int number;
     private int price;
 
@@ -52,6 +53,9 @@ public class RCChatroomGiftAll extends MessageContent {
             }
             if (jsonObj.has("giftName")) {
                 giftName = jsonObj.getString("giftName");
+            }
+            if (jsonObj.has("giftPath")) {
+                giftPath = jsonObj.getString("giftPath");
             }
             if (jsonObj.has("number")) {
                 number = jsonObj.getInt("number");
@@ -81,6 +85,9 @@ public class RCChatroomGiftAll extends MessageContent {
             }
             if (!TextUtils.isEmpty(giftName)) {
                 jsonObj.put("giftName", giftName);
+            }
+            if (!TextUtils.isEmpty(giftPath)) {
+                jsonObj.put("giftPath", giftPath);
             }
 
             jsonObj.put("number", number);
@@ -120,6 +127,14 @@ public class RCChatroomGiftAll extends MessageContent {
         return giftName;
     }
 
+    public String getGiftPath() {
+        return giftPath;
+    }
+
+    public void setGiftPath(String giftPath) {
+        this.giftPath = giftPath;
+    }
+
     public void setGiftName(String giftName) {
         this.giftName = giftName;
     }
@@ -151,6 +166,7 @@ public class RCChatroomGiftAll extends MessageContent {
         dest.writeString(this.userName);
         dest.writeString(this.giftId);
         dest.writeString(this.giftName);
+        dest.writeString(this.giftPath);
         dest.writeInt(this.number);
         dest.writeInt(this.price);
     }
@@ -160,6 +176,7 @@ public class RCChatroomGiftAll extends MessageContent {
         this.userName = source.readString();
         this.giftId = source.readString();
         this.giftName = source.readString();
+        this.giftPath = source.readString();
         this.number = source.readInt();
         this.price = source.readInt();
     }
@@ -172,6 +189,7 @@ public class RCChatroomGiftAll extends MessageContent {
         this.userName = in.readString();
         this.giftId = in.readString();
         this.giftName = in.readString();
+        this.giftPath = in.readString();
         this.number = in.readInt();
         this.price = in.readInt();
     }

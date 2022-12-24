@@ -16,10 +16,10 @@ public class InputBarDialog extends Dialog {
     InputBar.InputBarListener inputBarListener;
     InputBar inputBar;
 
-    public InputBarDialog(Context context, InputBar.InputBarListener inputBarListener) {
+    public InputBarDialog(Context context, String info,InputBar.InputBarListener inputBarListener) {
         super(context, R.style.InputBar_Dialog_Style);
         this.inputBarListener = inputBarListener;
-        inputBar = new InputBar(context);
+        inputBar = new InputBar(context,info);
         inputBar.setInputBarListener(new InputBar.InputBarListener() {
             @Override
             public void onClickSend(String message) {

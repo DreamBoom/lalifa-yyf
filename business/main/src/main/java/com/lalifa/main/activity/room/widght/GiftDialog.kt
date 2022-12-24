@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.drake.brv.BindingAdapter
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.models
 import com.drake.logcat.LogCat
@@ -24,31 +23,43 @@ import com.drake.net.utils.scopeNetLife
 import com.flyco.tablayout.SlidingTabLayout
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Account
+import com.lalifa.ext.UserManager
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.text
 import com.lalifa.extension.toast
 import com.lalifa.main.R
+import com.lalifa.main.activity.room.message.AllBroadcastManager
+import com.lalifa.main.activity.room.message.RCAllBroadcastMessage
+import com.lalifa.main.activity.room.message.RCChatroomGift
+import com.lalifa.main.activity.room.message.RCChatroomGiftAll
 import com.lalifa.main.api.RoomGift
 import com.lalifa.main.api.RoomGiftBean
 import com.lalifa.main.api.sendRoomGift
 import com.lalifa.main.databinding.FragmentListBinding
 import com.lalifa.main.fragment.adapter.roomGiftAdapter
 import com.lalifa.main.fragment.adapter.seatGiftAdapter
-import okhttp3.internal.notifyAll
+import com.lalifa.utils.UIKit
+import io.rong.imlib.model.MessageContent
 
 
 /**
  * 直播间礼物弹框
  */
 class GiftDialog(
-    val act: AppCompatActivity,val roomId: String, val roomGiftBean: RoomGiftBean, var list: ArrayList<Account>
+    val act: AppCompatActivity,
+    val roomId: String,
+    val isPrivate: Boolean,
+    val roomGiftBean: RoomGiftBean,
+    var list: ArrayList<Account>,
+     var onSendGiftListener:OnSendGiftListener
 ) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // val bundle = arguments
         setStyle(STYLE_NO_TITLE, R.style.MyDialog)
+        this.mOnSendGiftListener = onSendGiftListener
     }
 
     override fun onStart() {
@@ -81,7 +92,7 @@ class GiftDialog(
         val attributes = window!!.attributes
         attributes.gravity = Gravity.BOTTOM //下方
         attributes.width = getW() //满屏
-        attributes.height = 500
+        attributes.height = 1100
         window.attributes = attributes
     }
 
@@ -103,25 +114,43 @@ class GiftDialog(
         }
         val etNum = view.findViewById<EditText>(R.id.etNum)
         view.findViewById<TextView>(R.id.btnBuy).onClick {
-            if(userId == ""){
+            if (userId == "") {
                 requireContext().toast("请选择赠送用户")
                 return@onClick
             }
-            if(giftId == ""){
+            if (giftId == "") {
                 requireContext().toast("请选择赠送礼物")
                 return@onClick
             }
-            if(etNum.text()==""){
+            if (etNum.text() == "") {
                 requireContext().toast("请选择赠送数量")
                 return@onClick
             }
+            giftNum = etNum.text()
             scopeNetLife {
                 val sendRoomGift = sendRoomGift(
                     type, userId, roomId,
                     etNum.text(), giftId, userType
                 )
-                if(null!=sendRoomGift){
-                    dismiss()
+                var finalIsAll = false
+                if (null != sendRoomGift) {
+                    if (userId.contains(",")) {
+                        // 全选只发一条全麦打赏的广播
+                        finalIsAll = true
+                        sendGiftBroadcast( true)
+                    } else {
+                        finalIsAll = false
+                        sendGiftBroadcast(false)
+                    }
+                    Thread {
+                        try {
+                            UIKit.runOnUiThread {
+                                sendGiftMessage(finalIsAll)
+                            }
+                        } catch (e: InterruptedException) {
+                            e.printStackTrace()
+                        }
+                    }.start()
                 }
             }
 
@@ -144,12 +173,12 @@ class GiftDialog(
                     } else {
                         //用户组添加 userId
                         userType = "1"
-                        for(i in 0 until model.size){
+                        for (i in 0 until model.size) {
                             model[i].select = true
-                            if(i!=0){
-                                userId += if( i !=model.size-1){
-                                    model[i].userId+","
-                                }else{
+                            if (i != 0) {
+                                userId += if (i != model.size - 1) {
+                                    model[i].userId + ","
+                                } else {
                                     model[i].userId
                                 }
                             }
@@ -163,6 +192,7 @@ class GiftDialog(
                     model.forEach { it.select = false }
                     getModel<Account>().select = true
                     userId = getModel<Account>().userId
+                    userName = getModel<Account>().userName
                     notifyDataSetChanged()
                 }
 
@@ -181,14 +211,78 @@ class GiftDialog(
 
     }
 
+    private fun sendGiftBroadcast(isAll: Boolean) {
+        val message = RCAllBroadcastMessage()
+        message.userId = UserManager.get()!!.userId
+        message.userName = UserManager.get()!!.userName
+        if (!isAll) {
+            message.targetId = userId
+            message.targetName = userName
+        } else {
+            message.targetId = ""
+            message.targetName = ""
+        }
+        message.giftCount = giftNum
+        message.giftId = giftId
+        message.giftPath = giftPath
+        message.giftValue = giftValue
+        message.giftName = giftName
+        message.roomId = roomId
+        message.roomType = ""
+        message.isPrivate = "$isPrivate"
+        AllBroadcastManager.getInstance().addMessage(message)
+    }
+
+    /**
+     * 礼物发送成功后发送消息
+     *
+     * @param members
+     * @param isAll
+     */
+    private fun sendGiftMessage(isAll: Boolean) {
+        var messages:MessageContent ?= null
+        if (isAll) {
+            val all = RCChatroomGiftAll()
+            all.userId = UserManager.get()!!.userId
+            all.userName = UserManager.get()!!.userName
+            all.giftId = giftId
+            all.giftName = giftName
+            all.number = giftNum.toInt()
+            all.price = giftValue.toInt()
+            messages = all
+        } else {
+            val gift = RCChatroomGift()
+            gift.userId = UserManager.get()!!.userId
+            gift.userName = UserManager.get()!!.userName
+            gift.giftId = giftId
+            gift.giftName = giftName
+            gift.number = giftNum
+            gift.price = giftValue.toDouble()
+            gift.targetId = userId
+            gift.targetName = userName
+            messages = gift
+        }
+        // 回调回去结果
+        // 回调回去结果
+        mOnSendGiftListener?.onSendGiftSuccess(messages)
+        dismiss()
+    }
+    private var mOnSendGiftListener: OnSendGiftListener? = null
+
+    interface OnSendGiftListener {
+        fun onSendGiftSuccess(messages: MessageContent?)
+    }
     companion object {
         fun newInstance(
             activity: AppCompatActivity,
             roomId: String,
+            isPrivate: Boolean,
             roomGiftBean: RoomGiftBean,
-            list: ArrayList<Account>
+            list: ArrayList<Account>,
+            onSendGiftListener:OnSendGiftListener
         ): GiftDialog {
-            val customDialogFragment = GiftDialog(activity, roomId,roomGiftBean, list)
+            val customDialogFragment = GiftDialog(activity, roomId,isPrivate, roomGiftBean, list,
+                 onSendGiftListener)
 //            val bundle = Bundle()
 //            bundle.putString("content", content)
 //            customDialogFragment.arguments = bundle
@@ -196,9 +290,14 @@ class GiftDialog(
         }
 
         var giftId = ""
+        var giftName = ""
+        var giftValue = ""
+        var giftPath = ""
         var type = "1"
         var userType = "0"
         var userId = ""
+        var userName = ""
+        var giftNum = ""
     }
 
     class GiftFragment(val inType: Int, val list: List<RoomGift>) :
@@ -210,6 +309,9 @@ class GiftDialog(
                     list.forEach { it.choose = false }
                     list[layoutPosition].choose = true
                     giftId = list[layoutPosition].id.toString()
+                    giftName =list[layoutPosition].name
+                    giftValue = list[layoutPosition].price
+                    giftPath = list[layoutPosition].image
                     notifyDataSetChanged()
                 }
             }

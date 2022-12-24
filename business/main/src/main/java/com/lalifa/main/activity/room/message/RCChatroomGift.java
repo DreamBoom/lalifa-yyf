@@ -31,8 +31,9 @@ public class RCChatroomGift extends MessageContent {
     private String targetName;
     private String giftId;
     private String giftName;
+    private String giftPath;
     private String number;
-    private int price;
+    private double price;
 
     public RCChatroomGift(byte[] data) {
         super(data);
@@ -59,6 +60,9 @@ public class RCChatroomGift extends MessageContent {
             }
             if (jsonObj.has("giftName")) {
                 giftName = jsonObj.getString("giftName");
+            }
+            if (jsonObj.has("giftPath")) {
+                giftName = jsonObj.getString("giftPath");
             }
             if (jsonObj.has("number")) {
                 number = jsonObj.getString("number");
@@ -92,6 +96,9 @@ public class RCChatroomGift extends MessageContent {
             }
             if (!TextUtils.isEmpty(giftName)) {
                 jsonObj.put("giftName", giftName);
+            }
+            if (!TextUtils.isEmpty(giftPath)) {
+                jsonObj.put("giftPath", giftPath);
             }
             if (!TextUtils.isEmpty(number)) {
                 jsonObj.put("number", number);
@@ -153,6 +160,14 @@ public class RCChatroomGift extends MessageContent {
         this.giftName = giftName;
     }
 
+    public String getGiftPath() {
+        return giftPath;
+    }
+
+    public void setGiftPath(String giftPath) {
+        this.giftPath = giftPath;
+    }
+
     public String getNumber() {
         return number;
     }
@@ -161,14 +176,13 @@ public class RCChatroomGift extends MessageContent {
         this.number = number;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-
 
     @Override
     public int describeContents() {
@@ -183,8 +197,9 @@ public class RCChatroomGift extends MessageContent {
         dest.writeString(this.targetName);
         dest.writeString(this.giftId);
         dest.writeString(this.giftName);
+        dest.writeString(this.giftPath);
         dest.writeString(this.number);
-        dest.writeInt(this.price);
+        dest.writeDouble(this.price);
     }
 
     public void readFromParcel(Parcel source) {
@@ -194,8 +209,9 @@ public class RCChatroomGift extends MessageContent {
         this.targetName = source.readString();
         this.giftId = source.readString();
         this.giftName = source.readString();
+        this.giftPath = source.readString();
         this.number = source.readString();
-        this.price = source.readInt();
+        this.price = source.readDouble();
     }
 
     public RCChatroomGift() {
@@ -208,8 +224,9 @@ public class RCChatroomGift extends MessageContent {
         this.targetName = in.readString();
         this.giftId = in.readString();
         this.giftName = in.readString();
+        this.giftPath = in.readString();
         this.number = in.readString();
-        this.price = in.readInt();
+        this.price = in.readDouble();
     }
 
     public static final Creator<RCChatroomGift> CREATOR = new Creator<RCChatroomGift>() {

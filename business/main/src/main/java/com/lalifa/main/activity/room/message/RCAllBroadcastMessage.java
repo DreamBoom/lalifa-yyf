@@ -35,6 +35,7 @@ public class RCAllBroadcastMessage extends MessageContent {
     private String targetName;
     private String giftId;
     private String giftName;
+    private String giftPath;
     private String giftValue;
     private String giftCount;
     private String roomId;
@@ -55,6 +56,7 @@ public class RCAllBroadcastMessage extends MessageContent {
             this.targetName = message.targetName;
             this.giftId = message.giftId;
             this.giftName = message.giftName;
+            this.giftPath = message.giftPath;
             this.giftValue = message.giftValue;
             this.giftCount = message.giftCount;
             this.roomId = message.roomId;
@@ -70,6 +72,7 @@ public class RCAllBroadcastMessage extends MessageContent {
         setTargetName(ParcelUtils.readFromParcel(source));
         setGiftId(ParcelUtils.readFromParcel(source));
         setGiftName(ParcelUtils.readFromParcel(source));
+        setGiftPath(ParcelUtils.readFromParcel(source));
         setGiftValue(ParcelUtils.readFromParcel(source));
         setGiftCount(ParcelUtils.readFromParcel(source));
         setRoomId(ParcelUtils.readFromParcel(source));
@@ -95,6 +98,7 @@ public class RCAllBroadcastMessage extends MessageContent {
         ParcelUtils.writeToParcel(dest, targetName);
         ParcelUtils.writeToParcel(dest, giftId);
         ParcelUtils.writeToParcel(dest, giftName);
+        ParcelUtils.writeToParcel(dest, giftPath);
         ParcelUtils.writeToParcel(dest, giftValue);
         ParcelUtils.writeToParcel(dest, giftCount);
         ParcelUtils.writeToParcel(dest, roomId);
@@ -109,6 +113,7 @@ public class RCAllBroadcastMessage extends MessageContent {
         setTargetName(ParcelUtils.readFromParcel(source));
         setGiftId(ParcelUtils.readFromParcel(source));
         setGiftName(ParcelUtils.readFromParcel(source));
+        setGiftPath(ParcelUtils.readFromParcel(source));
         setGiftValue(ParcelUtils.readFromParcel(source));
         setGiftCount(ParcelUtils.readFromParcel(source));
         setRoomId(ParcelUtils.readFromParcel(source));
@@ -162,6 +167,14 @@ public class RCAllBroadcastMessage extends MessageContent {
 
     public void setGiftName(String giftName) {
         this.giftName = giftName;
+    }
+
+    public String getGiftPath() {
+        return giftPath;
+    }
+
+    public void setGiftPath(String giftPath) {
+        this.giftPath = giftPath;
     }
 
     public String getGiftValue() {

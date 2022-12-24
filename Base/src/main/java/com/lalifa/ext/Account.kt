@@ -6,20 +6,22 @@ import java.util.*
 
 data class Account(
     var userId: String = "",
-    var userName: String= "",
-    var avatar: String= "",
-    var imToken: String= "",
+    var userName: String = "",
+    var avatar: String = "",
+    var imToken: String = "",
     //头像框
-    var frame: String= "",
+    var frame: String = "",
     //座驾
-    var car: String= "",
+    var car: String = "",
     //气泡
-    var bubble: String= "",
+    var bubble: String = "",
     //音波
-    var sound: String= "",
+    var sound: String = "",
     //随心值
-    var sx: String= "",
-    var select: Boolean = false
+    var sx: String = "",
+    var select: Boolean = false,
+    //麦序
+    var seat: Int = -1
 ) : Serializable {
     @JvmName("getAvatar1")
     fun getAvatar(): String {

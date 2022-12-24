@@ -4,8 +4,8 @@ import com.drake.logcat.LogCat
 import com.lalifa.ext.Account
 
 object AccountManager {
-    private val accounts: MutableList<Account> = ArrayList(500)
-    private val seats: ArrayList<Account> = ArrayList(10)
+    private val accounts: MutableList<Account> = ArrayList()
+    private val seats: ArrayList<Account> = ArrayList()
 
     @JvmStatic
     var currentId //当前账号
@@ -54,7 +54,8 @@ object AccountManager {
         seats.clear()
     }
 
-    fun setSeat(a: Account) {
-        seats.add(a)
+    fun setSeat(a: List<Account>) {
+        seats.clear()
+        seats.addAll(a)
     }
 }

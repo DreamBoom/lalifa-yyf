@@ -919,7 +919,7 @@ fun RecyclerView.seatGiftAdapter(): BindingAdapter {
                     if (layoutPosition == 0) {
                         name.text = "全麦"
                     } else {
-                        name.text = "${layoutPosition - 1} 号麦"
+                        name.text = "${bean.seat} 号麦"
                     }
                 }
             }

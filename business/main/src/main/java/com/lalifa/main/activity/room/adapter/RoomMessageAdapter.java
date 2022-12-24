@@ -73,25 +73,22 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
     public RoomMessageAdapter(Context context, int... itemLayoutId) {
         super(context, itemLayoutId);
         refreshBuffer = new RCRefreshBuffer<>(-1);
-        refreshBuffer.setOnOutflowListener(new IBuffer.OnOutflowListener<MessageContent>() {
-            @Override
-            public void onOutflow(List<MessageContent> data) {
-                setData(data, false);
-                // 当前是否在列表最下面
-                boolean inBottom = null != recyclerView && null != recyclerView.get() && !recyclerView.get().canScrollVertically(1);
-                // 是否是自己主动发的消息
-                boolean isMyselfMessage = false;
-                if (data != null && data.size() > 0) {
-                    MessageContent messageContent = data.get(data.size() - 1);
-                    if (messageContent instanceof RCChatroomBarrage) {
-                        isMyselfMessage = TextUtils.equals(((RCChatroomBarrage) messageContent).getUserId(), UserManager.get().getUserId());
-                    }
+        refreshBuffer.setOnOutflowListener(data -> {
+            setData(data, false);
+            // 当前是否在列表最下面
+            boolean inBottom = null != recyclerView && null != recyclerView.get() && !recyclerView.get().canScrollVertically(1);
+            // 是否是自己主动发的消息
+            boolean isMyselfMessage = false;
+            if (data != null && data.size() > 0) {
+                MessageContent messageContent = data.get(data.size() - 1);
+                if (messageContent instanceof RCChatroomBarrage) {
+                    isMyselfMessage = TextUtils.equals(((RCChatroomBarrage) messageContent).getUserId(), UserManager.get().getUserId());
                 }
-                if (inBottom || isMyselfMessage) {
-                    int count = getItemCount();
-                    if (count > 0 && null != recyclerView.get()) {
-                        recyclerView.get().smoothScrollToPosition(count - 1);
-                    }
+            }
+            if (inBottom || isMyselfMessage) {
+                int count = getItemCount();
+                if (count > 0 && null != recyclerView.get()) {
+                    recyclerView.get().smoothScrollToPosition(count - 1);
                 }
             }
         });

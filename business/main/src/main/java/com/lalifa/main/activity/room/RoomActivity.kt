@@ -20,6 +20,7 @@ import com.drake.net.utils.scopeNetLife
 import com.kit.utils.KToast
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseActivity
+import com.lalifa.ext.Account
 import com.lalifa.ext.Config
 import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
@@ -27,10 +28,7 @@ import com.lalifa.main.R
 import com.lalifa.main.activity.room.adapter.RoomMessageAdapter
 import com.lalifa.main.activity.room.ext.*
 import com.lalifa.main.activity.room.ext.QuickEventListener.*
-import com.lalifa.main.activity.room.message.RCChatRoomMessageManager
-import com.lalifa.main.activity.room.message.RCChatroomBarrage
-import com.lalifa.main.activity.room.message.RCChatroomEnter
-import com.lalifa.main.activity.room.message.RCChatroomLocationMessage
+import com.lalifa.main.activity.room.message.*
 import com.lalifa.main.activity.room.widght.*
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityRoomBinding
@@ -46,6 +44,8 @@ import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
+import io.rong.imkit.utils.RouteUtils
+import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import io.rong.imlib.model.MessageContent
 
@@ -58,7 +58,8 @@ import io.rong.imlib.model.MessageContent
  */
 class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     RoomInfoObserver, CreateRoomDialog.CreateRoomCallBack,
-    RoomMessageAdapter.OnClickMessageUserListener {
+    RoomMessageAdapter.OnClickMessageUserListener,
+    GiftDialog.OnSendGiftListener {
     companion object {
         const val ACTION_ROOM = 1000
         private const val KET_ROOM_ID = "room_id"
@@ -286,30 +287,62 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             && mRoomDetail!!.manage_type == 1
         ) {
             scopeNetLife {
-                val userInfo = userInfo(models.userId.noEN(), roomId!!.noEN())
+                val userInfo = userInfo(models.userId, roomId!!)
                 if (null != userInfo) {
-                    roomUserDialog(userInfo) {
+                    roomUserDialog(userInfo, models.isMute) {
                         when (it) {
                             1 -> {
                                 //@ta
+                                clickSend("@${userInfo.userName}")
                             }
                             2 -> {
                                 //发消息
+                                RouteUtils.routeToConversationActivity(
+                                    this@RoomActivity,
+                                    Conversation.ConversationType.PRIVATE,
+                                    userInfo.userId,
+                                    false
+                                )
                             }
                             3 -> {
                                 //送礼物
+                                loadTag!!.show()
+                                scopeNetLife {
+                                    val roomGift = roomGift()
+                                    if (null != roomGift) {
+                                        loadTag!!.dismiss()
+                                        val dialog = GiftDialog.newInstance(
+                                            this@RoomActivity, roomId!!,
+                                            mRoomDetail!!.password_type == 1,
+                                            roomGift,
+                                            AccountManager.getSeats(),
+                                            this@RoomActivity
+                                        )
+                                        dialog.show(supportFragmentManager, "dialog")
+                                    } else {
+                                        loadTag!!.dismiss()
+                                        toast("获取礼物失败")
+                                    }
+                                }
                             }
                             4 -> {
                                 //抱下麦
+                                kickSeat(userInfo.userId)
                             }
                             5 -> {
                                 //闭麦
+                                if (isBoss) {
+                                    muteSeat(position, !models.isMute)
+                                } else {
+                                    muteSeat(2 + position, !models.isMute)
+                                }
                             }
                             6 -> {
                                 //禁言
                             }
                             7 -> {
                                 //踢出房间
+                                kickUser(userInfo.userId)
                             }
                         }
                     }
@@ -337,7 +370,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 //申请上麦or取消申请
                 requestSeatDialog(currentStatus) {
                     if (currentStatus == Tool.STATUS_NOT_ON_SEAT) {
-                        Tool.currentSeatIndex = position
+                        if(position!=1){
+                            Tool.currentSeatIndex = position+2
+                        }else{
+                            Tool.currentSeatIndex = position
+                        }
                         requestSeat()
                     } else if (currentStatus == Tool.STATUS_WAIT_FOR_SEAT) {
                         Tool.currentSeatIndex = -1
@@ -346,6 +383,61 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 }
             }
         }
+    }
+
+    /**
+     * 踢出房间
+     * @param userId 要踢出的人的 id
+     */
+    private fun kickUser(userId: String) {
+        RCVoiceRoomEngine.getInstance().kickUserFromRoom(userId, object : RCVoiceRoomCallback {
+            override fun onSuccess() {}
+            override fun onError(code: Int, message: String) {}
+        })
+    }
+
+    /**
+     * 被踢出房间回调
+     * @param targetId 被踢用户的标识
+     */
+    override fun onOut(targetId: String?) {
+        if (targetId == AccountManager.currentId) {
+            VoiceRoomApi.getApi().leaveRoom { result ->
+                NotificationService.unbindNotifyService()
+                if (result) {
+                    KToast.show("您被踢出了房间")
+                    finish()
+                } else {
+                    KToast.show("踢出房间失败")
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 抱下麦
+     */
+    fun kickSeat(userId: String) {
+        RCVoiceRoomEngine.getInstance().kickUserFromSeat(userId,object : RCVoiceRoomCallback {
+            override fun onSuccess() {}
+            override fun onError(code: Int, message: String) {}
+        })
+    }
+    /**
+     * 静麦，注意：
+     * 1、可以静麦自己也可以静麦其他人
+     * 2、muteSeat 和 disableAudioRecording 都是操作麦克风状态，后者只能操作自己的麦克风状态，而且修改麦克风状态，该状态不会同步给房间内的其他人
+     *
+     * @param seatIndex 麦位序号
+     * @param isMute    是否静音
+     * @param callback  结果回调
+     */
+    fun muteSeat(seatIndex: Int, isMute: Boolean) {
+        RCVoiceRoomEngine.getInstance().muteSeat(seatIndex, isMute, object : RCVoiceRoomCallback {
+            override fun onSuccess() {}
+            override fun onError(code: Int, message: String) {}
+        })
     }
 
     //申请上麦
@@ -381,7 +473,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     override fun onClick() {
         super.onClick()
         binding.apply {
-            sendMessage.onClick { clickSend() }
+            sendMessage.onClick { clickSend("") }
             more.onClick { more() }
             setting.onClick { setPop() }
             create.onClick { showCreateRoomDialog(roomId!!) }
@@ -411,8 +503,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                     if (null != roomGift) {
                         loadTag!!.dismiss()
                         val dialog = GiftDialog.newInstance(
-                            this@RoomActivity, roomId!!, roomGift,
-                            AccountManager.getSeats()
+                            this@RoomActivity, roomId!!,
+                            mRoomDetail!!.password_type == 1,
+                            roomGift,
+                            AccountManager.getSeats(),
+                            this@RoomActivity
                         )
                         dialog.show(supportFragmentManager, "dialog")
                     } else {
@@ -442,6 +537,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
 
     //麦位变化，刷新房间观众
     var isLoad = false
+    var seatList = arrayListOf<Account>()
     override fun onSeatList(seatInfos: List<Seat>) {
         if (!isLoad) {
             isLoad = true
@@ -461,6 +557,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                         }
                         //设置本人麦位状态
                         AccountManager.removeSeats()
+                        seatList.clear()
                         for (i in seatInfos.indices) {
                             if (seatInfos[i].userId == AccountManager.currentId) {
                                 currentStatus = Tool.STATUS_HAVE_SEAT
@@ -469,9 +566,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                             //更新麦位用户信息
                             val account = AccountManager.getAccount(seatInfos[i].userId)
                             if (null != account) {
-                                AccountManager.setSeat(account)
+                                account.seat = i
+                                seatList.add(account)
                             }
                         }
+                        AccountManager.setSeat(seatList)
                         isLoad = false
                     }
                 }
@@ -510,8 +609,8 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
 
     //发送消息
     private var inputBarDialog: InputBarDialog? = null
-    private fun clickSend() {
-        inputBarDialog = InputBarDialog(this@RoomActivity,
+    private fun clickSend(info: String) {
+        inputBarDialog = InputBarDialog(this@RoomActivity, info,
             object : InputBar.InputBarListener {
                 override fun onClickSend(message: String?) {
                     if (TextUtils.isEmpty(message)) {
@@ -594,7 +693,9 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             when (it) {
                 2 -> {
                     //清空消息
-
+                    // 默认消息
+                    val list: MutableList<MessageContent> = java.util.ArrayList(1)
+                    mRoomMessageAdapter!!.setMessages(list, true)
                 }
                 3 -> {
                     //房间管理
@@ -622,6 +723,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 }
                 7 -> {
                     //发布广播
+
                 }
             }
         }
@@ -679,9 +781,10 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         barrage.userName = UserManager.get()!!.userName
         RCChatRoomMessageManager.sendChatMessage(roomId, barrage, true,
             {
-               // addMessage(messageContent)
+                // addMessage(messageContent)
                 null
-            },null)
+            }, null
+        )
 //        val targetId = roomId
 //        val conversationType = Conversation.ConversationType.CHATROOM
 //        val message = Message.obtain(targetId, conversationType, content)
@@ -715,16 +818,22 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 Log.v(TAG, messageContent.toString())
                 //将消息显示到列表上
                 mRoomMessageAdapter!!.interMessage(messageContent)
+                if (messageContent is RCChatroomGift || messageContent is RCChatroomGiftAll) {
+                    //展示礼物动画
+                    val showGift = SPUtil.getBoolean(Tool.showGift, true)
+                    if (showGift) {
+                        messageContent as RCChatroomGift
+                        MUtils.loadSvg(
+                            binding.svgGift,
+                            Config.FILE_PATH + messageContent.giftPath
+                        ) {
 
-//                if (messageContent is RCChatroomGift || messageContent is RCChatroomGiftAll) {
-//                    if (null != mView) mView.showVideoGift()
-//                    getGiftCount()
-//                } else if (messageContent is RCAllBroadcastMessage) {
-//                    AllBroadcastManager.getInstance()
-//                        .addMessage(messageContent as RCAllBroadcastMessage)
-//                }else if (messageContent is RCChatroomLocationMessage) {
-//                    VoiceEventHelper.helper().addMessage(messageContent)
-//                }
+                        }
+                    }
+                } else if (messageContent is RCAllBroadcastMessage) {
+                    AllBroadcastManager.getInstance()
+                        .addMessage(messageContent)
+                }
             })
         // 默认消息
         val list: MutableList<MessageContent> = java.util.ArrayList(1)
@@ -756,5 +865,15 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     //点击消息
     override fun clickMessageUser(userId: String?) {
 
+    }
+
+    //礼物发送成功
+    override fun onSendGiftSuccess(messages: MessageContent?) {
+        RCChatRoomMessageManager.sendChatMessage(roomId, messages, true,
+            {
+                // addMessage(messageContent)
+                null
+            }, null
+        )
     }
 }

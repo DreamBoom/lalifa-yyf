@@ -19,14 +19,35 @@ public class Member implements Serializable {
     private String car;//座驾
     private String bubble;//气泡
     private String sound;//音波
+
     private int gender;
     // 是否是管理
     private int manageType = 0;
-    // 是否已关注
+    // 房间是否已关注
     private int collectionType = 0;
+    // 用户是否已关注
+    private int follow_type = 0;
     // 麦位
     private int seatIndex = -1;
-    public  boolean isFollow = getCollectionType()==1;
+    @Override
+    public String toString() {
+        return "Member{" +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", level='" + level + '\'' +
+                ", frame='" + frame + '\'' +
+                ", car='" + car + '\'' +
+                ", bubble='" + bubble + '\'' +
+                ", sound='" + sound + '\'' +
+                ", gender=" + gender +
+                ", manageType=" + manageType +
+                ", collectionType=" + collectionType +
+                ", followType=" + follow_type +
+                ", seatIndex=" + seatIndex +
+                '}';
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -127,12 +148,12 @@ public class Member implements Serializable {
         this.sound = sound;
     }
 
-    public boolean isFollow() {
-        return isFollow;
+    public int getFollow_type() {
+        return follow_type;
     }
 
-    public void setFollow(boolean follow) {
-        isFollow = follow;
+    public void setFollow_type(int follow_type) {
+        this.follow_type = follow_type;
     }
 
     @Override
