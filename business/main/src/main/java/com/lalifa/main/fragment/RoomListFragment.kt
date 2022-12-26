@@ -7,9 +7,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.get
-import com.drake.brv.BindingAdapter
-import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.page
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
@@ -22,14 +19,11 @@ import com.lalifa.main.R
 import com.lalifa.main.activity.MainSearchActivity
 import com.lalifa.main.activity.PHActivity
 import com.lalifa.main.activity.room.RoomActivity
-import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.FragmentRoomListBinding
 import com.lalifa.main.ext.inputPasswordDialog
 import com.lalifa.main.fragment.adapter.roomListAdapter
-import com.lalifa.widget.dialog.dialog.VRCenterDialog
 import com.lalifa.yyf.ext.showTipDialog
-import com.squareup.picasso.Callback.EmptyCallback
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
@@ -68,7 +62,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
                         }).indicator = CircleIndicator(context)
                 }
             }
-            xrvRoom.apply {
+            fgRoomList.apply {
                 roomListAdapter().apply {
                     R.id.itemRoom.onClick {
                         clickItem(getModel(), false)
@@ -111,7 +105,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
                 // 说明已经在房间内了，那么给弹窗
                 showTipDialog("您正在直播的房间中\n是否返回？"){
                     val userId = roomCheck.userId
-                    if(TextUtils.equals(userId,AccountManager.currentId)){
+                    if(TextUtils.equals(userId,Member.currentId)){
                         jumpRoom(true, roomCheck.RoomId)
                     }else{
                         jumpRoom(false, roomCheck.RoomId)

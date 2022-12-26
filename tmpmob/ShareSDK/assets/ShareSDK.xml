@@ -17,7 +17,7 @@
 <Email Enable="false" />
 <ShortMessage Enable="false" />
 <Wechat AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
-<WechatMoments Enable="false" />
+<WechatMoments AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
 <QQ AppId="100371282" AppKey="aed9b0303e3ed1e27bae87c33761161d" ShareByAppClient="true" />
 <Instapaper Enable="false" />
 <Pocket Enable="false" />

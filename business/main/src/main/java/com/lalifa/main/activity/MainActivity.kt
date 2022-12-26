@@ -1,22 +1,16 @@
 package com.lalifa.main.activity
 
-import cn.jpush.android.api.JPushInterface
-import com.drake.logcat.LogCat
 import com.lalifa.base.BaseActivity
-import com.lalifa.ext.Config
 import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.activity.che.CheActivity
-import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.databinding.ActivityHomeBinding
 import com.lalifa.main.fragment.MainFragment
 import com.lalifa.main.fragment.MeFragment
 import com.lalifa.main.fragment.MessageFragment
 import com.lalifa.main.fragment.RoomListFragment
-import com.lalifa.utils.SPUtil
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
-import io.rong.imlib.RongIMClient.ConnectionStatusListener.ConnectionStatus
 
 class MainActivity : BaseActivity<ActivityHomeBinding>() {
     override fun isCanExit() = true

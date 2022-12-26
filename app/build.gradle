@@ -40,20 +40,20 @@ android {
         buildConfigField("String[]", "YYF", "${modes()}")
     }
 
-//    signingConfigs {
-//        debug {
-//            keyAlias "key0"
-//            keyPassword "lalifa"
-//            storeFile file("./key.jks")
-//            storePassword 'lalifa'
-//        }
-//        release {
-//            keyAlias "key0"
-//            keyPassword "lalifa"
-//            storeFile file("./key.jks")
-//            storePassword 'lalifa'
-//        }
-//    }
+    signingConfigs {
+        debug {
+            keyAlias "key0"
+            keyPassword "lalifa"
+            storeFile file("./key.jks")
+            storePassword 'lalifa'
+        }
+        release {
+            keyAlias "key0"
+            keyPassword "lalifa"
+            storeFile file("./key.jks")
+            storePassword 'lalifa'
+        }
+    }
     buildFeatures{
         dataBinding = true
         viewBinding = true
@@ -64,6 +64,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled false

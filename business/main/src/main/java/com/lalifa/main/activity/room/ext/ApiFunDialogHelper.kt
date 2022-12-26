@@ -23,6 +23,7 @@ import com.lalifa.extension.pk
 import com.lalifa.main.R
 import com.lalifa.main.api.getMembers
 import com.lalifa.main.activity.room.widght.QDialog
+import com.lalifa.main.api.Member
 import java.util.*
 
 class ApiFunDialogHelper {
@@ -135,7 +136,7 @@ class ApiFunDialogHelper {
      */
     fun showSelectDialog(
         activity: Activity?, roomId: String?, title: String?,
-        resultBack: IResultBack<Account?>?
+        resultBack: IResultBack<Member?>?
     ) {
         if (null == dialog || !dialog!!.enable()) {
             dialog = QDialog(
@@ -145,10 +146,10 @@ class ApiFunDialogHelper {
         val refresh = RecyclerView(
             dialog!!.context
         )
-        val adapter = object : RcySAdapter<Account, RcyHolder>(
+        val adapter = object : RcySAdapter<Member, RcyHolder>(
             dialog!!.context, R.layout.layout_item_selector
         ) {
-            override fun convert(holder: RcyHolder, accout: Account, position: Int) {
+            override fun convert(holder: RcyHolder, accout: Member, position: Int) {
                 holder.setText(R.id.selector_name, accout.userName)
                 holder.itemView.setOnClickListener { resultBack?.onResult(accout) }
             }
@@ -163,7 +164,7 @@ class ApiFunDialogHelper {
 //                }
 //            }
 //        }
-        adapter.setData(AccountManager.getAccounts(), true)
+        adapter.setData(Member.getMembers(), true)
         dialog!!.replaceContent(
             title,
             "取消",
@@ -178,7 +179,7 @@ class ApiFunDialogHelper {
     fun showSelectDialog(
         activity: Activity?,
         title: String?,
-        resultBack: IResultBack<Account?>?,
+        resultBack: IResultBack<Member?>?,
         all: Boolean
     ) {
         if (null == dialog || !dialog!!.enable()) {
@@ -189,10 +190,10 @@ class ApiFunDialogHelper {
         val refresh = RecyclerView(
             dialog!!.context
         )
-        val adapter = object : RcySAdapter<Account, RcyHolder>(
+        val adapter = object : RcySAdapter<Member, RcyHolder>(
             dialog!!.context, R.layout.layout_item_selector
         ) {
-            override fun convert(holder: RcyHolder, accout: Account, position: Int) {
+            override fun convert(holder: RcyHolder, accout: Member, position: Int) {
                 holder.setText(R.id.selector_name, accout.userName)
                 holder.itemView.setOnClickListener { view: View? -> resultBack?.onResult(accout) }
             }
@@ -200,14 +201,14 @@ class ApiFunDialogHelper {
         refresh.layoutManager = LinearLayoutManager(dialog!!.context)
         adapter.setRefreshView(refresh)
         if (all) {
-            adapter.setData(AccountManager.getAccounts(), true)
+            adapter.setData(Member.getMembers(), true)
         } else {
-            val accounts = AccountManager.getAccounts()
-            val onlines: MutableList<Account> = ArrayList()
+            val accounts = Member.getMembers()
+            val onlines: MutableList<Member> = ArrayList()
             for (a in accounts) {
                 val id = a.userId
                 // 排除自己
-                if (id != AccountManager.currentId && QuickEventListener.get().audienceIds.contains(
+                if (id != Member.currentId && QuickEventListener.get().audienceIds.contains(
                         a.userId
                     )
                 ) {

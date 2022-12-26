@@ -16,6 +16,7 @@ import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
 import cn.rongcloud.voiceroom.api.callback.RCVoiceRoomCallback
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
 import com.drake.brv.BindingAdapter
+import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.kit.utils.KToast
 import com.lalifa.adapter.BannerImageAdapter
@@ -48,6 +49,7 @@ import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import io.rong.imlib.model.MessageContent
+import kotlinx.coroutines.delay
 
 
 /**
@@ -237,6 +239,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     //用户进入房间
     override fun onUserIn(userId: String?) {
         inUserIdList.add(userId!!)
+
         if (!isShowIn) {
             showUserIn()
         }
@@ -248,10 +251,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             isShowIn = true
             scopeNetLife {
                 val userInfo = userInfo(inUserIdList[0], roomId!!)
+                Member.setMember(userInfo, false)
                 //展示进场动画
                 val showIn = SPUtil.getBoolean(roomId!!, true)
                 if (showIn && !TextUtils.isEmpty(userInfo!!.car)) {
-                    MUtils.loadSvg(binding.svgIn, userInfo.car) {
+                    MUtils.loadSvg(binding.svgIn, userInfo.car!!) {
                         inUserIdList.removeAt(0)
                         showUserIn()
                     }
@@ -273,7 +277,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             seat!!.getModel<Seat>(position)
         }
         if (models.status != RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusEmpty
-            && models.userId == AccountManager.currentId
+            && models.userId == Member.currentId
         ) {
             //展示本人
             roomMyDialog(UserManager.get()!!) {
@@ -315,7 +319,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                                             this@RoomActivity, roomId!!,
                                             mRoomDetail!!.password_type == 1,
                                             roomGift,
-                                            AccountManager.getSeats(),
+                                            Member.getSeats(),
                                             this@RoomActivity
                                         )
                                         dialog.show(supportFragmentManager, "dialog")
@@ -327,7 +331,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                             }
                             4 -> {
                                 //抱下麦
-                                kickSeat(userInfo.userId)
+                                kickSeat(userInfo.userId!!)
                             }
                             5 -> {
                                 //闭麦
@@ -342,7 +346,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                             }
                             7 -> {
                                 //踢出房间
-                                kickUser(userInfo.userId)
+                                kickUser(userInfo.userId!!)
                             }
                         }
                     }
@@ -370,9 +374,9 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 //申请上麦or取消申请
                 requestSeatDialog(currentStatus) {
                     if (currentStatus == Tool.STATUS_NOT_ON_SEAT) {
-                        if(position!=1){
-                            Tool.currentSeatIndex = position+2
-                        }else{
+                        if (position != 1) {
+                            Tool.currentSeatIndex = position + 2
+                        } else {
                             Tool.currentSeatIndex = position
                         }
                         requestSeat()
@@ -401,7 +405,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
      * @param targetId 被踢用户的标识
      */
     override fun onOut(targetId: String?) {
-        if (targetId == AccountManager.currentId) {
+        if (targetId == Member.currentId) {
             VoiceRoomApi.getApi().leaveRoom { result ->
                 NotificationService.unbindNotifyService()
                 if (result) {
@@ -419,11 +423,12 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
      * 抱下麦
      */
     fun kickSeat(userId: String) {
-        RCVoiceRoomEngine.getInstance().kickUserFromSeat(userId,object : RCVoiceRoomCallback {
+        RCVoiceRoomEngine.getInstance().kickUserFromSeat(userId, object : RCVoiceRoomCallback {
             override fun onSuccess() {}
             override fun onError(code: Int, message: String) {}
         })
     }
+
     /**
      * 静麦，注意：
      * 1、可以静麦自己也可以静麦其他人
@@ -506,7 +511,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                             this@RoomActivity, roomId!!,
                             mRoomDetail!!.password_type == 1,
                             roomGift,
-                            AccountManager.getSeats(),
+                            Member.getSeats(),
                             this@RoomActivity
                         )
                         dialog.show(supportFragmentManager, "dialog")
@@ -536,46 +541,54 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     }
 
     //麦位变化，刷新房间观众
-    var isLoad = false
-    var seatList = arrayListOf<Account>()
+    var isFirst = true
     override fun onSeatList(seatInfos: List<Seat>) {
-        if (!isLoad) {
-            isLoad = true
-            scopeNetLife {
-                getMembers(roomId!!.noEN())?.apply {
-                    forEach { member ->
-                        AccountManager.setAccount(member.toAccount(), false)
-                    }.apply {
-                        val count = seatInfos.size ?: 0
-                        if (count > 0) {
-                            //老板麦位
-                            val bossSeats = seatInfos.subList(0, 2)
-                            seatBoss!!.models = bossSeats
-                            //观众麦位
-                            val seats = seatInfos.subList(2, count)
-                            seat!!.models = seats
-                        }
-                        //设置本人麦位状态
-                        AccountManager.removeSeats()
-                        seatList.clear()
-                        for (i in seatInfos.indices) {
-                            if (seatInfos[i].userId == AccountManager.currentId) {
-                                currentStatus = Tool.STATUS_HAVE_SEAT
-                                Tool.currentSeatIndex = i
-                            }
-                            //更新麦位用户信息
-                            val account = AccountManager.getAccount(seatInfos[i].userId)
-                            if (null != account) {
-                                account.seat = i
-                                seatList.add(account)
-                            }
-                        }
-                        AccountManager.setSeat(seatList)
-                        isLoad = false
+        if (isFirst) {
+            isFirst = false
+            Member.clearSeat()
+            if (seatInfos.isNotEmpty()) {
+                val count = seatInfos.size ?: 0
+                //老板麦位
+                LogCat.e("99999" + seatInfos.toString())
+                val bossSeats = seatInfos.subList(0, 2)
+                seatBoss!!.models = bossSeats
+                //观众麦位
+                val seats = seatInfos.subList(2, count)
+                seat!!.models = seats
+
+                for (i in seatInfos.indices) {
+                    if (seatInfos[i].userId == Member.currentId) {
+                        currentStatus = Tool.STATUS_HAVE_SEAT
+                        Tool.currentSeatIndex = i
+                    }
+                    //更新麦位用户信息
+                    val member = Member.getMember(seatInfos[i].userId)
+                    if (null != member) {
+                        member.seatIndex = i
+                        member.status = seatInfos[i].status
+                        member.isMute = seatInfos[i].isMute
+                        Member.setSeat(member)
                     }
                 }
             }
+            isFirst = true
         }
+    }
+
+    override fun userInSeat(index: Int, userId: String?) {
+//        LogCat.e("11111")
+//        val member = Member.getMember(userId)
+//        if (null != member) {
+//            member.seatIndex = index
+//            member.status = RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing
+//            member.isMute = getSeatInfo(index).isMute
+//            Member.setSeat(member)
+//        }
+    }
+
+    override fun userOutSeat(index: Int, userId: String?) {
+//        LogCat.e("22222")
+//        Member.removeSeat(userId!!)
     }
 
     /**
@@ -779,7 +792,8 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         barrage.content = content
         barrage.userId = UserManager.get()!!.userId
         barrage.userName = UserManager.get()!!.userName
-        RCChatRoomMessageManager.sendChatMessage(roomId, barrage, true,
+        RCChatRoomMessageManager.sendChatMessage(
+            roomId, barrage, true,
             {
                 // addMessage(messageContent)
                 null
@@ -869,7 +883,8 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
 
     //礼物发送成功
     override fun onSendGiftSuccess(messages: MessageContent?) {
-        RCChatRoomMessageManager.sendChatMessage(roomId, messages, true,
+        RCChatRoomMessageManager.sendChatMessage(
+            roomId, messages, true,
             {
                 // addMessage(messageContent)
                 null

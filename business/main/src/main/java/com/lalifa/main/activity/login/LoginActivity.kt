@@ -22,12 +22,11 @@ import com.lalifa.extension.enable
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.main.activity.MainActivity
-import com.lalifa.ext.Account
-import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.api.login
 import com.lalifa.main.databinding.ActivityLoginBinding
 import com.lalifa.utils.SPUtil
 import com.mob.MobSDK
+import com.mob.OperationCallback
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 
@@ -89,7 +88,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 //密码登录
                 start(LoginPassActivity::class.java)
             }
-            agree.onClick { agree.isSelected = !agree.isSelected }
+            agree.onClick {
+                agree.isSelected = !agree.isSelected
+                submitPrivacyGrantResult(agree.isSelected)
+            }
             agreeInfo.onClick {
                 //查看用户服务协议
             }
@@ -97,7 +99,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             wx.onClick { getWeiXin() }
         }
     }
+    private fun submitPrivacyGrantResult(granted: Boolean) {
+        MobSDK.submitPolicyGrantResult(granted, object : OperationCallback<Void?>() {
+            override fun onComplete(data: Void?) {
+                LogCat.d(TAG, "隐私协议授权结果提交：成功")
+            }
 
+            override fun onFailure(t: Throwable) {
+                LogCat.d(TAG, "隐私协议授权结果提交：失败")
+            }
+        })
+    }
     private fun loginUser() {
         scopeNetLife {
            // val user = login("13462439645", "111111")

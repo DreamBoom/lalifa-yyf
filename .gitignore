@@ -9,6 +9,11 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+/callkit/build
+/calllib/build
+/imkit/build
+/imlib/build
+/rtclib/build
 /app/release
 /channels
 /captures

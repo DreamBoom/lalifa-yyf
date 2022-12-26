@@ -111,14 +111,6 @@
         app:banner_indicator_selected_width="6dp"
         app:banner_indicator_space="6dp"
         app:banner_radius="4dp" />
-    <com.opensource.svgaplayer.SVGAImageView
-        android:id="@+id/svgGift"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/rl_seat"
-        app:layout_constraintBottom_toTopOf="@+id/btLl"
-        app:autoPlay="true"
-        app:loopCount="0" />
     <TextView
         android:id="@+id/task"
         android:text="任务"
@@ -157,6 +149,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="35dp"
         android:layout_height="35dp" />
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svgGift"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl_seat"
+        app:layout_constraintBottom_toTopOf="@+id/btLl"
+        app:autoPlay="true"
+        app:loopCount="1" />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/btLl"
         android:orientation="horizontal"

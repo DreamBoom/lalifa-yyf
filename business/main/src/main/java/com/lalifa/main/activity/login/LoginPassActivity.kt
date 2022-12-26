@@ -11,11 +11,11 @@ import com.lalifa.ext.User
 import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.activity.MainActivity
-import com.lalifa.ext.Account
-import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.api.login
 import com.lalifa.main.databinding.ActivityLoginPassBinding
 import com.lalifa.utils.SPUtil
+import com.mob.MobSDK
+import com.mob.OperationCallback
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 
@@ -32,7 +32,10 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
             back.onClick { finish() }
             register.onClick { start(RegisterActivity::class.java) }
             forget.onClick { start(ForgetPasswordActivity::class.java) }
-            agree.onClick { agree.isSelected = !agree.isSelected }
+            agree.onClick {
+                agree.isSelected = !agree.isSelected
+                submitPrivacyGrantResult(agree.isSelected)
+            }
             agreeInfo.onClick { }
             login.onClick {
                 if (etPhone.isEmp() || etPhone.text().length < 11) {
@@ -57,7 +60,17 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
         }
 
     }
+    private fun submitPrivacyGrantResult(granted: Boolean) {
+        MobSDK.submitPolicyGrantResult(granted, object : OperationCallback<Void?>() {
+            override fun onComplete(data: Void?) {
+                LogCat.d(TAG, "隐私协议授权结果提交：成功")
+            }
 
+            override fun onFailure(t: Throwable) {
+                LogCat.d(TAG, "隐私协议授权结果提交：失败")
+            }
+        })
+    }
     private fun initRongIM(user: User) {
         if (!TextUtils.isEmpty(user.imToken)) {
             RongIM.connect(user.imToken, object : RongIMClient.ConnectCallback() {

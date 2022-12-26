@@ -9,6 +9,7 @@ import com.drake.logcat.LogCat;
 import com.kit.cache.GsonUtil;
 import com.kit.utils.KToast;
 import com.kit.wapper.IResultBack;
+import com.lalifa.main.api.Member;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         void onSeatList(List<Seat> seatInfos);
         void requestSeatAccepted(int index);
         void seatSpeak(int index, int audioLevel);
+        void userInSeat(int index, String userId);
+        void userOutSeat(int index, String userId);
     }
 
     public interface RoomInfoObserver {
@@ -55,7 +58,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     //设置监听标识
     private WeakReference<IRCVoiceRoomEngine> reference;
     private WeakReference<Activity> activity;
-    private List<Seat> mSeatInfos;
+    public static List<Seat> mSeatInfos;
     private List<String> mAudienceIds;
 
     private QuickEventListener() {
@@ -141,7 +144,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      * @param userId
      * @return 麦位信息
      */
-    private RCVoiceSeatInfo getSeatInfo(String userId) {
+    public static RCVoiceSeatInfo getSeatInfo(String userId) {
         synchronized (obj) {
             int count = mSeatInfos.size();
             for (int i = 0; i < count; i++) {
@@ -155,7 +158,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         }
     }
 
-    private Seat getSeatInfo(int index) {
+    public static Seat getSeatInfo(int index) {
         synchronized (obj) {
             int count = mSeatInfos.size();
             if (index > -1 && index < count) {
@@ -236,6 +239,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      */
     @Override
     public void onSeatInfoUpdate(List<RCVoiceSeatInfo> list) {
+        LogCat.e("11111=====麦位列表跟新回调");
         int count = list.size();
         synchronized (obj) {
             mSeatInfos.clear();
@@ -250,13 +254,16 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     //同步回调 onSeatInfoUpdate 此处无特殊需求可不处理
     @Override
     public void onUserEnterSeat(int index, String userId) {
-        Log.d(TAG, "onUserEnterSeat: index = " + index + " userId = " + userId);
+        LogCat.e("11111=====onUserEnterSeat");
+        if (null != seatListObserver) seatListObserver.userInSeat(index,userId);
+      //  Log.d(TAG, "onUserEnterSeat: index = " + index + " userId = " + userId);
     }
 
     //同步回调 onSeatInfoUpdate 此处无特殊需求可不处理
     @Override
     public void onUserLeaveSeat(int index, String userId) {
-        Log.d(TAG, "onUserLeaveSeat: index = " + index + " userId = " + userId);
+        if (null != seatListObserver) seatListObserver.userOutSeat(index,userId);
+      //  Log.d(TAG, "onUserLeaveSeat: index = " + index + " userId = " + userId);
     }
 
     //同步回调 onSeatInfoUpdate 此处无特殊需求可不处理
@@ -355,13 +362,13 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         if (isOwner) return;
         Log.d(TAG, "onPickSeatReceivedFrom: userId = " + userId);
         if (null != activity && null != activity.get()) {
-            String name = AccountManager.getAccountName(userId);
+            String name = Member.Companion.getMemberName(userId);
             ApiFunDialogHelper.helper().showTipDialog(activity.get(), "邀请", "'" + name + "'邀请您上麦，是否接收", new IResultBack<Boolean>() {
                 @Override
                 public void onResult(Boolean result) {
                     if (result) {
                         //同意
-                        RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_AGREE_PICK, AccountManager.getCurrentId(), null);
+                        RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_AGREE_PICK, Member.Companion.getCurrentId(), null);
                         //获取可用麦位索引
                         int availableIndex = getAvailableSeatIndex();
                         if (availableIndex > -1) {
@@ -370,7 +377,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
                             KToast.show("当前没有空余的麦位");
                         }
                     } else {//拒绝
-                        RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_REJECT_PICK, AccountManager.getCurrentId(), null);
+                        RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_REJECT_PICK,Member.Companion.getCurrentId(), null);
                     }
 
                 }
@@ -397,7 +404,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     public void onRequestSeatAccepted() {
         Log.d(TAG, "onRequestSeatAccepted: ");
         RCVoiceRoomEngine.getInstance().notifyVoiceRoom(Api.EVENT_AGREE_PICK,
-                AccountManager.getCurrentId(), null);
+                Member.Companion.getCurrentId(), null);
         if (seatIsEmpty(Tool.Companion.getCurrentSeatIndex())) {
             if (null != seatListObserver) seatListObserver.requestSeatAccepted(Tool.Companion.getCurrentSeatIndex());
             KToast.show("您的上麦申请被同意啦");
@@ -440,7 +447,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
                 }
                 if (!requestIds.isEmpty()) {
                     String userId = requestIds.get(0);
-                    String name = AccountManager.getAccountName(userId);
+                    String name = Member.Companion.getMemberName(userId);
                     ApiFunDialogHelper.helper().showTipDialog(activity.get(), "申请上麦", "'" + name + "'申请上麦 是否同意？", new IResultBack<Boolean>() {
                         @Override
                         public void onResult(Boolean result) {
@@ -544,7 +551,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     @Override
     public void onReceivePKInvitation(String inviterRoomId, String inviterUserId) {
         Log.d(TAG, "onReveivePKInvitation: inviterRoomId = " + inviterRoomId + " inviterUserId = " + inviterUserId);
-        String name = AccountManager.getAccountName(inviterUserId);
+        String name = Member.Companion.getMemberName(inviterUserId);
         ApiFunDialogHelper.helper().showTipDialog(activity.get(), "PK邀请", "'" + name + "'向您发起PK申请，是否同意？", new IResultBack<Boolean>() {
             @Override
             public void onResult(Boolean result) {

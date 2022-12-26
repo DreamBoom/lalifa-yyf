@@ -2,7 +2,6 @@ package com.lalifa.main.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
@@ -13,15 +12,11 @@ import com.lalifa.extension.start
 import com.lalifa.main.activity.*
 import com.lalifa.main.activity.che.MyChe
 import com.lalifa.main.activity.me.*
-import com.lalifa.main.activity.room.ext.AccountManager
+import com.lalifa.main.api.Member
 import com.lalifa.main.api.UserInfoBean
 import com.lalifa.main.api.userInfo
 import com.lalifa.main.databinding.ViewMainMeBinding
 import com.lalifa.main.ext.MUtils
-import com.opensource.svgaplayer.SVGADrawable
-import com.opensource.svgaplayer.SVGAParser
-import com.opensource.svgaplayer.SVGAVideoEntity
-import java.net.URL
 
 class MeFragment : BaseFragment<ViewMainMeBinding>() {
     override fun getViewBinding(
@@ -54,7 +49,7 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
         scopeNetLife {
             bean = userInfo()
             bean!!.toUser()
-            AccountManager.setAccount(bean!!.toAccount(), true)
+            Member.setMember(bean!!.toMember(), true)
             binding.apply {
                 header.load(Config.FILE_PATH + bean!!.avatar)
                 UserManager.get()!!.frame = bean!!.frame

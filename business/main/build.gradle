@@ -4,6 +4,33 @@ plugins {
     id 'kotlin-kapt'
     id 'com.mob.sdk'
 }
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "36cdb3c927c4c"
+    appSecret "19587758b802435324dcdff55261544f"
+    ShareSDK {
+        devInfo {
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 2
+            }
+            WechatMoments {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+                shareByAppClient true
+            }
+        }
+    }
+}
+
 kapt {
     arguments {
         // ARouter 配置

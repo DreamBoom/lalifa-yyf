@@ -741,17 +741,17 @@ fun RecyclerView.seatBossAdapter(): BindingAdapter {
             val lock = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
             getBinding<LayoutSeatItemBinding>().apply {
                 if (useing) {
-                    val account = AccountManager.getAccount(seatInfo.userId)
+                    val account = Member.getMember(seatInfo.userId)
                     if (null != account) {
-                        if (null != account.frame && account.frame.contains("svga")) {
-                            MUtils.loadSvg(svg, account.frame) {
+                        if (null != account.frame && account.frame!!.contains("svga")) {
+                            MUtils.loadSvg(svg, account.frame!!) {
 
                             }
                         }
-                        ivPortrait.load(Config.FILE_PATH + account.avatar, R.mipmap.ic_room_seat)
+                        ivPortrait.load(Config.FILE_PATH + account.portraitUrl, R.mipmap.ic_room_seat)
                         //麦位上用户名称
                         memberName.text = account.userName
-                        sx.text = account.sx
+                        sx.text = account.level
                         if (showSx) {
                             sx.visible()
                         } else {
@@ -791,17 +791,17 @@ fun RecyclerView.seatAdapter(): BindingAdapter {
             val lock = seatInfo.status == RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusLocking
             getBinding<LayoutSeatItemBinding>().apply {
                 if (useing) {
-                    val account = AccountManager.getAccount(seatInfo.userId)
+                    val account = Member.getMember(seatInfo.userId)
                     if (null != account) {
-                        if (null != account.frame && account.frame.contains("svga")) {
-                            MUtils.loadSvg(svg, account.frame) {
+                        if (null != account.frame && account.frame!!.contains("svga")) {
+                            MUtils.loadSvg(svg, account.frame!!) {
 
                             }
                         }
-                        ivPortrait.load(Config.FILE_PATH + account.avatar, R.mipmap.ic_room_seat)
+                        ivPortrait.load(Config.FILE_PATH + account.portraitUrl, R.mipmap.ic_room_seat)
                         //麦位上用户名称
                         memberName.text = account.userName
-                        sx.text = account.sx
+                        sx.text = account.level
                         if (showSx) {
                             sx.visible()
                         } else {
@@ -906,20 +906,20 @@ fun RecyclerView.roomGiftAdapter(): BindingAdapter {
 fun RecyclerView.seatGiftAdapter(): BindingAdapter {
     return linear(LinearLayoutManager.HORIZONTAL)
         .setup {
-            addType<Account>(R.layout.item_header)
+            addType<Member>(R.layout.item_header)
             onBind {
-                val bean = getModel<Account>()
+                val bean = getModel<Member>()
                 getBinding<ItemHeaderBinding>().apply {
                     if (bean.select) {
                         select.visible()
                     } else {
                         select.invisible()
                     }
-                    header.load(bean.avatar)
+                    header.load(bean.portraitUrl!!.pk(""))
                     if (layoutPosition == 0) {
                         name.text = "全麦"
                     } else {
-                        name.text = "${bean.seat} 号麦"
+                        name.text = "${bean.seatIndex} 号麦"
                     }
                 }
             }

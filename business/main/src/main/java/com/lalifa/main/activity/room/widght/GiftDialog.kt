@@ -33,6 +33,7 @@ import com.lalifa.main.activity.room.message.AllBroadcastManager
 import com.lalifa.main.activity.room.message.RCAllBroadcastMessage
 import com.lalifa.main.activity.room.message.RCChatroomGift
 import com.lalifa.main.activity.room.message.RCChatroomGiftAll
+import com.lalifa.main.api.Member
 import com.lalifa.main.api.RoomGift
 import com.lalifa.main.api.RoomGiftBean
 import com.lalifa.main.api.sendRoomGift
@@ -51,7 +52,7 @@ class GiftDialog(
     val roomId: String,
     val isPrivate: Boolean,
     val roomGiftBean: RoomGiftBean,
-    var list: ArrayList<Account>,
+    var list: ArrayList<Member>,
      var onSendGiftListener:OnSendGiftListener
 ) : DialogFragment() {
 
@@ -92,7 +93,7 @@ class GiftDialog(
         val attributes = window!!.attributes
         attributes.gravity = Gravity.BOTTOM //下方
         attributes.width = getW() //满屏
-        attributes.height = 1100
+        attributes.height = 1200
         window.attributes = attributes
     }
 
@@ -159,13 +160,11 @@ class GiftDialog(
         val peopleList = view.findViewById<RecyclerView>(R.id.peopleList)
         val tabLayout = view.findViewById<SlidingTabLayout>(R.id.tab_layout)
         val viewPager = view.findViewById<ViewPager>(R.id.map_viewPager)
-        list.add(0, Account())
         peopleList.seatGiftAdapter().apply {
             R.id.header.onClick {
                 if (layoutPosition == 0) {
-                    LogCat.e(list.toString())
-                    val model = peopleList.bindingAdapter._data as ArrayList<Account>
-                    if (getModel<Account>().select) {
+                    val model = peopleList.bindingAdapter._data as ArrayList<Member>
+                    if (getModel<Member>().select) {
                         userType = "0"
                         model.forEach { it.select = false }
                         notifyDataSetChanged()
@@ -187,12 +186,12 @@ class GiftDialog(
                     }
                 } else {
                     userType = "0"
-                    val model = peopleList.bindingAdapter._data as ArrayList<Account>
-                    getModel<Account>(0).select = false
+                    val model = peopleList.bindingAdapter._data as ArrayList<Member>
+                    getModel<Member>(0).select = false
                     model.forEach { it.select = false }
-                    getModel<Account>().select = true
-                    userId = getModel<Account>().userId
-                    userName = getModel<Account>().userName
+                    getModel<Member>().select = true
+                    userId = getModel<Member>().userId!!
+                    userName = getModel<Member>().userName!!
                     notifyDataSetChanged()
                 }
 
@@ -247,6 +246,7 @@ class GiftDialog(
             all.userName = UserManager.get()!!.userName
             all.giftId = giftId
             all.giftName = giftName
+            all.giftPath = giftPath
             all.number = giftNum.toInt()
             all.price = giftValue.toInt()
             messages = all
@@ -255,6 +255,7 @@ class GiftDialog(
             gift.userId = UserManager.get()!!.userId
             gift.userName = UserManager.get()!!.userName
             gift.giftId = giftId
+            gift.giftPath = giftPath
             gift.giftName = giftName
             gift.number = giftNum
             gift.price = giftValue.toDouble()
@@ -278,7 +279,7 @@ class GiftDialog(
             roomId: String,
             isPrivate: Boolean,
             roomGiftBean: RoomGiftBean,
-            list: ArrayList<Account>,
+            list: ArrayList<Member>,
             onSendGiftListener:OnSendGiftListener
         ): GiftDialog {
             val customDialogFragment = GiftDialog(activity, roomId,isPrivate, roomGiftBean, list,
@@ -303,7 +304,7 @@ class GiftDialog(
     class GiftFragment(val inType: Int, val list: List<RoomGift>) :
         BaseFragment<FragmentListBinding>() {
         override fun initView() {
-            binding.list.roomGiftAdapter().apply {
+            binding.diaList.roomGiftAdapter().apply {
                 R.id.sendGift.onClick {
                     type = if (inType == 4) "2" else "1"
                     list.forEach { it.choose = false }
@@ -311,11 +312,11 @@ class GiftDialog(
                     giftId = list[layoutPosition].id.toString()
                     giftName =list[layoutPosition].name
                     giftValue = list[layoutPosition].price
-                    giftPath = list[layoutPosition].image
+                    giftPath = list[layoutPosition].effect_image
                     notifyDataSetChanged()
                 }
             }
-            binding.list.models = list
+            binding.diaList.models = list
         }
 
         override fun getViewBinding(

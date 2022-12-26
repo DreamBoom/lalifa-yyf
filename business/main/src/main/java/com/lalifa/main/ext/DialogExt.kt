@@ -11,7 +11,6 @@ import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
-import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNet
 import com.drake.tooltip.toast
 import com.lalifa.ext.Config
@@ -20,7 +19,6 @@ import com.lalifa.ext.User
 import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.R
-import com.lalifa.main.activity.room.ext.AccountManager
 import com.lalifa.main.activity.room.ext.Tool
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ItemCzBinding
@@ -259,7 +257,7 @@ fun roomUserDialog(user: Member,isMute:Boolean, callback: (type: Int) -> Unit = 
 
                 }
             }
-            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
+            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.portraitUrl)
             if (UserManager.get()!!.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
             } else {
@@ -270,7 +268,7 @@ fun roomUserDialog(user: Member,isMute:Boolean, callback: (type: Int) -> Unit = 
             gz!!.text = if (user.follow_type==1) "取消关注" else "关注"
             gz.onClick {
                 scopeNet {
-                    val follow = follow(user.userId)
+                    val follow = follow(user.userId!!)
                     if (follow != null) {
                         dismiss()
                     }
@@ -394,7 +392,7 @@ fun roomListDialog(
                 list.visible()
                 list.popRoomAdapter().apply {
                     R.id.inRoom.onClick {
-                        if (getModel<Fleet>().userId == AccountManager.currentId) {
+                        if (getModel<Fleet>().userId == Member.currentId) {
                             callback(getModel<Fleet>().roomid, true)
                         } else {
                             callback(getModel<Fleet>().roomid, false)

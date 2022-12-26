@@ -212,19 +212,23 @@ data class UserInfoBean(
         UserManager.get()!!.sound = sound
         UserManager.get()!!.sound = sound
     }
-        fun toAccount(): Account {
-            return Account(
-                UserManager.get()!!.userId!!,
+        fun toMember(): Member {
+            return Member(
+                UserManager.get()!!.userId,
                 userName,
                 avatar,
-                UserManager.get()!!.imToken!!,
+                level,
                 frame,
                 car,
                 bubble,
-                sound
+                sound,
+                gender,
+                0,
+                0,
+                0,
+                -1
             )
         }
-
 }
 
 /**
@@ -753,6 +757,7 @@ data class RoomGift(
     val image: String,
     val name: String,
     val price: String,
+    val effect_image: String,
     var choose:Boolean = false
 )
 

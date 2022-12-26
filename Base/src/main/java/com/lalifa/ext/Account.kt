@@ -17,11 +17,6 @@ data class Account(
     var bubble: String = "",
     //音波
     var sound: String = "",
-    //随心值
-    var sx: String = "",
-    var select: Boolean = false,
-    //麦序
-    var seat: Int = -1
 ) : Serializable {
     @JvmName("getAvatar1")
     fun getAvatar(): String {
@@ -43,10 +38,5 @@ data class Account(
     override fun hashCode(): Int {
         return Objects.hash(userId)
     }
-
-    override fun toString(): String {
-        return "Account(userId='$userId', userName='$userName', avatar='$avatar', imToken='$imToken', frame='$frame', car='$car', bubble='$bubble', sound='$sound', select=$select)"
-    }
-
 
 }

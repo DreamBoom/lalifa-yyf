@@ -4,125 +4,125 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="19"
-6-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml
+6-->E:\work\yyf\imlib\AndroidManifest.xml
 7        android:targetSdkVersion="31" />
-7-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml
+7-->E:\work\yyf\imlib\AndroidManifest.xml
 8
 9    <!-- 保存图片，拍照等 -->
 10    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-10-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:5:5-81
-10-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:5:22-78
+10-->E:\work\yyf\imlib\AndroidManifest.xml:5:5-81
+10-->E:\work\yyf\imlib\AndroidManifest.xml:5:22-78
 11    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-11-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:6:5-80
-11-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:6:22-77
+11-->E:\work\yyf\imlib\AndroidManifest.xml:6:5-80
+11-->E:\work\yyf\imlib\AndroidManifest.xml:6:22-77
 12    <!-- 网络 -->
 13    <uses-permission android:name="android.permission.INTERNET" />
-13-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:8:5-67
-13-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:8:22-64
+13-->E:\work\yyf\imlib\AndroidManifest.xml:8:5-67
+13-->E:\work\yyf\imlib\AndroidManifest.xml:8:22-64
 14    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-14-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:9:5-79
-14-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:9:22-76
+14-->E:\work\yyf\imlib\AndroidManifest.xml:9:5-79
+14-->E:\work\yyf\imlib\AndroidManifest.xml:9:22-76
 15    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-15-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:10:5-76
-15-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:10:22-73
+15-->E:\work\yyf\imlib\AndroidManifest.xml:10:5-76
+15-->E:\work\yyf\imlib\AndroidManifest.xml:10:22-73
 16    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-16-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:11:5-76
-16-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:11:22-73
+16-->E:\work\yyf\imlib\AndroidManifest.xml:11:5-76
+16-->E:\work\yyf\imlib\AndroidManifest.xml:11:22-73
 17    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-17-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:12:5-75
-17-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:12:22-72
+17-->E:\work\yyf\imlib\AndroidManifest.xml:12:5-75
+17-->E:\work\yyf\imlib\AndroidManifest.xml:12:22-72
 18    <!-- 消息通道保活 -->
 19    <uses-permission android:name="android.permission.WAKE_LOCK" />
-19-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:14:5-68
-19-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:14:22-65
+19-->E:\work\yyf\imlib\AndroidManifest.xml:14:5-68
+19-->E:\work\yyf\imlib\AndroidManifest.xml:14:22-65
 20    <!-- 定位，如果您需要定位相关的功能，可以打开以下注释 -->
 21    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
 22
 23    <uses-permission android:name="${applicationId}.permission.RONG_ACCESS_RECEIVER" />
-23-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:18:5-88
-23-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:18:22-85
+23-->E:\work\yyf\imlib\AndroidManifest.xml:18:5-88
+23-->E:\work\yyf\imlib\AndroidManifest.xml:18:22-85
 24
 25    <!-- 融云自定义接收广播权限，用于广播接收 -->
 26    <permission
-26-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:21:5-23:47
+26-->E:\work\yyf\imlib\AndroidManifest.xml:21:5-23:47
 27        android:name="${applicationId}.permission.RONG_ACCESS_RECEIVER"
-27-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:22:9-72
+27-->E:\work\yyf\imlib\AndroidManifest.xml:22:9-72
 28        android:protectionLevel="signature" />
-28-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:23:9-44
+28-->E:\work\yyf\imlib\AndroidManifest.xml:23:9-44
 29
 30    <application>
-30-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:25:5-68:19
+30-->E:\work\yyf\imlib\AndroidManifest.xml:25:5-68:19
 31        <service
-31-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:26:9-28:38
+31-->E:\work\yyf\imlib\AndroidManifest.xml:26:9-28:38
 32            android:name="io.rong.imlib.ipc.RongService"
-32-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:27:13-57
+32-->E:\work\yyf\imlib\AndroidManifest.xml:27:13-57
 33            android:process=":ipc" />
-33-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:28:13-35
+33-->E:\work\yyf\imlib\AndroidManifest.xml:28:13-35
 34
 35        <receiver android:name="io.rong.imlib.ConnectChangeReceiver" />
-35-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:30:9-72
-35-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:30:19-69
+35-->E:\work\yyf\imlib\AndroidManifest.xml:30:9-72
+35-->E:\work\yyf\imlib\AndroidManifest.xml:30:19-69
 36        <receiver android:name="io.rong.imlib.HeartbeatReceiver" />
-36-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:32:9-68
-36-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:32:19-65
+36-->E:\work\yyf\imlib\AndroidManifest.xml:32:9-68
+36-->E:\work\yyf\imlib\AndroidManifest.xml:32:19-65
 37
 38        <!-- 必选： SDK 核心功能 -->
 39        <service
-39-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:36:9-40:46
+39-->E:\work\yyf\imlib\AndroidManifest.xml:36:9-40:46
 40            android:name="io.rong.push.rongpush.PushService"
-40-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:37:13-61
+40-->E:\work\yyf\imlib\AndroidManifest.xml:37:13-61
 41            android:exported="true"
-41-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:38:13-36
+41-->E:\work\yyf\imlib\AndroidManifest.xml:38:13-36
 42            android:permission="android.permission.BIND_JOB_SERVICE"
-42-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:39:13-69
+42-->E:\work\yyf\imlib\AndroidManifest.xml:39:13-69
 43            android:process="io.rong.push" />
-43-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:40:13-43
+43-->E:\work\yyf\imlib\AndroidManifest.xml:40:13-43
 44
 45        <!-- push 相关事件接收器 -->
 46        <receiver
-46-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:43:9-53:20
+46-->E:\work\yyf\imlib\AndroidManifest.xml:43:9-53:20
 47            android:name="io.rong.push.rongpush.PushReceiver"
-47-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:44:13-62
+47-->E:\work\yyf\imlib\AndroidManifest.xml:44:13-62
 48            android:exported="true"
-48-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:45:13-36
+48-->E:\work\yyf\imlib\AndroidManifest.xml:45:13-36
 49            android:process="io.rong.push" > <!-- 此处进程可以改名，名称需要和PushService所在进程统一 -->
-49-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:46:13-43
+49-->E:\work\yyf\imlib\AndroidManifest.xml:46:13-43
 50            <!-- 心跳事件和网络切换事件监听,必须 -->
 51            <intent-filter>
-51-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:48:13-51:29
+51-->E:\work\yyf\imlib\AndroidManifest.xml:48:13-51:29
 52                <action android:name="io.rong.push.intent.action.HEART_BEAT" />
-52-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:49:17-80
-52-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:49:25-77
+52-->E:\work\yyf\imlib\AndroidManifest.xml:49:17-80
+52-->E:\work\yyf\imlib\AndroidManifest.xml:49:25-77
 53                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-53-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:50:17-79
-53-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:50:25-76
+53-->E:\work\yyf\imlib\AndroidManifest.xml:50:17-79
+53-->E:\work\yyf\imlib\AndroidManifest.xml:50:25-76
 54            </intent-filter>
 55        </receiver>
 56
 57        <activity
-57-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:55:9-67:20
+57-->E:\work\yyf\imlib\AndroidManifest.xml:55:9-67:20
 58            android:name="io.rong.push.notification.RongBridgeActivity"
-58-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:56:13-72
+58-->E:\work\yyf\imlib\AndroidManifest.xml:56:13-72
 59            android:enabled="true"
-59-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:57:13-35
+59-->E:\work\yyf\imlib\AndroidManifest.xml:57:13-35
 60            android:exported="true"
-60-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:58:13-36
+60-->E:\work\yyf\imlib\AndroidManifest.xml:58:13-36
 61            android:launchMode="singleInstance"
-61-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:59:13-48
+61-->E:\work\yyf\imlib\AndroidManifest.xml:59:13-48
 62            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-62-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:60:13-72
+62-->E:\work\yyf\imlib\AndroidManifest.xml:60:13-72
 63            <intent-filter>
-63-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:61:13-66:29
+63-->E:\work\yyf\imlib\AndroidManifest.xml:61:13-66:29
 64                <action android:name="android.intent.action.VIEW" />
-64-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:62:17-69
-64-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:62:25-66
+64-->E:\work\yyf\imlib\AndroidManifest.xml:62:17-69
+64-->E:\work\yyf\imlib\AndroidManifest.xml:62:25-66
 65                <action android:name="io.rong.push.notification.RongBridgeActivity" />
-65-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:63:17-87
-65-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:63:25-84
+65-->E:\work\yyf\imlib\AndroidManifest.xml:63:17-87
+65-->E:\work\yyf\imlib\AndroidManifest.xml:63:25-84
 66
 67                <category android:name="android.intent.category.DEFAULT" />
-67-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:65:17-76
-67-->D:\work\LALIFA\yyf\imlib\AndroidManifest.xml:65:27-73
+67-->E:\work\yyf\imlib\AndroidManifest.xml:65:17-76
+67-->E:\work\yyf\imlib\AndroidManifest.xml:65:27-73
 68            </intent-filter>
 69        </activity>
 70    </application>

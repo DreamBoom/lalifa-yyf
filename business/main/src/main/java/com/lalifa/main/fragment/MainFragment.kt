@@ -16,16 +16,11 @@ import com.lalifa.extension.start
 import com.lalifa.main.R
 import com.lalifa.main.activity.*
 import com.lalifa.main.activity.room.RoomActivity
-import com.lalifa.main.activity.room.ext.AccountManager
-import com.lalifa.main.api.Captain
-import com.lalifa.main.api.Host
-import com.lalifa.main.api.Room
-import com.lalifa.main.api.index
+import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ViewMainHomeBinding
 import com.lalifa.main.fragment.adapter.mainList1
 import com.lalifa.main.fragment.adapter.mainList2
 import com.lalifa.main.fragment.adapter.mainList3
-import com.lalifa.widget.loading.LoadTag
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
@@ -57,7 +52,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
                 mList1.mainList1().apply {
                     R.id.itemRoom.onClick {
                         val room = getModel<Captain>()
-                        if(TextUtils.equals(room.userId, AccountManager.currentId)){
+                        if(TextUtils.equals(room.userId, Member.currentId)){
                             jumpRoom(true, room.roomid)
                         }else{
                             jumpRoom(false, room.roomid)
@@ -67,7 +62,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
                 mList2.mainList2().apply {
                     R.id.itemRoom.onClick {
                         val room = getModel<Host>()
-                        if(TextUtils.equals(room.userId, AccountManager.currentId)){
+                        if(TextUtils.equals(room.userId, Member.currentId)){
                             jumpRoom(true, room.roomid)
                         }else{
                             jumpRoom(false, room.roomid)
