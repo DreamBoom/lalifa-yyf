@@ -1,5 +1,6 @@
 package com.lalifa.main.activity.room.widght
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -13,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -52,8 +54,8 @@ class GiftDialog(
     val roomId: String,
     val isPrivate: Boolean,
     val roomGiftBean: RoomGiftBean,
-    var list: ArrayList<Member>,
-     var onSendGiftListener:OnSendGiftListener
+    val list: ArrayList<Member>,
+    var onSendGiftListener: OnSendGiftListener
 ) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,6 +111,7 @@ class GiftDialog(
     }
 
     //初始化View
+    @SuppressLint("NotifyDataSetChanged")
     private fun initView(view: View) {
         view.findViewById<ImageView>(R.id.popClose).onClick {
             dismiss()
@@ -138,7 +141,7 @@ class GiftDialog(
                     if (userId.contains(",")) {
                         // 全选只发一条全麦打赏的广播
                         finalIsAll = true
-                        sendGiftBroadcast( true)
+                        sendGiftBroadcast(true)
                     } else {
                         finalIsAll = false
                         sendGiftBroadcast(false)
@@ -160,41 +163,36 @@ class GiftDialog(
         val peopleList = view.findViewById<RecyclerView>(R.id.peopleList)
         val tabLayout = view.findViewById<SlidingTabLayout>(R.id.tab_layout)
         val viewPager = view.findViewById<ViewPager>(R.id.map_viewPager)
+        val qm = view.findViewById<ConstraintLayout>(R.id.qm)
+        qm.setOnClickListener {
+            val model = peopleList.bindingAdapter._data as ArrayList<Member>
+            if (userType == "0") {
+                userType = "1"
+                model.forEach { it.select = false }
+                peopleList.bindingAdapter.notifyDataSetChanged()
+            } else {
+                userType = "0"
+                for (i in 0 until model.size) {
+                    model[i].select = true
+                    userId += if (i != model.size - 1) {
+                        model[i].userId + ","
+                    } else {
+                        model[i].userId
+                    }
+                }
+                peopleList.bindingAdapter.notifyDataSetChanged()
+            }
+        }
         peopleList.seatGiftAdapter().apply {
             R.id.header.onClick {
-                if (layoutPosition == 0) {
-                    val model = peopleList.bindingAdapter._data as ArrayList<Member>
-                    if (getModel<Member>().select) {
-                        userType = "0"
-                        model.forEach { it.select = false }
-                        notifyDataSetChanged()
-                        userId = ""
-                    } else {
-                        //用户组添加 userId
-                        userType = "1"
-                        for (i in 0 until model.size) {
-                            model[i].select = true
-                            if (i != 0) {
-                                userId += if (i != model.size - 1) {
-                                    model[i].userId + ","
-                                } else {
-                                    model[i].userId
-                                }
-                            }
-                        }
-                        notifyDataSetChanged()
-                    }
-                } else {
-                    userType = "0"
-                    val model = peopleList.bindingAdapter._data as ArrayList<Member>
-                    getModel<Member>(0).select = false
-                    model.forEach { it.select = false }
-                    getModel<Member>().select = true
-                    userId = getModel<Member>().userId!!
-                    userName = getModel<Member>().userName!!
-                    notifyDataSetChanged()
-                }
-
+                userType = "0"
+                val model = peopleList.bindingAdapter._data as ArrayList<Member>
+                getModel<Member>(0).select = false
+                model.forEach { it.select = false }
+                getModel<Member>().select = true
+                userId = getModel<Member>().userId
+                userName = getModel<Member>().userName
+                notifyDataSetChanged()
             }
         }.models = list
         viewPager!!.fragmentAdapter(
@@ -239,7 +237,7 @@ class GiftDialog(
      * @param isAll
      */
     private fun sendGiftMessage(isAll: Boolean) {
-        var messages:MessageContent ?= null
+        var messages: MessageContent? = null
         if (isAll) {
             val all = RCChatroomGiftAll()
             all.userId = UserManager.get()!!.userId
@@ -268,11 +266,13 @@ class GiftDialog(
         mOnSendGiftListener?.onSendGiftSuccess(messages)
         dismiss()
     }
+
     private var mOnSendGiftListener: OnSendGiftListener? = null
 
     interface OnSendGiftListener {
         fun onSendGiftSuccess(messages: MessageContent?)
     }
+
     companion object {
         fun newInstance(
             activity: AppCompatActivity,
@@ -280,10 +280,12 @@ class GiftDialog(
             isPrivate: Boolean,
             roomGiftBean: RoomGiftBean,
             list: ArrayList<Member>,
-            onSendGiftListener:OnSendGiftListener
+            onSendGiftListener: OnSendGiftListener
         ): GiftDialog {
-            val customDialogFragment = GiftDialog(activity, roomId,isPrivate, roomGiftBean, list,
-                 onSendGiftListener)
+            val customDialogFragment = GiftDialog(
+                activity, roomId, isPrivate, roomGiftBean, list,
+                onSendGiftListener
+            )
 //            val bundle = Bundle()
 //            bundle.putString("content", content)
 //            customDialogFragment.arguments = bundle
@@ -310,7 +312,7 @@ class GiftDialog(
                     list.forEach { it.choose = false }
                     list[layoutPosition].choose = true
                     giftId = list[layoutPosition].id.toString()
-                    giftName =list[layoutPosition].name
+                    giftName = list[layoutPosition].name
                     giftValue = list[layoutPosition].price
                     giftPath = list[layoutPosition].effect_image
                     notifyDataSetChanged()

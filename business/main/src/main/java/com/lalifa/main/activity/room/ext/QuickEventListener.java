@@ -33,8 +33,6 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         void onSeatList(List<Seat> seatInfos);
         void requestSeatAccepted(int index);
         void seatSpeak(int index, int audioLevel);
-        void userInSeat(int index, String userId);
-        void userOutSeat(int index, String userId);
     }
 
     public interface RoomInfoObserver {
@@ -254,15 +252,12 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
     //同步回调 onSeatInfoUpdate 此处无特殊需求可不处理
     @Override
     public void onUserEnterSeat(int index, String userId) {
-        LogCat.e("11111=====onUserEnterSeat");
-        if (null != seatListObserver) seatListObserver.userInSeat(index,userId);
       //  Log.d(TAG, "onUserEnterSeat: index = " + index + " userId = " + userId);
     }
 
     //同步回调 onSeatInfoUpdate 此处无特殊需求可不处理
     @Override
     public void onUserLeaveSeat(int index, String userId) {
-        if (null != seatListObserver) seatListObserver.userOutSeat(index,userId);
       //  Log.d(TAG, "onUserLeaveSeat: index = " + index + " userId = " + userId);
     }
 

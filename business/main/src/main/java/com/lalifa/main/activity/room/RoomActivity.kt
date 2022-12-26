@@ -106,19 +106,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             )
             adapter = mRoomMessageAdapter
         }
-        joinRoom()
-        //接收消息
-//        RongCoreClient.addOnReceiveMessageListener(object : OnReceiveMessageWrapperListener() {
-//            @SuppressLint("NotifyDataSetChanged")
-//            override fun onReceivedMessage(message: Message?, profile: ReceivedProfile?) {
-//
-//            }
-//        })
-    }
-
-    private var seatBoss: BindingAdapter? = null
-    private var seat: BindingAdapter? = null
-    override fun onReady() {
         seatBoss = binding.seatBossList.seatBossAdapter().apply {
             R.id.ivPortrait.onClick {
                 clickSeat(true, layoutPosition)
@@ -129,6 +116,12 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 clickSeat(false, layoutPosition)
             }
         }
+        joinRoom()
+    }
+
+    private var seatBoss: BindingAdapter? = null
+    private var seat: BindingAdapter? = null
+    override fun onReady() {
         binding.rankList.onClick {
             start(RankActivity::class.java) {
                 putExtra("roomId", roomId!!)
@@ -503,6 +496,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             }
             gift.onClick {
                 loadTag!!.show()
+                LogCat.e("====1111"+Member.getSeats().toString())
                 scopeNetLife {
                     val roomGift = roomGift()
                     if (null != roomGift) {
@@ -545,17 +539,16 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     override fun onSeatList(seatInfos: List<Seat>) {
         if (isFirst) {
             isFirst = false
-            Member.clearSeat()
+            Member.getSeats().clear()
             if (seatInfos.isNotEmpty()) {
+
                 val count = seatInfos.size ?: 0
                 //老板麦位
-                LogCat.e("99999" + seatInfos.toString())
                 val bossSeats = seatInfos.subList(0, 2)
                 seatBoss!!.models = bossSeats
                 //观众麦位
                 val seats = seatInfos.subList(2, count)
                 seat!!.models = seats
-
                 for (i in seatInfos.indices) {
                     if (seatInfos[i].userId == Member.currentId) {
                         currentStatus = Tool.STATUS_HAVE_SEAT
@@ -573,22 +566,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             }
             isFirst = true
         }
-    }
-
-    override fun userInSeat(index: Int, userId: String?) {
-//        LogCat.e("11111")
-//        val member = Member.getMember(userId)
-//        if (null != member) {
-//            member.seatIndex = index
-//            member.status = RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusUsing
-//            member.isMute = getSeatInfo(index).isMute
-//            Member.setSeat(member)
-//        }
-    }
-
-    override fun userOutSeat(index: Int, userId: String?) {
-//        LogCat.e("22222")
-//        Member.removeSeat(userId!!)
     }
 
     /**
@@ -799,26 +776,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 null
             }, null
         )
-//        val targetId = roomId
-//        val conversationType = Conversation.ConversationType.CHATROOM
-//        val message = Message.obtain(targetId, conversationType, content)
-//        RongIMClient.getInstance()
-//            .sendMessage(message, null, null, object :
-//                IRongCallback.ISendMessageCallback {
-//                override fun onAttached(message: Message) {
-//                    LogCat.e("===onAttached=$message")
-//                }
-//
-//                @SuppressLint("NotifyDataSetChanged")
-//                override fun onSuccess(message: Message) {
-//                    //发送文字消息
-//
-//                }
-//
-//                override fun onError(message: Message, errorCode: RongIMClient.ErrorCode) {
-//                    LogCat.e("===onError=$message===$errorCode")
-//                }
-//            })
     }
 
     /**
@@ -835,8 +792,10 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 if (messageContent is RCChatroomGift || messageContent is RCChatroomGiftAll) {
                     //展示礼物动画
                     val showGift = SPUtil.getBoolean(Tool.showGift, true)
+                    LogCat.e("222222====$showGift")
                     if (showGift) {
                         messageContent as RCChatroomGift
+                        LogCat.e("222222===="+Config.FILE_PATH + messageContent.giftPath)
                         MUtils.loadSvg(
                             binding.svgGift,
                             Config.FILE_PATH + messageContent.giftPath

@@ -14,12 +14,53 @@
         android:paddingHorizontal="10dp"
         android:paddingTop="8dp"
         android:src="@mipmap/icon_close_white" />
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/qm"
+        android:layout_marginHorizontal="10dp"
+        android:layout_height="wrap_content">
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/header"
+            android:background="@mipmap/icon_5"
+            app:shapeAppearance="@style/CircleStyle"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/select"
+            android:visibility="gone"
+            android:background="@drawable/bg_tm_y"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="46dp"
+            android:layout_height="46dp"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_marginTop="-10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size12"
+            android:paddingHorizontal="5dp"
+            android:text="全麦"
+            android:background="@drawable/bg_seat_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/peopleList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="15dp" />
+</androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_layout"

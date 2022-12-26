@@ -915,7 +915,7 @@ fun RecyclerView.seatGiftAdapter(): BindingAdapter {
                     } else {
                         select.invisible()
                     }
-                    header.load(bean.portraitUrl!!.pk(""))
+                    header.load(Config.FILE_PATH+bean.portraitUrl.pk(""))
                     if (layoutPosition == 0) {
                         name.text = "全麦"
                     } else {

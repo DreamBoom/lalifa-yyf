@@ -13,18 +13,18 @@ import javax.sql.StatementEvent
  * @date 2021/10/9
  */
 open class Member : Serializable {
-    var userId: String? = null
-    var userName: String? = null
-    var portraitUrl: String? = null
-    var level: String? = null
+    var userId: String = ""
+    var userName: String = ""
+    var portraitUrl: String = ""
+    var level: String = ""
     var frame //头像框
-            : String? = null
+            : String = ""
     var car //座驾
-            : String? = null
+            : String = ""
     var bubble //气泡
-            : String? = null
+            : String = ""
     var sound //音波
-            : String? = null
+            : String = ""
     var gender = 0
 
     // 是否是管理
@@ -44,14 +44,14 @@ open class Member : Serializable {
     var isMute = false
     var select = false
     constructor(
-        userId: String?,
-        userName: String?,
-        portraitUrl: String?,
-        level: String?,
-        frame: String?,
-        car: String?,
-        bubble: String?,
-        sound: String?,
+        userId: String,
+        userName: String,
+        portraitUrl: String,
+        level: String,
+        frame: String,
+        car: String,
+        bubble: String,
+        sound: String,
         gender: Int,
         manageType: Int,
         collectionType: Int,
@@ -142,19 +142,7 @@ open class Member : Serializable {
         }
 
         fun getSeats(): ArrayList<Member> {
-            seats.add(0, Member())
             return seats
-        }
-
-        fun clearSeat() {
-            seats.clear()
-        }
-
-        fun removeSeat(userId: String) {
-            val member = getMember(userId)
-            if(null!=member){
-                seats.remove(member)
-            }
         }
 
         fun setSeat(a: Member) {
