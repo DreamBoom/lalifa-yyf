@@ -1,18 +1,19 @@
 package com.lalifa.main.fragment
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.load
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.main.activity.*
 import com.lalifa.main.activity.che.MyChe
 import com.lalifa.main.activity.me.*
-import com.lalifa.main.api.Member
+import com.lalifa.main.activity.room.ext.Member
 import com.lalifa.main.api.UserInfoBean
 import com.lalifa.main.api.userInfo
 import com.lalifa.main.databinding.ViewMainMeBinding
@@ -30,7 +31,8 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && !svgLoad) {
+        if (isVisibleToUser && !svgLoad&&bean!=null
+            &&!TextUtils.isEmpty(bean!!.frame)) {
             svgLoad = true
             MUtils.loadSvg(binding.svg,bean!!.frame){
 
@@ -49,7 +51,6 @@ class MeFragment : BaseFragment<ViewMainMeBinding>() {
         scopeNetLife {
             bean = userInfo()
             bean!!.toUser()
-            Member.setMember(bean!!.toMember(), true)
             binding.apply {
                 header.load(Config.FILE_PATH + bean!!.avatar)
                 UserManager.get()!!.frame = bean!!.frame

@@ -1,4 +1,4 @@
-package com.lalifa.ext;
+package com.lalifa.main.activity.room.ext;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -16,6 +16,7 @@ import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
+import io.rong.message.TextMessage;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
 
@@ -146,5 +147,18 @@ public class RCChatRoomMessageManager {
             this.roomId = roomId;
             this.messageContent = messageContent;
         }
+    }
+    /**
+     * 是否显示在消息列表中的消息
+     *
+     * @param content
+     * @return
+     */
+    public static boolean isShowingMessage(MessageContent content) {
+        if (content instanceof RCChatroomBarrage || content instanceof RCChatroomEnter || content instanceof RCChatroomGiftAll
+                || content instanceof RCChatroomLocationMessage) {
+            return true;
+        }
+        return false;
     }
 }

@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RankActivity"
+            android:name=".activity.room.RankActivity"
             android:exported="false" />
         <activity
             android:name=".activity.room.ManageListActivity"

@@ -4,7 +4,7 @@ import com.drake.brv.BindingAdapter
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.load
 import com.lalifa.extension.start
 import com.lalifa.main.R

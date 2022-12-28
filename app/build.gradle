@@ -119,17 +119,6 @@ android {
             ]
         }
     }
-
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            def apkName = "随心语音_${variant.productFlavors[0].name}_${buildType.name}_${defaultConfig.versionName}"
-            if (buildType.name.toLowerCase().contains("release")) {
-                outputFileName = "../../../channels/" + apkName + ".apk"
-            } else {
-                outputFileName = apkName + ".apk"
-            }
-        }
-    }
 }
 
 

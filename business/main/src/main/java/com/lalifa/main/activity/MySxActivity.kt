@@ -11,6 +11,7 @@ import com.drake.brv.utils.setup
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
+import com.lalifa.ext.showTipDialog
 import com.lalifa.extension.AbsTextWatcher
 import com.lalifa.extension.onClick
 import com.lalifa.extension.toast
@@ -21,7 +22,6 @@ import com.lalifa.main.api.ZfbPay
 import com.lalifa.main.api.recharge
 import com.lalifa.main.databinding.ActivityMySxBinding
 import com.lalifa.main.databinding.ItemCzBinding
-import com.lalifa.yyf.ext.showTipDialog
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 

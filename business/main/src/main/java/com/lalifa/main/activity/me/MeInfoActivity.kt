@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.drake.brv.BindingAdapter
-import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseActivity
 import com.lalifa.base.BaseFragment
 import com.lalifa.base.BaseListFragment
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.che.CheInfoActivity
@@ -23,10 +22,6 @@ import com.lalifa.main.databinding.ActivityWardBinding
 import com.lalifa.main.databinding.MeTab1FragmentBinding
 import com.lalifa.main.ext.MUtils
 import com.lalifa.main.fragment.adapter.*
-import com.opensource.svgaplayer.SVGADrawable
-import com.opensource.svgaplayer.SVGAParser
-import com.opensource.svgaplayer.SVGAVideoEntity
-import java.net.URL
 
 class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     override fun getViewBinding() = ActivityMeInfoBinding.inflate(layoutInflater)
@@ -35,7 +30,7 @@ class MeInfoActivity : BaseActivity<ActivityMeInfoBinding>() {
     override fun initView() {
         binding.apply {
             header.load(Config.FILE_PATH + UserManager.get()!!.avatar)
-            MUtils.loadSvg(binding.svg,UserManager.get()!!.frame!!){
+            MUtils.loadSvg(binding.svg, UserManager.get()!!.frame!!){
 
             }
             name.text = UserManager.get()!!.userName

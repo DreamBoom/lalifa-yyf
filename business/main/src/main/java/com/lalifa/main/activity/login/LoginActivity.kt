@@ -15,13 +15,11 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.api.InitNet
 import com.lalifa.base.BaseActivity
 import com.lalifa.ext.Config
-import com.lalifa.ext.User
-import com.lalifa.ext.UserManager
-import com.lalifa.extension.disable
-import com.lalifa.extension.enable
-import com.lalifa.extension.onClick
-import com.lalifa.extension.start
+import com.lalifa.extension.*
 import com.lalifa.main.activity.MainActivity
+import com.lalifa.main.activity.room.ext.Tool
+import com.lalifa.main.activity.room.ext.User
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.main.api.login
 import com.lalifa.main.databinding.ActivityLoginBinding
 import com.lalifa.utils.SPUtil
@@ -39,6 +37,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun initView() {
         MobSDK.init(this, "36cdb3c927c4c", "19587758b802435324dcdff55261544f")
         MobSDK.submitPolicyGrantResult(true, null)
+        val boolean = SPUtil.getBoolean(Tool.agree, false)
+        binding.agree.isSelected = boolean
         binding.etPhone.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -75,9 +75,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 //                start(ForgetPasswordActivity::class.java)
 //            }
             login.onClick {
-//                toast("请进行密码登录")
-//                return@onClick
+                toast("请进行密码登录")
+                return@onClick
                 login.disable()
+                if(!agree.isSelected){
+                    toast("请勾选同意《用户服务协议》")
+                    return@onClick
+                }
                 //登录
                 loginUser()
             }
@@ -90,7 +94,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
             agree.onClick {
                 agree.isSelected = !agree.isSelected
-                submitPrivacyGrantResult(agree.isSelected)
             }
             agreeInfo.onClick {
                 //查看用户服务协议
@@ -115,8 +118,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
            // val user = login("13462439645", "111111")
               val user = login("15500000003", "123456")
             if (null != user) {
+                SPUtil.set(Tool.agree, true)
+                submitPrivacyGrantResult(true)
                 binding.login.enable()
-                InitNet.initNetHttp(this@LoginActivity)
+                InitNet.initNetHttp(this@LoginActivity,user.userinfo.token)
                 initRongIM(user.userinfo)
             } else {
                 binding.login.enable()

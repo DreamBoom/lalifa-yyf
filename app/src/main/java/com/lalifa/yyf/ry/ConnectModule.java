@@ -1,23 +1,18 @@
 package com.lalifa.yyf.ry;
 
-import android.app.Application;
-import android.content.Intent;
 import android.text.TextUtils;
 
 import com.drake.logcat.LogCat;
-import com.lalifa.ext.Config;
-import com.lalifa.ext.User;
-import com.lalifa.ext.UserManager;
+import com.lalifa.main.activity.room.ext.User;
+import com.lalifa.main.activity.room.ext.UserManager;
 import com.lalifa.utils.GsonUtil;
 import com.lalifa.utils.KToast;
-import com.lalifa.utils.UIKit;
 import com.lalifa.yyf.ry.shumei.RCDeviceMessage;
 import com.lalifa.yyf.ry.shumei.RCSMMessage;
 
 import java.util.Arrays;
 
 import io.rong.imkit.IMCenter;
-import io.rong.imkit.RongIM;
 import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.listener.OnReceiveMessageWrapperListener;

@@ -65,7 +65,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll3"
+            android:id="@+id/ll6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -76,14 +76,14 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ll3" />
+                app:srcCompat="@mipmap/ll6" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="房间管理"
+                android:text="礼物列表"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -115,6 +115,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_gl"
         android:paddingBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -143,9 +144,8 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/ll6"
+            android:id="@+id/ll3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -156,17 +156,18 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ll6" />
+                app:srcCompat="@mipmap/ll3" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="礼物列表"
+                android:text="房间管理"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/ll7"

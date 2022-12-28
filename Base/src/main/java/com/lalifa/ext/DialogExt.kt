@@ -1,35 +1,33 @@
-package com.lalifa.yyf.ext
+package com.lalifa.ext
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.text.InputType
-import android.text.TextUtils
 import android.view.Gravity
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.annotaion.DividerOrientation
-import com.drake.brv.utils.*
-import com.drake.channel.receiveEvent
+import com.drake.brv.utils.divider
+import com.drake.brv.utils.grid
+import com.drake.brv.utils.setup
 import com.lalifa.api.GiftBean
 import com.lalifa.base.R
 import com.lalifa.base.databinding.ItemChatGiftBinding
-import com.lalifa.ext.Config
 import com.lalifa.extension.*
 import per.goweii.layer.core.anim.AnimStyle
 import per.goweii.layer.core.anim.NullAnimatorCreator
-import per.goweii.layer.core.ktx.*
+import per.goweii.layer.core.ktx.onClickToDismiss
+import per.goweii.layer.core.ktx.onInitialize
+import per.goweii.layer.core.ktx.onPreDismiss
+import per.goweii.layer.core.ktx.onPreShow
 import per.goweii.layer.core.widget.SwipeLayout
 import per.goweii.layer.dialog.DialogLayer
 import per.goweii.layer.dialog.ktx.*
+
 //
 
 /**
@@ -116,26 +114,26 @@ fun Fragment.showTipDialog(
 //    requireActivity().showListDialog(contents, sureText, callback)
 //}
 //
-///**
-// * 显示一个通用List弹框
-// * @receiver Activity
-// * @param title String
-// * @param block [@kotlin.ExtensionFunctionType] Function1<RecyclerView, Unit>
-// */
-//fun Activity.showCommonListDialog(title: String = "", block: RecyclerView.(DialogLayer) -> Unit) {
-//    DialogLayer(this)
-//        .cancelableOnTouchOutside(true)
-//        .contentView(R.layout.dialog_parameter)
-//        .backgroundDimDefault()
-//        .gravity(Gravity.BOTTOM)
-//        .animStyle(AnimStyle.BOTTOM)
-//        .swipeDismiss(SwipeLayout.Direction.BOTTOM)//设置拖拽dismiss弹框的方向
-//        .onClickToDismiss(R.id.close_btn)
-//        .onInitialize {
-//            requireViewById<RecyclerView>(R.id.list).apply { block.invoke(this, this@onInitialize) }
-//            requireViewById<TextView>(R.id.title).text = title
-//        }.show()
-//}
+/**
+ * 显示一个通用List弹框
+ * @receiver Activity
+ * @param title String
+ * @param block [@kotlin.ExtensionFunctionType] Function1<RecyclerView, Unit>
+ */
+fun Activity.showCommonListDialog(title: String = "", block: RecyclerView.(DialogLayer) -> Unit) {
+    DialogLayer(this)
+        .cancelableOnTouchOutside(true)
+        .contentView(R.layout.dialog_parameter)
+        .backgroundDimDefault()
+        .gravity(Gravity.BOTTOM)
+        .animStyle(AnimStyle.BOTTOM)
+        .swipeDismiss(SwipeLayout.Direction.BOTTOM)//设置拖拽dismiss弹框的方向
+        .onClickToDismiss(R.id.close_btn)
+        .onInitialize {
+            requireViewById<RecyclerView>(R.id.list).apply { block.invoke(this, this@onInitialize) }
+            requireViewById<TextView>(R.id.title).text = title
+        }.show()
+}
 fun showGiftDialog(bean: List<GiftBean>, callback: (bean: GiftBean) -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.dialog_chat_gift)

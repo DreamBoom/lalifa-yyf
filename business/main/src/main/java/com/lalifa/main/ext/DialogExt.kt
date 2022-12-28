@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
@@ -15,8 +16,9 @@ import com.drake.net.utils.scopeNet
 import com.drake.tooltip.toast
 import com.lalifa.ext.Config
 import com.lalifa.ext.Config.Companion.parser
-import com.lalifa.ext.User
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.Member
+import com.lalifa.main.activity.room.ext.User
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.room.ext.Tool
@@ -198,6 +200,11 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
         .backgroundDimDefault()
         .setOutsideTouchToDismiss(true)
         .onInitialize {
+            val member = Member.getMember(Member.currentId)
+            val llGl = findViewById<LinearLayout>(R.id.ll_gl)
+            if(member!!.manage_type!=1){
+                llGl!!.gone()
+            }
             val showIn = SPUtil.getBoolean(Tool.showGift, true)
             val showSx = SPUtil.getBoolean(Tool.showSx, true)
             val tvShowIn = findViewById<TextView>(R.id.tvShowIn)
@@ -239,7 +246,7 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
 }
 
 //管理查看麦位
-fun roomUserDialog(user: Member,isMute:Boolean, callback: (type: Int) -> Unit = {}) {
+fun roomUserDialog(user: Member, isMute:Boolean, callback: (type: Int) -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.popup_info)
         .gravity(Gravity.BOTTOM)
@@ -250,14 +257,16 @@ fun roomUserDialog(user: Member,isMute:Boolean, callback: (type: Int) -> Unit = 
             findViewById<TextView>(R.id.mId)!!.text = "ID:${user.userId}"
             findViewById<TextView>(R.id.level)!!.text = user.level
             findViewById<TextView>(R.id.ac2)!!.text = if(isMute)"开麦" else "闭麦"
+            val ll = findViewById<LinearLayoutCompat>(R.id.ll2)
+            if(Member.getMember(Member.currentId)!!.manage_type!=1){
+                ll!!.gone()
+            }
             val sex = findViewById<ImageView>(R.id.sex)
             val svg = findViewById<SVGAImageView>(R.id.svg)!!
             if (!TextUtils.isEmpty(user.frame)) {
-                MUtils.loadSvg(svg, user.frame!!) {
-
-                }
+                MUtils.loadSvg(svg, user.frame) {}
             }
-            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.portraitUrl)
+            findViewById<ImageView>(R.id.header)!!.load(Config.FILE_PATH + user.avatar)
             if (UserManager.get()!!.gender == 0) {
                 sex!!.setImageResource(com.lalifa.base.R.drawable.ic_icon_boy)
             } else {

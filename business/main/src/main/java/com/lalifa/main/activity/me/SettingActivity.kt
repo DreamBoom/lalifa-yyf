@@ -3,18 +3,17 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.ActivityManager
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.ext.showTipDialog
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
 import com.lalifa.extension.toast
 import com.lalifa.main.activity.login.ForgetPasswordActivity
 import com.lalifa.main.activity.login.LoginActivity
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.main.databinding.ActivitySettingBinding
 import com.lalifa.utils.CacheDataManager
 import com.lalifa.utils.ImPushUtil
 import com.lalifa.utils.SPUtil
-import com.lalifa.yyf.ext.showTipDialog
-import java.util.*
 
 class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
     override fun getViewBinding() = ActivitySettingBinding.inflate(layoutInflater)

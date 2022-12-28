@@ -7,10 +7,11 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.api.InitNet
 import com.lalifa.base.BaseActivity
 import com.lalifa.ext.Config
-import com.lalifa.ext.User
-import com.lalifa.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.activity.MainActivity
+import com.lalifa.main.activity.room.ext.Tool
+import com.lalifa.main.activity.room.ext.User
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.main.api.login
 import com.lalifa.main.databinding.ActivityLoginPassBinding
 import com.lalifa.utils.SPUtil
@@ -29,15 +30,20 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
     override fun onClick() {
         super.onClick()
         binding.apply {
+            val boolean = SPUtil.getBoolean(Tool.agree, false)
+            agree.isSelected = boolean
             back.onClick { finish() }
             register.onClick { start(RegisterActivity::class.java) }
             forget.onClick { start(ForgetPasswordActivity::class.java) }
             agree.onClick {
                 agree.isSelected = !agree.isSelected
-                submitPrivacyGrantResult(agree.isSelected)
             }
             agreeInfo.onClick { }
             login.onClick {
+                if(!agree.isSelected){
+                    toast("请勾选同意《用户服务协议》")
+                    return@onClick
+                }
                 if (etPhone.isEmp() || etPhone.text().length < 11) {
                     toast("请输入正确的手机号")
                 }
@@ -48,8 +54,10 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                 scopeNetLife {
                     val user = login(etPhone.text(), etPass.text())
                     if (null != user) {
+                        SPUtil.set(Tool.agree, true)
+                        submitPrivacyGrantResult(true)
                         login.enable()
-                        InitNet.initNetHttp(this@LoginPassActivity)
+                        InitNet.initNetHttp(this@LoginPassActivity,user.userinfo.token)
                         initRongIM(user.userinfo)
                     } else {
                         toast("登录失败")

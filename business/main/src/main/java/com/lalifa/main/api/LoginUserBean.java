@@ -1,6 +1,6 @@
 package com.lalifa.main.api;
 
-import com.lalifa.ext.User;
+import com.lalifa.main.activity.room.ext.User;
 
 import java.io.Serializable;
 

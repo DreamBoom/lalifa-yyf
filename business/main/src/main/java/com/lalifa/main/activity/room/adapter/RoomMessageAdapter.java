@@ -2,9 +2,7 @@ package com.lalifa.main.activity.room.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -14,19 +12,17 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lalifa.ext.UserManager;
+import com.lalifa.main.activity.room.ext.UserManager;
 import com.lalifa.main.R;
 import com.lalifa.main.activity.room.message.RCChatroomAdmin;
 import com.lalifa.main.activity.room.message.RCChatroomBarrage;
 import com.lalifa.main.activity.room.message.RCChatroomEnter;
-import com.lalifa.main.activity.room.message.RCChatroomGift;
 import com.lalifa.main.activity.room.message.RCChatroomGiftAll;
 import com.lalifa.main.activity.room.message.RCChatroomKickOut;
 import com.lalifa.main.activity.room.message.RCChatroomLocationMessage;
@@ -38,8 +34,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.rong.calllib.RongCallCommon;
-import io.rong.imkit.manager.AudioPlayManager;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.TextMessage;
 
@@ -221,14 +215,16 @@ public class RoomMessageAdapter extends RcyAdapter<MessageContent, RcyHolder> {
             list.add(new MsgInfo(String.format("%s ", ((RCChatroomKickOut) message).getUserName()), ((RCChatroomKickOut) message).getUserId(), true, 0, 0));
             list.add(new MsgInfo(" 踢出去了", "", false, 0, 0));
         } else if (message instanceof RCChatroomGiftAll) {
-            list.add(new MsgInfo(String.format("%s ", ((RCChatroomGiftAll) message).getUserName()), ((RCChatroomGiftAll) message).getUserId(), true, 0, 0));
-            list.add(new MsgInfo(String.format("全麦打赏 %s x%s", ((RCChatroomGiftAll) message).getGiftName(), ((RCChatroomGiftAll) message).getNumber()), "", false, 0, 0));
-        } else if (message instanceof RCChatroomGift) {
-            list.add(new MsgInfo(String.format("%s ", ((RCChatroomGift) message).getUserName()), ((RCChatroomGift) message).getUserId(), true, 0, 0));
-            list.add(new MsgInfo(" 送给 ", "", false, 0, 0));
-            list.add(new MsgInfo(String.format("%s ", ((RCChatroomGift) message).getTargetName()), ((RCChatroomGift) message).getTargetId(), true, 0, 0));
-            list.add(new MsgInfo(String.format(" %s x%s", ((RCChatroomGift) message).getGiftName(), ((RCChatroomGift) message).getNumber()), "", false, 0, 0));
-        } else if (message instanceof RCChatroomAdmin) {
+            if(((RCChatroomGiftAll) message).getTargetId()==""){
+                list.add(new MsgInfo(String.format("%s ", ((RCChatroomGiftAll) message).getUserName()), ((RCChatroomGiftAll) message).getUserId(), true, 0, 0));
+                list.add(new MsgInfo(String.format("全麦打赏 %s x%s", ((RCChatroomGiftAll) message).getGiftName(), ((RCChatroomGiftAll) message).getNumber()), "", false, 0, 0));
+            }else {
+                list.add(new MsgInfo(String.format("%s ", ((RCChatroomGiftAll) message).getUserName()), ((RCChatroomGiftAll) message).getUserId(), true, 0, 0));
+                list.add(new MsgInfo(" 送给 ", "", false, 0, 0));
+                list.add(new MsgInfo(String.format("%s ", ((RCChatroomGiftAll) message).getTargetName()), ((RCChatroomGiftAll) message).getTargetId(), true, 0, 0));
+                list.add(new MsgInfo(String.format(" %s x%s", ((RCChatroomGiftAll) message).getGiftName(), ((RCChatroomGiftAll) message).getNumber()), "", false, 0, 0));
+            }
+        }else if (message instanceof RCChatroomAdmin) {
             list.add(new MsgInfo(String.format("%s ", ((RCChatroomAdmin) message).getUserName()), ((RCChatroomAdmin) message).getUserId(), true, 0, 0));
             if (((RCChatroomAdmin) message).isAdmin()) {
                 list.add(new MsgInfo(" 成为管理员", "", false, 0, 0));

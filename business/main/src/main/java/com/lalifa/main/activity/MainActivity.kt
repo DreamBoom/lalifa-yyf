@@ -1,7 +1,7 @@
 package com.lalifa.main.activity
 
 import com.lalifa.base.BaseActivity
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.activity.che.CheActivity
 import com.lalifa.main.databinding.ActivityHomeBinding

@@ -1,25 +1,20 @@
 package com.lalifa.main.fragment.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.text.*
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.view.View
 import android.widget.LinearLayout.HORIZONTAL
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
-import cn.rongcloud.voiceroom.model.messagemodel.RCVoiceRoomRefreshMessage
 import com.drake.brv.BindingAdapter
 import com.drake.brv.annotaion.DividerOrientation
 import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
-import com.lalifa.ext.Account
 import com.lalifa.ext.Config
+import com.lalifa.main.activity.room.ext.Member
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.room.ext.*
@@ -28,9 +23,6 @@ import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
 import com.lalifa.main.ext.MUtils
 import com.lalifa.utils.SPUtil
-import io.rong.imlib.model.MessageContent
-import java.io.Serializable
-import java.lang.String
 
 /**
  * 商城
@@ -515,7 +507,7 @@ fun RecyclerView.mainList3(): BindingAdapter {
         onBind {
             val bean = getModel<Room>()
             getBinding<ItemHome2Binding>().apply {
-                bg.load(Config.FILE_PATH + bean.background)
+                bg.load(Config.FILE_PATH + bean.image)
                 fire.text = bean.hot.toString()
                 name.text = bean.title
                 when (bean.type_id) {
@@ -577,6 +569,27 @@ fun RecyclerView.giftHistoryAdapter(): BindingAdapter {
                 giftIm.load(Config.FILE_PATH + bean.image)
                 name.text = bean.userName
                 giftTime.text = bean.create_time.substring(0, 10)
+            }
+        }
+    }
+}
+
+/**
+ * 房间礼物记录
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.roomGiftHistoryAdapter(): BindingAdapter {
+    return linear().setup {
+        addType<RoomGiftHistoryBean>(R.layout.item_room_history)
+        onBind {
+            val bean = getModel<RoomGiftHistoryBean>()
+            getBinding<ItemRoomHistoryBinding>().apply {
+                header.load(Config.FILE_PATH + bean.avatar)
+                giftIm.load(Config.FILE_PATH + bean.image)
+                name.text = bean.name
+                tvGift.text = "送给${bean.pd_name}  ${bean.num}个"
+                giftName.text = bean.gift_name
             }
         }
     }
@@ -732,7 +745,6 @@ fun RecyclerView.phAdapter(): BindingAdapter {
  */
 fun RecyclerView.seatBossAdapter(): BindingAdapter {
     return grid(2).setup {
-        //{"audioLevel":0,"mute":false,"speaking":false,"status":0}
         addType<Seat>(R.layout.layout_seat_item)
         onBind {
             val seatInfo = getModel<Seat>()
@@ -743,12 +755,12 @@ fun RecyclerView.seatBossAdapter(): BindingAdapter {
                 if (useing) {
                     val account = Member.getMember(seatInfo.userId)
                     if (null != account) {
-                        if (null != account.frame && account.frame!!.contains("svga")) {
-                            MUtils.loadSvg(svg, account.frame!!) {
+                        if (null != account.frame && account.frame.contains("svga")) {
+                            MUtils.loadSvg(svg, account.frame) {
 
                             }
                         }
-                        ivPortrait.load(Config.FILE_PATH + account.portraitUrl, R.mipmap.ic_room_seat)
+                        ivPortrait.load(Config.FILE_PATH + account.avatar, R.mipmap.ic_room_seat)
                         //麦位上用户名称
                         memberName.text = account.userName
                         sx.text = account.level
@@ -798,7 +810,7 @@ fun RecyclerView.seatAdapter(): BindingAdapter {
 
                             }
                         }
-                        ivPortrait.load(Config.FILE_PATH + account.portraitUrl, R.mipmap.ic_room_seat)
+                        ivPortrait.load(Config.FILE_PATH + account.avatar, R.mipmap.ic_room_seat)
                         //麦位上用户名称
                         memberName.text = account.userName
                         sx.text = account.level
@@ -915,12 +927,8 @@ fun RecyclerView.seatGiftAdapter(): BindingAdapter {
                     } else {
                         select.invisible()
                     }
-                    header.load(Config.FILE_PATH+bean.portraitUrl.pk(""))
-                    if (layoutPosition == 0) {
-                        name.text = "全麦"
-                    } else {
-                        name.text = "${bean.seatIndex} 号麦"
-                    }
+                    header.load(Config.FILE_PATH+bean.avatar.pk(""))
+                    name.text = "${bean.seatIndex} 号麦"
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.lalifa.main.activity.room.message;
 
+import com.drake.logcat.LogCat;
 import com.lalifa.utils.UIKit;
 
 import java.util.ArrayList;
@@ -49,7 +50,12 @@ public class AllBroadcastManager {
                 if (onObtainMessage != null) {
                     onObtainMessage.onMessage(message);
                 }
-                start(5000);
+                if(message.getInfo().length()<18){
+                    start(5000);
+                }else {
+                    start(500L *message.getInfo().length());
+                }
+
             }
         }, delay);
     }

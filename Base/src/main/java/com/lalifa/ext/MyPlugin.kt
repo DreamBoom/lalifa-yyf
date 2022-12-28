@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import com.drake.net.utils.scopeNet
 import com.lalifa.api.giftList
 import com.lalifa.base.R
-import com.lalifa.ext.Config
 import com.lalifa.utils.DownloadFileUtils
-import com.lalifa.yyf.ext.showGiftDialog
 import io.rong.imkit.RongIM
 import io.rong.imkit.conversation.extension.RongExtension
 import io.rong.imkit.conversation.extension.component.plugin.IPluginModule

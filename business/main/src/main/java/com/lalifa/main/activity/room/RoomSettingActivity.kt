@@ -2,26 +2,19 @@ package com.lalifa.main.activity.room
 
 import android.app.Activity
 import android.content.Intent
-import android.text.InputType
 import android.text.TextUtils
 import android.view.KeyEvent
 import com.drake.brv.BindingAdapter
 import com.drake.net.utils.scopeNetLife
-import com.kit.utils.KToast
 import com.lalifa.base.BaseActivity
-import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
+import com.lalifa.ext.showInputDialog
 import com.lalifa.extension.*
 import com.lalifa.main.R
-import com.lalifa.main.activity.room.ext.NotificationService
-import com.lalifa.main.activity.room.ext.VoiceRoomApi
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityRoomSettingBinding
 import com.lalifa.main.ext.inputPasswordDialog
 import com.lalifa.main.fragment.adapter.roomBgAdapter
-import com.lalifa.widget.loading.LoadTag
-import com.lalifa.yyf.ext.showInputDialog
-import com.lalifa.yyf.ext.showTipDialog
 
 class RoomSettingActivity : BaseActivity<ActivityRoomSettingBinding>() {
     override fun getViewBinding() = ActivityRoomSettingBinding.inflate(layoutInflater)

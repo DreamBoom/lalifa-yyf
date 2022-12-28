@@ -20,12 +20,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.models
-import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
 import com.flyco.tablayout.SlidingTabLayout
 import com.lalifa.base.BaseFragment
-import com.lalifa.ext.Account
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.fragmentAdapter
 import com.lalifa.extension.onClick
 import com.lalifa.extension.text
@@ -33,9 +31,8 @@ import com.lalifa.extension.toast
 import com.lalifa.main.R
 import com.lalifa.main.activity.room.message.AllBroadcastManager
 import com.lalifa.main.activity.room.message.RCAllBroadcastMessage
-import com.lalifa.main.activity.room.message.RCChatroomGift
 import com.lalifa.main.activity.room.message.RCChatroomGiftAll
-import com.lalifa.main.api.Member
+import com.lalifa.main.activity.room.ext.Member
 import com.lalifa.main.api.RoomGift
 import com.lalifa.main.api.RoomGiftBean
 import com.lalifa.main.api.sendRoomGift
@@ -141,10 +138,10 @@ class GiftDialog(
                     if (userId.contains(",")) {
                         // 全选只发一条全麦打赏的广播
                         finalIsAll = true
-                        sendGiftBroadcast(true)
+                       // sendGiftBroadcast(true)
                     } else {
                         finalIsAll = false
-                        sendGiftBroadcast(false)
+                      //  sendGiftBroadcast(false)
                     }
                     Thread {
                         try {
@@ -208,27 +205,27 @@ class GiftDialog(
 
     }
 
-    private fun sendGiftBroadcast(isAll: Boolean) {
-        val message = RCAllBroadcastMessage()
-        message.userId = UserManager.get()!!.userId
-        message.userName = UserManager.get()!!.userName
-        if (!isAll) {
-            message.targetId = userId
-            message.targetName = userName
-        } else {
-            message.targetId = ""
-            message.targetName = ""
-        }
-        message.giftCount = giftNum
-        message.giftId = giftId
-        message.giftPath = giftPath
-        message.giftValue = giftValue
-        message.giftName = giftName
-        message.roomId = roomId
-        message.roomType = ""
-        message.isPrivate = "$isPrivate"
-        AllBroadcastManager.getInstance().addMessage(message)
-    }
+//    private fun sendGiftBroadcast(isAll: Boolean) {
+//        val message = RCAllBroadcastMessage()
+//        message.userId = UserManager.get()!!.userId
+//        message.userName = UserManager.get()!!.userName
+//        if (!isAll) {
+//            message.targetId = userId
+//            message.targetName = userName
+//        } else {
+//            message.targetId = ""
+//            message.targetName = ""
+//        }
+//        message.giftCount = giftNum
+//        message.giftId = giftId
+//        message.giftPath = giftPath
+//        message.giftValue = giftValue
+//        message.giftName = giftName
+//        message.roomId = roomId
+//        message.roomType = ""
+//        message.isPrivate = "$isPrivate"
+//        AllBroadcastManager.getInstance().addMessage(message)
+//    }
 
     /**
      * 礼物发送成功后发送消息
@@ -238,30 +235,22 @@ class GiftDialog(
      */
     private fun sendGiftMessage(isAll: Boolean) {
         var messages: MessageContent? = null
+        val all = RCChatroomGiftAll()
+        all.userId = UserManager.get()!!.userId
+        all.userName = UserManager.get()!!.userName
+        all.giftId = giftId
+        all.giftName = giftName
+        all.giftPath = giftPath
         if (isAll) {
-            val all = RCChatroomGiftAll()
-            all.userId = UserManager.get()!!.userId
-            all.userName = UserManager.get()!!.userName
-            all.giftId = giftId
-            all.giftName = giftName
-            all.giftPath = giftPath
-            all.number = giftNum.toInt()
-            all.price = giftValue.toInt()
-            messages = all
+            all.targetId = ""
+            all.targetName = ""
         } else {
-            val gift = RCChatroomGift()
-            gift.userId = UserManager.get()!!.userId
-            gift.userName = UserManager.get()!!.userName
-            gift.giftId = giftId
-            gift.giftPath = giftPath
-            gift.giftName = giftName
-            gift.number = giftNum
-            gift.price = giftValue.toDouble()
-            gift.targetId = userId
-            gift.targetName = userName
-            messages = gift
+            all.targetId = userId
+            all.targetName = userName
         }
-        // 回调回去结果
+        all.number = giftNum.toInt()
+        all.price = giftValue.toDouble()
+        messages = all
         // 回调回去结果
         mOnSendGiftListener?.onSendGiftSuccess(messages)
         dismiss()

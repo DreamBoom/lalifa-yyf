@@ -13,17 +13,18 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.ext.showTipDialog
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.MainSearchActivity
 import com.lalifa.main.activity.PHActivity
 import com.lalifa.main.activity.room.RoomActivity
+import com.lalifa.main.activity.room.ext.Member
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.FragmentRoomListBinding
 import com.lalifa.main.ext.inputPasswordDialog
 import com.lalifa.main.fragment.adapter.roomListAdapter
-import com.lalifa.yyf.ext.showTipDialog
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
@@ -105,7 +106,7 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
                 // 说明已经在房间内了，那么给弹窗
                 showTipDialog("您正在直播的房间中\n是否返回？"){
                     val userId = roomCheck.userId
-                    if(TextUtils.equals(userId,Member.currentId)){
+                    if(TextUtils.equals(userId, Member.currentId)){
                         jumpRoom(true, roomCheck.RoomId)
                     }else{
                         jumpRoom(false, roomCheck.RoomId)

@@ -3,7 +3,7 @@ package com.lalifa.main.activity.me
 import com.drake.net.utils.scopeNet
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.*
 import com.lalifa.main.fragment.adapter.guardAdapter
 import com.lalifa.main.api.guard

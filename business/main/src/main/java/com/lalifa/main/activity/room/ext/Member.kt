@@ -1,12 +1,11 @@
-package com.lalifa.main.api
+package com.lalifa.main.activity.room.ext
 
 import android.net.Uri
 import android.text.TextUtils
 import cn.rongcloud.voiceroom.model.RCVoiceSeatInfo
-import com.lalifa.ext.User
+import com.alibaba.fastjson.JSONObject
 import io.rong.imlib.model.UserInfo
 import java.io.Serializable
-import javax.sql.StatementEvent
 
 /**
  * @author gyn
@@ -15,7 +14,7 @@ import javax.sql.StatementEvent
 open class Member : Serializable {
     var userId: String = ""
     var userName: String = ""
-    var portraitUrl: String = ""
+    var avatar: String = ""
     var level: String = ""
     var frame //头像框
             : String = ""
@@ -28,25 +27,29 @@ open class Member : Serializable {
     var gender = 0
 
     // 是否是管理
-    var manageType = 0
+    var manage_type = 0
 
     // 房间是否已关注
-    var collectionType = 0
+    var collection_type = 0
 
     // 用户是否已关注
     var follow_type = 0
 
     // 麦位
     var seatIndex = -1
+
     // 麦位状态
     var status = RCVoiceSeatInfo.RCSeatStatus.RCSeatStatusEmpty
+
     // 麦位是否静音
     var isMute = false
     var select = false
+
+
     constructor(
         userId: String,
         userName: String,
-        portraitUrl: String,
+        avatar: String,
         level: String,
         frame: String,
         car: String,
@@ -60,15 +63,15 @@ open class Member : Serializable {
     ) {
         this.userId = userId
         this.userName = userName
-        this.portraitUrl = portraitUrl
+        this.avatar = avatar
         this.level = level
         this.frame = frame
         this.car = car
         this.bubble = bubble
         this.sound = sound
         this.gender = gender
-        this.manageType = manageType
-        this.collectionType = collectionType
+        this.manage_type = manageType
+        this.collection_type = collectionType
         this.follow_type = follow_type
         this.seatIndex = seatIndex
     }
@@ -77,28 +80,8 @@ open class Member : Serializable {
 
     }
 
-
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val member = o as Member
-        return !TextUtils.isEmpty(userId) && userId == member.userId
-    }
-
-    fun toUserInfo(): UserInfo {
-        return UserInfo(userId, userName, Uri.parse(portraitUrl))
-    }
-
-    fun toUser(): User {
-        val user = User()
-        user.userId = userId!!
-        user.userName = userName!!
-        user.avatar = portraitUrl!!
-        return user
-    }
-
     override fun toString(): String {
-        return "Member(userId=$userId, userName=$userName, portraitUrl=$portraitUrl, level=$level, frame=$frame, car=$car, bubble=$bubble, sound=$sound, gender=$gender, manageType=$manageType, collectionType=$collectionType, follow_type=$follow_type, seatIndex=$seatIndex, status=$status, isMute=$isMute)"
+        return "Member(userId='$userId', userName='$userName', avatar='$avatar', level='$level', frame='$frame', car='$car', bubble='$bubble', sound='$sound', gender=$gender, manage_type=$manage_type, collection_type=$collection_type, follow_type=$follow_type, seatIndex=$seatIndex, status=$status, isMute=$isMute, select=$select)"
     }
 
     companion object {
@@ -112,13 +95,25 @@ open class Member : Serializable {
             return members
         }
 
-        fun setMember(a: Member?, mine: Boolean) {
+        fun memberEquals(o: Member): Boolean {
+            val find = members.find { ac -> ac.userId == o.userId } ?: return false
+            val toJSON = JSONObject.toJSONString(find)
+            val toJSON1 = JSONObject.toJSONString(o)
+            return if (TextUtils.equals(toJSON, toJSON1)) {
+                true
+            } else {
+                members.remove(find)
+                false
+            }
+
+        }
+
+        fun setMember(a: Member?) {
             if (null == a) return
-            if (mine) {
+            if (a.userId==UserManager.get()!!.userId) {
                 currentId = a.userId
             }
-            val find = members.find { it.userId == a.userId }
-            if (null == find) {
+            if (!memberEquals(a)) {
                 members.add(a)
             }
         }
@@ -146,7 +141,10 @@ open class Member : Serializable {
         }
 
         fun setSeat(a: Member) {
-            seats.add(a)
+            val find = seats.find { action -> a.userId == action.userId }
+            if (null == find) {
+                seats.add(a)
+            }
         }
     }
 

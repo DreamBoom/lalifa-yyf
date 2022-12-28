@@ -4,14 +4,14 @@ import android.graphics.Color
 import com.drake.brv.PageRefreshLayout
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseListActivity
+import com.lalifa.ext.showTipDialog
 import com.lalifa.extension.start
 import com.lalifa.main.R
-import com.lalifa.main.fragment.adapter.cheList
 import com.lalifa.main.api.Dynamic
 import com.lalifa.main.api.delDynamic
 import com.lalifa.main.api.dzChe
 import com.lalifa.main.api.release
-import com.lalifa.yyf.ext.showTipDialog
+import com.lalifa.main.fragment.adapter.cheList
 
 class MyChe : BaseListActivity() {
     override fun title() = "我的发布"

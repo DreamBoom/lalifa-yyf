@@ -1,8 +1,8 @@
 package com.lalifa.main.api
 
-import com.lalifa.ext.Account
-import com.lalifa.ext.User
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.Member
+import com.lalifa.main.activity.room.ext.User
+import com.lalifa.main.activity.room.ext.UserManager
 import java.io.Serializable
 
 /**
@@ -169,7 +169,7 @@ data class Classify(
 
 data class KnapsackInfo(
     val id: Int,
-    val type: Int,
+    var type: Int,
     val name: String,
     val image: String
 )
@@ -507,7 +507,11 @@ data class GiftHistoryBean(
     val pid: Int,
     val uid: Int,
     val userName: String
-)
+){
+    override fun toString(): String {
+        return "GiftHistoryBean(create_time='$create_time', id=$id, image='$image', avatar='$avatar', name='$name', pid=$pid, uid=$uid, userName='$userName')"
+    }
+}
 
 /**
  *
@@ -759,7 +763,12 @@ data class RoomGift(
     val price: String,
     val effect_image: String,
     var choose:Boolean = false
-)
+
+) {
+    override fun toString(): String {
+        return "RoomGift(id=$id, image='$image', name='$name', price='$price', effect_image='$effect_image', choose=$choose)"
+    }
+}
 
 data class RoomGiftBoxFrequency(
     val frequency: String,
@@ -887,4 +896,13 @@ data class RoomRankBean(
     val userName: String,
     val user_id: Int,
     val yield: String
+)
+
+data class RoomGiftHistoryBean(
+    val avatar: String,
+    val gift_name: String,
+    val image: String,
+    val name: String,
+    val pd_name: String,
+    val num:String
 )

@@ -48,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/back">
 
         <TextView
+            android:id="@+id/b1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_bk_white30"
@@ -58,6 +59,7 @@
             android:textSize="@dimen/size16" />
 
         <TextView
+            android:id="@+id/b2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
@@ -68,6 +70,7 @@
             android:textSize="@dimen/size16" />
 
         <TextView
+            android:id="@+id/b3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="15dp"

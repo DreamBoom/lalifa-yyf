@@ -3,12 +3,12 @@ package com.lalifa.main.activity.me
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
+import com.lalifa.ext.showInputDialog
 import com.lalifa.extension.*
 import com.lalifa.main.api.changeUserInfo
 import com.lalifa.main.api.upload
 import com.lalifa.main.api.userInfo
 import com.lalifa.main.databinding.ActivityEditMyInfoBinding
-import com.lalifa.yyf.ext.showInputDialog
 
 class EditMyInfoActivity : BaseTitleActivity<ActivityEditMyInfoBinding>() {
     override fun title() = "编辑个人资料"

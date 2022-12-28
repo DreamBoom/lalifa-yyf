@@ -11,4 +11,5 @@
     <color name="textColor2">#625896</color>
     <color name="colorPrimary">#FFF6F8F9</color>
     <color name="colorAccent">#FF69FD</color>
+    <color name="bg_broadcast">#33000000</color>
 </resources>

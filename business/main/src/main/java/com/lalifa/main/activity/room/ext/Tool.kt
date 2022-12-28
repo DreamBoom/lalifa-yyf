@@ -11,5 +11,6 @@ class Tool {
 
         val showGift = "showGift"
         val showSx = "showSx"
+        val agree = "agree"
     }
 }

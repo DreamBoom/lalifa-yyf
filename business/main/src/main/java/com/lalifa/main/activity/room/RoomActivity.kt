@@ -6,10 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.rongcloud.voiceroom.api.RCVoiceRoomEngine
@@ -21,9 +21,10 @@ import com.drake.net.utils.scopeNetLife
 import com.kit.utils.KToast
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseActivity
-import com.lalifa.ext.Account
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.ext.showCommonListDialog
+import com.lalifa.ext.showInputDialog
+import com.lalifa.ext.showTipDialog
 import com.lalifa.extension.*
 import com.lalifa.main.R
 import com.lalifa.main.activity.room.adapter.RoomMessageAdapter
@@ -34,34 +35,24 @@ import com.lalifa.main.activity.room.widght.*
 import com.lalifa.main.api.*
 import com.lalifa.main.databinding.ActivityRoomBinding
 import com.lalifa.main.ext.*
+import com.lalifa.main.fragment.adapter.roomGiftHistoryAdapter
 import com.lalifa.main.fragment.adapter.roomRankAdapter
 import com.lalifa.main.fragment.adapter.seatAdapter
 import com.lalifa.main.fragment.adapter.seatBossAdapter
 import com.lalifa.utils.SPUtil
 import com.lalifa.utils.UiUtils
-import com.lalifa.yyf.ext.showInputDialog
-import com.lalifa.yyf.ext.showTipDialog
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.functions.Consumer
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
 import io.rong.imlib.model.Message
 import io.rong.imlib.model.MessageContent
-import kotlinx.coroutines.delay
 
-
-/**
- * 演示房间api和麦位api的activity
- * 1.设置房间事件监听
- * 2.创建或者加入房间
- * 3.房主上麦 seatIndex = 0
- */
 class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     RoomInfoObserver, CreateRoomDialog.CreateRoomCallBack,
     RoomMessageAdapter.OnClickMessageUserListener,
-    GiftDialog.OnSendGiftListener {
+    GiftDialog.OnSendGiftListener, AllBroadView.OnClickBroadcast {
     companion object {
         const val ACTION_ROOM = 1000
         private const val KET_ROOM_ID = "room_id"
@@ -83,7 +74,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     private var mRoomDetail: RoomDetailBean? = null
     private var roomId: String? = null
     private var owner = false
-    private var msgList: ArrayList<MessageContent> = arrayListOf()
     var mRoomMessageAdapter: RoomMessageAdapter? = null
     override fun initView() {
         loadTag!!.show()
@@ -93,6 +83,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         get().observeSeatList(this)
         get().observeRoomInfo(this)
         get().register(this, owner)
+        binding.allBroadcast.setOnClickBroadcast(this)
         val linearLayoutManager = LinearLayoutManager(this)
         mRoomMessageAdapter = RoomMessageAdapter(
             this,
@@ -116,15 +107,80 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 clickSeat(false, layoutPosition)
             }
         }
+        //消息接收
+        RCChatRoomMessageManager.obMessageReceiveByRoomId(roomId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { messageContent ->
+                //更新礼物排行
+                getRoomRanking()
+                //将消息显示到列表上
+                if (RCChatRoomMessageManager.isShowingMessage(messageContent)) {
+                    mRoomMessageAdapter!!.interMessage(messageContent)
+                }
+                if (messageContent is RCChatroomGiftAll) {
+                    //展示礼物动画
+                    val showGift = SPUtil.getBoolean(Tool.showGift, true)
+                    if (showGift && !TextUtils.isEmpty(messageContent.giftPath)) {
+                        MUtils.loadSvg(
+                            binding.svgGift, messageContent.giftPath
+                        ) {
+                        }
+                    }
+                }
+            }
         joinRoom()
+    }
+
+    //麦位变化，刷新房间观众
+    override fun onSeatList(seatInfos: List<Seat>) {
+        Member.getSeats().clear()
+        scopeNetLife {
+            val apply = getMembers(roomId!!)
+            seatInfos.forEachIndexed { index, seat ->
+                if (!TextUtils.isEmpty(seat.userId)) {
+                    val find = apply!!.find { action -> seat.userId == action.userId }
+                    if (null != find) {
+                        if (find.userId == Member.currentId) {
+                            currentStatus = Tool.STATUS_HAVE_SEAT
+                            Tool.currentSeatIndex = index
+                        }
+                        val member = find.toMember()
+                        member.seatIndex = index
+                        member.status = seat.status
+                        member.isMute = seat.isMute
+                        Member.setMember(member)
+                        Member.setSeat(member)
+                    }
+                }
+            }.apply {
+                val count = seatInfos.size ?: 0
+                //老板麦位
+                val bossSeats = seatInfos.subList(0, 2)
+                seatBoss!!.models = bossSeats
+                //观众麦位
+                val seats = seatInfos.subList(2, count)
+                seat!!.models = seats
+            }
+        }
     }
 
     private var seatBoss: BindingAdapter? = null
     private var seat: BindingAdapter? = null
     override fun onReady() {
-        binding.rankList.onClick {
-            start(RankActivity::class.java) {
-                putExtra("roomId", roomId!!)
+        scopeNetLife {
+            val userInfo = userInfo(UserManager.get()!!.userId, roomId!!)
+            Member.setMember(userInfo)
+            if (userInfo!!.manage_type != 1) {
+                binding.voice.gone()
+                binding.sy.gone()
+            }
+            //展示进场动画
+            val showIn = SPUtil.getBoolean(roomId!!, true)
+            if (showIn && !TextUtils.isEmpty(userInfo.car)) {
+                MUtils.loadSvg(binding.svgIn, userInfo.car) {
+                    inUserIdList.removeAt(0)
+                    showUserIn()
+                }
             }
         }
     }
@@ -148,6 +204,26 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                 loadTag!!.dismiss()
             }
         }
+    }
+
+    /**
+     * 进入房间后发送默认的消息
+     */
+    private fun sendSystemMessage() {
+        // 默认消息
+        val list: MutableList<MessageContent> = java.util.ArrayList(1)
+        mRoomMessageAdapter!!.setMessages(list, true)
+        val welcome = RCChatroomLocationMessage()
+        welcome.content = java.lang.String.format("欢迎来到 %s", mRoomDetail!!.title)
+        RCChatRoomMessageManager.sendLocationMessage(mRoomDetail!!.Chatroom_id, welcome)
+//        val tips = RCChatroomLocationMessage()
+//        tips.content = "感谢使用随心语音 语音房，请遵守相关法规，不要传播低俗、暴力等不良信息。欢迎您把使用过程中的感受反馈给我们。"
+//        RCChatRoomMessageManager.sendLocationMessage(mRoomDetail!!.Chatroom_id, tips)
+        // 广播消息
+        val enter = RCChatroomEnter()
+        enter.userId = UserManager.get()!!.userId
+        enter.userName = UserManager.get()!!.userName
+        sendMessage(enter)
     }
 
     //获取房间详情
@@ -217,11 +293,17 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                         ) {
                             super.getItemOffsets(outRect, view, parent, state)
                             if (parent.getChildPosition(view) !== roomRanking.size - 1) {
-                                outRect.bottom = -10
+                                outRect.right = -10
                             }
                         }
                     })
-                    roomRankAdapter().models = roomRanking
+                    roomRankAdapter().apply {
+                        R.id.header.onClick {
+                            start(RankActivity::class.java) {
+                                putExtra("roomId", roomId!!)
+                            }
+                        }
+                    }.models = roomRanking
                 }
             }
         }
@@ -232,7 +314,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     //用户进入房间
     override fun onUserIn(userId: String?) {
         inUserIdList.add(userId!!)
-
         if (!isShowIn) {
             showUserIn()
         }
@@ -244,11 +325,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             isShowIn = true
             scopeNetLife {
                 val userInfo = userInfo(inUserIdList[0], roomId!!)
-                Member.setMember(userInfo, false)
+                Member.setMember(userInfo)
                 //展示进场动画
                 val showIn = SPUtil.getBoolean(roomId!!, true)
                 if (showIn && !TextUtils.isEmpty(userInfo!!.car)) {
-                    MUtils.loadSvg(binding.svgIn, userInfo.car!!) {
+                    MUtils.loadSvg(binding.svgIn, userInfo.car) {
                         inUserIdList.removeAt(0)
                         showUserIn()
                     }
@@ -354,7 +435,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                         //零号直接上麦
                         currentStatus = Tool.STATUS_HAVE_SEAT
                         Tool.currentSeatIndex = 0
-                        VoiceRoomApi.getApi().enterSeat(0, true, null)
+                        VoiceRoomApi.getApi().enterSeat(0, false, null)
                     }
                 } else {
                     toast("暂无权限")
@@ -484,9 +565,8 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                     VoiceRoomApi.getApi().leaveRoom { result ->
                         NotificationService.unbindNotifyService()
                         if (result) {
-                            KToast.show("离开房间成功")
                             finish()
-                            RoomActivity.joinVoiceRoom(this@RoomActivity, s, b)
+                            joinVoiceRoom(this@RoomActivity, s, b)
                         } else {
                             KToast.show("离开房间失败")
                         }
@@ -496,7 +576,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
             }
             gift.onClick {
                 loadTag!!.show()
-                LogCat.e("====1111"+Member.getSeats().toString())
                 scopeNetLife {
                     val roomGift = roomGift()
                     if (null != roomGift) {
@@ -515,7 +594,62 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                     }
                 }
             }
+            voice.onClick {
+                setSeatLock()
+            }
+            sy.onClick {
+                muteAllRemoteStreams(!roomIsMute)
+            }
         }
+    }
+
+    var roomIsMute = false
+    /**
+     * 锁麦
+     */
+    private fun setSeatLock() {
+        val seatInfo = getSeatInfo(Member.currentId)
+        if(null==seatInfo){
+            toast("未在麦位上，不可进行锁麦")
+            return
+        }
+        val member = Member.getMember(seatInfo.userId)
+        if (!seatInfo.isMute) {
+            seatInfo.userId
+            RCVoiceRoomEngine.getInstance().muteSeat(member!!.seatIndex, true) {
+                binding.voice.background = ContextCompat.getDrawable(
+                    this@RoomActivity, R.drawable.ic_mic_switch_off
+                )
+                KToast.show("麦位已静音")
+            }
+        }else{
+            RCVoiceRoomEngine.getInstance().muteSeat(member!!.seatIndex, false) {
+                binding.voice.background = ContextCompat.getDrawable(
+                    this@RoomActivity, R.drawable.ic_mic_switch_on
+                )
+                KToast.show("麦位已解锁")
+            }
+        }
+    }
+
+    /**
+     * 静音 取消静音
+     */
+    private fun muteAllRemoteStreams(isMute: Boolean) {
+        roomIsMute = isMute
+        RCVoiceRoomEngine.getInstance().muteAllRemoteStreams(isMute)
+        if (isMute) {
+            binding.sy.background = ContextCompat.getDrawable(
+                this@RoomActivity, R.drawable.ic_room_setting_mute
+            )
+            KToast.show("扬声器已静音")
+        } else {
+            binding.sy.background = ContextCompat.getDrawable(
+                this@RoomActivity, R.drawable.ic_room_setting_unmute
+            )
+            KToast.show("已取消静音")
+        }
+        //此时要将当前的状态同步到服务器，下次进入的时候可以同步
     }
 
     //创建房间弹框
@@ -534,40 +668,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
 
     }
 
-    //麦位变化，刷新房间观众
-    var isFirst = true
-    override fun onSeatList(seatInfos: List<Seat>) {
-        if (isFirst) {
-            isFirst = false
-            Member.getSeats().clear()
-            if (seatInfos.isNotEmpty()) {
-
-                val count = seatInfos.size ?: 0
-                //老板麦位
-                val bossSeats = seatInfos.subList(0, 2)
-                seatBoss!!.models = bossSeats
-                //观众麦位
-                val seats = seatInfos.subList(2, count)
-                seat!!.models = seats
-                for (i in seatInfos.indices) {
-                    if (seatInfos[i].userId == Member.currentId) {
-                        currentStatus = Tool.STATUS_HAVE_SEAT
-                        Tool.currentSeatIndex = i
-                    }
-                    //更新麦位用户信息
-                    val member = Member.getMember(seatInfos[i].userId)
-                    if (null != member) {
-                        member.seatIndex = i
-                        member.status = seatInfos[i].status
-                        member.isMute = seatInfos[i].isMute
-                        Member.setSeat(member)
-                    }
-                }
-            }
-            isFirst = true
-        }
-    }
-
     /**
      * 申请麦位回调
      * @param seatIndex -1 被拒绝 else 已同意
@@ -579,10 +679,20 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         } else {
             currentStatus = Tool.STATUS_HAVE_SEAT
         }
+        val isMute = getSeatInfo(seatIndex).isMute
+        if (isMute) {
+            binding.sy.background = ContextCompat.getDrawable(
+                this@RoomActivity, R.drawable.ic_room_setting_mute
+            )
+        } else {
+            binding.sy.background = ContextCompat.getDrawable(
+                this@RoomActivity, R.drawable.ic_room_setting_unmute
+            )
+        }
     }
 
     override fun seatSpeak(index: Int, audioLevel: Int) {
-        //  LogCat.e("=====$index 号麦说话状态：$audioLevel")
+
     }
 
     //关闭
@@ -608,7 +718,12 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                         return
                     }
                     //发送文字消息
-                    sendMessage(message!!)
+                    //发送文字消息
+                    val barrage = RCChatroomBarrage()
+                    barrage.content = message!!
+                    barrage.userId = UserManager.get()!!.userId
+                    barrage.userName = UserManager.get()!!.userName
+                    sendMessage(barrage)
                 }
 
                 override fun onClickEmoji(): Boolean {
@@ -704,16 +819,31 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
                         toast("暂无权限查看")
                     } else {
                         start(ManageListActivity::class.java) {
-                            putExtra("roomId", roomId)
+                            putExtra("roomId", roomId!!)
                         }
                     }
                 }
                 6 -> {
                     //礼物列表
+                    showCommonListDialog("礼物记录") {
+                        scopeNetLife {
+                            roomGiftHistoryAdapter().models = roomGiftHistory(roomId!!)
+                        }
+                    }
                 }
                 7 -> {
                     //发布广播
-
+                    showInputDialog(l = 200) {
+                        val message = RCAllBroadcastMessage()
+                        message.userId = UserManager.get()!!.userId
+                        message.userName = UserManager.get()!!.userName
+                        message.roomId = roomId
+                        message.roomType = "0"
+                        message.info = it
+                        message.isPrivate = mRoomDetail!!.password_type.toString()
+                        // sendMessage(message)
+                        AllBroadcastManager.getInstance().addMessage(message)
+                    }
                 }
             }
         }
@@ -726,21 +856,6 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
         }
         if (requestCode == 200 && data!!.getBooleanExtra("isChange", false))
             getRoomInfo()
-    }
-
-    //房间销毁
-    override fun onDestroy() {
-        //在销毁之前提前出栈顶
-        try {
-            if (null != mRoomMessageAdapter) mRoomMessageAdapter!!.release()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        if (inputBarDialog != null && inputBarDialog!!.isShowing) {
-            inputBarDialog!!.dismiss()
-        }
-        VoiceRoomApi.getApi().leaveRoom(null)
-        super.onDestroy()
     }
 
     //点击返回键
@@ -763,66 +878,10 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     }
 
     //消息发送
-    private fun sendMessage(content: String) {
-        //发送文字消息
-        val barrage = RCChatroomBarrage()
-        barrage.content = content
-        barrage.userId = UserManager.get()!!.userId
-        barrage.userName = UserManager.get()!!.userName
+    private fun sendMessage(messages: MessageContent?) {
         RCChatRoomMessageManager.sendChatMessage(
-            roomId, barrage, true,
-            {
-                // addMessage(messageContent)
-                null
-            }, null
+            roomId, messages, true, { null }, null
         )
-    }
-
-    /**
-     * 进入房间后发送默认的消息
-     */
-    private fun sendSystemMessage() {
-        //消息接收
-        RCChatRoomMessageManager.obMessageReceiveByRoomId(mRoomDetail!!.Chatroom_id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(Consumer { messageContent ->
-                Log.v(TAG, messageContent.toString())
-                //将消息显示到列表上
-                mRoomMessageAdapter!!.interMessage(messageContent)
-                if (messageContent is RCChatroomGift || messageContent is RCChatroomGiftAll) {
-                    //展示礼物动画
-                    val showGift = SPUtil.getBoolean(Tool.showGift, true)
-                    LogCat.e("222222====$showGift")
-                    if (showGift) {
-                        messageContent as RCChatroomGift
-                        LogCat.e("222222===="+Config.FILE_PATH + messageContent.giftPath)
-                        MUtils.loadSvg(
-                            binding.svgGift,
-                            Config.FILE_PATH + messageContent.giftPath
-                        ) {
-
-                        }
-                    }
-                } else if (messageContent is RCAllBroadcastMessage) {
-                    AllBroadcastManager.getInstance()
-                        .addMessage(messageContent)
-                }
-            })
-        // 默认消息
-        val list: MutableList<MessageContent> = java.util.ArrayList(1)
-        mRoomMessageAdapter!!.setMessages(list, true)
-        val welcome = RCChatroomLocationMessage()
-        welcome.content = java.lang.String.format("欢迎来到 %s", mRoomDetail!!.title)
-        RCChatRoomMessageManager.sendLocationMessage(mRoomDetail!!.Chatroom_id, welcome)
-        val tips = RCChatroomLocationMessage()
-        tips.content = "感谢使用随心语音 语音房，请遵守相关法规，不要传播低俗、暴力等不良信息。欢迎您把使用过程中的感受反馈给我们。"
-        RCChatRoomMessageManager.sendLocationMessage(mRoomDetail!!.Chatroom_id, tips)
-        // 广播消息
-        val enter = RCChatroomEnter()
-        enter.userId = UserManager.get()!!.userId
-        enter.userName = UserManager.get()!!.userName
-        RCChatRoomMessageManager.sendChatMessage(mRoomDetail!!.Chatroom_id, enter, false,
-            { null }) { _, _ -> null }
     }
 
     //创建房间成功返回
@@ -842,12 +901,11 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
 
     //礼物发送成功
     override fun onSendGiftSuccess(messages: MessageContent?) {
-        RCChatRoomMessageManager.sendChatMessage(
-            roomId, messages, true,
-            {
-                // addMessage(messageContent)
-                null
-            }, null
-        )
+        sendMessage(messages)
+    }
+
+    //点击广播
+    override fun clickBroadcast(message: RCAllBroadcastMessage?) {
+
     }
 }

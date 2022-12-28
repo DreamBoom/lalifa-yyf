@@ -1,7 +1,8 @@
-package com.lalifa.ext
+package com.lalifa.main.activity.room.ext
 
 import android.net.Uri
 import android.text.TextUtils
+import com.lalifa.ext.Account
 import java.io.Serializable
 
 /**
@@ -39,6 +40,24 @@ class User : Serializable {
             car,
             bubble,
             sound
+        )
+    }
+
+    fun toMember(): Member {
+        return Member(
+            userId,
+            userName,
+            avatar,
+            level,
+            frame,
+            car,
+            bubble,
+            sound,
+            gender,
+            manageType = 0,
+            collectionType= 0,
+            follow_type= 0,
+            seatIndex = -1
         )
     }
 

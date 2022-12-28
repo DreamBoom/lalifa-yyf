@@ -9,7 +9,8 @@ import com.drake.net.utils.scopeNetLife
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
-import com.lalifa.ext.UserManager
+import com.lalifa.main.activity.room.ext.Member
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.extension.load
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
@@ -72,7 +73,7 @@ class MainFragment : BaseFragment<ViewMainHomeBinding>() {
                 mList3.mainList3().apply {
                     R.id.rl.onClick {
                         val room = getModel<Room>()
-                        if(room.uid==UserManager.get()!!.id){
+                        if(room.uid== UserManager.get()!!.id){
                             jumpRoom(true, room.roomid)
                         }else{
                             jumpRoom(false, room.roomid)

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="温馨提示"
         android:textColor="@color/white"
         android:textSize="18dp" />

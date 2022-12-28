@@ -8,19 +8,19 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.multidex.MultiDex
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.drake.logcat.LogCat
-import com.drake.statelayout.StateConfig
 import com.drake.tooltip.ToastConfig
 import com.drake.tooltip.interfaces.ToastFactory
 import com.lalifa.api.InitNet
 import com.lalifa.base.BaseApplication
 import com.lalifa.ext.*
 import com.lalifa.ext.Config.Companion.parser
+import com.lalifa.extension.pk
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.main.activity.room.message.*
 import com.lalifa.utils.ImPushUtil
 import com.lalifa.utils.SystemUtil
@@ -67,7 +67,9 @@ class MApplication : BaseApplication() {
         ActivityManager.getInstance().init(this)
         initConfig()
     }
+
     private var modes: MutableList<String?>? = null
+
     /**
      * 初始化通用吐司View
      */
@@ -101,40 +103,44 @@ class MApplication : BaseApplication() {
         //初始化IM
         ImPushUtil.getInstance(this).init()
         RongIM.init(this, Config.RONG_APP_KEY, true)
-        RongCoreClient.init(this,Config.RONG_APP_KEY)
+        RongCoreClient.init(this, Config.RONG_APP_KEY)
         LogCat.setDebug(BuildConfig.DEBUG, MApplication.get().getString(R.string.app_name))
         //注册自定义消息
         val myMessages = ArrayList<Class<out MessageContent?>>()
         myMessages.add(MyMediaMessageContent::class.java)
         myMessages.add(RCChatroomBarrage::class.java)
         myMessages.add(RCChatroomEnter::class.java)
-        myMessages.add(RCChatroomGift::class.java)
         myMessages.add(RCChatroomGiftAll::class.java)
         RongIMClient.registerMessageType(myMessages)
         //注册自定义键盘
         RongExtensionManager.getInstance().extensionConfig = MyGiftConfig()
         //自定义聊天头像为圆形
-//        RongConfigCenter.featureConfig().kitImageEngine =
-//            object : GlideKitImageEngine() {
-//                override fun loadConversationPortrait(
-//                    context: Context,
-//                    url: String,
-//                    imageView: ImageView,
-//                    message: Message?
-//                ) {
-//                    super.loadConversationPortrait(context, url, imageView, message)
-//                    Glide.with(context).load(url)
-//                        .apply(RequestOptions.bitmapTransform(CircleCrop()))
-//                        .into(imageView)
-//                }
-//            }
+        RongConfigCenter.featureConfig().kitImageEngine =
+            object : GlideKitImageEngine() {
+                override fun loadConversationPortrait(
+                    context: Context,
+                    url: String,
+                    imageView: ImageView,
+                    message: Message?
+                ) {
+                    super.loadConversationPortrait(context, url, imageView, message)
+                    Glide.with(context).load(url)
+                        .apply(RequestOptions.bitmapTransform(CircleCrop()))
+                        .into(imageView)
+                }
+            }
         initToast()
-        InitNet.initNetHttp(this)
+        if (null == UserManager.get() || TextUtils.isEmpty(UserManager.get()!!.token)) {
+            InitNet.initNetHttp(this, "")
+        } else {
+            InitNet.initNetHttp(this, UserManager.get()!!.token.pk(""))
+        }
+
         initMessageType()
     }
 
 
-    private fun initMessageType(){
+    private fun initMessageType() {
         //初始化消息类型
         RongIMClient.registerMessageType(
             object : java.util.ArrayList<Class<out MessageContent?>?>() {
@@ -143,6 +149,7 @@ class MApplication : BaseApplication() {
                 }
             })
     }
+
     //表情库
     class MyEmojiProvider : EmojiProvider {
         override fun getCategories(): Array<EmojiCategory> {

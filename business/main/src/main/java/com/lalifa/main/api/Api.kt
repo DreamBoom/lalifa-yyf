@@ -1,9 +1,9 @@
 package com.lalifa.main.api
 
-import com.drake.logcat.LogCat
 import com.drake.net.Get
 import com.drake.net.Post
-import com.lalifa.ext.User
+import com.lalifa.main.activity.room.ext.Member
+import com.lalifa.main.activity.room.ext.User
 import com.lalifa.extension.string
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -804,6 +804,16 @@ suspend fun CoroutineScope.roomRanking(
     return Post<BaseBean<List<RoomRankBean>>>("chat_room/ranking") {
         param("category", type)
         param("id", id)
+    }.await().data
+}
+
+/**
+ * 房间礼物赠送记录
+ * @return
+ */
+suspend fun CoroutineScope.roomGiftHistory(roomId:String): List<RoomGiftHistoryBean>? {
+    return Post<BaseBean<List<RoomGiftHistoryBean>>>("chat_room/gift_record") {
+        param("id", roomId)
     }.await().data
 }
 

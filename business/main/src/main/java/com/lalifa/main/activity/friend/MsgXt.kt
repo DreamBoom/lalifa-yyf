@@ -22,7 +22,7 @@ class MsgXt : BaseListActivity() {
 
     override fun PageRefreshLayout.getData() {
         scopeNetLife {
-            addData(friendsList())
+           // addData(friendsList())
         }
     }
 

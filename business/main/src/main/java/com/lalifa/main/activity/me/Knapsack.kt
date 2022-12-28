@@ -1,6 +1,7 @@
 package com.lalifa.main.activity.me
 
 import android.annotation.SuppressLint
+import com.drake.brv.BindingAdapter
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.models
 import com.drake.net.utils.scopeNetLife
@@ -25,38 +26,43 @@ class Knapsack : BaseTitleActivity<ActivityKnapsackBinding>() {
     private fun initData() {
         getData()
     }
-
+    var shop:KnapsackBean?=null
+    var apply:BindingAdapter?=null
+    var choose = 0
     @SuppressLint("NotifyDataSetChanged")
-    private fun getData(){
+    private fun getData() {
         scopeNetLife {
-            val shop = knapsack()
+            shop = knapsack()
             binding.apply {
-                typeList.apply {
-                    knapsackList().apply {
-                        R.id.im.onClick {
-                            goodList.bindingAdapter.models = getModel<Classify>().knapsack
-                        }
-                    }
-                    models = shop!!.classify
-                }
-                goodList.apply {
-                    knapsacksList().apply {
-                        models = shop!!.classify[0].knapsack
-                        R.id.use.onClick {
-                            useMyDress(getModel<KnapsackInfo>().id.toString())
-                        }
+                 apply = goodList.knapsacksList().apply {
+                    R.id.use.onClick {
+                        useMyDress(getModel<KnapsackInfo>().id.toString())
                     }
                 }
+                apply!!.models = shop!!.classify[choose].knapsack
+                typeList.knapsackList().apply {
+                    R.id.im.onClick {
+                        choose = layoutPosition
+                        apply!!.models = getModel<Classify>().knapsack
+                    }
+                }.models = shop!!.classify
             }
         }
     }
 
-    private fun useMyDress(id:String){
+    private fun useMyDress(id: String) {
         scopeNetLife {
             val useDress = useDress(id)
-            if(null!=useDress){
-                getData()
-            }else{
+            if (null != useDress) {
+                shop!!.classify[choose].knapsack.forEach {
+                    if(it.id.toString() == id){
+                        it.type = 1
+                    }else{
+                        it.type = 0
+                    }
+                }
+                apply!!.notifyDataSetChanged()
+            } else {
                 toast("使用异常，请重新尝试")
             }
         }

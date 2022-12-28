@@ -3,13 +3,10 @@ package com.lalifa.main.activity.room.ext;
 import android.app.Activity;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.drake.logcat.LogCat;
 import com.kit.cache.GsonUtil;
 import com.kit.utils.KToast;
 import com.kit.wapper.IResultBack;
-import com.lalifa.main.api.Member;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -314,8 +311,8 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
      */
     @Override
     public void onSpeakingStateChanged(int index, int audioLevel) {
-//        Log.d(TAG, "onSpeakingStateChanged: index = " + index + " audioLevel = " + audioLevel);
-        if (null != seatListObserver) seatListObserver.seatSpeak(index,audioLevel);
+      //  Log.d(TAG, "onSpeakingStateChanged: index = " + index + " audioLevel = " + audioLevel);
+     //   if (null != seatListObserver) seatListObserver.seatSpeak(index,audioLevel);
 //        Seat seat = getSeatInfo(index);
 //        if (null != seat) {
 //            seat.setAudioLevel(audioLevel);

@@ -31,13 +31,7 @@ public class RCAllBroadcastMessage extends MessageContent {
     private static final String TAG = "RCAllBroadcastMessage";
     private String userId;
     private String userName;
-    private String targetId;
-    private String targetName;
-    private String giftId;
-    private String giftName;
-    private String giftPath;
-    private String giftValue;
-    private String giftCount;
+    private String info;
     private String roomId;
     private String roomType;
     private String isPrivate;
@@ -52,13 +46,7 @@ public class RCAllBroadcastMessage extends MessageContent {
         if (message != null) {
             this.userId = message.userId;
             this.userName = message.userName;
-            this.targetId = message.targetId;
-            this.targetName = message.targetName;
-            this.giftId = message.giftId;
-            this.giftName = message.giftName;
-            this.giftPath = message.giftPath;
-            this.giftValue = message.giftValue;
-            this.giftCount = message.giftCount;
+            this.info = message.info;
             this.roomId = message.roomId;
             this.roomType = message.roomType;
             this.isPrivate = message.isPrivate;
@@ -68,13 +56,7 @@ public class RCAllBroadcastMessage extends MessageContent {
     protected RCAllBroadcastMessage(Parcel source) {
         setUserId(ParcelUtils.readFromParcel(source));
         setUserName(ParcelUtils.readFromParcel(source));
-        setTargetId(ParcelUtils.readFromParcel(source));
-        setTargetName(ParcelUtils.readFromParcel(source));
-        setGiftId(ParcelUtils.readFromParcel(source));
-        setGiftName(ParcelUtils.readFromParcel(source));
-        setGiftPath(ParcelUtils.readFromParcel(source));
-        setGiftValue(ParcelUtils.readFromParcel(source));
-        setGiftCount(ParcelUtils.readFromParcel(source));
+        setInfo(ParcelUtils.readFromParcel(source));
         setRoomId(ParcelUtils.readFromParcel(source));
         setRoomType(ParcelUtils.readFromParcel(source));
         setIsPrivate(ParcelUtils.readFromParcel(source));
@@ -94,13 +76,7 @@ public class RCAllBroadcastMessage extends MessageContent {
     public void writeToParcel(Parcel dest, int flags) {
         ParcelUtils.writeToParcel(dest, userId);
         ParcelUtils.writeToParcel(dest, userName);
-        ParcelUtils.writeToParcel(dest, targetId);
-        ParcelUtils.writeToParcel(dest, targetName);
-        ParcelUtils.writeToParcel(dest, giftId);
-        ParcelUtils.writeToParcel(dest, giftName);
-        ParcelUtils.writeToParcel(dest, giftPath);
-        ParcelUtils.writeToParcel(dest, giftValue);
-        ParcelUtils.writeToParcel(dest, giftCount);
+        ParcelUtils.writeToParcel(dest, info);
         ParcelUtils.writeToParcel(dest, roomId);
         ParcelUtils.writeToParcel(dest, roomType);
         ParcelUtils.writeToParcel(dest, isPrivate);
@@ -109,13 +85,7 @@ public class RCAllBroadcastMessage extends MessageContent {
     public void readFromParcel(Parcel source) {
         setUserId(ParcelUtils.readFromParcel(source));
         setUserName(ParcelUtils.readFromParcel(source));
-        setTargetId(ParcelUtils.readFromParcel(source));
-        setTargetName(ParcelUtils.readFromParcel(source));
-        setGiftId(ParcelUtils.readFromParcel(source));
-        setGiftName(ParcelUtils.readFromParcel(source));
-        setGiftPath(ParcelUtils.readFromParcel(source));
-        setGiftValue(ParcelUtils.readFromParcel(source));
-        setGiftCount(ParcelUtils.readFromParcel(source));
+        setInfo(ParcelUtils.readFromParcel(source));
         setRoomId(ParcelUtils.readFromParcel(source));
         setRoomType(ParcelUtils.readFromParcel(source));
         setIsPrivate(ParcelUtils.readFromParcel(source));
@@ -137,60 +107,12 @@ public class RCAllBroadcastMessage extends MessageContent {
         this.userName = userName;
     }
 
-    public String getTargetId() {
-        return targetId;
+    public String getInfo() {
+        return info;
     }
 
-    public void setTargetId(String targetId) {
-        this.targetId = targetId;
-    }
-
-    public String getTargetName() {
-        return targetName;
-    }
-
-    public void setTargetName(String targetName) {
-        this.targetName = targetName;
-    }
-
-    public String getGiftId() {
-        return giftId;
-    }
-
-    public void setGiftId(String giftId) {
-        this.giftId = giftId;
-    }
-
-    public String getGiftName() {
-        return giftName;
-    }
-
-    public void setGiftName(String giftName) {
-        this.giftName = giftName;
-    }
-
-    public String getGiftPath() {
-        return giftPath;
-    }
-
-    public void setGiftPath(String giftPath) {
-        this.giftPath = giftPath;
-    }
-
-    public String getGiftValue() {
-        return giftValue;
-    }
-
-    public void setGiftValue(String giftValue) {
-        this.giftValue = giftValue;
-    }
-
-    public String getGiftCount() {
-        return giftCount;
-    }
-
-    public void setGiftCount(String giftCount) {
-        this.giftCount = giftCount;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public String getRoomId() {

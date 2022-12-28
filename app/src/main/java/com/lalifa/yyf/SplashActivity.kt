@@ -1,5 +1,6 @@
 package com.lalifa.yyf
 
+import android.Manifest.permission.MODIFY_AUDIO_SETTINGS
 import android.annotation.SuppressLint
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
@@ -29,6 +30,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             .permission(Permission.ACCESS_COARSE_LOCATION)
             .permission(Permission.ACCESS_FINE_LOCATION)
             .permission(Permission.READ_PHONE_STATE)
+            .permission(Permission.RECORD_AUDIO)
             .permission(Permission.CAMERA)
             // 设置权限请求拦截器（局部设置）
             //.interceptor(new PermissionInterceptor())

@@ -1,14 +1,11 @@
 package com.lalifa.main.activity.login
 
 import com.lalifa.base.BaseActivity
-import com.lalifa.base.BaseTitleActivity
+import com.lalifa.ext.showTipDialog
 import com.lalifa.extension.getIntentString
 import com.lalifa.extension.onClick
 import com.lalifa.extension.start
-import com.lalifa.extension.text
 import com.lalifa.main.databinding.ActivitySexBinding
-
-import com.lalifa.yyf.ext.showTipDialog
 
 /**
  * 选择性别界面
