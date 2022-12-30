@@ -897,7 +897,9 @@ data class RoomRankBean(
     val user_id: Int,
     val yield: String
 )
-
+/**
+ * @Des 房间消费记录
+ */
 data class RoomGiftHistoryBean(
     val avatar: String,
     val gift_name: String,
@@ -905,4 +907,15 @@ data class RoomGiftHistoryBean(
     val name: String,
     val pd_name: String,
     val num:String
+)
+/**
+ * @Des 房间主题
+ */
+data class RoomThemeBean(
+    val create_time: String,
+    val id: Int,
+    val name: String,
+    val sort: Int,
+    val status: Int,
+    val type: Int
 )

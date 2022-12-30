@@ -34,7 +34,7 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
 
     public interface RoomInfoObserver {
         void onUserIn(String userId);
-        void onOnLineCount(int userNumber);
+        //void onOnLineCount(int userNumber);
         void onReady();
         void onMessage(Message message);
         void onOut(String userId);
@@ -298,9 +298,9 @@ public class QuickEventListener implements RCVoiceRoomEventListener {
         Log.d(TAG, "onAudienceExit: userId = " + userId);
         // 移除观众id
         if (null != mAudienceIds) mAudienceIds.remove(userId);
-        if (null != roomInfoObserver) {
-            roomInfoObserver.onOnLineCount(mAudienceIds.size());
-        }
+//        if (null != roomInfoObserver) {
+//            roomInfoObserver.onOnLineCount(mAudienceIds.size());
+//        }
     }
 
     /**

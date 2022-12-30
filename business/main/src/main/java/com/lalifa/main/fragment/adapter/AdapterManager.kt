@@ -1,6 +1,7 @@
 package com.lalifa.main.fragment.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.text.*
 import android.widget.LinearLayout.HORIZONTAL
 import androidx.core.content.ContextCompat
@@ -13,6 +14,7 @@ import com.drake.brv.utils.divider
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.lalifa.ext.Config
 import com.lalifa.main.activity.room.ext.Member
 import com.lalifa.extension.*
@@ -23,6 +25,8 @@ import com.lalifa.main.api.*
 import com.lalifa.main.databinding.*
 import com.lalifa.main.ext.MUtils
 import com.lalifa.utils.SPUtil
+import io.rong.imkit.utils.TimeUtils
+import io.rong.imlib.model.Conversation
 
 /**
  * 商城
@@ -901,7 +905,7 @@ fun RecyclerView.roomGiftAdapter(): BindingAdapter {
                     name.text = bean.name
                     price.text = bean.price
                     if (bean.choose) {
-                        name.setTextColor(ContextCompat.getColor(context, R.color.textColor2))
+                        name.setTextColor(ContextCompat.getColor(context, R.color.or))
                     } else {
                         name.setTextColor(ContextCompat.getColor(context, R.color.white))
                     }
@@ -927,7 +931,7 @@ fun RecyclerView.seatGiftAdapter(): BindingAdapter {
                     } else {
                         select.invisible()
                     }
-                    header.load(Config.FILE_PATH+bean.avatar.pk(""))
+                    header.load(Config.FILE_PATH + bean.avatar.pk(""))
                     name.text = "${bean.seatIndex} 号麦"
                 }
             }
@@ -993,6 +997,28 @@ fun RecyclerView.popRoomAdapter(): BindingAdapter {
                 name.text = if (bean.type == 1) "[游戏]" else "[娱乐]"
                 info.text = bean.explain
                 level.text = bean.rank
+            }
+        }
+    }
+}
+
+
+/**
+ * 消息适配器
+ * @receiver RecyclerView
+ * @return BindingAdapter
+ */
+fun RecyclerView.messageList(): BindingAdapter {
+    return linear().setup {
+        addType<Conversation>(R.layout.item_message)
+        onBind {
+            val bean = getModel<Conversation>()
+            getBinding<ItemMessageBinding>().apply {
+                imName.text = bean.senderUserId
+                imHeader.load(bean.portraitUrl)
+                imMessage.text = bean.latestMessage.extra
+                val sentTime = TimeUtils.formatTime(context, bean.sentTime)
+                imTime.text = sentTime
             }
         }
     }

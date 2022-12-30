@@ -20,13 +20,12 @@ import com.lalifa.base.databinding.ItemChatGiftBinding
 import com.lalifa.extension.*
 import per.goweii.layer.core.anim.AnimStyle
 import per.goweii.layer.core.anim.NullAnimatorCreator
-import per.goweii.layer.core.ktx.onClickToDismiss
-import per.goweii.layer.core.ktx.onInitialize
-import per.goweii.layer.core.ktx.onPreDismiss
-import per.goweii.layer.core.ktx.onPreShow
+import per.goweii.layer.core.ktx.*
 import per.goweii.layer.core.widget.SwipeLayout
 import per.goweii.layer.dialog.DialogLayer
 import per.goweii.layer.dialog.ktx.*
+import per.goweii.layer.guide.GuideLayer
+import per.goweii.layer.popup.PopupLayer
 
 //
 
@@ -71,6 +70,24 @@ fun Fragment.showTipDialog(
     requireActivity().showTipDialog(content, title,
         isShowCancelBtn, cancelText, sureText, callback)
 }
+
+/**
+ * 显示消息清空弹框
+ */
+fun Activity.showClearDialog( callback: (type:Int) -> Unit = {type->}) {
+    DialogLayer(this)
+        .contentView(R.layout.dialog_clear)
+        .gravity(Gravity.RIGHT)
+        .backgroundDimDefault()
+        .swipeDismiss(SwipeLayout.Direction.TOP)//设置拖拽dismiss弹框的方向
+        .cancelableOnTouchOutside(true)
+        .onClickToDismiss(R.id.yd) { callback.invoke(1) }
+        .onClickToDismiss(R.id.qk) { callback.invoke(2) }
+        .onInitialize {
+
+        }.show()
+}
+
 //
 ///**
 // * 显示一个带取消按钮的list弹框
@@ -647,24 +664,4 @@ fun Activity.showInputDialog(
 //        }.show()
 //}
 //
-///**
-// * 显示分享代码弹框
-// */
-//fun Activity.showShareCodeDialog() {
-//    DialogLayer(this)
-//        .contentView(R.layout.dialog_code)
-//        .gravity(Gravity.BOTTOM)
-//        .backgroundDimDefault()
-//        .swipeDismiss(SwipeLayout.Direction.BOTTOM)//设置拖拽dismiss弹框的方向
-//        .animStyle(AnimStyle.BOTTOM)
-//        .cancelableOnTouchOutside(true)
-//        .onDismiss {}
-//        .onInitialize {
-//
-//        }.show()
-//}
-//
-//
-//
-//
-//
+

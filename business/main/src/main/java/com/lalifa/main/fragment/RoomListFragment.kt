@@ -10,6 +10,7 @@ import android.widget.ImageView
 import com.drake.brv.utils.page
 import com.drake.logcat.LogCat
 import com.drake.net.utils.scopeNetLife
+import com.drake.tooltip.toast
 import com.lalifa.adapter.BannerImageAdapter
 import com.lalifa.base.BaseFragment
 import com.lalifa.ext.Config
@@ -33,8 +34,6 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentRoomListBinding.inflate(layoutInflater)
-
-    private var type = 1
     @SuppressLint("SetTextI18n")
     override fun initView() {
         binding.apply {
@@ -66,12 +65,12 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
             fgRoomList.apply {
                 roomListAdapter().apply {
                     R.id.itemRoom.onClick {
-                        clickItem(getModel(), false)
+                        clickItem(getModel())
                     }
                 }
                 page().onRefresh {
                     scopeNetLife {
-                        addData(roomList(type.toString(), index.toString())!!.office)
+                        addData(roomList("","", index.toString())!!.office)
                     }
 //                    if (isRefreshing) {
 //                        loadRoomList()
@@ -107,23 +106,15 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
                 showTipDialog("您正在直播的房间中\n是否返回？"){
                     val userId = roomCheck.userId
                     if(TextUtils.equals(userId, Member.currentId)){
-                        jumpRoom(true, roomCheck.RoomId)
+                        RoomActivity.joinVoiceRoom(requireActivity(),
+                            roomCheck.RoomId, true)
                     }else{
-                        jumpRoom(false, roomCheck.RoomId)
+                        RoomActivity.joinVoiceRoom(requireActivity(),
+                            roomCheck.RoomId, false)
                     }
                 }
             }
         }
-    }
-
-    /**
-     * 跳转到语聊房界面
-     *
-     * @param roomId 房间Id
-     * @param owner  是不是房主
-     */
-    private fun jumpRoom(owner: Boolean, roomId: String) {
-        RoomActivity.joinVoiceRoom(requireActivity(), roomId, owner)
     }
 
     override fun onDestroy() {
@@ -138,28 +129,29 @@ class RoomListFragment : BaseFragment<FragmentRoomListBinding>() {
         }
     }
 
-    private fun clickItem(
-        item: Office,
-        isCreate: Boolean
-    ) {
+
+    /**
+     * 跳转到语聊房界面
+     *
+     * @param roomId 房间Id
+     * @param owner  是不是房主
+     */
+    private fun clickItem(item: Office) {
         if (TextUtils.equals(item.userId, UserManager.get()!!.userId)) {
-            val list: ArrayList<String> = ArrayList()
-            list.add(item.roomid)
-            jumpRoom(true, item.roomid)
-            LogCat.e("进入自己创建的房间====${item.roomid}")
+            RoomActivity.joinVoiceRoom(requireActivity(), item.roomid, true)
         } else if (item.password_type == 1) {
             inputPasswordDialog() {
                 scopeNetLife {
-//                    val roomDetail = roomDetail(item.id.toString())
-//                    if (roomDetail != null&&) {
-//                        jumpRoom(item.userId, item.roomid)
-//                    }
+                    val roomDetail = roomDetail(item.id.toString())
+                    if (roomDetail != null&&it == roomDetail.password) {
+                        RoomActivity.joinVoiceRoom(requireActivity(), item.roomid, false)
+                    }else{
+                        toast("密码错误")
+                    }
                 }
             }
-            LogCat.e("进入密码房间====${item.roomid}")
         } else {
-            LogCat.e("进入非创建无密码房间====${item.roomid}")
-            jumpRoom(false, item.roomid)
+            RoomActivity.joinVoiceRoom(requireActivity(), item.roomid, false)
         }
     }
 

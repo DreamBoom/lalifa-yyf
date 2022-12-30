@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.other.MainSearchActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".activity.MainSearchActivity">
 
     <ImageView
         android:id="@+id/back"
@@ -17,10 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/search" />
 
-    <ImageView
-        android:id="@+id/imSearch"
+    <EditText
+        android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="35dp"
+        android:paddingHorizontal="15dp"
+        android:maxLength="10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size16"
+        android:lines="1"
+        android:hint="请输入搜索ID或名称"
+        android:textColorHint="#90ffffff"
         android:background="@drawable/bg_black30"
         app:layout_constraintBottom_toBottomOf="@+id/search"
         app:layout_constraintEnd_toStartOf="@+id/search"

@@ -1,11 +1,12 @@
 package com.lalifa.main.activity
 
 import android.graphics.Color
+import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import com.lalifa.base.BaseActivity
-import com.lalifa.extension.fragmentAdapter
-import com.lalifa.extension.onClick
-import com.lalifa.extension.pageChangedListener
+import com.lalifa.extension.*
+import com.lalifa.main.activity.friend.FriendList
+import com.lalifa.main.activity.room.SearchRoomList
 import com.lalifa.main.databinding.ActivityMainSearchBinding
 import com.lalifa.main.fragment.SearchPeopleFragment
 import com.lalifa.main.fragment.SearchRoomFragment
@@ -38,6 +39,21 @@ class MainSearchActivity : BaseActivity<ActivityMainSearchBinding>() {
         super.onClick()
         binding.apply {
             back.onClick { finish() }
+            search.onClick {
+                if(TextUtils.isEmpty(etSearch.text())){
+                    toast("请输入搜索ID或名称")
+                    return@onClick
+                }
+                if(tabLayout.currentTab == 0){
+                    start(SearchRoomList::class.java){
+                        putExtra("name",etSearch.text())
+                    }
+                }else{
+                    start(FriendList::class.java){
+                        putExtra("name",etSearch.text())
+                    }
+                }
+            }
         }
     }
 }

@@ -109,7 +109,6 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/msg_hy"
         app:layout_constraintTop_toBottomOf="@+id/t1" />
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

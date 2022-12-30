@@ -5,9 +5,14 @@ import android.view.ViewGroup
 
 import com.lalifa.base.databinding.*
 import com.drake.brv.utils.setup
+import com.drake.net.utils.scopeNetLife
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.lalifa.base.BaseFragment
+import com.lalifa.extension.start
 import com.lalifa.main.R
+import com.lalifa.main.activity.room.SearchRoomList
+import com.lalifa.main.api.RoomThemeBean
+import com.lalifa.main.api.roomTheme
 import com.lalifa.main.databinding.ItemSearchBinding
 import com.lalifa.main.databinding.SearchRoomBinding
 
@@ -18,26 +23,26 @@ class SearchRoomFragment : BaseFragment<SearchRoomBinding>() {
     ) = SearchRoomBinding.inflate(layoutInflater)
 
     override fun initView() {
-        binding.apply {
-            list.apply {
-                layoutManager = FlexboxLayoutManager(context)
-                setup {
-                        addType<String>(R.layout.item_search)
+        scopeNetLife {
+            val roomTheme = roomTheme()
+            binding.apply {
+                list.apply {
+                    layoutManager = FlexboxLayoutManager(context)
+                    setup {
+                        addType<RoomThemeBean>(R.layout.item_search)
                         onBind {
-                            getBinding<ItemSearchBinding>().name.text = getModel()
+                            getBinding<ItemSearchBinding>().name.text =
+                                getModel<RoomThemeBean>().name
                         }
-                    }.models = arrayListOf("游戏", "相亲", "接待", "电影VIP", "电竞", "女生", "男生",
-                    "交友", "声鉴", "音乐", "电台播放")
+                    }.apply {
+                        R.id.name.onClick {
+                            start(SearchRoomList::class.java){
+                                putExtra("theme",getModel<RoomThemeBean>().id)
+                            }
+                        }
+                    }.models = roomTheme
+                }
             }
-//            list.grid(4).dividerSpace(12.dp)
-//                .dividerSpace(10.dp, DividerOrientation.VERTICAL)
-//                .setup {
-//                    addType<String>(R.layout.item_search)
-//                    onBind {
-//                        getBinding<ItemSearchBinding>().name.text = getModel()
-//                    }
-//                }.models = arrayListOf("游戏", "相亲", "接待", "电影", "电竞", "女生", "男生",
-//                "交友", "声鉴", "音乐", "电台")
         }
     }
 }

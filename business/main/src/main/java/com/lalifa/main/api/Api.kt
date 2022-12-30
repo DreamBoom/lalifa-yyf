@@ -8,6 +8,7 @@ import com.lalifa.extension.string
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import java.io.File
+
 /**
  * 注册
  * @receiver CoroutineScope
@@ -73,11 +74,12 @@ suspend fun CoroutineScope.index(): IndexBean? {
  * @param path String
  * @return String
  */
-suspend fun CoroutineScope.upload(path: String):ImgBean  {
+suspend fun CoroutineScope.upload(path: String): ImgBean {
     return Post<BaseBean<ImgBean>>("common/upload") {
         param("file", File(path))
     }.await().data!!
 }
+
 suspend fun CoroutineScope.upload(list: ArrayList<String>): ArrayList<String> {
     val deferredList = arrayListOf<Deferred<BaseBean<ImgBean>>>().apply {
         list.forEach {
@@ -109,7 +111,7 @@ suspend fun CoroutineScope.knapsack(): KnapsackBean? {
  * @receiver CoroutineScope
  * @return KnapsackBean?
  */
-suspend fun CoroutineScope.useDress(id:String): String? {
+suspend fun CoroutineScope.useDress(id: String): String? {
     return Post<BaseBean<String>>("user/use_dress_up") {
         param("id", id)
     }.await().data
@@ -244,7 +246,7 @@ suspend fun CoroutineScope.realName(
  */
 suspend fun CoroutineScope.changeUserInfo(
     username: String, gender: String, birthday: String,
-    age: String, bio: String,avatar:String
+    age: String, bio: String, avatar: String
 ): Any? {
     return Post<BaseBean<Any>>("user/profile") {
         param("username", username)
@@ -273,7 +275,7 @@ suspend fun CoroutineScope.titles(): ArrayList<TitleBean>? {
  * @param page 页码
  * @return ReleaseBean?
  */
-suspend fun CoroutineScope.release(page:Int): CheListBean? {
+suspend fun CoroutineScope.release(page: Int): CheListBean? {
     return Post<BaseBean<CheListBean>>("user/release") {
         param("offset", page)
     }.await().data
@@ -285,7 +287,7 @@ suspend fun CoroutineScope.release(page:Int): CheListBean? {
  * @param id 动态ID
  * @return Any?
  */
-suspend fun CoroutineScope.delDynamic(id:String): Any? {
+suspend fun CoroutineScope.delDynamic(id: String): Any? {
     return Post<BaseBean<Any>>("user/del_dynamic") {
         param("id", id)
     }.await().data
@@ -308,7 +310,7 @@ suspend fun CoroutineScope.getActivity(): ArrayList<ActivityBean>? {
  * @param id ID
  * @return ActivityInfoBean?
  */
-suspend fun CoroutineScope.getActivityInfo(id:String): ActivityInfoBean? {
+suspend fun CoroutineScope.getActivityInfo(id: String): ActivityInfoBean? {
     return Post<BaseBean<ActivityInfoBean>>("user/activity_details") {
         param("id", id)
     }.await().data
@@ -321,7 +323,7 @@ suspend fun CoroutineScope.getActivityInfo(id:String): ActivityInfoBean? {
  * @param name String 搜索名称
  * @return ArrayList<FriendBean>?
  */
-suspend fun CoroutineScope.friendsList(id: String = "",name: String = ""):ArrayList<FriendBean>? {
+suspend fun CoroutineScope.friendsList(id: String = "", name: String = ""): ArrayList<FriendBean>? {
     return Post<BaseBean<ArrayList<FriendBean>>>("user/friends_list") {
         param("id", id)
         param("name", name)
@@ -333,7 +335,7 @@ suspend fun CoroutineScope.friendsList(id: String = "",name: String = ""):ArrayL
  * @receiver CoroutineScope
  * @return ArrayList<NewFriendBean>?
  */
-suspend fun CoroutineScope.newFriendsList():ArrayList<NewFriendBean>? {
+suspend fun CoroutineScope.newFriendsList(): ArrayList<NewFriendBean>? {
     return Post<BaseBean<ArrayList<NewFriendBean>?>>("user/new_people") {
     }.await().data!!
 }
@@ -343,7 +345,7 @@ suspend fun CoroutineScope.newFriendsList():ArrayList<NewFriendBean>? {
  * @receiver CoroutineScope
  * @return ArrayList<NewFriendBean>?
  */
-suspend fun CoroutineScope.applyList():ArrayList<ApplyBean>? {
+suspend fun CoroutineScope.applyList(): ArrayList<ApplyBean>? {
     return Post<BaseBean<ArrayList<ApplyBean>?>>("user/examine_friends_list") {
     }.await().data!!
 }
@@ -355,7 +357,7 @@ suspend fun CoroutineScope.applyList():ArrayList<ApplyBean>? {
  * @param type String 状态 1：通过  2：拒绝
  * @return Any
  */
-suspend fun CoroutineScope.applyFriend(id: String,type: String):Any{
+suspend fun CoroutineScope.applyFriend(id: String, type: String): Any {
     return Post<BaseBean<Any>>("user/examine_friends") {
         param("id", id)
         param("type", type)
@@ -369,12 +371,13 @@ suspend fun CoroutineScope.applyFriend(id: String,type: String):Any{
  * @param postscript String 申请附言
  * @return Any
  */
-suspend fun CoroutineScope.addFriend(pid: String,postscript: String=""):Any{
+suspend fun CoroutineScope.addFriend(pid: String, postscript: String = ""): Any {
     return Post<BaseBean<Any>>("user/add_friends") {
         param("pid", pid)
         param("postscript", postscript)
     }.await().data!!
 }
+
 /**
  * 发现页列表
  * @receiver CoroutineScope
@@ -454,6 +457,7 @@ suspend fun CoroutineScope.getGiftList(): GiftListBean? {
     return Post<BaseBean<GiftListBean>>("user/gift_wall") {
     }.await().data
 }
+
 /**
  * 礼物记录
  * @receiver CoroutineScope
@@ -588,7 +592,7 @@ suspend fun CoroutineScope.collection(id: String): String? {
  * @return
  */
 suspend fun CoroutineScope.editRoom(
-    id: String, title: String, image: String,background_id: String,
+    id: String, title: String, image: String, background_id: String,
     background: String, passwordType: String,
     password: String, notice: String
 ): String? {
@@ -603,6 +607,7 @@ suspend fun CoroutineScope.editRoom(
         param("notice", notice)
     }.await().data
 }
+
 /**
  * 关闭房间
  * @return
@@ -628,7 +633,7 @@ suspend fun CoroutineScope.recharge(): RechargeBean? {
  * @receiver CoroutineScope
  * @return String?
  */
-suspend fun CoroutineScope.ZfbPay(id:String,price:String,payType:String): String? {
+suspend fun CoroutineScope.ZfbPay(id: String, price: String, payType: String): String? {
     return Post<BaseBean<String>>("user/recharge") {
         param("id", id)
         param("price", price)
@@ -636,7 +641,7 @@ suspend fun CoroutineScope.ZfbPay(id:String,price:String,payType:String): String
     }.await().data
 }
 
-suspend fun CoroutineScope.WxPay(id:String,price:String,payType:String): WxPayBean? {
+suspend fun CoroutineScope.WxPay(id: String, price: String, payType: String): WxPayBean? {
     return Post<BaseBean<WxPayBean>>("user/recharge") {
         param("id", id)
         param("price", price)
@@ -661,9 +666,10 @@ suspend fun CoroutineScope.roomIndex(): RoomIndexBean? {
  * @param offset 页码
  * @return RoomListBean?
  */
-suspend fun CoroutineScope.roomList(id:String,offset:String): RoomListBean? {
+suspend fun CoroutineScope.roomList(id: String, name: String, offset: String): RoomListBean? {
     return Post<BaseBean<RoomListBean>>("chat_room/ChatRoom") {
         param("id", id)
+        param("name", name)
         param("offset", offset)
     }.await().data
 }
@@ -675,7 +681,7 @@ suspend fun CoroutineScope.roomList(id:String,offset:String): RoomListBean? {
  * @param category 1：日榜  2：周榜 3月榜
  * @return RoomListBean?
  */
-suspend fun CoroutineScope.ranking(type:String,category:String,): List<RankBean>? {
+suspend fun CoroutineScope.ranking(type: String, category: String): List<RankBean>? {
     return Post<BaseBean<List<RankBean>>>("user/ranking") {
         param("category", category)
         param("type", type)
@@ -689,7 +695,7 @@ suspend fun CoroutineScope.ranking(type:String,category:String,): List<RankBean>
  * @param office_id 房间ID
  * @return RoomListBean?
  */
-suspend fun CoroutineScope.userInfo(id:String,office_id:String): Member? {
+suspend fun CoroutineScope.userInfo(id: String, office_id: String): Member? {
     return Post<BaseBean<Member>>("chat_room/usre_information") {
         param("id", id)
         param("office_id", office_id)
@@ -702,7 +708,7 @@ suspend fun CoroutineScope.userInfo(id:String,office_id:String): Member? {
  * @param id
  * @return
  */
-suspend fun CoroutineScope.getManageList(id:String): MutableList<ManageListBean>? {
+suspend fun CoroutineScope.getManageList(id: String): MutableList<ManageListBean>? {
     return Post<BaseBean<MutableList<ManageListBean>>>("chat_room/manage") {
         param("office_id", id)
     }.await().data
@@ -714,7 +720,7 @@ suspend fun CoroutineScope.getManageList(id:String): MutableList<ManageListBean>
  * @param id
  * @return
  */
-suspend fun CoroutineScope.getManage(userId:String,roomId:String): MutableList<ManageListBean>? {
+suspend fun CoroutineScope.getManage(userId: String, roomId: String): MutableList<ManageListBean>? {
     return Post<BaseBean<MutableList<ManageListBean>>>("chat_room/search_manage") {
         param("userId", userId)
         param("office_id", roomId)
@@ -727,19 +733,20 @@ suspend fun CoroutineScope.getManage(userId:String,roomId:String): MutableList<M
  * @param id
  * @return
  */
-suspend fun CoroutineScope.addManage(userId:String,roomId:String): String? {
+suspend fun CoroutineScope.addManage(userId: String, roomId: String): String? {
     return Post<BaseBean<String>>("chat_room/add_manage") {
         param("uid", userId)
         param("office_id", roomId)
     }.await().data
 }
+
 /**
  * 删除管理员
  *
  * @param id
  * @return
  */
-suspend fun CoroutineScope.removeManage(userId:String,roomId:String): String? {
+suspend fun CoroutineScope.removeManage(userId: String, roomId: String): String? {
     return Post<BaseBean<String>>("chat_room/del_manage") {
         param("id", userId)
         param("office_id", roomId)
@@ -752,7 +759,7 @@ suspend fun CoroutineScope.removeManage(userId:String,roomId:String): String? {
  * @param id
  * @return
  */
-suspend fun CoroutineScope.getMembers(id:String): MutableList<User>? {
+suspend fun CoroutineScope.getMembers(id: String): MutableList<User>? {
     return Post<BaseBean<MutableList<User>>>("chat_room/members") {
         param("id", id)
     }.await().data
@@ -773,19 +780,21 @@ suspend fun CoroutineScope.getRoomBg(): MutableList<RoomBgBean>? {
  *
  * @return
  */
-suspend fun CoroutineScope.reportRoom(roomId:String,content:String): String? {
+suspend fun CoroutineScope.reportRoom(roomId: String, content: String): String? {
     return Post<BaseBean<String>>("chat_room/report") {
         param("room_id", roomId)
         param("content", content)
     }.await().data
 }
+
 /**
  * 房间送礼物
  * @return
  */
 suspend fun CoroutineScope.sendRoomGift(
-    type:String,uid:String,roomId:String,
-    num:String,id:String,userType:String): String? {
+    type: String, uid: String, roomId: String,
+    num: String, id: String, userType: String
+): String? {
     return Post<BaseBean<String>>("chat_room/gifts") {
         param("office_id", roomId)
         param("uid", uid)
@@ -795,12 +804,14 @@ suspend fun CoroutineScope.sendRoomGift(
         param("user_type", userType)
     }.await().data
 }
+
 /**
  * 房间礼物排行榜
  * @return
  */
 suspend fun CoroutineScope.roomRanking(
-    type:String, id:String): List<RoomRankBean>? {
+    type: String, id: String
+): List<RoomRankBean>? {
     return Post<BaseBean<List<RoomRankBean>>>("chat_room/ranking") {
         param("category", type)
         param("id", id)
@@ -811,11 +822,21 @@ suspend fun CoroutineScope.roomRanking(
  * 房间礼物赠送记录
  * @return
  */
-suspend fun CoroutineScope.roomGiftHistory(roomId:String): List<RoomGiftHistoryBean>? {
+suspend fun CoroutineScope.roomGiftHistory(roomId: String): List<RoomGiftHistoryBean>? {
     return Post<BaseBean<List<RoomGiftHistoryBean>>>("chat_room/gift_record") {
         param("id", roomId)
     }.await().data
 }
+
+/**
+ * 房间主题
+ * @return
+ */
+suspend fun CoroutineScope.roomTheme(): List<RoomThemeBean>? {
+    return Post<BaseBean<List<RoomThemeBean>>>("index/theme") {
+    }.await().data
+}
+
 
 
 

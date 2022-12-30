@@ -8,7 +8,6 @@ class Tool {
         val STATUS_WAIT_FOR_SEAT = 1
         val STATUS_HAVE_SEAT = 2
         var currentSeatIndex = -1
-
         val showGift = "showGift"
         val showSx = "showSx"
         val agree = "agree"
