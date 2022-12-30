@@ -31,8 +31,11 @@ import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
 import com.opensource.svgaplayer.SVGAVideoEntity
+import per.goweii.layer.core.anim.AnimStyle
+import per.goweii.layer.core.ktx.onClickToDismiss
 import per.goweii.layer.core.ktx.onInitialize
 import per.goweii.layer.dialog.DialogLayer
+import per.goweii.layer.dialog.ktx.animStyle
 import per.goweii.layer.dialog.ktx.backgroundDimDefault
 import per.goweii.layer.dialog.ktx.contentView
 import per.goweii.layer.dialog.ktx.gravity
@@ -169,6 +172,7 @@ fun roomTopDialog(isLike: Boolean, callback: (type: Int) -> Unit = {}) {
         .contentView(R.layout.popup_exit_room)
         .gravity(Gravity.TOP)
         .backgroundDimDefault()
+        .animStyle(animStyle = AnimStyle.TOP)
         .setOutsideTouchToDismiss(true)
         .addOnClickToDismissListener(R.id.iv_close)
         .onInitialize {
@@ -197,7 +201,9 @@ fun roomBottomDialog(callback: (type: Int) -> Unit = {}) {
     DialogLayer()
         .contentView(R.layout.popup_set_room)
         .gravity(Gravity.BOTTOM)
+        .animStyle(animStyle = AnimStyle.BOTTOM)
         .backgroundDimDefault()
+        .onClickToDismiss(R.id.iv_close)
         .setOutsideTouchToDismiss(true)
         .onInitialize {
             val member = Member.getMember(Member.currentId)

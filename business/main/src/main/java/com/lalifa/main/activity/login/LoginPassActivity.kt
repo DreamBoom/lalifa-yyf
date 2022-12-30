@@ -1,5 +1,6 @@
 package com.lalifa.main.activity.login
 
+import android.net.Uri
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
 import com.drake.logcat.LogCat
@@ -18,7 +19,10 @@ import com.lalifa.utils.SPUtil
 import com.mob.MobSDK
 import com.mob.OperationCallback
 import io.rong.imkit.RongIM
+import io.rong.imkit.userinfo.RongUserInfoManager
+import io.rong.imkit.userinfo.UserDataProvider
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.UserInfo
 
 class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
     override fun getViewBinding() = ActivityLoginPassBinding.inflate(layoutInflater)
@@ -54,6 +58,10 @@ class LoginPassActivity : BaseActivity<ActivityLoginPassBinding>() {
                 scopeNetLife {
                     val user = login(etPhone.text(), etPass.text())
                     if (null != user) {
+                        RongUserInfoManager.getInstance().setUserInfoProvider({ userId ->
+                                UserInfo(userId, user.userinfo.userName,
+                                    Uri.parse(Config.FILE_PATH+user.userinfo.avatar))
+                            }, true)
                         SPUtil.set(Tool.agree, true)
                         submitPrivacyGrantResult(true)
                         login.enable()

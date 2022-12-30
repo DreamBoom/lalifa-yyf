@@ -1,5 +1,6 @@
 package com.lalifa.main.activity.login
 
+import android.net.Uri
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -26,7 +27,9 @@ import com.lalifa.utils.SPUtil
 import com.mob.MobSDK
 import com.mob.OperationCallback
 import io.rong.imkit.RongIM
+import io.rong.imkit.userinfo.RongUserInfoManager
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.UserInfo
 
 
 /**
@@ -118,6 +121,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
            // val user = login("13462439645", "111111")
               val user = login("15500000003", "123456")
             if (null != user) {
+                RongUserInfoManager.getInstance().setUserInfoProvider({ userId ->
+                    UserInfo(userId, user.userinfo.userName,
+                        Uri.parse(Config.FILE_PATH+user.userinfo.avatar))
+                }, true)
                 SPUtil.set(Tool.agree, true)
                 submitPrivacyGrantResult(true)
                 binding.login.enable()

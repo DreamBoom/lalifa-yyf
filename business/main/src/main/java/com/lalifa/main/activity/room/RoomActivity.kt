@@ -212,7 +212,7 @@ class RoomActivity : BaseActivity<ActivityRoomBinding>(), SeatListObserver,
     override fun onClick() {
         super.onClick()
         binding.apply {
-            sendMessage.onClick { clickSend(roomId!!, "") }
+            sendMessage.onClick { clickSend("", roomId!!) }
             more.onClick { roomMore(mRoomDetail!!) }
             setting.onClick { setPop() }
             create.onClick {

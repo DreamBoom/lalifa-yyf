@@ -35,7 +35,7 @@
             android:maxWidth="75dp"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="#ffffff"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -9,8 +9,8 @@
         android:id="@+id/rc_title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:right_icon="@drawable/rc_title_bar_more"
-        app:titleMargin="0dp" />
+        android:background="@color/app_color_black"
+        app:right_icon="@drawable/rc_title_bar_more"/>
 
     <ViewFlipper
         android:id="@+id/rc_base_container"

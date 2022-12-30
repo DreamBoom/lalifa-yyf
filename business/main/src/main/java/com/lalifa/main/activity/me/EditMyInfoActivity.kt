@@ -1,14 +1,18 @@
 package com.lalifa.main.activity.me
 
+import android.net.Uri
 import com.drake.net.utils.scopeNetLife
 import com.lalifa.base.BaseTitleActivity
 import com.lalifa.ext.Config
 import com.lalifa.ext.showInputDialog
 import com.lalifa.extension.*
+import com.lalifa.main.activity.room.ext.UserManager
 import com.lalifa.main.api.changeUserInfo
 import com.lalifa.main.api.upload
 import com.lalifa.main.api.userInfo
 import com.lalifa.main.databinding.ActivityEditMyInfoBinding
+import io.rong.imkit.userinfo.RongUserInfoManager
+import io.rong.imlib.model.UserInfo
 
 class EditMyInfoActivity : BaseTitleActivity<ActivityEditMyInfoBinding>() {
     override fun title() = "编辑个人资料"
@@ -92,6 +96,10 @@ class EditMyInfoActivity : BaseTitleActivity<ActivityEditMyInfoBinding>() {
     }
 
     private fun upInfo() {
+        RongUserInfoManager.getInstance().refreshUserInfoCache(
+            UserInfo(UserManager.get()!!.imToken,mName,
+                Uri.parse(Config.FILE_PATH+mAvatar))
+        )
         scopeNetLife {
             changeUserInfo(mName, mGender, mBirthday, mAge, mBio, mAvatar)
         }

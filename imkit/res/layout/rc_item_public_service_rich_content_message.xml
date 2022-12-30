@@ -5,7 +5,7 @@
     android:paddingEnd="14dp"
     android:paddingStart="14dp"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@color/app_color_black">
 
     <TextView
         android:layout_width="fill_parent"
@@ -13,14 +13,14 @@
         android:textSize="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="6dp"
-        android:textColor="#353535"
+        android:textColor="@color/app_color_white"
         android:id="@+id/rc_title"/>
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="14dp"
-        android:textColor="#999999"
+        android:textColor="@color/app_color_white"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
         android:id="@+id/rc_time"/>
@@ -28,7 +28,7 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="160dp"
-        android:background="@android:color/white"
+        android:background="@color/app_color_black"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         android:id="@+id/rc_img"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textSize="14dp"
-        android:textColor="#999999"
+        android:textColor="@color/app_color_white"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         android:id="@+id/rc_content"/>
@@ -50,7 +50,7 @@
         android:layout_height="1dp"
         android:paddingBottom="8dp"
         android:paddingTop="6dp"
-        android:background="@color/picture_color_eb"/>
+        android:background="@color/app_color_black"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -59,7 +59,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:textSize="14dp"
-        android:textColor="#353535"
+        android:textColor="@color/app_color_white"
         android:text="@string/rc_read_all"/>
 
 </LinearLayout>

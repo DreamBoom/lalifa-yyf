@@ -7,7 +7,7 @@
     <color name="rc_item_background_color">#F8F8F8</color>
     <color name="rc_item_top_color">#F1F1F1</color>
     <color name="rc_text_main_color">#111F2C</color>
-    <color name="rc_secondary_color">#A0A5AB</color>
+    <color name="rc_secondary_color">#ffffff</color>
     <color name="rc_auxiliary_color">#c7cbce</color>
     <color name="rc_divider_color">#E3E5E6</color>
     <color name="rc_gif_item_pre_progress_color">#CCFFFFFF</color>

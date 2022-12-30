@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_color_black"
     tools:context="io.rong.imkit.conversationlist.RongConversationListActivity">
 
    <fragment
        android:id="@+id/conversationlist"
+       android:background="@color/app_color_black"
        android:name="io.rong.imkit.conversationlist.ConversationListFragment"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>

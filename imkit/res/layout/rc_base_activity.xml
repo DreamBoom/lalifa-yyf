@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_color_black"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/rc_ac_ll_base_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/rc_main_theme"
+        android:background="@color/app_color_black"
         android:orientation="horizontal">
 
         <Button
@@ -25,7 +26,7 @@
             android:layout_height="24dp"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
-            android:background="#0083e0" />
+            android:background="@color/app_color_white" />
 
         <TextView
             android:id="@+id/rc_action_bar_title"

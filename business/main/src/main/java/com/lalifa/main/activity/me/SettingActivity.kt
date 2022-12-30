@@ -63,7 +63,6 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         toast("注销成功！")
                         ActivityManager.getInstance()
                             .finishAllActivities(LoginActivity::class.java)
-                        start(LoginActivity::class.java)
                     }
                 }
             }
@@ -76,7 +75,6 @@ class SettingActivity : BaseTitleActivity<ActivitySettingBinding>() {
                         toast("退出成功！")
                         ActivityManager.getInstance()
                             .finishAllActivities(LoginActivity::class.java)
-                        start(LoginActivity::class.java)
                     }
                 }
             }
